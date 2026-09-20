@@ -1,8 +1,8 @@
 # LAST_TASKS
 
-## 2026-09-20 21:12 CEST — NEOWULF v6 display/spectroscope milestone
+## 2026-09-20 21:20 CEST — NEOWULF v6 display/spectroscope milestone
 
-**STATE:** VERIFIED
+**STATE:** IN_PROGRESS
 
 **OBJECTIVE:** Transfer the approved NEOWULF v6 high-detail Black Steel / Hell Machine design into the functional Winamp Modern skin and publish reproducible changes here.
 
@@ -14,28 +14,28 @@
 - Display substrate changed to near black; red grid/reflection intensity reduced.
 - Deterministic fine horizontal brushed-metal micrograin implemented for component artwork.
 - `neowulf-vis-profile.m` compiled successfully with Nullsoft MAKI Compiler 1.2.0 / Winamp 5.66.
-- Runtime profile driver and source committed.
-- Reproducible display transformation and validation tools committed.
-- Synthetic end-to-end display pipeline fixture committed.
-- GitHub Actions validation workflow committed.
+- Runtime profile driver/source, display transform, validator and end-to-end fixture committed.
 - R2 WAL/source artifacts built and SHA-256 recorded.
 
-**VERIFIED:**
-- Local real-skin display validator passes.
-- Synthetic apply → validate pipeline passes.
-- Committed Python tools compile successfully after downloading them from GitHub.
-- No old green analyzer colors remain in the transformed skin.
-- Both main-player and standalone analyzer are configured mode 1 / thin / 60 FPS / peaks.
-- MAKI signature checks are part of CI.
+**STATE_MISMATCH:**
+- The first GitHub Actions run failed before exposing executable steps/logs.
+- Local tests and downloaded-from-GitHub Python compilation had passed, so the previous VERIFIED label overstated repository CI state.
+- Workflow strategy changed: no `actions/checkout` or `actions/setup-python`; the job now uses the runner's built-in git/python and clones the public repository directly.
 
-**CURRENT_STAGE:** DISPLAY_SPECTROSCOPE_REWORK_VERIFIED
+**VERIFIED LOCALLY:**
+- Real-skin display validator passes.
+- Synthetic apply → validate fixture passes.
+- Python tools fetched back from GitHub compile successfully.
+- Committed MAKI binary signatures are valid.
 
-**NEXT_SECTION:** HIGH_RES_CHASSIS_AND_SPEAKERS
+**CURRENT_STAGE:** CI_RETRY_AFTER_RUNNER_ACTION_FAILURE
 
 **NEXT_ACTION:**
-- Continue the high-resolution Black Steel chassis pass and upright Teufel MK Ultra tower-speaker geometry while keeping the turntable physically separate.
+- Confirm the revised workflow.
+- Then continue high-resolution Black Steel chassis and upright Teufel MK Ultra tower-speaker geometry with no platter overlap.
 
 **DO_NOT_REPEAT:**
+- Do not blindly rerun the failed marketplace-action workflow.
 - No static green spectroscope bars.
 - No substitute visualization unrelated to the playing song.
 - No excessive red wash over black display glass.
