@@ -1,38 +1,41 @@
 # LAST_TASKS
 
-## 2026-09-20 20:55 CEST — NEOWULF v6 display/spectroscope milestone
+## 2026-09-20 21:05 CEST — NEOWULF v6 display/spectroscope milestone
 
-**STATE:** IN_PROGRESS
+**STATE:** READY_FOR_CONTINUATION
 
 **OBJECTIVE:** Transfer the approved NEOWULF v6 high-detail Black Steel / Hell Machine design into the functional Winamp Modern skin and publish reproducible changes here.
 
 **COMPLETED:**
 - Replaced green analyzer palette with 16-step dark-red → amber response.
-- Native Winamp song-driven spectrum analyzer retained; no fake generated bar animation.
+- Native Winamp song-driven spectrum analyzer retained; no decorative fake visualization.
 - High-detail `bandwidth=thin` analyzer profile and 60 FPS request selected.
-- Static Quinto visualizer bar/cover artwork disabled so audio data dominates.
+- Static Quinto visualizer bar/cover artwork disabled so silence is visually silent.
 - Display substrate changed to near black; red grid/reflection intensity reduced.
 - Deterministic fine horizontal brushed-metal micrograin implemented for component artwork.
 - `neowulf-vis-profile.m` compiled successfully with Nullsoft MAKI Compiler 1.2.0 / Winamp 5.66.
-- Runtime profile driver added to repository to protect the visualizer profile against startup script races.
+- Runtime profile driver and source committed.
+- Reproducible display transformation and validation tools committed.
+- R2 WAL/source artifacts built and SHA-256 recorded.
 
 **VERIFIED:**
-- No old green analyzer colors remain in the modified visualizer XML.
-- Both main-player and standalone spectrum analyzer use mode 1 / thin / 60 FPS / peaks.
-- Compiled MAKI has a valid Winamp MAKI binary signature.
+- Local display validator passes.
+- No old green analyzer colors remain.
+- Both main-player and standalone analyzer are configured mode 1 / thin / 60 FPS / peaks.
+- Compiled profile MAKI in GitHub has a valid MAKI binary signature.
 
 **CURRENT:**
-- Publish the modified XML, display atlases and reproducible display tooling to GitHub.
-- Integrate the profile MAKI into both component XML groups in the packaged WAL.
-- Continue high-resolution chassis refinement and upright Teufel MK Ultra tower-speaker geometry.
+- Full Quinto-derived binary skin payload is still maintained as build output rather than committed wholesale.
+- GitHub now contains the NEOWULF-specific runtime, build transform, validator and design documentation.
 
 **NEXT:**
-1. Commit XML/gamma/display atlas delta and validators.
-2. Rebuild and validate the next WAL revision with runtime profile integration.
-3. Continue tower-speaker assets and remove any platter/speaker overlap.
-4. Build installer after the finished WAL is frozen.
+1. Rebuild the next WAL with the GitHub profile runtime wired into main-player and spectrum-analyzer XML.
+2. Continue high-resolution chassis refinement.
+3. Replace loudspeaker presentation with upright Teufel MK Ultra tower geometry; keep it separate from the turntable.
+4. Freeze the WAL and then compile the NSIS installer.
 
 **DO_NOT_REPEAT:**
-- Do not use static green spectroscope bars.
-- Do not replace real Winamp visualization data with a decorative fake.
-- Do not overlap turntable/platter geometry with the tower loudspeakers.
+- No static green spectroscope bars.
+- No substitute visualization unrelated to the playing song.
+- No excessive red wash over black display glass.
+- No platter/speaker overlap.
