@@ -1,33 +1,38 @@
 # LAST_TASKS
 
-## 2026-09-20 18:14 CEST — NEOWULF v6 design transfer
+## 2026-09-20 20:55 CEST — NEOWULF v6 display/spectroscope milestone
 
-**STATE:** IN_PROGRESS  
-**OBJECTIVE:** Transfer the approved NEOWULF v6 high-detail Black Steel / Hell Machine design into the functional Winamp Modern skin on GitHub.
+**STATE:** IN_PROGRESS
+
+**OBJECTIVE:** Transfer the approved NEOWULF v6 high-detail Black Steel / Hell Machine design into the functional Winamp Modern skin and publish reproducible changes here.
+
+**COMPLETED:**
+- Replaced green analyzer palette with 16-step dark-red → amber response.
+- Native Winamp song-driven spectrum analyzer retained; no fake generated bar animation.
+- High-detail `bandwidth=thin` analyzer profile and 60 FPS request selected.
+- Static Quinto visualizer bar/cover artwork disabled so audio data dominates.
+- Display substrate changed to near black; red grid/reflection intensity reduced.
+- Deterministic fine horizontal brushed-metal micrograin implemented for component artwork.
+- `neowulf-vis-profile.m` compiled successfully with Nullsoft MAKI Compiler 1.2.0 / Winamp 5.66.
+- Runtime profile driver added to repository to protect the visualizer profile against startup script races.
+
+**VERIFIED:**
+- No old green analyzer colors remain in the modified visualizer XML.
+- Both main-player and standalone spectrum analyzer use mode 1 / thin / 60 FPS / peaks.
+- Compiled MAKI has a valid Winamp MAKI binary signature.
 
 **CURRENT:**
-- Repository contains the compiled NEOWULF animation drivers.
-- Full source exists in the working build and is being converted into reproducible GitHub source/delta assets.
-- Target visual direction: high-resolution brushed black steel, fine metal grain, brighter red/amber displays, high-detail controls, NEOWULF v6 branding.
-- Loudspeakers must be upright Teufel MK Ultra tower enclosures; no platter/speaker overlap.
-- Vinyl animation remains isolated to the dedicated turntable and uses the high-frame NEOWULF animation driver.
+- Publish the modified XML, display atlases and reproducible display tooling to GitHub.
+- Integrate the profile MAKI into both component XML groups in the packaged WAL.
+- Continue high-resolution chassis refinement and upright Teufel MK Ultra tower-speaker geometry.
 
 **NEXT:**
-1. Add reproducible source-side design generator and skin XML changes.
-2. Replace loudspeaker geometry/assets with upright tower design.
-3. Brighten display/gamma system while retaining red/amber Hell Machine palette.
-4. Add fine brushed-metal treatment to chassis/window assets.
-5. Validate XML references, image dimensions, animation frame geometry, and rebuild the WAL.
+1. Commit XML/gamma/display atlas delta and validators.
+2. Rebuild and validate the next WAL revision with runtime profile integration.
+3. Continue tower-speaker assets and remove any platter/speaker overlap.
+4. Build installer after the finished WAL is frozen.
 
-**PLANNED_FILES:**
-- skin/XML/gammaset.xml
-- skin/XML/loudspeaker-left.xml
-- skin/XML/loudspeaker-right.xml
-- skin/XML/elements.xml
-- skin/PNG/ls-elements.png
-- skin/PNG/neowulf-ls-cone-animation-32.png
-- tools/apply_neowulf_v6_design.py
-- README.md
-- LAST_TASKS.md
-
-**BLOCKERS:** None for source implementation. Large binary WAL/release publication may require a separate artifact/release path.
+**DO_NOT_REPEAT:**
+- Do not use static green spectroscope bars.
+- Do not replace real Winamp visualization data with a decorative fake.
+- Do not overlap turntable/platter geometry with the tower loudspeakers.
