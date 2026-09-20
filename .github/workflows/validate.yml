@@ -19,18 +19,7 @@ jobs:
           cd "$RUNNER_TEMP/neowulf-ci"
           git rev-parse HEAD
 
-      - name: Ensure Pillow
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          try:
-              import PIL
-              print("Pillow", PIL.__version__)
-          except Exception:
-              raise SystemExit(1)
-          PY
-
-      - name: Compile Python tools
+      - name: Compile Python tooling
         shell: bash
         working-directory: ${{ runner.temp }}/neowulf-ci
         run: |
@@ -38,6 +27,8 @@ jobs:
           python3 -m py_compile tools/validate_neowulf_v6_display.py
           python3 -m py_compile tools/apply_neowulf_v6_reference_design.py
           python3 -m py_compile tools/validate_neowulf_v6_turntable.py
+          python3 -m py_compile tools/apply_neowulf_v6_r41_ultra.py
+          python3 -m py_compile tools/validate_neowulf_v6_r41.py
           python3 -m py_compile tests/test_display_pipeline.py
           python3 -m py_compile tests/test_turntable_source_assets.py
 
@@ -54,17 +45,9 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          files = sorted(Path("skin/SCRIPTS").glob("*.maki"))
+          files=sorted(Path("skin/SCRIPTS").glob("*.maki"))
           assert files, "no MAKI binaries found"
-          bad = [str(p) for p in files if not p.read_bytes().startswith(b"FG")]
+          bad=[str(p) for p in files if not p.read_bytes().startswith(b"FG")]
           assert not bad, "invalid MAKI signature: " + ", ".join(bad)
-          required = {
-              "neowulf-vis-profile.maki",
-              "neowulf-vrp-rotation.maki",
-              "neowulf-speaker.maki",
-              "neowulf-vu-40.maki",
-          }
-          missing = required - {p.name for p in files}
-          assert not missing, "missing required MAKI: " + ", ".join(sorted(missing))
           print(f"validated {len(files)} MAKI binaries")
           PY

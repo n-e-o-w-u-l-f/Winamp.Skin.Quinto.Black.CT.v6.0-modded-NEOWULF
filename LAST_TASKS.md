@@ -1,59 +1,41 @@
 # LAST_TASKS
 
-## 2026-09-20 22:42 CEST — NEOWULF v6 R4 ultra-detail full skin pass
+## 2026-09-20 23:55 CEST — NEOWULF v6 R4.1 ultra-detail correction
 
-**STATE:** IN_PROGRESS
+**STATE:** VERIFIED_LOCALLY
 
-**OBJECTIVE:** Rework the functional NEOWULF Winamp Modern skin to the highest practical detail level while preserving Winamp compatibility. Runtime PNGs must remain truecolor RGBA; new artwork is rendered from 4x/8x supersampled masters and downsampled with high-quality filtering.
+**OBJECTIVE:** Make the visible functional skin match the requested high-detail direction rather than merely adding hidden R4 assets.
 
-**USER REQUIREMENTS / HARD GATES:**
-- No 16-bit/paletted-looking artwork; all generated runtime PNGs must be 32-bit RGBA truecolor.
-- No black boxes behind LED indicators and no oversized round “clown nose” LEDs.
-- VU Meter Left/Right is no longer an analog needle display. Replace it with a bright digital black-glass meter: white scale/detail + intense red/white signal animation.
-- Fully black display glass for VU, spectroscope/oscilloscope and EQ readouts; remove the ugly light-grey haze.
-- VU animation must remain inside the display aperture only; no red bars bleeding over chassis/frame structure.
-- Digital VU gets a higher-motion fire-like response driven by Winamp left/right VU data.
-- Keep native Winamp song-data visualization for spectroscope/oscilloscope.
-- Add three new oscillator deck components using native Vis data.
-- Teufel MK Ultra style speaker towers become approximately 3x the current height.
-- Left/right towers must be true mirror counterparts: cabinet, trim, light direction and driver bezels are mirrored rather than duplicated.
-- LP/platter: no decorative rotating stripes and no baked light rotating with vinyl. Physical vinyl rotates; deck/stylus/reflections stay fixed.
-- Metal finish: very fine brushed Black Steel / machined metal micrograin, no coarse periodic stripes.
+**COMPLETED:**
+- Replaced generic round/framed LED artwork with transparent thin micro-slot emitters while retaining original atlas coordinates for compatibility.
+- Replaced the framed round power lamp with a flush horizontal red slot.
+- Removed `group.power.indicator` from the digital Left/Right VU component.
+- Rebuilt Left/Right VU response as a 120-frame segmented red / orange / white-hot digital animation on black glass.
+- Kept VU animation inside the black display aperture.
+- Made all three native Winamp oscillator decks visible on first load: Fire Wide, Dual L/R, Twin Mirror.
+- Kept oscillator input routed to real Winamp `Vis` audio data (channels 1/2/3, mode 2, 60 FPS request).
+- Enforced 298x1044 towers and exact horizontal mirroring of the right cabinet and 64-frame right driver atlas.
+- Preserved R3 LP physical-light separation.
+- Built `NEOWULF-v6.0-ultra-detail-r4.1.wal`.
 
-**CURRENT IMPLEMENTATION PLAN:**
-1. Generate R4 truecolor supersampled assets for displays, LEDs, VU fire animation, EQ chassis and tall mirrored speaker towers.
-2. Replace analog VU XML with digital Left/Right black-glass display and 120-frame (40 levels x 3 motion phases) fire animation.
-3. Upgrade horizontal/vertical/main-player VU overlays to the same 120-frame engine.
-4. Add 3 native oscillator decks (wide fire trace, dual L/R trace, mirrored overlay trace).
-5. Replace round LED sprites globally with transparent integrated slot/micro-LED optics.
-6. Rework EQ and display frames to eliminate white/grey haze.
-7. Build 64-frame mirrored speaker cone animation and 3x-height towers.
-8. Preserve R3 physically-correct LP layer separation.
-9. Validate PNG mode, display black level, LED geometry, speaker height/mirroring, VU containment, oscillator-deck count, XML references, and WAL ZIP integrity.
-10. Commit source generator, MAKI sources/binaries, XML and validators to GitHub; build an R4 WAL.
+**VERIFIED:**
+- R4.1 validator passes.
+- Key generated assets are RGBA truecolor.
+- LED background frames are transparent and active emitters are narrow slots.
+- VU high frame contains strong red response and white-hot tips.
+- All three oscillator decks are default-visible and use native Vis objects.
+- Right tower is pixel-exact mirror of left.
+- WAL ZIP integrity passes.
+- SHA-256: `1306138d173a5330e4814b452fd762bdebef22693857ef8bd6b2aabe4d9e668d`.
 
-**PLANNED_FILES:**
-- tools/apply_neowulf_v6_ultra_detail.py
-- tools/validate_neowulf_v6_ultra_detail.py
-- tests/test_ultra_detail_source.py
-- XML/vu-meter-analog.xml
-- XML/vu-meter-digital-horizontal.xml
-- XML/vu-meter-digital-vertical.xml
-- XML/loudspeaker-left.xml
-- XML/loudspeaker-right.xml
-- XML/neowulf-oscillator-decks.xml
-- skin.xml
-- SCRIPTS/neowulf-vu-fire-r4.m / .maki
-- SCRIPTS/neowulf-speaker-r4.m / .maki
-- README.md
-- docs/ULTRA-DETAIL-R4.md
-- LAST_TASKS.md
+**CURRENT_STAGE:** R4_1_VISIBLE_QA_CORRECTION
+
+**NEXT_ACTION:** Continue per-component visual QA in Winamp, then freeze the skin and derive the NSIS installer.
 
 **DO_NOT_REPEAT:**
-- No generated concept image instead of editing the actual skin.
-- No fake/static green bars.
-- No analog needle VU for Left/Right.
-- No broad grey bloom over displays.
-- No round red LED noses with black square backgrounds.
-- No identical left/right tower artwork.
+- No hidden-only feature implementation presented as a visible redesign.
+- No round framed LEDs or opaque black LED boxes.
+- No analog needle face for Left/Right VU.
+- No fake song-independent spectroscope.
+- No identical unmirrored speaker cabinets.
 - No rotating LP lighting.

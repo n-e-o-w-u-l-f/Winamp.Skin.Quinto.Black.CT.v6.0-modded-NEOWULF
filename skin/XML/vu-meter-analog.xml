@@ -1,0 +1,15 @@
+<!-- NEOWULF R4.1 DIGITAL LEFT/RIGHT VU: replaces analog needle instrument -->
+<groupdef id="vu.ma.group.main">
+    <Layer x="0" y="0" w="638" h="226" id="vu.ma.layer.base"/>
+    <Layer x="0" y="0" w="638" h="226" id="vu.ma.layer.component" image="neowulf.vu.lr.component.r4"/>
+    <Layer x="71" y="33" id="neowulf.vu.r4.display.left" image="neowulf.vu.lr.display.left.r4"/>
+    <Layer x="323" y="33" id="neowulf.vu.r4.display.right" image="neowulf.vu.lr.display.right.r4"/>
+    <AnimatedLayer x="75" y="37" id="neowulf.vu.r4.left" image="neowulf.vu.fire.left.r4" autoplay="0" autoreplay="0" frameheight="104"/>
+    <AnimatedLayer x="327" y="37" id="neowulf.vu.r4.right" image="neowulf.vu.fire.right.r4" autoplay="0" autoreplay="0" frameheight="104"/>
+    <button:close x="-108" y="17" relatx="1" id="button.close"/>
+    <SendParams target="xui.button.close" tooltip="Close NEOWULF Digital VU L/R"/>
+    <script file="SCRIPTS\neowulf-vu-fire-r4.maki" param="analog"/>
+</groupdef>
+<Container default_x="100" default_y="100" default_w="638" default_h="226" default_visible="1" id="vu.meter.analog" name="NEOWULF Digital VU // L-R">
+    <Layout x="100" y="100" w="638" h="226" id="normal" alphabackground="vu.ma.background.alpha"><Group fitparent="1" id="vu.ma.group.main"/></Layout>
+</Container>

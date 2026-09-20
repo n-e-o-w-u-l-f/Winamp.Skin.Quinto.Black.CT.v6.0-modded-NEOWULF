@@ -1,0 +1,21 @@
+<!-- NEOWULF R4.1: three native audio-data oscillator decks, all visible on first load -->
+<groupdef id="neowulf.osc.deck1.group">
+  <Layer x="0" y="0" image="neowulf.osc.deck1.component.r4"/>
+  <Vis x="69" y="37" w="500" h="128" id="neowulf.osc.deck1.vis" channel="3" mode="2" fps="60" oscstyle="lines" coloring="normal" colorosc1="#FFFDFC" colorosc2="#FF8A70" colorosc3="#FF3A20" colorosc4="#C6170C" colorosc5="#5B0704"/>
+  <button:close x="-64" y="12" relatx="1" id="button.close"/>
+</groupdef>
+<Container default_x="660" default_y="0" default_w="638" default_h="208" default_visible="1" id="neowulf.oscillator.deck.fire.wide.r41" name="NEOWULF Oscillator // Fire Wide"><Layout x="660" y="0" w="638" h="208" id="normal" alphabackground="sa.background.alpha"><Group fitparent="1" id="neowulf.osc.deck1.group"/></Layout></Container>
+<groupdef id="neowulf.osc.deck2.group">
+  <Layer x="0" y="0" image="neowulf.osc.deck2.component.r4"/>
+  <Vis x="69" y="38" w="500" h="66" id="neowulf.osc.deck2.left" channel="1" mode="2" fps="60" oscstyle="lines" colorosc1="#FFFDFC" colorosc2="#FF8A70" colorosc3="#FF3A20" colorosc4="#C6170C" colorosc5="#5B0704"/>
+  <Vis x="69" y="120" w="500" h="66" id="neowulf.osc.deck2.right" channel="2" mode="2" fps="60" oscstyle="lines" fliph="1" colorosc1="#FFFDFC" colorosc2="#FF8A70" colorosc3="#FF3A20" colorosc4="#C6170C" colorosc5="#5B0704"/>
+  <button:close x="-64" y="12" relatx="1" id="button.close"/>
+</groupdef>
+<Container default_x="660" default_y="220" default_w="638" default_h="246" default_visible="1" id="neowulf.oscillator.deck.dual.lr.r41" name="NEOWULF Oscillator // Dual L-R"><Layout x="660" y="220" w="638" h="246" id="normal" alphabackground="eq.background.alpha"><Group fitparent="1" id="neowulf.osc.deck2.group"/></Layout></Container>
+<groupdef id="neowulf.osc.deck3.group">
+  <Layer x="0" y="0" image="neowulf.osc.deck3.component.r4"/>
+  <Vis x="69" y="38" w="236" h="136" id="neowulf.osc.deck3.left" channel="1" mode="2" fps="60" oscstyle="lines" colorosc1="#FFFDFC" colorosc2="#FF8A70" colorosc3="#FF3A20" colorosc4="#C6170C" colorosc5="#5B0704"/>
+  <Vis x="333" y="38" w="236" h="136" id="neowulf.osc.deck3.right" channel="2" mode="2" fps="60" oscstyle="lines" fliph="1" colorosc1="#FFFDFC" colorosc2="#FF8A70" colorosc3="#FF3A20" colorosc4="#C6170C" colorosc5="#5B0704"/>
+  <button:close x="-64" y="12" relatx="1" id="button.close"/>
+</groupdef>
+<Container default_x="660" default_y="480" default_w="638" default_h="246" default_visible="1" id="neowulf.oscillator.deck.twin.mirror.r41" name="NEOWULF Oscillator // Twin Mirror"><Layout x="660" y="480" w="638" h="246" id="normal" alphabackground="eq.background.alpha"><Group fitparent="1" id="neowulf.osc.deck3.group"/></Layout></Container>

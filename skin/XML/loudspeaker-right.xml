@@ -1,0 +1,10 @@
+<!-- NEOWULF R4.1 3x-height mirrored MK ULTRA tower -->
+<groupdef id="ls.right.group.main">
+    <Layer x="0" y="0" w="298" h="1044" id="ls.right.layer.tower" image="neowulf.ls.tower.right.r4"/>
+    <AnimatedLayer x="74" y="335" id="neowulf.ls.right.woofer1" image="neowulf.ls.driver.right.r4" autoplay="0" autoreplay="0" framewidth="150"/>
+    <AnimatedLayer x="74" y="545" id="neowulf.ls.right.woofer2" image="neowulf.ls.driver.right.r4" autoplay="0" autoreplay="0" framewidth="150"/>
+    <AnimatedLayer x="74" y="755" id="neowulf.ls.right.woofer3" image="neowulf.ls.driver.right.r4" autoplay="0" autoreplay="0" framewidth="150"/>
+    <Button x="260" y="10" id="button.close.big" image="caption.close.big" hoverImage="caption.close.big.hover" downImage="caption.close.big.down" inactiveAlpha="0" tooltip="Close Loudspeaker"/>
+    <script file="SCRIPTS\neowulf-speaker-r4.maki" param="right"/>
+</groupdef>
+<Container default_x="500" default_y="100" default_w="298" default_h="1044" default_visible="0" id="loudspeaker.right" name="Loudspeaker Right // MK ULTRA" nomenu="1"><Layout x="500" y="100" w="298" h="1044" id="normal" alphabackground="neowulf.ls.tower.alpha.r4"><Group fitparent="1" id="ls.right.group.main"/></Layout></Container>
