@@ -1,0 +1,46 @@
+name: Validate NEOWULF
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install validation dependency
+        run: python -m pip install --disable-pip-version-check pillow
+
+      - name: Compile Python tools
+        run: |
+          python -m py_compile tools/apply_neowulf_v6_display.py
+          python -m py_compile tools/validate_neowulf_v6_display.py
+          python -m py_compile tests/test_display_pipeline.py
+
+      - name: Run display pipeline fixture
+        run: python tests/test_display_pipeline.py
+
+      - name: Verify committed MAKI binaries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files=sorted(Path('skin/SCRIPTS').glob('*.maki'))
+          assert files, 'no MAKI binaries found'
+          bad=[str(p) for p in files if not p.read_bytes().startswith(b'FG')]
+          assert not bad, 'invalid MAKI signature: ' + ', '.join(bad)
+          required={'neowulf-vis-profile.maki','neowulf-vrp-rotation.maki','neowulf-speaker.maki','neowulf-vu-40.maki'}
+          have={p.name for p in files}
+          missing=required-have
+          assert not missing, 'missing required MAKI: ' + ', '.join(sorted(missing))
+          print(f'validated {len(files)} MAKI binaries')
+          PY

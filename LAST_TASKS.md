@@ -1,8 +1,8 @@
 # LAST_TASKS
 
-## 2026-09-20 21:05 CEST — NEOWULF v6 display/spectroscope milestone
+## 2026-09-20 21:12 CEST — NEOWULF v6 display/spectroscope milestone
 
-**STATE:** READY_FOR_CONTINUATION
+**STATE:** VERIFIED
 
 **OBJECTIVE:** Transfer the approved NEOWULF v6 high-detail Black Steel / Hell Machine design into the functional Winamp Modern skin and publish reproducible changes here.
 
@@ -16,23 +16,24 @@
 - `neowulf-vis-profile.m` compiled successfully with Nullsoft MAKI Compiler 1.2.0 / Winamp 5.66.
 - Runtime profile driver and source committed.
 - Reproducible display transformation and validation tools committed.
+- Synthetic end-to-end display pipeline fixture committed.
+- GitHub Actions validation workflow committed.
 - R2 WAL/source artifacts built and SHA-256 recorded.
 
 **VERIFIED:**
-- Local display validator passes.
-- No old green analyzer colors remain.
+- Local real-skin display validator passes.
+- Synthetic apply → validate pipeline passes.
+- Committed Python tools compile successfully after downloading them from GitHub.
+- No old green analyzer colors remain in the transformed skin.
 - Both main-player and standalone analyzer are configured mode 1 / thin / 60 FPS / peaks.
-- Compiled profile MAKI in GitHub has a valid MAKI binary signature.
+- MAKI signature checks are part of CI.
 
-**CURRENT:**
-- Full Quinto-derived binary skin payload is still maintained as build output rather than committed wholesale.
-- GitHub now contains the NEOWULF-specific runtime, build transform, validator and design documentation.
+**CURRENT_STAGE:** DISPLAY_SPECTROSCOPE_REWORK_VERIFIED
 
-**NEXT:**
-1. Rebuild the next WAL with the GitHub profile runtime wired into main-player and spectrum-analyzer XML.
-2. Continue high-resolution chassis refinement.
-3. Replace loudspeaker presentation with upright Teufel MK Ultra tower geometry; keep it separate from the turntable.
-4. Freeze the WAL and then compile the NSIS installer.
+**NEXT_SECTION:** HIGH_RES_CHASSIS_AND_SPEAKERS
+
+**NEXT_ACTION:**
+- Continue the high-resolution Black Steel chassis pass and upright Teufel MK Ultra tower-speaker geometry while keeping the turntable physically separate.
 
 **DO_NOT_REPEAT:**
 - No static green spectroscope bars.
