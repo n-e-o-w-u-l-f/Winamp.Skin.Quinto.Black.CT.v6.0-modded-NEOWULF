@@ -1,0 +1,108 @@
+<!-- ***************************************** -->
+<!-- Filename: vinyl-record-player.xml         -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="vrp.group.main">
+	<Layer x="0" y="0" id="vrp.layer.table.stop" image="vrp.table.stop" visible="1"/>
+	<Layer x="0" y="0" id="vrp.layer.table.play" image="vrp.table.play" visible="0"/>
+	<AnimatedLayer
+		x="40" y="40" w="474" h="474"
+		id="vrp.layer.vinyl"
+		image="neowulf.vrp.lp.rotation.a"
+		autoplay="0"
+		autoreplay="1"
+		frameheight="474"/>
+	<!-- NEOWULF R3: lighting/reflections are fixed in deck coordinates, never baked into rotating vinyl -->
+	<Layer
+		x="40" y="40" w="474" h="474"
+		id="vrp.layer.fixed.reflection"
+		image="neowulf.vrp.fixed.reflection"
+		ghost="1"/>
+	<Layer x="10" y="10" id="vrp.layer.label" image="vrp.label" visible="0"/>
+	<Layer x="258" y="266" id="vrp.layer.table.shadow" image="vrp.table.shadow"/>
+	<Layer x="204" y="-226" id="vrp.layer.tonearm" image="vrp.tonearm"/>
+
+	<Button x="23" y="418" id="vrp.button.on.off"
+		image="vrp.on.off" hoverImage="vrp.on.off.hover" downImage="vrp.on.off.down"
+		tooltip="Power On/Off "/>
+
+	<Button x="26" y="459" id="vrp.button.start"
+		image="vrp.start.stop" downImage="vrp.start.stop.down"
+		action="play" tooltip="Start/Stop Playback " visible="1"/>
+	<Button x="26" y="459" id="vrp.button.stop"
+		image="vrp.start.stop" downImage="vrp.start.stop.down"
+		action="stop" tooltip="Start/Stop Playback " visible="0"/>
+	<Layer x="26" y="459" id="vrp.layer.start.stop.glow" image="vrp.start.stop.glow" ghost="1"/>
+	<Status x="26" y="459" w="74" h="74"
+		id="vrp.status.start.stop" playBitmap="vrp.status.start.stop"
+		pauseBitmap="vrp.status.start.stop" ghost="1"/>
+	<script file="SCRIPTS\hover-glow.maki" param="vrp.button.start|vrp.layer.start.stop.glow"/>
+	<script file="SCRIPTS\hover-glow.maki" param="vrp.button.stop|vrp.layer.start.stop.glow"/>
+	<AnimatedLayer x="26" y="459"
+		id="vrp.animatedlayer.playback.status"
+		image="vrp.playback.status.animation"
+		autoplay="0" autoreplay="1" ghost="1" framewidth="74" speed="1000"/>
+
+	<Button x="103" y="506" id="vrp.button.33"
+		image="vrp.33.45" hoverImage="vrp.33.45.hover" downImage="vrp.33.45.down"
+		tooltip="Turntable Speed 33rpm "/>
+	<Layer x="103" y="506" id="vrp.layer.33" image="vrp.33" ghost="1"/>
+	<Layer x="103" y="506" id="vrp.layer.33.led" image="vrp.33.45.led" ghost="1"/>
+	<Button x="141" y="506" id="vrp.button.45"
+		image="vrp.33.45" hoverImage="vrp.33.45.hover" downImage="vrp.33.45.down"
+		tooltip="Turntable Speed 45rpm "/>
+	<Layer x="141" y="506" id="vrp.layer.45" image="vrp.45" ghost="1"/>
+	<Layer x="141" y="506" id="vrp.layer.45.led" image="vrp.33.45.led" ghost="1"/>
+
+	<NStatesButton x="541" y="396" id="vrp.nstatesbutton.reset"
+		image="vrp.reset" hoverImage="vrp.reset.hover" downImage="vrp.reset.down"
+		cfgvals="0;1" nstates="2" tooltip="Reset "/>
+	<Layer x="567" y="396" id="vrp.layer.reset.led" image="vrp.reset.led"/>
+	<Layer x="610" y="227" id="vrp.layer.50.led" image="vrp.50.led"/>
+	<Layer x="610" y="246" id="vrp.layer.16.led" image="vrp.16.led"/>
+	<Layer x="610" y="265" id="vrp.layer.8.led" image="vrp.8.led"/>
+
+	<Slider x="617" y="333" w="24" h="162"
+		id="vrp.slider.tempo"
+		thumb="vrp.slider.tempo.thumb"
+		hoverThumb="vrp.slider.tempo.thumb.hover"
+		downThumb="vrp.slider.tempo.thumb.down"
+		low="0" high="162" orientation="vertical"
+		tooltip="Change Speed "/>
+
+	<NStatesButton x="610" y="290"
+		id="vrp.nstatesbutton.tempo.range"
+		image="vrp.tempo.range"
+		hoverImage="vrp.tempo.range.hover"
+		downImage="vrp.tempo.range.down"
+		cfgvals="50;16;8" nstates="3"
+		tooltip="Change Tempo Range "/>
+
+	<Button x="690" y="10"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close Vinyl Record Player"/>
+
+	<script file="SCRIPTS\vinyl-record-player.maki"/>
+	<script file="SCRIPTS\neowulf-vrp-rotation.maki"/>
+</groupdef>
+
+<Container
+	default_x="100" default_y="100" default_w="728" default_h="554"
+	default_visible="0"
+	id="vinyl.record.player"
+	name="Vinyl Record Player"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="728" h="554"
+		id="normal"
+		alphabackground="vrp.background.alpha">
+		<Group fitparent="1" id="vrp.group.main"/>
+	</Layout>
+</Container>

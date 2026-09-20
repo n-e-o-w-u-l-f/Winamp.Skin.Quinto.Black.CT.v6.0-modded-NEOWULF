@@ -8,38 +8,63 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     steps:
-      - name: Clone repository without marketplace actions
+      - name: Prepare clean source
         shell: bash
         run: |
-          git clone --depth 1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" repo
-          cd repo
+          set -euxo pipefail
+          rm -rf "$RUNNER_TEMP/neowulf-ci"
+          git clone --depth 1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$RUNNER_TEMP/neowulf-ci"
+          cd "$RUNNER_TEMP/neowulf-ci"
           git rev-parse HEAD
 
-      - name: Validate Python and display pipeline
+      - name: Ensure Pillow
         shell: bash
-        working-directory: repo
         run: |
-          python3 -m pip install --disable-pip-version-check --user pillow
+          python3 - <<'PY'
+          try:
+              import PIL
+              print("Pillow", PIL.__version__)
+          except Exception:
+              raise SystemExit(1)
+          PY
+
+      - name: Compile Python tools
+        shell: bash
+        working-directory: ${{ runner.temp }}/neowulf-ci
+        run: |
           python3 -m py_compile tools/apply_neowulf_v6_display.py
           python3 -m py_compile tools/validate_neowulf_v6_display.py
+          python3 -m py_compile tools/apply_neowulf_v6_reference_design.py
+          python3 -m py_compile tools/validate_neowulf_v6_turntable.py
           python3 -m py_compile tests/test_display_pipeline.py
+          python3 -m py_compile tests/test_turntable_source_assets.py
+
+      - name: Run lightweight source invariants
+        shell: bash
+        working-directory: ${{ runner.temp }}/neowulf-ci
+        run: |
           python3 tests/test_display_pipeline.py
+          python3 tests/test_turntable_source_assets.py
 
       - name: Verify committed MAKI binaries
         shell: bash
-        working-directory: repo
+        working-directory: ${{ runner.temp }}/neowulf-ci
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          files=sorted(Path('skin/SCRIPTS').glob('*.maki'))
-          assert files, 'no MAKI binaries found'
-          bad=[str(p) for p in files if not p.read_bytes().startswith(b'FG')]
-          assert not bad, 'invalid MAKI signature: ' + ', '.join(bad)
-          required={'neowulf-vis-profile.maki','neowulf-vrp-rotation.maki','neowulf-speaker.maki','neowulf-vu-40.maki'}
-          have={p.name for p in files}
-          missing=required-have
-          assert not missing, 'missing required MAKI: ' + ', '.join(sorted(missing))
-          print(f'validated {len(files)} MAKI binaries')
+          files = sorted(Path("skin/SCRIPTS").glob("*.maki"))
+          assert files, "no MAKI binaries found"
+          bad = [str(p) for p in files if not p.read_bytes().startswith(b"FG")]
+          assert not bad, "invalid MAKI signature: " + ", ".join(bad)
+          required = {
+              "neowulf-vis-profile.maki",
+              "neowulf-vrp-rotation.maki",
+              "neowulf-speaker.maki",
+              "neowulf-vu-40.maki",
+          }
+          missing = required - {p.name for p in files}
+          assert not missing, "missing required MAKI: " + ", ".join(sorted(missing))
+          print(f"validated {len(files)} MAKI binaries")
           PY
