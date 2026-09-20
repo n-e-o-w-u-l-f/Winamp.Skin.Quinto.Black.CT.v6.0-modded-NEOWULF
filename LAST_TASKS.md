@@ -14,7 +14,7 @@
 - Moved stylus/platter/room light into `vrp.layer.fixed.reflection`, a normal non-animated layer.
 - Kept the tonearm above the fixed-light layer.
 - Rebuilt platter rims and fixed strobe dots.
-- Reworked the turntable deck toward dark brushed Black Steel / machined-metal treatment without coarse stripes.
+- Reworked the turntable deck toward dark brushed Black Steel / machined-metal treatment with irregular fine micrograin and no periodic full-width striping.
 - Added deterministic generator, turntable validator, lightweight source-invariant test, design documentation and versioned R3 XML/source.
 - Built local `NEOWULF-v6.0-reference-r3.wal`.
 
@@ -23,7 +23,7 @@
 - Generated LP frames contain no red sectors or bright baked light outside the center label.
 - Fixed reflection/stylus light is static and ordered LP -> fixed light -> tonearm.
 - ZIP/WAL integrity check passes.
-- R3 WAL SHA-256: `1d3f2d7f02483549f4591fb48d3cb8290ecfa596bcef4fb63afd56791b54c11c`.
+- R3 WAL SHA-256 after fine-grain correction: `aa31d4659f858c2315a02b1b4d98132a8f54ac213df934b7c67333614edde8ad`.
 
 **STATE_MISMATCH / CI:**
 - GitHub-hosted workflow runs failed before useful job logs/steps were exposed.

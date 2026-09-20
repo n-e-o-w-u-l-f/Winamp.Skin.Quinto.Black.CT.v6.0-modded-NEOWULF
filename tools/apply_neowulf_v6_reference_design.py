@@ -21,24 +21,37 @@ def lerp(a, b, t):
 def brushed_steel(size, dark=18, light=66, seed=SEED):
     w,h=size
     rnd=random.Random(seed)
-    # Build a 1-pixel-wide horizontal grain column, then stretch.
-    grain=Image.new('L',(1,h))
-    gp=grain.load()
-    walk=0.0
+    im=Image.new('RGBA',(w,h),(0,0,0,255))
+    px=im.load()
+    # Fine directional brushing: sub-pixel-scale row variation plus irregular
+    # short streaks. Avoid periodic full-width bands.
+    row_walk=0.0
+    row_bias=[]
     for y in range(h):
-        walk = walk*0.78 + rnd.uniform(-7,7)
-        base = lerp(light,dark,y/max(1,h-1)) * 0.20 + lerp(dark,light,y/max(1,h-1))*0.80
-        # Brushed metal is dominated by fine horizontal directionality.
-        v=base + walk + rnd.uniform(-3.2,3.2)
-        if y % 17 == 0: v += rnd.uniform(3,8)
-        if y % 31 == 0: v -= rnd.uniform(2,6)
-        gp[0,y]=clamp(int(v))
-    im=grain.resize((w,h),Image.Resampling.BILINEAR).convert('RGBA')
-    # no coarse striping: only fine horizontal brushed grain.
+        row_walk = row_walk*0.58 + rnd.uniform(-1.15,1.15)
+        row_bias.append(row_walk + rnd.uniform(-0.65,0.65))
+    for y in range(h):
+        fy=y/max(1,h-1)
+        base=lerp(dark+5, dark+11, fy)
+        for x in range(w):
+            fx=x/max(1,w-1)
+            # broad machined-steel reflection, intentionally non-periodic
+            spec=8.0*math.exp(-((fx-0.43)/0.34)**2)
+            edge=-3.2*abs(fx-0.5)*2.0
+            # micrograin changes pixel-to-pixel but remains horizontally directional
+            micro=1.2*math.sin(x*0.071 + y*0.017) + 0.75*math.sin(x*0.019 + y*0.133)
+            micro += rnd.uniform(-0.75,0.75)
+            v=clamp(int(base+spec+edge+row_bias[y]+micro))
+            px[x,y]=(v,v+1,v+2,255)
     d=ImageDraw.Draw(im,'RGBA')
-    for y in range(11,h,37):
-        a=5 + (y*3)%5
-        d.line((0,y,w,y),fill=(255,255,255,a),width=1)
+    # sparse short hairline brush marks rather than full-width stripes
+    for _ in range(max(24,(w*h)//14000)):
+        y=rnd.randrange(3,max(4,h-3))
+        x0=rnd.randrange(0,max(1,w-24))
+        ln=rnd.randrange(12,max(13,min(w-x0,110)))
+        a=rnd.randrange(5,13)
+        c=210 if rnd.random()>0.35 else 0
+        d.line((x0,y,x0+ln,y),fill=(c,c,c,a),width=1)
     return im
 
 
