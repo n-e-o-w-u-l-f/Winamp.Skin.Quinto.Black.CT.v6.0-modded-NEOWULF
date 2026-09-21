@@ -1,41 +1,46 @@
 # LAST_TASKS
 
-## 2026-09-20 23:55 CEST — NEOWULF v6 R4.1 ultra-detail correction
+## 2026-09-21 12:46 CEST — NEOWULF v6 R4.2 functional correction pass
 
-**STATE:** VERIFIED_LOCALLY
+**STATE:** IN_PROGRESS
 
-**OBJECTIVE:** Make the visible functional skin match the requested high-detail direction rather than merely adding hidden R4 assets.
+**OBJECTIVE:** Correct the actually observed R4.1 runtime defects in Winamp. Work from the functional skin structure and Winamp Modern Vis behavior, not from assumed appearance.
 
-**COMPLETED:**
-- Replaced generic round/framed LED artwork with transparent thin micro-slot emitters while retaining original atlas coordinates for compatibility.
-- Replaced the framed round power lamp with a flush horizontal red slot.
-- Removed `group.power.indicator` from the digital Left/Right VU component.
-- Rebuilt Left/Right VU response as a 120-frame segmented red / orange / white-hot digital animation on black glass.
-- Kept VU animation inside the black display aperture.
-- Made all three native Winamp oscillator decks visible on first load: Fire Wide, Dual L/R, Twin Mirror.
-- Kept oscillator input routed to real Winamp `Vis` audio data (channels 1/2/3, mode 2, 60 FPS request).
-- Enforced 298x1044 towers and exact horizontal mirroring of the right cabinet and 64-frame right driver atlas.
-- Preserved R3 LP physical-light separation.
-- Built `NEOWULF-v6.0-ultra-detail-r4.1.wal`.
+**OBSERVED DEFECTS FROM WINAMP QA:**
+- Oscillator Deck 1 has no visible signal.
+- Oscillator Decks 2 and 3 currently look like the same pixelated animation instead of three genuinely different scopes.
+- Digital VU L/R motion is better, but the gradient direction is wrong: the bottom must be brightest/white-hot and the signal must darken upward through yellow/orange into red/dark red.
+- Loudspeaker skins disappeared from the usable skin.
+- Generic frame/header added around the decks is too large.
+- Added header text duplicates/overwrites the component's own title (for example WINAMP over NEOWULF, SPECTROSCOPE over SPECTROSCOPE). Exactly one title is allowed.
+- Deck title/header behavior must be editable from backend configuration, not baked destructively into artwork/XML duplicates.
+- VU Left/Right remains digital, bright and high-detail; do not restore analog needles.
 
-**VERIFIED:**
-- R4.1 validator passes.
-- Key generated assets are RGBA truecolor.
-- LED background frames are transparent and active emitters are narrow slots.
-- VU high frame contains strong red response and white-hot tips.
-- All three oscillator decks are default-visible and use native Vis objects.
-- Right tower is pixel-exact mirror of left.
-- WAL ZIP integrity passes.
-- SHA-256: `1306138d173a5330e4814b452fd762bdebef22693857ef8bd6b2aabe4d9e668d`.
+**START / CURRENT:**
+- Repository head verified before edits.
+- Current R4.1 XML and generator inspected.
+- Winamp source confirms Vis channel is a bitmask (left=1, right=2, stereo=3) and oscilloscope uses mode=2.
+- R4.1 currently forces all three oscillator containers visible and gives them closely related mode=2 line renderers; this does not meet the visual/functional requirement.
 
-**CURRENT_STAGE:** R4_1_VISIBLE_QA_CORRECTION
-
-**NEXT_ACTION:** Continue per-component visual QA in Winamp, then freeze the skin and derive the NSIS installer.
+**NEXT:**
+1. Rebuild the three oscillator decks as distinct native-audio renderers:
+   - Deck 1: robust stereo oscilloscope with explicit black-glass surface and visible native Vis.
+   - Deck 2: dual-channel stacked L/R oscilloscope with different trace treatment.
+   - Deck 3: spectrum/fire analyzer using native frequency data, not another copy of Deck 2.
+2. Reverse the digital VU thermal gradient: bottom white-hot -> yellow -> orange -> red/dark red upward.
+3. Restore loudspeaker containers and menu/config access; verify both XML includes and assets.
+4. Replace oversized generic headers with compact frame geometry.
+5. Remove duplicate/baked deck headings; use exactly one configurable title.
+6. Add backend configuration entries for title visibility/text profile and deck visual mode where Winamp skin configuration permits.
+7. Build R4.2 WAL from the real R4 package, validate XML references, Vis modes/channels, VU pixel gradient, speaker availability, and ZIP integrity.
+8. Commit source generator, XML snapshots, validator, documentation and LAST_TASKS update to GitHub.
 
 **DO_NOT_REPEAT:**
-- No hidden-only feature implementation presented as a visible redesign.
-- No round framed LEDs or opaque black LED boxes.
-- No analog needle face for Left/Right VU.
-- No fake song-independent spectroscope.
-- No identical unmirrored speaker cabinets.
+- No guessing that a feature is visible because an XML object exists.
+- No three near-identical oscillator animations.
+- No duplicate titles.
+- No oversized title bars.
+- No analog VU needles.
+- No bottom-dark/top-white VU gradient.
+- No hidden/disconnected loudspeaker windows.
 - No rotating LP lighting.
