@@ -1,46 +1,50 @@
 # LAST_TASKS
 
-## 2026-09-21 12:46 CEST — NEOWULF v6 R4.2 functional correction pass
+## 2026-09-21 16:12 CEST — NEOWULF v6 R5 full functional reference transfer
 
 **STATE:** IN_PROGRESS
 
-**OBJECTIVE:** Correct the actually observed R4.1 runtime defects in Winamp. Work from the functional skin structure and Winamp Modern Vis behavior, not from assumed appearance.
+**OBJECTIVE:** Rebuild/reshape the functional NEOWULF Winamp Modern skin so the supplied Black-Steel / Hell-Machine reference language is applied consistently to the real runtime components. Do not preserve broken R4 framing or duplicated headers just because they already exist.
 
-**OBSERVED DEFECTS FROM WINAMP QA:**
-- Oscillator Deck 1 has no visible signal.
-- Oscillator Decks 2 and 3 currently look like the same pixelated animation instead of three genuinely different scopes.
-- Digital VU L/R motion is better, but the gradient direction is wrong: the bottom must be brightest/white-hot and the signal must darken upward through yellow/orange into red/dark red.
-- Loudspeaker skins disappeared from the usable skin.
-- Generic frame/header added around the decks is too large.
-- Added header text duplicates/overwrites the component's own title (for example WINAMP over NEOWULF, SPECTROSCOPE over SPECTROSCOPE). Exactly one title is allowed.
-- Deck title/header behavior must be editable from backend configuration, not baked destructively into artwork/XML duplicates.
-- VU Left/Right remains digital, bright and high-detail; do not restore analog needles.
+**OBSERVED R4/R4.2 DEFECTS TO REMOVE:**
+- Transparent/empty bands between stacked decks caused by oversized container/layout/background geometry.
+- Deck 1 can render no visible signal.
+- Decks 2 and 3 are too visually similar/pixelated.
+- Generated deck header frame is too tall and duplicates the component title.
+- Titles such as WINAMP/NEOWULF or SPECTROSCOPE/SPECTROSCOPE overlap. Exactly one title is allowed.
+- Left/Right digital VU thermal gradient is reversed.
+- Loudspeaker windows/assets became disconnected from the usable skin.
+- Several old Quinto component frames still look low-detail/light-grey compared with the reference.
+- Existing R4 is not accepted as the target design.
 
-**START / CURRENT:**
-- Repository head verified before edits.
-- Current R4.1 XML and generator inspected.
-- Winamp source confirms Vis channel is a bitmask (left=1, right=2, stereo=3) and oscilloscope uses mode=2.
-- R4.1 currently forces all three oscillator containers visible and gives them closely related mode=2 line renderers; this does not meet the visual/functional requirement.
+**REFERENCE / FUNCTIONAL GATES:**
+1. Preserve real Winamp Modern functionality and native audio data.
+2. Use Winamp source behavior, existing Quinto XML and runtime testing as reference; no visual guessing.
+3. One compact header/title per window, backend-configurable via a single component metadata/config source.
+4. No oversized transparent margins between components.
+5. Three distinct analysis decks:
+   - Deck 1: stereo oscilloscope, mode=2, channel=3.
+   - Deck 2: independent L/R oscilloscopes, mode=2, channels 1 and 2, visibly different rendering from Deck 1.
+   - Deck 3: spectrum/fire analyzer, mode=1 using frequency-domain data; not another oscillator copy.
+6. Digital VU L/R: fully black glass; brightest white/yellow energy at the baseline/bottom, grading upward through yellow/orange/red to dark red.
+7. Loudspeaker containers must be present in skin.xml/menu/config and use the tall mirrored MK-Ultra assets.
+8. LP physics from R3 remains mandatory: vinyl material rotates; platter/stylus/reflections remain fixed.
+9. Runtime assets are truecolor RGBA generated from supersampled masters; no paletted/16-bit-looking gradients.
+10. Validate against the actual built WAL, not only isolated XML snippets.
 
-**NEXT:**
-1. Rebuild the three oscillator decks as distinct native-audio renderers:
-   - Deck 1: robust stereo oscilloscope with explicit black-glass surface and visible native Vis.
-   - Deck 2: dual-channel stacked L/R oscilloscope with different trace treatment.
-   - Deck 3: spectrum/fire analyzer using native frequency data, not another copy of Deck 2.
-2. Reverse the digital VU thermal gradient: bottom white-hot -> yellow -> orange -> red/dark red upward.
-3. Restore loudspeaker containers and menu/config access; verify both XML includes and assets.
-4. Replace oversized generic headers with compact frame geometry.
-5. Remove duplicate/baked deck headings; use exactly one configurable title.
-6. Add backend configuration entries for title visibility/text profile and deck visual mode where Winamp skin configuration permits.
-7. Build R4.2 WAL from the real R4 package, validate XML references, Vis modes/channels, VU pixel gradient, speaker availability, and ZIP integrity.
-8. Commit source generator, XML snapshots, validator, documentation and LAST_TASKS update to GitHub.
+**CURRENT / NEXT:**
+- Inspect current extracted R4.1/R4.2 build and original Quinto include/menu structure on the self-hosted Linux machine.
+- Identify exact source of inter-deck transparent bands (container coordinates, layout coordinates, alpha background, or component PNG alpha).
+- Replace R4 deck framework rather than patching around it.
+- Restore speaker inclusion/menu wiring.
+- Rebuild the VU gradient and native analysis modes.
+- Build a clean R5 WAL, run validators plus ZIP/XML/reference checks, then commit the real source changes to GitHub.
 
 **DO_NOT_REPEAT:**
-- No guessing that a feature is visible because an XML object exists.
-- No three near-identical oscillator animations.
+- No concept-image generation instead of editing the skin.
 - No duplicate titles.
-- No oversized title bars.
+- No giant frame/header margins.
+- No three near-identical analysis decks.
+- No hidden/disconnected speaker windows.
 - No analog VU needles.
-- No bottom-dark/top-white VU gradient.
-- No hidden/disconnected loudspeaker windows.
 - No rotating LP lighting.
