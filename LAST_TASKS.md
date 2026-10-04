@@ -1,50 +1,20 @@
 # LAST_TASKS
 
-## 2026-09-21 16:12 CEST — NEOWULF v6 R5 full functional reference transfer
+## 2026-10-05 — NEOWULF From Hell / Quinto Black CT 5.1 continuation
 
 **STATE:** IN_PROGRESS
+**ACTIVE_EXECUTION:** Interactive tool work; no independent skin-build job observed.
+**OBJECTIVE:** Deliver a real Winamp Modern skin using the original Quinto Black CT 5.1 foundation, black high-detail decks, smoothly pulsing red LEDs, rotating vinyl with stationary reflections, and independently movable/dockable modules. Keep the complete user scope until verified.
+**START / CURRENT:** Published source main was directly read at 8bb11e350f66fc84807a8127f22c6ea5261c9fd1 (2026-09-21). README still reports R4.1 and the prior record R5 IN_PROGRESS; these are historical. BMAX-B6 current identity bmax-b6\\megal verified 2026-10-05 00:14 CEST. C:\\Users\\megal\\source\\neowulf-hellfire-20261005 contains Quinto-Black-CT-5.1-verified.zip (6025286 bytes, modified 00:11:38). New deck source/build completion has not yet been observed. A previous assistant report of initialized development is not completion evidence.
+**REQUIRED_COVERAGE:** Main player with vinyl; equalizer; three distinct oscillator/analysis decks; oscilloscope; virtualizer; TV visualization; analog VU L/R; digital VU L/R; horizontal VU; vertical VU; five Teufel Ultima MK II speaker modules plus subwoofer; separate Electribe 2 Synth, Electribe 2 Sampler and EMX-1 instrument decks. Every deck must move and dock independently. Latest explicit analog-VU request supersedes the old no-analog-needle restriction.
+**FUNCTIONAL_LIMIT:** Instrument pads, sequencer, synth/sample controls and sound require an actual audio engine/plugin, not painted controls or skin XML alone. Exact proprietary Korg engine parity is not claimed.
+**ACCEPTANCE:** Deterministic build; compiled scripts; archive/XML/asset/reference checks; real Winamp startup, audio/control and docking checks; independently playable instrument/audio tests; traceable source commits. Planned or static checks do not imply runtime acceptance.
+**DECISIONS:** Use the user-approved existing design direction; do not restart approval or model-selection questions. Keep original Winamp/Quinto controls, native audio data, compact single headers, no large transparent margins, fixed LP lighting and rotating vinyl. Apply current formal requester address from Agent-Governance/governance/preferences/neowulf.md.
+**NEXT:** Inspect the archive and actual working repositories/compiler; preserve existing state; create the next coherent source/build checkpoint.
+**PLANNED_FILES:** tools/hellfire build and validation scripts; skin XML/MAKI/assets; instrument plugin source; requirements/design documentation; this project record.
+**BLOCKERS / UNCERTAINTY:** Current source workspace and compiler paths not yet reconciled; Winamp process/output not yet observed; original 5.1 archive integrity and metadata to be independently checked.
+**DO_NOT_REPEAT:** No generated concept replacing the actual skin, no nonfunctional instrument mockup called functional, no duplicate titles, no disconnected speaker modules, no same-copy analysis decks, no rotating reflection layer, no DONE without runtime checks.
 
-**OBJECTIVE:** Rebuild/reshape the functional NEOWULF Winamp Modern skin so the supplied Black-Steel / Hell-Machine reference language is applied consistently to the real runtime components. Do not preserve broken R4 framing or duplicated headers just because they already exist.
+## Historical R5 requirements
 
-**OBSERVED R4/R4.2 DEFECTS TO REMOVE:**
-- Transparent/empty bands between stacked decks caused by oversized container/layout/background geometry.
-- Deck 1 can render no visible signal.
-- Decks 2 and 3 are too visually similar/pixelated.
-- Generated deck header frame is too tall and duplicates the component title.
-- Titles such as WINAMP/NEOWULF or SPECTROSCOPE/SPECTROSCOPE overlap. Exactly one title is allowed.
-- Left/Right digital VU thermal gradient is reversed.
-- Loudspeaker windows/assets became disconnected from the usable skin.
-- Several old Quinto component frames still look low-detail/light-grey compared with the reference.
-- Existing R4 is not accepted as the target design.
-
-**REFERENCE / FUNCTIONAL GATES:**
-1. Preserve real Winamp Modern functionality and native audio data.
-2. Use Winamp source behavior, existing Quinto XML and runtime testing as reference; no visual guessing.
-3. One compact header/title per window, backend-configurable via a single component metadata/config source.
-4. No oversized transparent margins between components.
-5. Three distinct analysis decks:
-   - Deck 1: stereo oscilloscope, mode=2, channel=3.
-   - Deck 2: independent L/R oscilloscopes, mode=2, channels 1 and 2, visibly different rendering from Deck 1.
-   - Deck 3: spectrum/fire analyzer, mode=1 using frequency-domain data; not another oscillator copy.
-6. Digital VU L/R: fully black glass; brightest white/yellow energy at the baseline/bottom, grading upward through yellow/orange/red to dark red.
-7. Loudspeaker containers must be present in skin.xml/menu/config and use the tall mirrored MK-Ultra assets.
-8. LP physics from R3 remains mandatory: vinyl material rotates; platter/stylus/reflections remain fixed.
-9. Runtime assets are truecolor RGBA generated from supersampled masters; no paletted/16-bit-looking gradients.
-10. Validate against the actual built WAL, not only isolated XML snippets.
-
-**CURRENT / NEXT:**
-- Inspect current extracted R4.1/R4.2 build and original Quinto include/menu structure on the self-hosted Linux machine.
-- Identify exact source of inter-deck transparent bands (container coordinates, layout coordinates, alpha background, or component PNG alpha).
-- Replace R4 deck framework rather than patching around it.
-- Restore speaker inclusion/menu wiring.
-- Rebuild the VU gradient and native analysis modes.
-- Build a clean R5 WAL, run validators plus ZIP/XML/reference checks, then commit the real source changes to GitHub.
-
-**DO_NOT_REPEAT:**
-- No concept-image generation instead of editing the skin.
-- No duplicate titles.
-- No giant frame/header margins.
-- No three near-identical analysis decks.
-- No hidden/disconnected speaker windows.
-- No analog VU needles.
-- No rotating LP lighting.
+The previous 2026-09-21 record remains in Git history (blob 3229c3bfb7543b3226dd10c027a4deaded682bc6). Preserve its native stereo waveform/spectrum modes and truecolor asset requirements; latest user scope above overrides older model/analog-VU requirements.
