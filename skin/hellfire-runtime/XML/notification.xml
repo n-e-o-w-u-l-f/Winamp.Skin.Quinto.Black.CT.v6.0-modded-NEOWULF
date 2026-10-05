@@ -1,0 +1,128 @@
+<!-- ***************************************** -->
+<!-- Filename: notification.xml                -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="notification.group.albumart">
+	<AlbumArt
+		x="0" y="0" w="72" h="72"
+		id="notification.albumart"
+		notfoundimage="notification.not.found.image.small"
+		stretched="1"/>
+	<Layer
+		x="0" y="0" w="72" h="72"
+		id="notification.layer.webcover"
+		image="notification.webcover.small"
+		visible="0"
+		stretched="1"/>
+</groupdef>
+<groupdef id="notification.group.songinfo">
+	<Text
+		x="10" y="0" w="140" h="16"
+		id="notification.text.info.playlist.entry"
+		align="left"
+		bold="1"
+		color="color.notification.songinfo"
+		font="Verdana"
+		fontsize="14"
+		ghost="1"
+		text="-- no Info --"/>
+	<Text
+		x="70" y="0" w="-70" h="16" relatw="1"
+		id="notification.text.info.next.track"
+		align="right"
+		bold="1"
+		color="color.notification.songinfo"
+		font="Verdana"
+		fontsize="14"
+		ghost="1"
+		text="-- no Track --"/>
+	<Text
+		x="0" y="15" w="0" h="20" relatw="1"
+		id="notification.text.info.title"
+		align="center"
+		bold="1"
+		color="color.notification.title"
+		font="Verdana"
+		fontsize="20"
+		ghost="1"
+		text="-- no Title --"/>
+	<Text
+		x="0" y="38" w="0" h="16" relatw="1"
+		id="notification.text.info.artist"
+		align="center"
+		bold="1"
+		color="color.notification.songinfo"
+		font="Verdana"
+		fontsize="16"
+		ghost="1"
+		text="-- no Artist --"/>
+	<Text
+		x="0" y="56" w="0" h="16" relatw="1"
+		id="notification.text.info.album"
+		align="center"
+		bold="1"
+		color="color.notification.songinfo"
+		font="Verdana"
+		fontsize="16"
+		ghost="1"
+		text="-- no Album --"/>
+</groupdef>
+<groupdef id="notification.group.main">
+	<Grid
+		id="notification.grid"
+	topleft    ="notification.grid.top.left"
+	top        ="notification.grid.top"
+	topright   ="notification.grid.top.right"
+	left       ="notification.grid.left"
+	middle     ="notification.grid.middle"
+	right      ="notification.grid.right"
+	bottomleft ="notification.grid.bottom.left"
+	bottom     ="notification.grid.bottom"
+	bottomright="notification.grid.bottom.right"
+		fitparent="1"
+		ghost="1"/>
+	<Group
+		x="24" y="14" w="72" h="72" relatw="1" relath="1"
+		id="notification.group.albumart"/>
+	<Group
+		x="96" y="12" w="-120" h="79" relatw="1"
+		id="notification.group.songinfo"/> <!-- w = grid left + grid right + album=24+24+72=120 -->
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="100" default_h="100"
+	default_visible="0"
+	dynamic="1"
+	id="notification"
+	name="Notification"
+	nofocusapponclose="1"
+	nomenu="1"> <!-- nofocusapponclose="0" causes main window to get focus (and apears on desktop if minimized) after notifier hides -->
+	<Layout
+		x="100" y="100" w="100" h="100"
+		id="normal"
+		desktopalpha="1"
+		move="0"
+		noactivation="1"
+		nodock="1"
+		noparent="1"
+		ontop="1">
+		<Group
+			fitparent="1"
+			id="notification.group.main"/>
+		<Text
+			x="24" y="39" w="-48" h="18" relatw="1"
+			id="notification.text.info.pause.end"
+			align="center"
+			bold="1"
+			color="color.notification.title"
+			font="Verdana"
+			fontsize="18"
+			ghost="1"
+			text="-- no Title --"
+			visible="0"/>
+	</Layout>
+</Container>
+<script
+	file="SCRIPTS\notification.maki"/>

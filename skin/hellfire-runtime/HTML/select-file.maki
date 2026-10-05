@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- http://forums.winamp.com/showthread.php?s=5e77f0777e37d19a822347fa45b6aa44&threadid=240514" -->
+		<!-- "Allowing users to select a file through a File Open dialog" made by rohan_pwln in March 2006 -->
+		<!-- This file was updated using https://validator.w3.org/ in November 2025 -->
+		<meta charset="UTF-8">
+		<title>Select file through Open Dialog Box</title>
+		<script>
+			function checkFile()
+			{
+				var name = document.getElementById('select-file').value;
+				document.location.replace("replace-name.maki?add={__" + name);
+			}
+			function load()
+			{
+				document.getElementById('select-file').click();
+			}
+		</script>
+	</head>
+	<body onload="load()">
+		<input type="file" id="select-file" onchange="checkFile()">
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<!-- ***************************************** -->
+<!-- Filename: compact-cassette.xml            -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="cc.group.main">
+	<Layer
+		x="0" y="0"
+		id="cc.layer.paper"
+		image="cc.paper"/>
+	<Layer
+		x="0" y="88"
+		id="cc.layer.light"
+		image="cc.light"/>
+	<!-- LEFT -->
+	<Layer
+		x="25" y="27"
+		id="cc.layer.reel.left"
+		image="cc.reel31"/>
+	<Layer
+		x="27" y="29"
+		id="cc.layer.tape.left"
+		image="cc.tape.left31"/>
+	<Layer
+		x="52" y="54"
+		id="cc.layer.wheel.left"
+		image="cc.wheel"/>
+	<!-- RIGHT -->
+	<Layer
+		x="191" y="27"
+		id="cc.layer.reel.right"
+		image="cc.reel1"/>
+	<Layer
+		x="193" y="29"
+		id="cc.layer.tape.right"
+		image="cc.tape.right1"/>
+	<Layer
+		x="218" y="54"
+		id="cc.layer.wheel.right"
+		image="cc.wheel"/>
+	<Layer
+		x="0" y="0"
+		id="cc.layer.front"
+		image="cc.front"/>
+	<Layer
+		x="0" y="45"
+		id="cc.layer.sticker"
+		image="cc.sticker"/>
+	<Layer
+		fitparent="1"
+		id="cc.layer.context.menu"/> <!-- area for component's own context menu -->
+	<!-- BUTTON "CLOSE" BIG -->
+	<Button
+		x="422" y="10"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close Compact Cassette"/>
+	<script
+		file="SCRIPTS\compact-cassette.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="460" default_h="281"
+	default_visible="0"
+	id="compact.cassette"
+	name="Compact Cassette"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="460" h="281"
+		id="normal"
+		alphabackground="cc.background.alpha">
+		<Group
+			fitparent="1"
+			id="cc.group.main"/>
+	</Layout>
+</Container>

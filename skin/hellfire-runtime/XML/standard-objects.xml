@@ -1,0 +1,470 @@
+<!-- ***************************************** -->
+<!-- Filename: standard-objects.xml            -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="group.button.playback">
+	<!-- do not remove width and height because we use setXmlParam -->
+	<Group
+		x="0" y="9" w="311" h="24"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "PREV" - image changeable via button-color.m script -->
+	<Button
+		x="2" y="11" w="40" h="19"
+		id="button.prev"
+		action="prev"
+		tooltip="Previous "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "PLAY" - image changeable via button-color.m script -->
+	<Button
+		x="44" y="11" w="40" h="19"
+		id="button.play"
+		action="play"
+		tooltip="Play/Restart "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "PAUSE" - image changeable via button-color.m script -->
+	<Button
+		x="86" y="11" w="40" h="19"
+		id="button.pause"
+		action="pause"
+		tooltip="Pause/Unpause "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "STOP" - image changeable via button-color.m script -->
+	<Button
+		x="128" y="11" w="40" h="19"
+		id="button.stop"
+		action="stop"
+		tooltip="Stop "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "NEXT" - image changeable via button-color.m script -->
+	<Button
+		x="170" y="11" w="40" h="19"
+		id="button.next"
+		action="next"
+		tooltip="Next "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "EJECT" - image changeable via button-color.m script -->
+	<Button
+		x="212" y="11" w="40" h="19"
+		id="button.eject"
+		action="eject"
+		tooltip="Open a File "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "MUTE" - image changeable via button-color.m script -->
+	<Button
+		x="254" y="11" w="54" h="19"
+		id="button.mute"
+		tooltip="Mute "/> <!-- do not translate tooltip -->
+	<!-- BUTTON LED "MUTE" (ghost) -->
+	<Layer
+		x="311" y="6"
+		image="led.background.blue"/>
+	<Button
+		x="311" y="6"
+		id="button.led.mute"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<Status
+		x="24" y="1" w="80" h="40"
+		id="status.play"
+		playBitmap="status.play"
+		ghost="1"/> <!-- keep w and h -->
+	<Status
+		x="66" y="1" w="80" h="40"
+		id="status.pause"
+		pauseBitmap="status.pause"
+		ghost="1"/> <!-- keep w and h -->
+	<Status
+		x="108" y="1" w="80" h="40"
+		id="status.stop"
+		stopBitmap="status.stop"
+		ghost="1"/> <!-- keep w and h -->
+</groupdef>
+<groupdef id="group.display.bottom" inherit_group="wasabi.objectframe.group">
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="2" y="2" w="95" h="26"
+		id="layer.display.bottom.background"
+		image="display.background"/>
+	<Layer
+		x="2" y="2" w="95" h="26"
+		id="layer.display.bottom.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="2" y="2" w="95" h="26"
+		id="layer.display.shadow"
+		image="display.shadow"/>
+	<Text
+		x="0" y="5" w="0" h="19" relatw="1"
+		id="text.display.bottom.time"
+		align="center"
+		color="color.display.info"
+		font="Verdana"
+		fontsize="19"/> <!-- with w="0" the text can be aligned in the middle -->
+	<!-- OVERLAY - FRAME -->
+	<Layer
+		x="2" y="2" w="95" h="26"
+		id="layer.display.bottom.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="2" y="2"
+		id="layer.display.bottom.frame.left"
+		image="display.big.frame.left"/>
+	<Layer
+		x="32" y="2" w="35"
+		id="layer.display.bottom.frame.center"
+		image="display.big.frame.center"/>
+	<Layer
+		x="67" y="2"
+		id="layer.display.bottom.frame.right"
+		image="display.big.frame.right"/>
+</groupdef>
+<groupdef id="group.frame.noframe">
+	<Layer
+		x="0" y="0"
+		id="layer.noframe.top.left"
+		image="noframe.top.left"/>
+	<Layer
+		x="48" y="0" w="-96" relatw="1"
+		id="layer.noframe.top"
+		image="noframe.top"/>
+	<Layer
+		x="-48" y="0" relatx="1"
+		id="layer.noframe.top.right"
+		image="noframe.top.right"/>
+	<Layer
+		x="0" y="27" h="-30" relath="1"
+		id="layer.noframe.left"
+		image="noframe.left"
+		resize="left"/> <!-- height of left frame: y-value + height of noframe.bottom.left: -(27+3) -->
+	<Layer
+		x="-1" y="27" h="-30" relatx="1" relath="1"
+		id="layer.noframe.right"
+		image="noframe.right"
+		resize="right"/> <!-- height of right frame: y-value + height of noframe.bottom.right: -(27+3) -->
+	<Layer
+		x="0" y="-3" relaty="1"
+		id="layer.noframe.bottom.left"
+		image="noframe.bottom.left"
+		resize="bottomleft"/>
+	<Layer
+		x="1" y="-1" w="-2" relaty="1" relatw="1"
+		id="layer.noframe.bottom"
+		image="noframe.bottom"
+		resize="bottom"/>
+	<Layer
+		x="-1" y="-3" relatx="1" relaty="1"
+		id="layer.noframe.bottom.right"
+		image="noframe.bottom.right"
+		resize="bottomright"/>
+	<Text
+		x="0" y="5" w="0" h="15" relatw="1"
+		id="text.title.bar"
+		align="center"
+		antialias="1"
+		bold="1"
+		color="color.component.name"
+		font="Verdana"
+		fontsize="15"
+		forceuppercase="1"
+		ghost="1"
+		text=":componentname"/> <!-- w="0" means text is as wide as the top frame and aligned in the middle -->
+	<button:sysmenu
+		x="30" y="6"
+		id="button.sysmenu"/>
+	<button:minimize
+		x="-76" y="6" relatx="1"
+		id="button.minimize"/>
+</groupdef>
+<groupdef id="group.frame.standardframe">
+	<!-- STANDARDFRAME FOR SKIN'S WINDOWS -->
+	<Layer
+		x="0" y="0"
+		id="layer.standardframe.top.left"
+		image="standardframe.top.left"/>
+	<Layer
+		x="48" y="0" w="-96" relatw="1"
+		id="layer.standardframe.top"
+		image="standardframe.top"/> <!-- width equals -(48+48) (frame top left + frame top right -->
+	<Layer
+		x="-48" y="0" relatx="1"
+		id="layer.standardframe.top.right"
+		image="standardframe.top.right"/>
+	<Layer
+		x="0" y="32" h="-116" relath="1"
+		id="layer.standardframe.left"
+		image="standardframe.left"
+		resize="left"/> <!-- height equals -(32+84) => h=-116 (frame top left + frame bottom left) -->
+	<Layer
+		x="-32" y="32" h="-116" relatx="1" relath="1"
+		id="layer.standardframe.right"
+		image="standardframe.right"
+		resize="right"/> <!-- height equals -(32+84) => h=-116 (frame top left + frame bottom left) -->
+	<Text
+		x="0" y="5" w="0" h="15" relatw="1"
+		id="text.title.bar"
+		align="center"
+		antialias="1"
+		bold="1"
+		color="color.component.name"
+		font="Verdana"
+		fontsize="15"
+		forceuppercase="1"
+		ghost="1"
+		text=":componentname"/> <!-- w="0" means text is as wide as the top frame and aligned in the middle -->
+	<button:sysmenu
+		x="30" y="6"
+		id="button.sysmenu"/>
+	<button:minimize
+		x="-76" y="6" relatx="1"
+		id="button.minimize"/>
+	<Layer
+		x="0" y="-84" relaty="1"
+		id="layer.standardframe.bottom.left"
+		image="standardframe.bottom.left"
+		resize="bottomleft"/>
+	<Layer
+		x="32" y="-32" w="-64" relaty="1" relatw="1"
+		id="layer.standardframe.bottom"
+		image="standardframe.bottom"
+		resize="bottom"/> <!-- width equals -(31+31) (frame bottom left + frame bottom right) -->
+	<Layer
+		x="-32" y="-84" relatx="1" relaty="1"
+		id="layer.standardframe.bottom.right"
+		image="standardframe.bottom.right"
+		resize="bottomright"/>
+</groupdef>
+<groupdef id="group.playback">
+	<!-- BLUE AREA (stretchable) -->
+	<Layer
+		x="0" y="0" w="0" h="115" relatw="1"
+		id="layer.playback.blue.background"
+		image="filter.lightblue"
+		tile="1"/>
+	<Rect
+		x="0" y="0" w="1" h="115"
+		id="rect.playback.light.reflection.left"
+		color="color.filter.lightblue.left.top"/>
+	<Rect
+		x="0" y="0" w="-1" h="1" relatw="1"
+		id="rect.playback.light.reflection.top"
+		color="color.filter.lightblue.left.top"/>
+	<Rect
+		x="-1" y="0" w="1" h="115" relatx="1"
+		id="rect.playback.shadow.right"
+		color="color.filter.lightblue.right.bottom"/>
+	<Rect
+		x="1" y="-1" w="0" h="1" relaty="1" relatw="1"
+		id="rect.playback.shadow.bottom"
+		color="color.filter.lightblue.right.bottom"/>
+	<!-- SLIDER PROGRESS -->
+	<Group
+		x="11" y="-73" w="-22" h="31" relaty="1" relatw="1"
+		id="wasabi.objectframe.group"/>
+	<Layer
+		x="13" y="-71" relaty="1"
+		id="layer.slider.progress.background.left"
+		image="slider.progress.background.left"/>
+	<Layer
+		x="41" y="-71" w="-83" relaty="1" relatw="1"
+		id="layer.slider.progress.background.center"
+		image="slider.progress.background.center"/> <!-- w = -(2 * x) + 1 because objectframe is 2px on the left side and 3px on the right -->
+	<Layer
+		x="-42" y="-71" relatx="1" relaty="1"
+		id="layer.slider.progress.background.right"
+		image="slider.progress.background.right"/>
+	<ProgressGrid
+		x="41" y="-60" w="-82" h="4" relaty="1" relatw="1"
+		id="progress.grid"
+		middle="progress.grid"/>
+	<Slider
+		x="41" y="-65" w="-82" h="19" relaty="1" relatw="1"
+		id="slider.progress"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		action="seek"/>
+	<Slider
+		x="41" y="-65" w="-82" h="19" relaty="1" relatw="1"
+		id="slider.progress.ghost"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		action="seek"
+		tooltip="Seek "/> <!-- do not translate tooltip -->
+	<Group
+		x="11" y="-42" w="344" h="41" relaty="1"
+		id="group.button.playback"/>
+	<!-- SLIDER VOLUME -->
+	<Group
+		x="366" y="-33" w="145" h="24" relaty="1"
+		id="wasabi.objectframe.group"/>
+	<Layer
+		x="368" y="-31" relaty="1"
+		id="layer.volume.background.left"
+		image="volume.background.left"/>
+	<Layer
+		x="388" y="-31" w="100" relaty="1"
+		id="layer.volume.background.center"
+		image="volume.background.center"/>
+	<Layer
+		x="488" y="-31" relaty="1"
+		id="layer.volume.background.right"
+		image="volume.background.right"/>
+	<Layer
+		x="388" y="-23" w="100" h="4" relaty="1"
+		id="layer.bar.volume"
+		image="bar.volume"/>
+	<Slider
+		x="375" y="-27" w="127" h="16" relaty="1"
+		id="slider.volume"
+		thumb="slider.volume.thumb"
+		hoverThumb="slider.volume.thumb.hover"
+		downThumb="slider.volume.thumb.down"
+		action="volume"
+		tooltip="Volume "/> <!-- do not translate tooltip -->
+	<!-- NSTATESBUTTON LED "REPEAT" -->
+	<Layer
+		x="527" y="-43" relaty="1"
+		image="led.background.blue"/>
+	<NStatesButton
+		x="527" y="-43" relaty="1"
+		id="nstatesbutton.led.repeat"
+		autoelements="0"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Repeat"
+		cfgvals="0;1;-1"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"
+		nstates="3"/> <!-- do not remove autoelements="0" & ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<Layer
+		x="526" y="-17" relaty="1"
+		id="layer.label.repeat"
+		image="label.repeat"/>
+	<!-- TOGGLEBUTTON LED "SHUFFLE"  -->
+	<Layer
+		x="567" y="-43" relaty="1"
+		image="led.background.blue"/>
+	<ToggleButton
+		x="567" y="-43" relaty="1"
+		id="togglebutton.led.shuffle"
+		image="led.off"
+		activeImage="led.blue"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Shuffle"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<Layer
+		x="566" y="-16" relaty="1"
+		id="layer.label.shuffle"
+		image="label.shuffle"/>
+	<Group
+		x="-111" y="-37" w="100" h="31" relatx="1" relaty="1"
+		id="group.display.bottom"/>
+</groupdef>
+<groupdef id="group.power.indicator">
+	<Layer
+		x="0" y="0"
+		id="layer.power.label"
+		image="power.label"/>
+	<Layer
+		x="0" y="11"
+		id="layer.power.off"
+		image="power.off"/>
+	<Layer
+		x="0" y="11"
+		id="layer.power.on"
+		image="power.on"/>
+</groupdef>
+<groupdef id="group.xui.button.close" embed_xui="xui.button.close" xuitag="button:close">
+	<Button
+		id="xui.button.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		action="close"
+		inactiveAlpha="0"
+		tooltip="Close "/> <!-- do not translate tooltip -->
+</groupdef>
+<groupdef id="group.xui.button.minimize" embed_xui="xui.button.minimize" xuitag="button:minimize">
+	<Button
+		id="xui.button.minimize"
+		image="caption.minimize"
+		hoverImage="caption.minimize.hover"
+		downImage="caption.minimize.down"
+		action="minimize"
+		inactiveAlpha="0"
+		tooltip="Minimize Winamp "/> <!-- do not translate tooltip -->
+</groupdef>
+<groupdef id="group.xui.button.sysmenu" embed_xui="xui.button.sysmenu" xuitag="button:sysmenu">
+	<Button
+		id="xui.button.sysmenu"
+		image="caption.sysmenu"
+		hoverImage="caption.sysmenu.hover"
+		downImage="caption.sysmenu.down"
+		action="sysmenu"
+		inactiveAlpha="0"
+		tooltip="Show main menu"/>
+</groupdef>
+<groupdef id="group.xui.nstatesbutton.frame" embed_xui="xui.nstatesbutton.frame" xuitag="nstatesbutton:frame">
+	<!-- NSTATESBUTTON "FRAME" FOR ML, PE, VID, VIS -->
+	<NStatesButton
+		id="xui.nstatesbutton.frame"
+		image="nstatesbutton.frame"
+		hoverImage="nstatesbutton.frame.hover"
+		downImage="nstatesbutton.frame.down"
+		cfgvals="1;2;3"
+		nstates="3"
+		tooltip="Standard-Frame |Playback-Frame |No-Frame"/> <!-- nstatesbutton is a special togglebutton + remeber to use image0, image1, etc. -->
+</groupdef>
+<groupdef id="group.xui.text.field" inherit_group="wasabi.objectframe.group" embed_xui="xui.text.field" xuitag="text:field">
+	<Text
+		x="5" y="0" w="-10" h="0" relatw="1" relath="1"
+		id="xui.text.field"
+		align="center"
+		valign="center"
+		color="color.text.field"
+		font="Verdana"
+		fontsize="16"
+		text=""/>
+</groupdef>
+<groupdef id="group.xui.text.info" embed_xui="xui.text.info" xuitag="text:info">
+	<Text
+		x="0" y="0" w="0" h="7" relatw="1"
+		id="xui.text.info"
+		font="bitmapfont.text.info"/> <!-- charcters*9+4 (2px from left + 2px from right) -->
+</groupdef>
+<!-- the following group overwrites the default checkbox look from checkbox.xml file; do not change the id! -->
+<groupdef id="wasabi.checkbox.group">
+	<ToggleButton
+		x="0" y="0" w="120" h="15"
+		id="checkbox.toggle"
+		image="wasabi.button.checkbox"
+		activeImage="wasabi.button.checkbox.pressed"
+		rectrgn="1"/>
+</groupdef>
+<groupdef id="wasabi.standardframe.nostatusbar">
+	<!-- STANDARDFRAME FOR THIRD-PARTY COMPONENTS LIKE PLUG-INS OR "QUEUE MANAGER" -->
+	<Group
+		x="0" y="0" w="0" h="0" relatw="1" relath="1"
+		id="group.frame.standardframe"/>
+	<!-- BUTTON "CLOSE" -->
+	<Button
+		x="-48" y="6" relatx="1"
+		id="button.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		action="close"
+		inactiveAlpha="0"
+		tooltip="Close "/> <!-- do not translate tooltip -->
+	<script
+		file="SCRIPTS\standardframe.maki"
+		param="32|32|-64|-64|0|0|1|1"/>
+</groupdef>
+<!-- the following group overwrites the default font and fontsize from titlebox.xml file; do not change the id! -->
+<groupdef id="wasabi.titlebox.center.group">
+	<Text
+		x="0" y="-2" w="0" relatw="1"
+		id="titlebox.text"
+		bold="1"
+		color="color.cfg.text.window"
+		font="Verdana"
+		fontsize="16"/>
+</groupdef>

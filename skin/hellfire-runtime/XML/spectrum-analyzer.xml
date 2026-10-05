@@ -1,0 +1,205 @@
+<!-- ***************************************** -->
+<!-- Filename: spectrum-analyzer.xml           -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="sa.group.vis.classic"> <!-- keep it as group, we need it in script -->
+	<Layer
+		x="4" y="4" w="492" h="89"
+		id="sa.layer.vis.classic.background"
+		image="sa.vis.classic.background"
+		tile="1"/>
+	<Layer
+		x="8" y="9" w="484" h="75"
+		id="sa.layer.vis.classic.bars"
+		image="sa.vis.classic.bars"
+		tile="1"/>
+	<!-- VISUALIZER CLASSIC -->
+	<!-- do not change the width: changing the width will change the width of all columns -->
+	<Vis
+		x="8" y="9" w="486" h="75"
+		id="sa.vis.classic"
+		channel="3"
+		colorbandpeak="#969696"
+		colorband16  ="#ffffff"
+		colorband15  ="#ce2910"
+		colorband14  ="#d65a00"
+		colorband13  ="#d66600"
+		colorband12  ="#d67300"
+		colorband11  ="#c67b08"
+		colorband10  ="#dea518"
+		colorband9   ="#d6b521"
+		colorband8   ="#bdde29"
+		colorband7   ="#94de21"
+		colorband6   ="#29ce10"
+		colorband5   ="#32be10"
+		colorband4   ="#39b510"
+		colorband3   ="#319c08"
+		colorband2   ="#299400"
+		colorband1   ="#188408"/> <!-- channel = 1/2/3 left/right/stereo does not work - it is always stereo -->
+	<Layer
+		x="8" y="9" w="484" h="75"
+		id="sa.layer.vis.classic.grid"
+		image="sa.vis.classic.grid"
+		tile="1"/>
+	<Layer
+		x="8" y="9" w="1" h="75"
+		id="sa.layer.vis.classic.cover"
+		image="sa.vis.classic.cover"/> <!-- make all bars look equally wide -->
+</groupdef>
+<groupdef id="sa.group.vis.modern"> <!-- keep it as group, we need it in script -->
+	<Layer
+		x="4" y="4" w="492" h="89"
+		id="sa.layer.vis.modern.background"
+		image="sa.vis.modern.background"
+		tile="1"/>
+	<Layer
+		x="8" y="9" w="484" h="75"
+		id="sa.layer.vis.modern.bars"
+		image="sa.vis.modern.bars"
+		tile="1"/>
+	<!-- VISUALIZER MODERN -->
+	<!-- do not change the width: changing the width will change the width of all columns -->
+	<Vis
+		x="8" y="9" w="486" h="75"
+		id="sa.vis.modern"
+		channel="3"
+		colorallbands="#808080"
+		gammagroup="gamma.miscellaneous.spectrum.analyzer"/> <!-- channel = 1/2/3 (left/right/stereo does not work - it is always stereo -->
+	<Layer
+		x="8" y="9" w="484" h="75"
+		id="sa.layer.vis.modern.grid"
+		image="sa.vis.modern.grid"
+		tile="1"/>
+	<Layer
+		x="8" y="9" w="1" h="75"
+		id="sa.layer.vis.modern.cover"
+		image="sa.vis.modern.cover"/> <!-- make all bars look equally wide -->
+</groupdef>
+<groupdef id="sa.group.main">
+	<!-- COMPONENT BASE: do not remove width and height because we use setXmlParam() -->
+	<Layer
+		x="0" y="0" w="638" h="208"
+		id="sa.layer.base"/>
+	<!-- COMPONENT BACKGROUND -->
+	<Layer
+		x="54" y="14" w="530" h="170"
+		id="sa.layer.component.filter.black"
+		image="filter.black"
+		tile="1"/>
+	<Layer
+		x="0" y="0" w="638" h="208"
+		id="sa.layer.component"
+		image="sa.component"/>
+	<!-- COMPONENT LABEL TOP -->
+	<Layer
+		x="236" y="20"
+		id="sa.layer.label"
+		image="sa.label"/>
+	<!-- COMPONENT LABEL BOTTOM -->
+	<Layer
+		x="209" y="141"
+		id="sa.layer.label.bottom"
+		image="sa.label.bottom"/>
+	<!-- SIDE PANEL: do not remove width and height because we use setXmlParam -->
+	<Layer
+		x="39" y="10" w="20" h="178"
+		id="sa.layer.side.panel.width.thin.left"/>
+	<Layer
+		x="579" y="10" w="20" h="178"
+		id="sa.layer.side.panel.width.thin.right"/>
+	<Layer
+		x="19" y="10" w="40" h="178"
+		id="sa.layer.side.panel.width.wide.left"/>
+	<Layer
+		x="579" y="10" w="40" h="178"
+		id="sa.layer.side.panel.width.wide.right"/>
+	<!-- SIDE PANEL LIGHT REFLECTION -->
+	<Layer
+		x="39" y="-105" relaty="1"
+		id="sa.layer.side.panel.light.reflection.thin.left"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="sa.layer.side.panel.light.reflection.thin.right"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="19" y="-105" relaty="1"
+		id="sa.layer.side.panel.light.reflection.wide.left"
+		image="side.panel.light.reflection.wide"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="sa.layer.side.panel.light.reflection.wide.right"
+		image="side.panel.light.reflection.wide"/>
+	<!-- SIDE PANEL SHADOW -->
+	<Layer
+		x="59" y="14" w="10" h="170"
+		id="sa.layer.side.panel.shadow.left"
+		image="side.panel.shadow.left"/>
+	<Layer
+		x="569" y="14" w="10" h="170"
+		id="sa.layer.side.panel.shadow.right"
+		image="side.panel.shadow.right"/>
+	<Group
+		x="71" y="33" w="492" h="89"
+		id="sa.group.vis.classic"/>
+	<Group
+		x="71" y="33" w="492" h="89"
+		id="sa.group.vis.modern"/>
+	<!-- LIGHT - OVERLAY - FRAME - LIGHT REFLECTION -->
+	<Layer
+		x="75" y="37" w="488" h="37"
+		id="sa.layer.display.light"
+		image="display.light.white"
+		tile="1"/>
+	<Layer
+		x="75" y="37" w="488" h="85"
+		id="sa.layer.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="71" y="33"
+		id="sa.layer.display.frame"
+		image="sa.display.frame"/>
+	<Layer
+		x="75" y="37" w="488" h="85"
+		id="sa.layer.light.reflection"
+		image="sa.light.reflection"/>
+	<Button
+		x="462" y="141"
+		id="sa.button.menu"
+		image="sa.menu"
+		hoverImage="sa.menu.hover"
+		downImage="sa.menu.down"
+		tooltip="Show additional options"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-108" y="17" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Spectrum Analyzer"/>
+	<!-- POWER INDICATOR -->
+	<Group
+		x="82" y="-70" relaty="1"
+		id="group.power.indicator"/>
+	<script
+		file="SCRIPTS\spectrum-analyzer.maki"/>
+<Layer id="nw.pulse" fitparent="1" image="nw.sa-pulse" ghost="1"/><script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="638" default_h="208"
+	default_visible="0"
+	id="spectrum.analyzer"
+	name="Spectrum Analyzer"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="638" h="208"
+		id="normal"
+		alphabackground="sa.background.alpha">
+		<Group
+			fitparent="1"
+			id="sa.group.main"/>
+	</Layout>
+</Container>

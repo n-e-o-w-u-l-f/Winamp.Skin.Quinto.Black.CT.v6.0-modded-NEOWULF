@@ -1,0 +1,135 @@
+<!-- ***************************************** -->
+<!-- Filename: media-library.xml               -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="ml.group.display" inherit_group="wasabi.objectframe.group">
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="ml.layer.display.background"
+		image="display.background"/> <!-- w="-5": less 2px on the left and 3px on the right side -->
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="ml.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="ml.layer.display.shadow"
+		image="display.shadow"/>
+	<Text
+		x="16" y="3" w="-32" h="22" relatw="1"
+		id="ml.text.songticker"
+		align="center"
+		altfont="Verdana"
+		color="color.display.info"
+		display="SONGNAME"
+		font="bitmapfont.songticker"
+		fontsize="24"
+		visible="0"/> <!-- do not delete color and fontsize: needed for altfont; TRACKINFO & TRACKMENU do not work on ML -->
+	<SongTicker
+		x="16" y="3" w="-32" h="22" relatw="1"
+		id="ml.songticker"
+		align="center"
+		altfont="Verdana"
+		color="color.display.info"
+		display="SONGNAME"
+		font="bitmapfont.songticker"
+		fontsize="24"
+		visible="0"/> <!-- do not delete color and fontsize: needed for altfont; TRACKINFO & TRACKMENU do not work on ML -->
+	<Text
+		x="16" y="3" w="-32" h="22" relatw="1"
+		id="ml.text.infoticker"
+		align="center"
+		font="bitmapfont.songticker"
+		ghost="1"
+		altfont="Verdana"
+		color="color.display.info"
+		fontsize="24"/> <!-- do not delete color and fontsize: needed for altfont -->
+	<!-- LIGHT - OVERLAY - FRAME -->
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="ml.layer.display.light"
+		image="display.light.white.small"
+		tile="1"/>
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="ml.layer.display.overlay"
+		image="display.overlay"
+		ghost="1"/>
+	<Layer
+		x="2" y="2"
+		id="ml.layer.display.frame.left"
+		image="display.big.frame.left"
+		ghost="1"/> <!-- x="0+2" (objectframe) -->
+	<Layer
+		x="32" y="2" w="-65" relatw="1"
+		id="ml.layer.display.frame.center"
+		image="display.big.frame.center"
+		ghost="1"/>
+	<Layer
+		x="-33" y="2" relatx="1"
+		id="ml.layer.display.frame.right"
+		image="display.big.frame.right"
+		ghost="1"/> <!-- x="-30-3" (width frame right and objectframe right side -->
+</groupdef>
+<groupdef id="ml.group.frame.playback" inherit_group="group.frame.standardframe">
+	<Group
+		x="32" y="-146" w="-64" h="114" relaty="1" relatw="1"
+		id="group.playback"/>
+	<Group
+		x="43" y="-140" w="-86" h="31" relaty="1" relatw="1"
+		id="ml.group.display"/>
+</groupdef>
+<groupdef id="ml.group.component">
+	<Component
+		fitparent="1"
+		param="guid:{6b0edf80-c9a5-11d3-9f26-00c04f39ffc6}"/>
+</groupdef>
+<groupdef id="ml.group.main">
+	<Group
+		fitparent="1"
+		id="group.frame.noframe"/>
+	<Group
+		fitparent="1"
+		id="group.frame.standardframe"/>
+	<Group
+		fitparent="1"
+		id="ml.group.frame.playback"/> <!-- three different frames: NoFrame, Standard, Playback -->
+	<Group
+		fitparent="1"
+		id="ml.group.component"/> <!-- x, y, w, h values are assigned via window-frame.m script -->
+	<!-- NSTATESBUTTON "FRAME" -->
+	<nstatesbutton:frame
+		x="-104" y="6" relatx="1"
+		id="nstatesbutton.frame"
+		inactiveAlpha="0"/> <!-- keep inactiveAlpha="0" in here and not in standard-objects.xml -->
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Media Library"/>
+	<script
+		file="SCRIPTS\media-library.maki"/>
+</groupdef>
+<Container
+	component="guid:{6b0edf80-c9a5-11d3-9f26-00c04f39ffc6}"
+	default_x="100" default_y="100"	default_w="530" default_h="287"
+	default_visible="0"
+	dynamic="1"
+	id="media.library"
+	name="Media Library">
+	<Layout
+		x="100" y="100"	w="530" h="287" relatw="1" relath="1" minimum_w="530" minimum_h="287"
+		id="normal"
+		background="base.texture"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="ml.group.main"/>
+	</Layout>
+</Container>

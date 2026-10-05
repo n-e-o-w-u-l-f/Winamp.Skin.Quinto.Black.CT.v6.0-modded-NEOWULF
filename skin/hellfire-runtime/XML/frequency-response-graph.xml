@@ -1,0 +1,272 @@
+<!-- ***************************************** -->
+<!-- Filename: frequency-response-graph.xml    -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="frg.group.main">
+	<!-- COMPONENT BASE: do not remove width and height because we use setXmlParam() -->
+	<Layer
+		x="0" y="0" w="638" h="226"
+		id="frg.layer.base"/>
+	<!-- COMPONENT BACKGROUND -->
+	<Layer
+		x="54" y="14" w="530" h="188"
+		id="frg.layer.component.filter.black"
+		image="filter.black"
+		tile="1"/>
+	<Layer
+		x="0" y="0" w="638" h="226"
+		id="frg.layer.component"
+		image="frg.component"/>
+	<!-- COMPONENT LABEL -->
+	<Layer
+		x="183" y="20"
+		id="frg.layer.label"
+		image="frg.label"/>
+	<!-- SIDE PANEL: do not remove width and height because we use setXmlParam -->
+	<Layer
+		x="39" y="10" w="20" h="196"
+		id="frg.layer.side.panel.width.thin.left"/>
+	<Layer
+		x="579" y="10" w="20" h="196"
+		id="frg.layer.side.panel.width.thin.right"/>
+	<Layer
+		x="19" y="10" w="40" h="196"
+		id="frg.layer.side.panel.width.wide.left"/>
+	<Layer
+		x="579" y="10" w="40" h="196"
+		id="frg.layer.side.panel.width.wide.right"/>
+	<!-- SIDE PANEL LIGHT REFLECTION -->
+	<Layer
+		x="39" y="-105" relaty="1"
+		id="frg.layer.side.panel.light.reflection.thin.left"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="frg.layer.side.panel.light.reflection.thin.right"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="19" y="-105" relaty="1"
+		id="frg.layer.side.panel.light.reflection.wide.left"
+		image="side.panel.light.reflection.wide"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="frg.layer.side.panel.light.reflection.wide.right"
+		image="side.panel.light.reflection.wide"/>
+	<!-- SIDE PANEL SHADOW -->
+	<Layer
+		x="59" y="14" w="10" h="188"
+		id="frg.layer.side.panel.shadow.left"
+		image="side.panel.shadow.left"/>
+	<Layer
+		x="569" y="14" w="10" h="188"
+		id="frg.layer.side.panel.shadow.right"
+		image="side.panel.shadow.right"/>
+	<EQVis
+		x="91" y="43" w="409" h="54"
+		id="eqvis"
+		colortop="#00ff00"
+		colormiddle="#ffff00"
+		colorbottom="#ff0000"
+		colorpreamp="#0000ff"/>
+	<Layer
+		x="71" y="102"
+		id="frg.layer.frequency.mode"
+		image="frg.frequency.mode.iso"/> <!-- ISO or Winamp - image changeable via equalizer.m script -->
+	<!-- LIGHT - OVERLAY - FRAME - LIGHT REFLECTION -->
+	<Layer
+		x="75" y="37" w="488" h="37"
+		id="frg.layer.display.light"
+		image="display.light.white"
+		tile="1"/>
+	<Layer
+		x="75" y="37" w="488" h="75"
+		id="frg.layer.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="71" y="33"
+		id="frg.layer.display.frame"
+		image="frg.display.frame"/>
+	<Layer
+		x="75" y="37"
+		id="frg.layer.light.reflection"
+		image="frg.light.reflection"/>
+	<Slider
+		x="168" y="124" w="128" h="12"
+		id="slider.balance"
+		action="pan"
+		visible="0"/>
+	<AnimatedLayer
+		x="175" y="124"
+		id="frg.animatedlayer.knob.balance"
+		image="frg.knob.animation"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="54"
+		ghost="0"
+		move="0"
+		tooltip="Balance "/> <!-- do not translate tooltip -->
+	<AnimatedLayer
+		x="175" y="122"
+		id="frg.animatedlayer.knob.balance.scale"
+		image="frg.knob.scale.animation"
+		frameheight="54"
+		autoplay="0"
+		autoreplay="0"
+		ghost="1"
+		move="0"/>
+	<AnimatedLayer
+		x="274" y="124"
+		id="frg.animatedlayer.knob.bass"
+		image="frg.knob.animation"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="54"
+		ghost="0"
+		move="0"
+		tooltip="Bass "/> <!-- do not translate tooltip -->
+	<AnimatedLayer
+		x="274" y="122"
+		id="frg.animatedlayer.knob.bass.scale"
+		image="frg.knob.scale.animation"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="54"
+		ghost="1"
+		move="0"/>
+	<AnimatedLayer
+		x="352" y="124"
+		id="frg.animatedlayer.knob.treble"
+		image="frg.knob.animation"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="54"
+		ghost="0"
+		move="0"
+		tooltip="Treble "/> <!-- do not translate tooltip -->
+	<AnimatedLayer
+		x="352" y="122"
+		id="frg.animatedlayer.knob.treble.scale"
+		image="frg.knob.scale.animation"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="54"
+		ghost="1"
+		move="0"/>
+	<Group
+		x="437" y="126" w="119" h="26"
+		id="wasabi.objectframe.group"/>
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="439" y="128" w="114" h="21"
+		id="frg.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="439" y="128" w="114" h="21"
+		id="frg.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="439" y="128" w="114" h="21"
+		id="frg.layer.display.shadow"
+		image="display.shadow"/>
+	<Layer
+		x="449" y="135"
+		id="frg.layer.BASS"
+		image="frg.BASS"/>
+	<Text
+		x="497" y="135" w="50" h="7"
+		id="frg.text.bass.value"
+		align="right"
+		font="bitmapfont.data"/>
+	<!-- OVERLAY - FRAME (BASS) -->
+	<Layer
+		x="440" y="129" w="112" h="19"
+		id="frg.layer.bass.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="439" y="128"
+		id="frg.layer.display.frame.left"
+		image="display.small.frame.left"/>
+	<Layer
+		x="469" y="128" w="54"
+		id="frg.layer.display.frame.center"
+		image="display.small.frame.center"/>
+	<Layer
+		x="523" y="128"
+		id="frg.layer.display.frame.right"
+		image="display.small.frame.right"/>
+	<Group
+		x="437" y="158" w="119" h="26"
+		id="wasabi.objectframe.group"/>
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="439" y="160" w="114" h="21"
+		id="frg.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="439" y="160" w="114" h="21"
+		id="frg.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="439" y="160" w="114" h="21"
+		id="frg.layer.display.shadow"
+		image="display.shadow"/>
+	<Layer
+		x="449" y="167"
+		id="frg.layer.TREBLE"
+		image="frg.TREBLE"/>
+	<Text
+		x="497" y="167" w="50" h="7"
+		id="frg.text.treble.value"
+		align="right"
+		font="bitmapfont.data"/>
+	<!-- OVERLAY - FRAME (TREBLE) -->
+	<Layer
+		x="440" y="161" w="112" h="19"
+		id="frg.layer.treble.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="439" y="160"
+		id="frg.layer.display.frame.left"
+		image="display.small.frame.left"/>
+	<Layer
+		x="469" y="160" w="54"
+		id="frg.layer.display.frame.center"
+		image="display.small.frame.center"/>
+	<Layer
+		x="523" y="160"
+		id="frg.layer.display.frame.right"
+		image="display.small.frame.right"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-108" y="17" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Frequency Response Graph"/>
+	<!-- POWER INDICATOR -->
+	<Group
+		x="82" y="-70" relaty="1"
+		id="group.power.indicator"/>
+	<script
+		file="SCRIPTS\frequency-response-graph.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="638" default_h="226"
+	default_visible="0"
+	id="frequency.response.graph"
+	name="Frequency Response Graph"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="638" h="226"
+		id="normal"
+		alphabackground="frg.background.alpha">
+		<Group
+			fitparent="1"
+			id="frg.group.main"/>
+	</Layout>
+</Container>

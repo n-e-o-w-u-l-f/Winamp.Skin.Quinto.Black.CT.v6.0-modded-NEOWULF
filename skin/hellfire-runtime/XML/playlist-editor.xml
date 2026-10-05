@@ -1,0 +1,1161 @@
+<!-- ***************************************** -->
+<!-- Filename: playlist-editor.xml             -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="pe.group.albumart.cuelist">
+	<AlbumArt
+		fitparent="1"
+		id="pe.albumart"
+		notfoundimage="not.found.image"
+		stretched="0"/> <!-- in here we want to keep the ratio 1:1, not to stretch the image -->
+	<List
+		fitparent="1"
+		id="pe.list.cuelist"
+		background="pe.cuelist.background"
+		nocolheader="1"
+		tile="0"/> <!-- top-most-object -->
+</groupdef>
+<groupdef id="pe.group.buttons">
+	<!-- keep width and height for folowing buttons which change color (darkblue/lightblue) -->
+	<Group
+		x="0" y="3" w="496" h="24"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "ADD" - image changeable via button-color.m script -->
+	<Button
+		x="2" y="5" w="45" h="19"
+		id="pe.button.add"
+		action="PE_Add"
+		tooltip="Add files to playlist "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "REM" - image changeable via button-color.m script -->
+	<Button
+		x="49" y="5" w="72" h="19"
+		id="pe.button.remove"
+		action="PE_Rem"
+		tooltip="Remove files from playlist "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "SELECT" - image changeable via button-color.m script -->
+	<Button
+		x="123" y="5" w="72" h="19"
+		id="pe.button.select"
+		action="PE_Sel"
+		tooltip="Select files in playlist "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "MISC" - image changeable via button-color.m script -->
+	<Button
+		x="197" y="5" w="58" h="19"
+		id="pe.button.misc"
+		action="PE_Misc"
+		tooltip="Miscellaneous actions "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "MANAGE PLAYLIST" - image changeable via button-color.m script -->
+	<Button
+		x="257" y="5" w="153" h="19"
+		id="pe.button.manage.playlist"
+		action="PE_List"
+		tooltip="Manage playlist "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "OPTIONS" - image changeable via button-color.m script -->
+	<Button
+		x="412" y="5" w="81" h="19"
+		id="pe.button.options"
+		tooltip="Show additional features"/>
+	<Layer
+		x="417" y="5" w="81" h="19"
+		id="pe.layer.mousetrap.button.options"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<!-- BUTTON LED "OPTIONS" -->
+	<Layer
+		x="500" y="0"
+		image="led.background.blue"/>
+	<Button
+		x="500" y="0"
+		id="pe.button.led.options"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+</groupdef>
+<groupdef id="pe.group.PE.info.display" inherit_group="wasabi.objectframe.group">
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="2" y="2" w="171" h="26"
+		id="pe.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="2" y="2" w="171" h="26"
+		id="pe.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="2" y="2" w="171" h="26"
+		id="pe.layer.display.shadow"
+		image="display.shadow"/>
+	<Text
+		x="0" y="5" w="0" h="19" relatw="1"
+		id="pe.text.display.PE.info"
+		align="center"
+		color="color.display.info"
+		display="PE_Info"
+		font="Verdana"
+		fontsize="19"/> <!-- PE_Info's width is limited to 17 characters: 13:10:32/13:10:32 (example) -->
+	<!-- OVERLAY - FRAME -->
+	<Layer
+		x="2" y="2" w="171" h="26"
+		id="pe.layer.display.PE.info.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="2" y="2"
+		id="pe.layer.display.frame.left"
+		image="display.big.frame.left"/>
+	<Layer
+		x="32" y="2" w="111"
+		id="pe.layer.display.frame.center"
+		image="display.big.frame.center"/>
+	<Layer
+		x="143" y="2"
+		id="pe.layer.display.frame.right"
+		image="display.big.frame.right"/>
+</groupdef>
+<groupdef id="pe.group.options.auto.close">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="36" w="292"
+		text="CLOSE WINAMP AFTER CURRENT TRACK"/>
+	<!-- BUTTON "CLOSE WINAMP AFTER CURRENT TRACK" -->
+	<Button
+		x="345" y="25"
+		id="pe.button.auto.close.track"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Shut down Winamp after the current track is finished"/>
+	<Layer
+		x="348" y="28" w="24" h="24"
+		id="pe.layer.mousetrap.button.auto.close.track"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<text:info
+		x="20" y="71" w="317"
+		text="CLOSE WINAMP AFTER CURRENT PLAYLIST"/>
+	<!-- BUTTON "CLOSE WINAMP AFTER CURRENT PLAYLIST" -->
+	<Button
+		x="345" y="60"
+		id="pe.button.auto.close.playlist"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Shut down Winamp after the current playlist is finished"/>
+	<Layer
+		x="347" y="63" w="24" h="24"
+		id="pe.layer.mousetrap.button.auto.close.playlist"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<!-- ACTIVATE & CANCEL AREA -->
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="76" relatx="1"
+		text="ACTIVATE"/>
+	<!-- BUTTON "ACTIVATE" (OPTIONS: AUTO CLOSE) -->
+	<Button
+		x="-87" y="25" relatx="1"
+		id="pe.button.auto.close.activate"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Activate Auto Close"/>
+	<!-- BUTTON LED "ACTIVATE" (OPTIONS: AUTO CLOSE) -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.led.auto.close.activate"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<text:info
+		x="-170" y="71" w="58" relatx="1"
+		text="CANCEL"/>
+	<!-- BUTTON "CANCEL" (OPTIONS: AUTO CLOSE) -->
+	<Button
+		x="-87" y="60" relatx="1"
+		id="pe.button.auto.close.cancel"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Cancel Auto Close activation"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: AUTO CLOSE) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.auto.close.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Auto Close"/> <!-- keep the close button in here so the group will not cover it -->
+</groupdef>
+<groupdef id="pe.group.options.auto.play">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="36" w="292"
+		text="RESTORE LAST POSITION AT STARTUP"/>
+	<text:info
+		x="20" y="71" w="130"
+		text="LAST POSITION:"/>
+	<!-- TEXT FIELD: LAST POSITION -->
+	<text:field
+		x="162" y="62" w="95" h="25"
+		id="pe.text.auto.play.last.position"
+		text="-- no Time --"/>
+	<!-- ACTIVATE & CANCEL AREA -->
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="76" relatx="1"
+		text="ACTIVATE"/>
+	<!-- BUTTON "ACTIVATE" (OPTIONS: AUTO PLAY) -->
+	<Button
+		x="-87" y="25" relatx="1"
+		id="pe.button.auto.play.activate"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Activate Auto Play"/>
+	<!-- BUTTON LED "ACTIVATE" (OPTIONS: AUTO PLAY) -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.led.auto.play.activate"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<text:info
+		x="-170" y="71" w="58" relatx="1"
+		text="CANCEL"/>
+	<!-- BUTTON "CANCEL" (OPTIONS: AUTO PLAY) -->
+	<Button
+		x="-87" y="60" relatx="1"
+		id="pe.button.auto.play.cancel"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Cancel Auto Play activation"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: AUTO PLAY) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.auto.play.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Auto Play"/> <!-- keep the close button in here so the group will not cover it -->
+</groupdef>
+<groupdef id="pe.group.options.crossfader">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<Slider
+		x="0" y="0" w="1" h="1"
+		id="pe.slider.crossfader"
+		cfgattrib="{f1239f09-8cc6-4081-8519-c2ae99fcb14c};Crossfade time"
+		low="1"
+		high="20"
+		visible="0"/>
+	<text:info
+		x="20" y="36" w="121"
+		text="DECREASE TIME"/>
+	<!-- BUTTON "DECREASE" (OPTIONS: CROSSAFDER) -->
+	<Button
+		x="65" y="50"
+		id="pe.button.crossfader.decrease"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Decrease Crossfader time "/> <!-- do not translate tooltip -->
+	<Layer
+		x="72" y="83"
+		image="pe.minus"/>
+	<!-- TEXT FIELD: CROSSFADER TIME -->
+	<text:field
+		x="150" y="52" w="95" h="25"
+		id="pe.text.crossfader.time"
+		text="-- no Time --"/>
+	<text:info
+		x="270" y="36" w="121"
+		text="INCREASE TIME"/>
+	<!-- BUTTON "INCREASE" (OPTIONS: CROSSAFDER) -->
+	<Button
+		x="315" y="50"
+		id="pe.button.crossfader.increase"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Increase Crossfader time "/> <!-- do not translate tooltip -->
+	<Layer
+		x="322" y="83"
+		image="pe.plus"/>
+	<!-- ACTIVATE & CANCEL AREA -->
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="76" relatx="1"
+		text="ACTIVATE"/>
+	<!-- TOGGLEBUTTON "ACTIVATE" (OPTIONS: CROSSAFDER) -->
+	<ToggleButton
+		x="-87" y="25" relatx="1"
+		id="pe.togglebutton.crossfader.activate"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		action="toggle_crossfader"
+		cfgattrib="{fc3eaf78-c66e-4ed2-a0aa-1494dfcc13ff};Enable crossfading"
+		tooltip="Activate/Deactivate Crossfader"/>
+	<!-- TOGGLEBUTTON LED "ACTIVATE" (OPTIONS: CROSSAFDER) -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<ToggleButton
+		x="-57" y="25" relatx="1"
+		id="pe.togglebutton.led.crossfader.activate"
+		image="led.off"
+		activeImage="led.blue"
+		action="toggle_crossfader"
+		cfgattrib="{fc3eaf78-c66e-4ed2-a0aa-1494dfcc13ff};Enable crossfading"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- BUTTON "CLOSE" (OPTIONS: CROSSFADER) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.crossfader.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Crossfader"/> <!-- keep the close button in here so the group will not cover it -->
+</groupdef>
+<groupdef id="pe.group.options.cue.player">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="28" w="58"
+		text="REWIND"/>
+	<Layer
+		x="40" y="83"
+		image="pe.rewind"/>
+	<!-- BUTTON "REWIND 10 SECONDS" (OPTIONS: CUE PLAYER) -->
+	<Button
+		x="34" y="44"
+		id="pe.button.cue.player.rewind"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Rewind 10 seconds back"/>
+	<Layer
+		x="71" y="59" w="56" h="1"
+		image="wasabi.groupbox.top"/>
+	<text:info
+		x="129" y="28" w="40"
+		text="PREV"/>
+	<Layer
+		x="141" y="83"
+		image="pe.prev"/>
+	<!-- BUTTON "PREV" (OPTIONS: CUE PLAYER) -->
+	<Button
+		x="134" y="44"
+		id="pe.button.cue.player.prev"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Play previous track from the cuelist"/>
+	<text:info
+		x="229" y="28" w="40"
+		text="NEXT"/>
+	<!-- BUTTON "NEXT" (OPTIONS: CUE PLAYER) -->
+	<Button
+		x="234" y="44"
+		id="pe.button.cue.player.next"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Play next track from the cuelist"/>
+	<Layer
+		x="241" y="83"
+		image="pe.next"/>
+	<Layer
+		x="271" y="59" w="56" h="1"
+		image="wasabi.groupbox.top"/>
+	<text:info
+		x="315" y="28" w="67"
+		text="FORWARD"/>
+	<!-- BUTTON "FORWARD 10 SECONDS" (OPTIONS: CUE PLAYER) -->
+	<Button
+		x="334" y="44"
+		id="pe.button.cue.player.forward"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Jump 10 seconds forward"/>
+	<Layer
+		x="342" y="83"
+		image="pe.forward"/>
+	<Layer
+		x="-109" y="18" w="1"  h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-79" y="28" w="40" relatx="1"
+		text="INFO"/>
+	<!-- BUTTON "INFO" (OPTIONS: CUE PLAYER) -->
+	<Button
+	    x="-74" y="44" relatx="1"
+		id="pe.button.cue.player.info"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Show more information|about playing a CUE file format"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: CUE PLAYER) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.cue.player.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close CUE Player"/>
+</groupdef>
+<groupdef id="pe.group.options.file.info">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+
+	<Text x="20" y="16" w="80" id="pe.text.label.artist"   bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Artist:"/>
+	<Text x="20" y="36" w="80" id="pe.text.label.title"    bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Title:"/>
+	<Text x="20" y="56" w="80" id="pe.text.label.album"    bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Album:"/>
+	<Text x="20" y="56" w="80" id="pe.text.label.homepage" bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Homepage:"/>
+	<Text x="20" y="76" w="80" id="pe.text.label.genre"    bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Genre:"/>
+
+	<Text x="105" y="16" w="350" id="pe.text.info.artist"   bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="105" y="36" w="350" id="pe.text.info.title"    bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="105" y="56" w="350" id="pe.text.info.album"    bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="105" y="56" w="350" id="pe.text.info.homepage" bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="105" y="76" w="350" id="pe.text.info.genre"    bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+
+	<Text x="460" y="16" w="80" id="pe.text.label.year"     bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Year:"/>
+	<Text x="460" y="36" w="80" id="pe.text.label.comment"  bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Comment:"/>
+	<Text x="460" y="56" w="80" id="pe.text.label.bitrate"  bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Bitrate:"/>
+	<Text x="460" y="76" w="80" id="pe.text.label.duration" bold="1" color="color.text.field" font="Verdana" fontsize="16" text="Duration:"/>
+
+	<Text x="545" y="16" w="160" id="pe.text.info.year"     bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="545" y="36" w="160" id="pe.text.info.comment"  bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="545" y="56" w="160" id="pe.text.info.bitrate"  bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Text x="545" y="76" w="160" id="pe.text.info.duration" bold="0" color="color.text.field" font="Verdana" fontsize="16" text="-- no Info --"/>
+	<Layer
+		x="-264" y="8" relatx="1"
+		id="pe.layer.online.radio"
+		image="pe.online.radio"/>
+	<AnimatedLayer
+		x="-193" y="18" relatx="1"
+		id="pe.animatedlayer.online.radio.sender"
+		image="pe.online.radio.sender.animation"
+		autoplay="1"
+		autoreplay="1"
+		frameheight="16"
+		speed="1000"
+		visible="0"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: FILE INFO) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.file.info.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close File Info"/> <!-- keep the close button in here so the group will not cover it -->
+</groupdef>
+<groupdef id="pe.group.options.intro.mix">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="36" w="166"
+		text="START POSITION AT:"/>
+	<!-- SLIDER START POSITION -->
+	<Layer
+		x="213" y="34" w="169" h="10"
+		id="pe.layer.bar.intro.mix.background"
+		image="pe.bar.background"/>
+	<Layer
+		x="215" y="36" w="165" h="6"
+		id="pe.layer.bar.intro.mix.start.position"
+		image="pe.bar"/>
+	<Slider
+		x="198" y="32" w="201" h="19"
+		id="pe.slider.intro.mix.start.position"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		low="5"
+		high="60"
+		tooltip="Set start position for the playback"/> <!-- 17px to the left since thumb is 34 -->
+	<Layer
+		x="198" y="32" w="201" h="19"
+		id="pe.layer.mousetrap.slider.intro.mix.start.position"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<!-- TEXT FIELD: START POSITION -->
+	<text:field
+		x="418" y="28" w="40" h="25"
+		id="pe.text.intro.mix.start.position"/>
+	<text:info
+		x="478" y="36" w="40"
+		text="SEC."/>
+	<text:info
+		x="20" y="71" w="85"
+		text="DURATION:"/>
+	<!-- SLIDER DURATION INTRO MIX -->
+	<Layer
+		x="213" y="69" w="169" h="10"
+		id="pe.layer.bar.intro.mix.duration.background"
+		image="pe.bar.background"/>
+	<Layer
+		x="215" y="71" w="165" h="6"
+		id="pe.layer.bar.intro.mix.duration"
+		image="pe.bar"/>
+	<Slider
+		x="198" y="67" w="201" h="19"
+		id="pe.slider.intro.mix.duration"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		low="5"
+		high="60"
+		tooltip="Set duration of the playback"/> <!-- 17px to the left since thumb is 34 -->
+	<Layer
+		x="198" y="67" w="201" h="19"
+		id="pe.layer.mousetrap.slider.intro.mix.duration"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<!-- TEXT FIELD: DURATION -->
+	<text:field
+		x="418" y="63" w="40" h="25"
+		id="pe.text.intro.mix.duration"/>
+	<text:info
+		x="478" y="71" w="34"
+		text="SEC."/>
+	<!-- ACTIVATE & CANCEL AREA -->
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="76" relatx="1"
+		text="ACTIVATE"/>
+	<!-- BUTTON "ACTIVATE" (OPTIONS: INTRO MIX) -->
+	<Button
+		x="-87" y="25" relatx="1"
+		id="pe.button.intro.mix.activate"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Activate Intro Mix"/>
+	<!-- BUTTON LED "ACTIVATE" (OPTIONS: INTRO MIX) -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.led.intro.mix.activate"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<text:info
+		x="-170" y="71" w="58" relatx="1"
+		text="CANCEL"/>
+	<!-- BUTTON "CANCEL" (OPTIONS: INTRO MIX) -->
+	<Button
+		x="-87" y="60" relatx="1"
+		id="pe.button.intro.mix.cancel"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Cancel Intro Mix activation"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: INTRO MIX) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.intro.mix.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Intro Mix"/>
+</groupdef>
+<groupdef id="pe.group.options.online.stream.cover.art">
+	<Browser
+		x="0" y="0" w="0" h="0"
+		id="pe.browser.dialog.box"/>
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="36" w="130"
+		text="ONLINE STREAM:"/>
+	<!-- TEXT FIELD: ONLINE STREAM -->
+	<text:field
+		x="167" y="27" w="-392" h="25" relatw="1"
+		id="pe.text.current.online.stream"/>
+	<text:info
+		x="20" y="71" w="103"
+		text="BITMAP FILE"/>
+	<!-- BUTTON "SELECT BITMAP FILE" -->
+	<Button
+		x="130" y="60"
+		id="pe.button.online.stream.cover.art.select"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Select a bitmap file for Cover Art |You can use bmp/jpg/png file format"/>
+	<!-- TEXT FIELD: CUSTOM BITMAP PATH -->
+	<text:field
+		x="167" y="62" w="-392" h="25" relatw="1"
+		id="pe.text.custom.bitmap.path"/>
+	<!-- SAVE & REMOVE AREA -->
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="103" relatx="1"
+		text="SAVE BITMAP"/>
+	<!-- BUTTON "SAVE" (OPTIONS: ONLINE STREAM COVER ART) -->
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.online.stream.cover.art.save"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Save selected bitmap as Cover Art for this online stream"/>
+	<text:info
+		x="-170" y="71" w="58" relatx="1"
+		text="REMOVE"/>
+	<!-- BUTTON "REMOVE" (OPTIONS: ONLINE STREAM COVER ART) -->
+	<Button
+		x="-57" y="60" relatx="1"
+		id="pe.button.online.stream.cover.art.remove"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Remove selected bitmap"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: ONLINE STREAM COVER ART) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.online.stream.cover.art.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		image="caption.close"
+		tooltip="Close Online Stream Cover Art"/> <!-- keep the close button in here so the group will not cover it -->
+</groupdef>
+<groupdef id="pe.group.options.playlist.directory">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<Layer
+		x="0" y="8"
+		id="pe.layer.pldir.title"
+		image="pe.pldir.title"
+		ghost="1"/>
+	<Layer
+		x="144" y="8" w="-285" relatw="1"
+		id="pe.layer.pldir.fill.in"
+		image="pe.pldir.fill.in"
+		tile="1"/>
+	<Layer
+		x="-141" y="8" relatx="1"
+		id="pe.layer.pldir.items"
+		image="pe.pldir.items"
+		ghost="1"/>
+	<Layer
+		x="-73" y="8" relatx="1"
+		id="pe.layer.pldir.time"
+		image="pe.pldir.time"
+		ghost="1"/>
+	<PlaylistDirectory
+		x="0" y="27" w="0" h="79" relatw="1"
+		background="pe.pldir.background"
+		nocolheader="1"/> <!-- top-most-object hence no way to put CLOSE button on it -->
+</groupdef>
+<groupdef id="pe.group.options.repeat">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="36" w="94"
+		text="POSITION A"/>
+	<!-- BUTTON "A" (OPTIONS: REPEAT A-B) -->
+	<Button
+		x="121" y="25"
+		id="pe.button.repeat.a"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Save A-position for Repeat A-B"/>
+	<!-- TEXT FIELD: REPEAT A -->
+	<text:field
+		x="169" y="28" w="95" h="25"
+		id="pe.text.repeat.a"
+		text="-- no Time --"/>
+	<text:info
+		x="20" y="71" w="94"
+		text="POSITION B"/>
+	<!-- BUTTON "B" (OPTIONS: REPEAT A-B) -->
+	<Button
+		x="121" y="60"
+		id="pe.button.repeat.b"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Save B-position for Repeat A-B"/>
+	<!-- TEXT FIELD: REPEAT B -->
+	<text:field
+		x="169" y="63" w="95" h="25"
+		id="pe.text.repeat.b"
+		text="-- no Time --"/>
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="76" relatx="1"
+		text="ACTIVATE"/>
+	<!-- BUTTON "ACTIVATE" (OPTIONS: REPEAT A-B) -->
+	<Button
+		x="-87" y="25" relatx="1"
+		id="pe.button.repeat.activate"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Start A-B Repeat"/>
+	<!-- BUTTON LED "ACTIVATE" (OPTIONS: REPEAT A-B) -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.led.repeat.activate"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<text:info
+		x="-170" y="71" w="58" relatx="1"
+		text="CANCEL"/>
+	<!-- BUTTON "CANCEL" (OPTIONS: REPEAT A-B) -->
+	<Button
+		x="-87" y="60" relatx="1"
+		id="pe.button.repeat.cancel"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Stop Repeat A-B"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: REPEAT A-B) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.repeat.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Repeat A-B"/>
+</groupdef>
+<groupdef id="pe.group.options.search.in.list">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="27" y="24" w="76"
+		text="PLAYLIST"/>
+	<!-- BUTTON "SEARCH IN PLAYLIST" (OPTIONS: SEARCH IN LIST) -->
+	<Button
+		x="49" y="40"
+		id="pe.button.search.in.list.playlist"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Search in the current Playlist"/>
+	<text:info
+		x="126" y="24" w="67"
+		text="CUELIST"/>
+	<!-- BUTTON "SEARCH IN CUELIST" (OPTIONS: SEARCH IN LIST) -->
+	<Button
+		x="144" y="40"
+		id="pe.button.search.in.list.cuelist"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Search in the current Cuelist"/>
+	<Group
+		x="20" y="76" w="179" h="20"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="22" y="78" w="158" h="15"
+		id="pe.edit.search.in.list"/>
+	<Text
+		x="22" y="78" w="158" h="15"
+		id="pe.text.search.in.list"
+		font="Verdana"
+		fontsize="16"
+		color="color.text.field"
+		text="Search in Playlist "/> <!-- do not translate -->
+	<Button
+		x="181" y="78"
+		id="pe.button.search.in.list.delete"
+		image="pe.delete"
+		hoverImage="pe.hover"
+		downImage="pe.down"
+		tooltip="Remove text from the search box"/>
+	<Layer
+		x="181" y="78"
+		id="pe.layer.search.in.list.find.icon"
+		image="pe.find.icon"/>
+	<Group
+		x="220" y="18" w="-270" h="78" relatw="1"
+		id="wasabi.objectframe.group"/>
+	<List
+		x="222" y="20" w="-275" h="73" relatw="1"
+		id="pe.list.search.in.list.search.result"
+		background="pe.searchlist.background"
+		nocolheader="0"/> <!-- top-most-object -->
+	<!-- BUTTON "CLOSE" (OPTIONS: SEARCH IN PLAYLIST) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.search.in.list.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Search In Playlist"/>
+</groupdef>
+<groupdef id="pe.group.options.sleep.timer">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<text:info
+		x="20" y="36" w="103"
+		text="PAUSE TRACK"/>
+	<!-- BUTTON "PAUSE TRACK" (OPTIONS: SLEEP TIMER) -->
+	<Button
+		x="130" y="25"
+		id="pe.button.sleep.timer.pause.track"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Pause track after time is up"/>
+	<Layer
+		x="132" y="28" w="24" h="24"
+		id="pe.layer.mousetrap.button.sleep.timer.pause.track"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<text:info
+		x="20" y="71" w="94"
+		text="STOP TRACK"/>
+	<!-- BUTTON "STOP TRACK" (OPTIONS: SLEEP TIMER) -->
+	<Button
+		x="130" y="60"
+		id="pe.button.sleep.timer.stop.track"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Stop track after time is up"/>
+	<Layer
+		x="132" y="63" w="24" h="24"
+		id="pe.layer.mousetrap.button.sleep.timer.stop.track"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<text:info
+		x="180" y="45" w="58"
+		text="CLOSE"/>
+	<text:info
+		x="180" y="64" w="58"
+		text="WINAMP"/>
+	<!-- BUTTON "CLOSE WINAMP" (OPTIONS: SLEEP TIMER) -->
+	<Button
+		x="245" y="42"
+		id="pe.button.sleep.timer.close.application"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.active"
+		tooltip="Close Winamp after time is up"/>
+	<Layer
+		x="253" y="45" w="24" h="24"
+		id="pe.layer.mousetrap.button.sleep.timer.close.application"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<!-- SLIDER DURATION SLEEP TIMER -->
+	<Layer
+		x="324" y="69" w="169" h="10"
+		id="pe.layer.bar.sleep.timer.duration.background"
+		image="pe.bar.background"/>
+	<Layer
+		x="326" y="71" w="165" h="6"
+		id="pe.layer.bar.sleep.timer.duration"
+		image="pe.bar"/>
+	<Slider
+		x="309" y="67" w="201" h="19"
+		id="pe.slider.sleep.timer.duration"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		low="5"
+		high="60"
+		tooltip="Set Sleep Timer's duration"/> <!-- 17px to the left since thumb is 34 -->
+	<Layer
+		x="309" y="67" w="201" h="19"
+		id="pe.layer.mousetrap.slider.sleep.timer"
+		cursor="IDC_ARROW"
+		visible="0"/>
+	<text:info
+		x="331" y="36" w="85"
+		text="DURATION:"/>
+	<!-- TEXT FIELD: DURATION -->
+	<text:field
+		x="418" y="28" w="40" h="25"
+		id="pe.text.sleep.timer.duration"/>
+	<text:info
+		x="478" y="36" w="36"
+		text="MIN."/>
+	<!-- ACTIVATE & CANCEL AREA -->
+	<Layer
+		x="-186" y="18" w="1" h="78" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<text:info
+		x="-170" y="36" w="76" relatx="1"
+		text="ACTIVATE"/>
+	<!-- BUTTON "ACTIVATE" (OPTIONS: SLEEP TIMER) -->
+	<Button
+		x="-87" y="25" relatx="1"
+		id="pe.button.sleep.timer.activate"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Start Sleep Timer"/>
+	<!-- BUTTON LED "ACTIVATE" (OPTIONS: SLEEP TIMER) -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.led.sleep.timer.activate"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<text:info
+		x="-170" y="71" w="58" relatx="1"
+		text="CANCEL"/>
+	<!-- BUTTON "CANCEL" (OPTIONS: SLEEP TIMER) -->
+	<Button
+		x="-87" y="60" relatx="1"
+		id="pe.button.sleep.timer.cancel"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Stop Sleep Timer"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: SLEEP TIMER) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.sleep.timer.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Sleep Timer"/>
+</groupdef>
+<groupdef id="pe.group.options.track.bookmarks">
+	<Layer
+		x="0" y="0" w="0" h="8" relatw="1"
+		image="wasabi.framewnd.horizontaldivider"/>
+	<!-- BUTTON "PLAY" - "REMOVE" - "SAVE" -->
+	<text:info x="30"  y="20" w="40" text="PLAY"/>
+	<text:info x="84"  y="20" w="58" text="REMOVE"/>
+	<text:info x="157" y="20" w="40" text="SAVE"/>
+	<Button    x="34"  y="34" id="pe.button.track.bookmarks.play"   image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.down" tooltip="Play selected bookmark"/>
+	<Button    x="98"  y="34" id="pe.button.track.bookmarks.remove" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.down" tooltip="Remove selected bookmark"/>
+	<Button    x="162" y="34" id="pe.button.track.bookmarks.save"   image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.down" tooltip="Save time and songinfo of|the selected track"/>
+	<!-- BUTTON "B1-B5" -->
+	<text:info x="251" y="20" w="22" text="B1"/>
+	<text:info x="301" y="20" w="22" text="B2"/>
+	<text:info x="351" y="20" w="22" text="B3"/>
+	<text:info x="401" y="20" w="22" text="B4"/>
+	<text:info x="451" y="20" w="22" text="B5"/>
+	<text:info x="501" y="20" w="22" text="B6"/>
+	<Button    x="246" y="34" id="pe.button.track.bookmarks.B1" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.active" tooltip="Select Bookmark 1"/>
+	<Button    x="296" y="34" id="pe.button.track.bookmarks.B2" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.active" tooltip="Select Bookmark 2"/>
+	<Button    x="346" y="34" id="pe.button.track.bookmarks.B3" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.active" tooltip="Select Bookmark 3"/>
+	<Button    x="396" y="34" id="pe.button.track.bookmarks.B4" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.active" tooltip="Select Bookmark 4"/>
+	<Button	   x="446" y="34" id="pe.button.track.bookmarks.B5" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.active" tooltip="Select Bookmark 5"/>
+	<Button	   x="496" y="34" id="pe.button.track.bookmarks.B6" image="button.black" hoverImage="button.black.hover" downImage="button.black.down" activeImage="button.black.active" tooltip="Select Bookmark 6"/>
+	<Layer
+		x="-186" y="18" w="1" h="42" relatx="1"
+		image="wasabi.groupbox.left"/>
+	<!-- BUTTON "CLEAR PLAYLIST" -->
+	<text:info
+		x="-159" y="28" w="49" relatx="1"
+		text="CLEAR"/>
+	<text:info
+		x="-169" y="45" w="76" relatx="1"
+		text="PLAYLIST"/>
+	<Button
+		x="-87" y="25" relatx="1"
+		id="pe.button.track.bookmarks.clear.playlist"
+		image="button.black"
+		hoverImage="button.black.hover"
+		downImage="button.black.down"
+		activeImage="button.black.down"
+		tooltip="Press this button if you want to|remove all items from the playlist.|Do not use it if you listen to online stream."/>
+	<!-- BUTTON LED "CLEAR PLAYLIST" -->
+	<Layer
+		x="-57" y="25" relatx="1"
+		image="led.background.black"/>
+	<Button
+		x="-57" y="25" relatx="1"
+		id="pe.button.led.track.bookmarks.clear.playlist"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- TEXT FIELD: BOOKMARK TIME -->
+	<text:field
+		x="10" y="71" w="206" h="25"
+		id="pe.text.track.bookmarks"
+		align="left"
+		bold="1"
+		text=" BOOKMARK"/>
+	<Text
+		x="10" y="71" w="189" h="25"
+		id="pe.text.track.bookmarks.time"
+		align="right"
+		color="color.text.field"
+		font="Verdana"
+		fontsize="16"
+		text="-- no Time --"/>
+	<!-- TEXT FIELD: BOOKMARK TRACK -->
+	<text:field
+		x="236" y="71" w="-247" h="25" relatw="1"
+		id="pe.text.track.bookmarks.track"
+		text="-- no saved Bookmark --"/>
+	<!-- BUTTON "CLOSE" (OPTIONS: TRACK BOOKMARKS) -->
+	<Button
+		x="-23" y="13" relatx="1"
+		id="pe.button.track.bookmarks.close"
+		image="caption.close"
+		hoverImage="caption.close.hover"
+		downImage="caption.close.down"
+		tooltip="Close Track Bookmarks"/>
+</groupdef>
+<groupdef id="pe.group.component">
+	<Component
+		fitparent="1"
+		param="guid:{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d}"/>
+</groupdef>
+<groupdef id="pe.group.frame.playback" inherit_group="group.frame.standardframe">
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.auto.close"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.auto.play"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.crossfader"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.cue.player"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.file.info"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.intro.mix"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.online.stream.cover.art"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.playlist.directory"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.repeat"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.search.in.list"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.sleep.timer"/>
+	<Group x="32" y="-252" w="-64" h="106" relaty="1" relatw="1" id="pe.group.options.track.bookmarks"/>
+	<Group
+		x="32" y="-146" w="-64" h="114" relaty="1" relatw="1"
+		id="group.playback"/>
+	<Group
+		x="43" y="-139" w="529" h="30" relaty="1"
+		id="pe.group.buttons"/>
+	<Group
+		x="-219" y="-141" w="176" h="31" relatx="1" relaty="1"
+		id="pe.group.PE.info.display"/>
+</groupdef>
+<groupdef id="pe.group.framewnd">
+	<Wasabi:Frame
+		fitparent="1"
+		id="wasabi.frame"
+		image="wasabi.framewnd.verticaldivider"
+		from="right"
+		maxwidth="-8"
+		minwidth="8"
+		left="pe.group.component"
+		right="pe.group.albumart.cuelist"
+		orientation="v"/>
+</groupdef>
+<groupdef id="pe.group.main">
+	<Group
+		fitparent="1"
+		id="group.frame.noframe"/>
+	<Group
+		fitparent="1"
+		id="group.frame.standardframe"/>
+	<Group
+		fitparent="1"
+		id="pe.group.frame.playback"/> <!-- three different frames: NoFrame, Standard, Playback -->
+	<Group
+		fitparent="1"
+		id="pe.group.framewnd"/> <!-- x, y, w, h values are assigned via window-frame.m script -->
+	<!-- NSTATESBUTTON "FRAME" -->
+	<nstatesbutton:frame
+		x="-104" y="6" relatx="1"
+		id="nstatesbutton.frame"
+		inactiveAlpha="0"/> <!-- keep inactiveAlpha in here and not in standard-objects.xml -->
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Playlist Editor"/>
+	<script
+		file="SCRIPTS\playlist-editor.maki"
+		param="@SKINPATH@HTML\"/> <!-- keep the parameter in here and not in the script otherwise it will not work -->
+</groupdef>
+<Container
+	component="guid:{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d}"
+	default_x="100" default_y="100"	default_w="530" default_h="287"
+	default_visible="0"
+	dynamic="1"
+	id="playlist.editor"
+	name="Playlist Editor">
+	<Layout
+		x="100" y="100"	w="530" h="287" minimum_w="530" minimum_h="287"
+		id="normal"
+		background="base.texture"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="pe.group.main"/>
+	</Layout>
+</Container>

@@ -1,0 +1,33 @@
+<elements>
+<bitmap id="nw.eq-pulse" file="PNG\NEOWULF\eq-pulse.png" w="638" h="246"/>
+<bitmap id="nw.header" file="PNG\NEOWULF\header.png" w="16" h="32"/>
+<bitmap id="nw.speaker-tower-right" file="PNG\NEOWULF\speaker-tower-right.png" w="174" h="590"/>
+<bitmap id="nw.rpm33" file="PNG\NEOWULF\rpm33.png" w="48" h="28"/>
+<bitmap id="nw.label-main" file="PNG\NEOWULF\label-main.png" w="130" h="9"/>
+<bitmap id="nw.speaker-sub" file="PNG\NEOWULF\speaker-sub.png" w="285" h="304"/>
+<bitmap id="nw.label-sa" file="PNG\NEOWULF\label-sa.png" w="108" h="9"/>
+<bitmap id="nw.led-red" file="PNG\NEOWULF\led-red.png" w="30" h="30"/>
+<bitmap id="nw.frame" file="PNG\NEOWULF\frame.png" w="16" h="16"/>
+<bitmap id="nw.header-pulse" file="PNG\NEOWULF\header-pulse.png" w="16" h="32"/>
+<bitmap id="nw.turntable" file="PNG\NEOWULF\turntable.png" w="728" h="554"/>
+<bitmap id="nw.label-eq" file="PNG\NEOWULF\label-eq.png" w="81" h="9"/>
+<bitmap id="nw.rpm45" file="PNG\NEOWULF\rpm45.png" w="48" h="28"/>
+<bitmap id="nw.main" file="PNG\NEOWULF\main.png" w="638" h="246"/>
+<bitmap id="nw.speaker-bookshelf-left" file="PNG\NEOWULF\speaker-bookshelf-left.png" w="220" h="330"/>
+<bitmap id="nw.turntable-pulse" file="PNG\NEOWULF\turntable-pulse.png" w="728" h="554"/>
+<bitmap id="nw.eq" file="PNG\NEOWULF\eq.png" w="638" h="246"/>
+<bitmap id="nw.main-pulse" file="PNG\NEOWULF\main-pulse.png" w="638" h="246"/>
+<bitmap id="nw.cone-copper" file="PNG\NEOWULF\cone-copper.png" w="160" h="160"/>
+<bitmap id="nw.sa-pulse" file="PNG\NEOWULF\sa-pulse.png" w="638" h="208"/>
+<bitmap id="nw.speaker-center" file="PNG\NEOWULF\speaker-center.png" w="490" h="190"/>
+<bitmap id="nw.sa" file="PNG\NEOWULF\sa.png" w="638" h="208"/>
+<bitmap id="nw.power" file="PNG\NEOWULF\power.png" w="74" h="28"/>
+<bitmap id="nw.vinyl" file="PNG\NEOWULF\vinyl.png" w="474" h="474"/>
+<bitmap id="nw.cone-black" file="PNG\NEOWULF\cone-black.png" w="160" h="160"/>
+<bitmap id="nw.speaker-tower-left" file="PNG\NEOWULF\speaker-tower-left.png" w="174" h="590"/>
+<bitmap id="nw.speaker-bookshelf-right" file="PNG\NEOWULF\speaker-bookshelf-right.png" w="220" h="330"/>
+<bitmap id="nw.tonearm-fixed" file="PNG\NEOWULF\tonearm-fixed.png" w="728" h="554"/>
+<bitmap id="nw.base" file="PNG\NEOWULF\base.png" w="638" h="246"/>
+<bitmap id="nw.vinyl-reflection" file="PNG\NEOWULF\vinyl-reflection.png" w="474" h="474"/>
+<bitmap id="nw.close" file="PNG\NEOWULF\close.png" w="38" h="24"/>
+</elements>

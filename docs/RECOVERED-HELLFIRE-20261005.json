@@ -1,0 +1,21 @@
+{
+  "baseline_wal_sha256": "249b03cb2845ed4ebc8d1f925b541f6a1e5413726dcb2e430fdab87a50a61243",
+  "baseline_entries": 176,
+  "source": "Verified existing BMAX test package; recovered source, not a new runtime completion claim.",
+  "plugin_source_status": "Native plugin C++ build source not found in the available workspace; prebuilt bytes preserved with hashes. JS audio/UI engines and MAKI source recovered.",
+  "plugins": {
+    "dsp_neowulf.dll": {
+      "sha256": "fd7446ac1d01bc4b690ef77e1ad93896816da6a709d2298ef31d5745c7513f8a",
+      "bytes": 216576
+    },
+    "gen_neowulf.dll": {
+      "sha256": "09f35e8cfbb47c9faca47ce732ec61e93cbd0aa0ce15aa8da7132fcc14333130",
+      "bytes": 392192
+    },
+    "WebView2Loader.dll": {
+      "sha256": "a08c57142946e5a554d9d5c018e27dcbb09248be8ad44852667b96564bbceeda",
+      "bytes": 124768
+    }
+  },
+  "formatting_repair": "Notification indentation and MAKI EOF normalized, fragment semantic contract/script tokens verified; original package retained."
+}

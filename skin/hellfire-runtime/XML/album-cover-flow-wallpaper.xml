@@ -1,0 +1,103 @@
+<!-- ***************************************** -->
+<!-- Filename: album-cover-flow-wallpaper.xml  -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="acfw.group.main" inherit_group="group.frame.standardframe">
+	<Layer
+		x="32" y="32" w="320" h="331"
+		image="filter.darkblue"
+		tile="1"/>
+	<Rect x="32"  y="32"  w="1"   h="331" color="color.filter.darkblue.left.top"/>
+	<Rect x="32"  y="32"  w="320" h="1"   color="color.filter.darkblue.left.top"/>
+	<Rect x="351" y="33"  w="1"   h="330" color="color.filter.darkblue.right.bottom"/>
+	<Rect x="33"  y="362" w="319" h="1"   color="color.filter.darkblue.right.bottom"/>
+	<!-- BUTTON "SELECT FILE" - image changeable via button-color.m script -->
+	<Group
+		x="43" y="43" w="298" h="24"
+		id="wasabi.objectframe.group"/>
+	<Button
+		x="45" y="45" w="293" h="19"
+		id="acfw.button.select.new.wallpaper.file"
+		tooltip="Select a bitmap file for Album Cover Flow wallpaper |You can use bmp/jpg/png file format"/>
+	<Browser
+		x="43" y="43" w="0" h="0"
+		id="acfw.browser.dialog.box"/>
+	<Layer
+		x="43" y="77" w="298" h="35"
+		image="filter.lightblue"
+		tile="1"/>
+	<Rect x="43"  y="77"  w="1"   h="35"  color="color.filter.lightblue.left.top"/>
+	<Rect x="43"  y="77"  w="298" h="1"   color="color.filter.lightblue.left.top"/>
+	<Rect x="340" y="76"  w="1"   h="34"  color="color.filter.lightblue.right.bottom"/>
+	<Rect x="44"  y="111" w="297" h="1"   color="color.filter.lightblue.right.bottom"/>
+	<text:info
+		x="58" y="91" w="85"
+		text="FILE NAME"/>
+	<!-- TEXT FIELD: FILE NAME -->
+	<text:field
+		x="154" y="82" w="176" h="25"
+		id="acfw.text.file.name"/>
+	<!-- PREVIEW AREA -->
+	<text:info
+		x="158" y="123" w="67"
+		text="PREVIEW"/>
+	<Layer
+		x="43" y="140" w="297" h="178"
+		id="acf.frame.sunken"
+		image="filter.darkblue"
+		tile="1"/>
+	<Rect x="43"  y="140" w="1"   h="178" color="color.filter.darkblue.right.bottom"/>
+	<Rect x="43"  y="140" w="297" h="1"   color="color.filter.darkblue.right.bottom"/>
+	<Rect x="339" y="141" w="1"   h="177" color="color.filter.darkblue.left.top"/>
+	<Rect x="43"  y="317" w="297" h="1"   color="color.filter.darkblue.left.top"/> <!-- inverted colors because frame sunken -->
+	<Group
+		x="54" y="151" w="275" h="156"
+		id="wasabi.objectframe.group"/>
+	<Layer
+		x="56" y="153" w="271" h="152"
+		id="acfw.layer.no.preview"
+		image="acfw.no.preview"
+		tooltip="In order to have a sharp wallpaper image you might want |to crop the file according to the size of the window"/> <!-- 16:9 -->
+	<!-- BUTTON "APPLY NEW WALLPAPER" - image changeable via button-color.m script -->
+	<Group
+		x="43" y="328" w="298" h="24"
+		id="wasabi.objectframe.group"/>
+	<Button
+		x="45" y="330" w="228" h="19"
+		id="acfw.button.apply.new.wallpaper"
+		tooltip="Show new wallpaper in Album Cover Flow window"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Album Cover Flow Wallpaper"/>
+	<!-- BUTTON "CLOSE" (BOTTOM) - image changeable via button-color.m script -->
+	<Button
+		x="275" y="330" w="63" h="19"
+		id="acfw.button.close.bottom"
+		tooltip="Close Album Cover Flow Wallpaper"/>
+	<script
+		file="SCRIPTS\album-cover-flow-wallpaper.maki"
+		param="@SKINPATH@HTML\"/> <!-- keep the parameter in here and not in the script otherwise it will not work -->
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="384" default_h="395"
+	default_visible="0"
+	id="album.cover.flow.wallpaper"
+	name="Album Cover Flow Wallpaper"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="384" h="395"
+		id="normal"
+		background="base.texture"
+		resizable="0"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="acfw.group.main"/>
+	</Layout>
+</Container>

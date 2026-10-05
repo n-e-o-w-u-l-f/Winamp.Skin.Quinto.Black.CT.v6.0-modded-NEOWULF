@@ -1,0 +1,37 @@
+<!-- ***************************************** -->
+<!-- Filename: accelerators.xml                -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<!-- do not change the section's name -->
+<accelerators section="general">
+	<accelerator bind="CTRL+ALT+Q" action="OPEN.CLOSE.ABOUT"/>
+	<accelerator bind="CTRL+ALT+O" action="OPEN.CLOSE.CONFIGURATION"/>
+
+	<accelerator bind="CTRL+ALT+A" action="OPEN.CLOSE.COVER.ART"/>
+	<accelerator bind="CTRL+ALT+C" action="OPEN.CLOSE.COMPACT.CASSETTE"/>
+	<accelerator bind="CTRL+ALT+D" action="OPEN.CLOSE.COMPACT.DISC"/>
+	<accelerator bind="CTRL+ALT+E" action="OPEN.CLOSE.EQUALIZER"/>
+	<accelerator bind="CTRL+ALT+F" action="OPEN.CLOSE.ALBUM.COVER.FLOW"/>
+	<accelerator bind="CTRL+ALT+G" action="OPEN.CLOSE.FREQUENCY.RESPONSE.GRAPH"/>
+	<accelerator bind="CTRL+ALT+H" action="OPEN.CLOSE.VU.METER.DIGITAL.HORIZONTAL"/>
+	<accelerator bind="CTRL+ALT+L" action="OPEN.CLOSE.LOUDSPEAKER"/>
+	<accelerator bind="CTRL+ALT+N" action="OPEN.CLOSE.VU.METER.ANALOG"/>
+	<accelerator bind="CTRL+ALT+P" action="OPEN.CLOSE.VINYL.RECORD.PLAYER"/>
+	<accelerator bind="CTRL+ALT+R" action="OPEN.CLOSE.RGB.COLOR.CHANGER"/>
+	<accelerator bind="CTRL+ALT+V" action="OPEN.CLOSE.VU.METER.DIGITAL.VERTICAL"/>
+	<accelerator bind="CTRL+ALT+Y" action="OPEN.CLOSE.VINYL.RECORD"/>
+	<accelerator bind="CTRL+ALT+Z" action="OPEN.CLOSE.SPECTRUM.ANALYZER"/>
+
+	<accelerator bind="CTRL+ALT+7" action="TOP.LEFT"/>     <!-- 7 8 9 -->
+	<accelerator bind="CTRL+ALT+8" action="TOP"/>
+	<accelerator bind="CTRL+ALT+9" action="TOP.RIGHT"/>
+	<accelerator bind="CTRL+ALT+4" action="LEFT"/>         <!-- 4 5 6 -->
+	<accelerator bind="CTRL+ALT+5" action="FULLSCREEN"/>
+	<accelerator bind="CTRL+ALT+6" action="RIGHT"/>
+	<accelerator bind="CTRL+ALT+1" action="BOTTOM.LEFT"/>  <!-- 1 2 3 -->
+	<accelerator bind="CTRL+ALT+2" action="BOTTOM"/>
+	<accelerator bind="CTRL+ALT+3" action="BOTTOM.RIGHT"/>
+</accelerators>

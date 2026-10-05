@@ -1,0 +1,141 @@
+<!-- ***************************************** -->
+<!-- Filename: video.xml                       -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="vid.group.display" inherit_group="wasabi.objectframe.group">
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="vid.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="vid.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="vid.layer.display.shadow"
+		image="display.shadow"/>
+	<Text
+		x="16" y="3" w="-32" h="22" relatw="1"
+		id="vid.text.info.file"
+		align="center"
+		font="bitmapfont.songticker"
+		display="VID_Info"
+		altfont="Verdana"
+		color="color.display.info"
+		fontsize="24"/> <!-- do not delete color and fontsize: needed for altfont; TRACKINFO & TRACKMENU do not work here -->
+	<!-- LIGHT - OVERLAY - FRAME -->
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="vid.layer.display.light"
+		image="display.light.white.small"
+		tile="1"/>
+	<Layer
+		x="2" y="2" w="-5" h="26" relatw="1"
+		id="vid.layer.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="2" y="2"
+		id="vid.layer.display.frame.left"
+		image="display.big.frame.left"/> <!-- x="0+2" (objectframe) -->
+	<Layer
+		x="32" y="2" w="-65" relatw="1"
+		id="vid.layer.display.frame.center"
+		image="display.big.frame.center"/>
+	<Layer
+		x="-33" y="2" relatx="1"
+		id="vid.layer.display.frame.right"
+		image="display.big.frame.right"/> <!-- x="-30-3" (width frame right and objectframe right side -->
+</groupdef>
+<groupdef id="vid.group.frame.playback" inherit_group="group.frame.standardframe">
+	<Group
+		x="32" y="-146" w="-64" h="114" relaty="1" relatw="1"
+		id="group.playback"/>
+	<Group
+		x="43" y="-136" w="189" h="24" relaty="1"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "FULLSCREEN" - image changeable via button-color.m script -->
+	<Button
+		x="45" y="-134" w="108" h="19" relaty="1"
+		id="vid.button.fullscreen"
+		action="VID_FS"
+		tooltip="Fullscreen "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "1x" - image changeable via button-color.m script -->
+	<Button
+		x="155" y="-134" w="36" h="19" relaty="1"
+		id="vid.button.1x"
+		action="VID_1X"
+		tooltip="Normal size "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "2x" - image changeable via button-color.m script -->
+	<Button
+		x="193" y="-134" w="36" h="19" relaty="1"
+		id="vid.button.2x"
+		action="VID_2X"
+		tooltip="Double size "/> <!-- do not translate tooltip -->
+	<Group
+		x="252" y="-140" w="-401" h="31" relaty="1" relatw="1"
+		id="vid.group.display"/> <!-- actually w="-468" but display is aligned between two buttons -->
+	<!-- BUTTON "OPTIONS" - image changeable via button-color.m script -->
+	<Group
+		x="-129" y="-136" w="86" h="24" relatx="1" relaty="1"
+		id="wasabi.objectframe.group"/>
+	<Button
+		x="-127" y="-134" w="81" h="19" relatx="1" relaty="1"
+		id="vid.button.options"
+		action="VID_Misc"
+		tooltip="Options "/> <!-- do not translate tooltip -->
+</groupdef>
+<groupdef id="vid.group.component">
+	<Component
+		fitparent="1"
+		param="guid:{f0816d7b-fffc-4343-80f2-e8199aa15cc3}"/>
+</groupdef>
+<groupdef id="vid.group.main">
+	<Group
+		fitparent="1"
+		id="group.frame.noframe"/>
+	<Group
+		fitparent="1"
+		id="group.frame.standardframe"/>
+	<Group
+		fitparent="1"
+		id="vid.group.frame.playback"/> <!-- three different frames: NoFrame, Standard, Playback -->
+	<Group
+		fitparent="1"
+		id="vid.group.component"/> <!-- x, y, w, h values are assigned via window-frame.m script -->
+	<!-- NSTATESBUTTON "FRAME" -->
+	<nstatesbutton:frame
+		x="-104" y="6" relatx="1"
+		id="nstatesbutton.frame"
+		inactiveAlpha="0"/> <!-- keep inactiveAlpha="0" in here and not in standard-objects.xml -->
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Video"/>
+	<script
+		file="SCRIPTS\video.maki"/>
+</groupdef>
+<Container
+	component="guid:{f0816d7b-fffc-4343-80f2-e8199aa15cc3}"
+	default_x="100" default_y="100"	default_w="530" default_h="287"
+	default_visible="0"
+	dynamic="1"
+	id="video"
+	name="Video">
+	<Layout
+		x="100" y="100"	w="530" h="287" minimum_w="530" minimum_h="287"
+		id="normal"
+		background="base.texture"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="vid.group.main"/>
+	</Layout>
+</Container>

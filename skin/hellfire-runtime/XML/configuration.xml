@@ -1,0 +1,547 @@
+<!-- ***************************************** -->
+<!-- Filename: configuration.xml               -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<!-- do not use xui-group for <Slider/>, <Button/> (tooltip will not work) and radio button text (color will work but ghost won't) -->
+<groupdef id="cfg.group.xui.text.button.label" embed_xui="xui.text.button.label" xuitag="text:button.label">
+	<Text
+		w="178" h="33"
+		id="xui.text.button.label"
+		align="center"
+		color="color.cfg.text.button.label"
+		font="Verdana"
+		fontsize="16"
+		ghost="1"/> <!-- keep w and h: we need to align the text on those buttons -->
+</groupdef>
+<groupdef id="cfg.group.xui.text.slider" embed_xui="xui.text.slider" xuitag="text:slider">
+	<Text
+		id="xui.text.slider"
+		color="color.cfg.text.radio.button"
+		font="Verdana"
+		fontsize="16"/>
+</groupdef>
+<groupdef id="cfg.group.button.tab">
+	<Button x="0"   y="0" w="95"  h="27" id="cfg.button.tab.color.theme"     image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;Color Theme&quot; page"/>
+	<Button x="96"  y="0" w="125" h="27" id="cfg.button.tab.component.label" image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;Component Label&quot; page"/>
+	<Button x="222" y="0" w="76"  h="27" id="cfg.button.tab.led.color"       image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;LED Color&quot; page"/>
+	<Button x="299" y="0" w="89"  h="27" id="cfg.button.tab.main.player"     image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;Main Player&quot; page"/>
+	<Button x="389" y="0" w="104" h="27" id="cfg.button.tab.miscellaneous"   image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;Miscellaneous&quot; page"/>
+	<Button x="494" y="0" w="93"  h="27" id="cfg.button.tab.notification"    image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;Notification&quot; page"/>
+	<Button x="588" y="0" w="57"  h="27" id="cfg.button.tab.update"          image="cfg.tab" hoverImage="cfg.tab.hover" downImage="cfg.tab.down" activeImage="cfg.tab.active" tooltip="Go to &quot;Update&quot; page"/>
+
+	<Text x="0"   y="0" w="95"  h="27" id="cfg.text.tab.color.theme"     align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="Color Theme"/>
+	<Text x="96"  y="0" w="125" h="27" id="cfg.text.tab.component.label" align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="Component Label"/>
+	<Text x="222" y="0" w="76"  h="27" id="cfg.text.tab.led.color"       align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="LED Color"/>
+	<Text x="299" y="0" w="89"  h="27" id="cfg.text.tab.main.player"     align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="Main Player"/>
+	<Text x="389" y="0" w="104" h="27" id="cfg.text.tab.miscellaneous"   align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="Miscellaneous"/>
+	<Text x="494" y="0" w="93"  h="27" id="cfg.text.tab.notification"    align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="Notification"/>
+	<Text x="588" y="0" w="57"  h="27" id="cfg.text.tab.update"          align="center" color="color.cfg.text.window" font="Verdana" fontsize="17" ghost="1" text="Update"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.export">
+	<Button            x="13"  y="11" id="cfg.button.color.theme.copy.to.clipboard" image="cfg.blue" hoverImage="cfg.blue.hover" downImage="cfg.blue.down" activeImage="cfg.blue.down" tooltip="Copy your current color theme to clipboard"/>
+	<text:button.label x="13"  y="11" id="cfg.text.color.theme.copy.to.clipboard" text=" Copy to Clipboard "/>
+	<Button            x="254" y="11" id="cfg.button.color.theme.help.export" image="cfg.help" hoverImage="cfg.help.hover" downImage="cfg.help.down" tooltip="Show more information|about export of a Color Theme"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.import">
+	<Browser           x="0"   y="0" w="0" h="0" id="cfg.browser.dialog.box"/>
+	<Button            x="13"  y="11"  id="cfg.button.color.theme.import"      image="cfg.blue" hoverImage="cfg.blue.hover" downImage="cfg.blue.down" activeImage="cfg.blue.down" tooltip="Load previously saved|Color Theme xml file"/>
+	<Button            x="13"  y="59"  id="cfg.button.color.theme.replace"     image="cfg.blue" hoverImage="cfg.blue.hover" downImage="cfg.blue.down" activeImage="cfg.blue.down" tooltip="Replace current Color Theme"/>
+	<Button            x="13"  y="107" id="cfg.button.color.theme.reload.skin" image="cfg.blue" hoverImage="cfg.blue.hover" downImage="cfg.blue.down" activeImage="cfg.blue.down" tooltip="Apply changes and refresh current skin"/>
+	<text:button.label x="13"  y="11"  id="cfg.text.color.theme.import"      text=" Import Color Theme "/>
+	<text:button.label x="13"  y="59"  id="cfg.text.color.theme.replace"     text=" Replace Color Theme "/>
+	<text:button.label x="13"  y="107" id="cfg.text.color.theme.reload.skin" text=" Reload Skin "/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.component.label">
+	<Button x="5" y="7"   id="cfg.button.component.label.equalizer"                   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;Equalizer&quot; label"/>
+	<Button x="5" y="30"  id="cfg.button.component.label.frequency.response.graph"    image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;Frequency Response Graph&quot; label"/>
+	<Button x="5" y="53"  id="cfg.button.component.label.main.player"                 image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move Main Player's label"/>
+	<Button x="5" y="76"  id="cfg.button.component.label.spectrum.analyzer"           image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;Spectrum Analyzer&quot; label"/>
+	<Button x="5" y="99"  id="cfg.button.component.label.vu.meter.analog"             image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;Left Right&quot; label"/>
+	<Button x="5" y="122" id="cfg.button.component.label.vu.meter.digital.horizontal" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;VU Meter Digital&quot; label"/>
+	<Text   x="5" y="6"   w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Equalizer"/>
+	<Text   x="5" y="29"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Frequency Response Graph"/>
+	<Text   x="5" y="52"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Main Player"/>
+	<Text   x="5" y="75"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Spectrum Analyzer"/>
+	<Text   x="5" y="98"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     VU Meter Analog"/>
+	<Text   x="5" y="121" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     VU Meter Digital Horizontal"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.component.label.main.player">
+	<Button x="5" y="7"  id="cfg.button.component.label.main.player.quinto.black.ct" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;Quinto Black CT&quot; label"/>
+	<Button x="5" y="30" id="cfg.button.component.label.main.player.winamp"          image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Move &quot;Winamp&quot; label"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Quinto Black CT"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Winamp"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.component.label.hide.show">
+	<!-- COMPONENT LABEL: HIDE/SHOW -->
+	<Button x="15"  y="7"  id="cfg.button.component.label.position.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide label on selected component"/>
+	<Button x="101" y="7"  id="cfg.button.component.label.position.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show label on selected component"/>
+	<Text   x="15"  y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="101" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+	<Layer  x="13"  y="34" w="150" h="3" image="wasabi.groupbox.top"/>
+	<!-- COMPONENT LABEL: CENTER -->
+	<Button x="15" y="47" id="cfg.button.component.label.position.center" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Move selected label to the center"/>
+	<Text   x="15" y="45" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Center"/>
+	<!-- COMPONENT LABEL: POSITION -->
+	<Text  x="0"   y="74" bold="1" color="color.cfg.text.window" font="Verdana" fontsize="16" text=" Position on Component "/>
+	<Layer x="165" y="82"  w="169" h="3" image="wasabi.groupbox.top"/>
+	<Layer x="41"  y="106" w="255" h="6" image="cfg.bar.orange"/>
+	<Layer x="41"  y="106" w="0"   h="6" id="cfg.layer.bar.component.label.position" image="cfg.bar.green"/>
+	<Slider
+		x="19" y="99" w="300" h="22"
+		id="cfg.slider.component.label.position"
+		thumb="cfg.slider.thumb"
+		hoverThumb="cfg.slider.thumb.hover"
+		downThumb="cfg.slider.thumb.down"
+		low="72"
+		high="446"
+		tooltip="Change label's position on selected component"/>
+	<text:slider x="25" y="123" text="Left                                                         Right"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.component.label.bottom.hide.show">
+	<!-- COMPONENT LABEL (BOTTOM) -->
+	<Button x="15"  y="7"  id="cfg.button.component.label.bottom.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide bottom label on selected component"/>
+	<Button x="101" y="7"  id="cfg.button.component.label.bottom.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show bottom label on selected component"/>
+	<Text   x="15"  y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="101" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.led.color.equalizer">
+	<Button x="5" y="7"  id="cfg.button.led.color.equalizer.auto" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Auto LED color on Equalizer"/>
+	<Button x="5" y="30" id="cfg.button.led.color.equalizer.eq"   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change EQ LED color on Equalizer"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Auto"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Equalizer (EQ)"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.led.color.main.player">
+	<Button x="5" y="7"  id="cfg.button.led.color.main.player.mute"    image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Mute LED color"/>
+	<Button x="5" y="30" id="cfg.button.led.color.main.player.repeat"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Repeat LED color"/>
+	<Button x="5" y="53" id="cfg.button.led.color.main.player.shuffle" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Shuffle LED color"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Mute"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Repeat"/>
+	<Text   x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Shuffle"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.led.color.playlist.editor">
+	<Button x="5" y="7"   id="cfg.button.led.color.playlist.editor.auto.close.activate"            image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Auto Close LED color"/>
+	<Button x="5" y="30"  id="cfg.button.led.color.playlist.editor.auto.play.activate"             image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Auto Play LED color"/>
+	<Button x="5" y="53"  id="cfg.button.led.color.playlist.editor.crossfader.activate"            image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Crossfader LED color on Equalizer"/>
+	<Button x="5" y="76"  id="cfg.button.led.color.playlist.editor.intro.mix.activate"             image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Intro Mix LED color"/>
+	<Button x="5" y="99"  id="cfg.button.led.color.playlist.editor.repeat.activate"                image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Repeat A-B LED color"/>
+	<Button x="5" y="122" id="cfg.button.led.color.playlist.editor.sleep.timer.activate"           image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Sleep Timer LED color"/>
+	<Button x="5" y="145" id="cfg.button.led.color.playlist.editor.track.bookmarks.clear.playlist" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Sleep Timer LED color"/>
+	<Button x="5" y="168" id="cfg.button.led.color.playlist.editor.options"                        image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Options LED color"/>
+	<Text   x="5" y="6"   w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Activate Auto Close"/>
+	<Text   x="5" y="29"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Activate Auto Play"/>
+	<Text   x="5" y="52"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Activate Crossfader"/>
+	<Text   x="5" y="75"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Activate Intro Mix"/>
+	<Text   x="5" y="98"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Activate Repeat A-B"/>
+	<Text   x="5" y="121" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Activate Sleep Timer"/>
+	<Text   x="5" y="144" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Clear Playlist"/>
+	<Text   x="5" y="167" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Options"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.led.color.visualizations">
+	<Button x="5" y="7" id="cfg.button.led.color.visualizations.random" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Random LED color"/>
+	<Text   x="5" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Random"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.led.color.bgry">
+	<Button x="5" y="7"  id="cfg.button.led.color.bgry.blue"   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change selected LED color to blue"/>
+	<Button x="5" y="30" id="cfg.button.led.color.bgry.green"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change selected LED color to green"/>
+	<Button x="5" y="53" id="cfg.button.led.color.bgry.red"    image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change selected LED color to red"/>
+	<Button x="5" y="76" id="cfg.button.led.color.bgry.yellow" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change selected LED color to yellow"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Blue"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Green"/>
+	<Text   x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Red"/>
+	<Text   x="5" y="75" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Yellow"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.beats.per.minute.hide.show">
+	<Button x="5"  y="7" id="cfg.button.main.player.beats.per.minute.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide BPM on Main Player's display"/>
+	<Button x="91" y="7" id="cfg.button.main.player.beats.per.minute.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show BPM on Main Player's display"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.playback.status">
+	<Button x="5" y="7"  id="cfg.button.main.player.playback.status.hide"        image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Hide playback status on|Main Player's display"/>
+	<Button x="5" y="30" id="cfg.button.main.player.playback.status.show.symbol" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show playback status on|Main Player's display as symbol"/>
+	<Button x="5" y="53" id="cfg.button.main.player.playback.status.show.text"   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show playback status on|Main Player's display as text"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show as Symbol"/>
+	<Text   x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show as Text"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.songticker.scrolling">
+	<Button          x="5"   y="7"  id="cfg.button.main.player.songticker.scrolling.classic"  image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Songticker text goes in a loop|through entire display"/>
+	<Button          x="5"   y="30" id="cfg.button.main.player.songticker.scrolling.disabled" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Turn songticker text off"/>
+	<Button          x="5"   y="53" id="cfg.button.main.player.songticker.scrolling.modern"   image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Songticker text goes from|left to right and back"/>
+	<Text            x="5"   y="6"  w="82"           color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Classic"/> <!-- w=0 and relatw=1 would cover "Ticker" checkbox -->
+	<Text            x="5"   y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Disable"/>
+	<Text            x="5"   y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Modern"/>
+	<Wasabi:CheckBox x="110" y="7"  id="cfg.checkbox.main.player.songticker.scrolling.ticker" text=""/>
+	<Text            x="110" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Ticker"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.timer">
+	<Layer x="29" y="11" w="162" h="6" image="cfg.bar.orange"/>
+	<Layer x="29" y="11" w="0"   h="6" id="cfg.layer.bar.main.player.timer.min.sec" image="cfg.bar.green"/>
+	<Slider
+		x="7" y="4" w="207" h="22"
+		id="cfg.slider.main.player.timer.min.sec"
+		thumb="cfg.slider.thumb"
+		hoverThumb="cfg.slider.thumb.hover"
+		downThumb="cfg.slider.thumb.down"
+		low="0"
+		high="60"
+		tooltip="Change MIN SEC text position on Main Player's display"/>
+	<text:slider x="14" y="31" text="Left                                  Right"/>
+	<Button x="5" y="56" id="cfg.button.main.player.timer.min.sec" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show Timer and MIN SEC text"/>
+	<Button x="5" y="79" id="cfg.button.main.player.timer.only"    image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show Timer but hide MIN SEC text"/>
+	<Text   x="5" y="55" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show Timer and MIN SEC"/>
+	<Text   x="5" y="78" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show Timer only"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.beat.visualization.hide.show">
+	<Button x="5"  y="7" id="cfg.button.main.player.beat.visualization.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide Beat Visualization|on Main Player's display"/>
+	<Button x="91" y="7" id="cfg.button.main.player.beat.visualization.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show Beat Visualization|on Main Player's display"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.vu.meter.hide.show">
+	<!-- VU METER HIDE/SHOW -->
+	<Button x="5"  y="7" id="cfg.button.main.player.vu.meter.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide VU Meter|on Main Player's display"/>
+	<Button x="91" y="7" id="cfg.button.main.player.vu.meter.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show VU Meter|on Main Player's display"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+	<!-- COLOR -->
+	<Text   x="0"  y="29" bold="1" color="color.cfg.text.window" font="Verdana" fontsize="16" text=" Color"/>
+	<Layer  x="53" y="37" w="117" h="3" image="wasabi.groupbox.top"/>
+	<Button x="5"  y="53" id="cfg.button.main.player.vu.meter.color.blue"  image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Change VU Meter color|on Main Player's display to blue"/>
+	<Button x="91" y="53" id="cfg.button.main.player.vu.meter.color.green" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Change VU Meter color|on Main Player's display to green"/>
+	<Text   x="5"  y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Blue"/>
+	<Text   x="91" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Green"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.visualizer.hide.show">
+	<!-- VISUALIZER HIDE/SHOW -->
+	<Button x="5"  y="7" id="cfg.button.main.player.visualizer.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide Visualizer|on Main Player's display"/>
+	<Button x="91" y="7" id="cfg.button.main.player.visualizer.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show Visualizer|on Main Player's display"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+	<!-- VISUALIZER: OSCILLOSCOPE & SPECTROSCOPE -->
+	<Button x="5" y="30" id="cfg.button.main.player.visualizer.oscilloscope" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Hide Oscilloscope|on Main Player's display"/>
+	<Button x="5" y="53" id="cfg.button.main.player.visualizer.spectroscope" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show Oscilloscope|on Main Player's display"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Oscilloscope"/>
+	<Text   x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Spectroscope"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.visualizer.spectroscope.falloff.speed">
+	<Layer x="29" y="11" w="155" h="6" image="cfg.bar.orange"/>
+	<Layer x="29" y="11" w="0"   h="6" id="cfg.layer.bar.main.player.visualizer.spectroscope.falloff.speed" image="cfg.bar.green"/>
+	<Slider
+		x="7" y="4" w="199" h="22"
+		id="cfg.slider.main.player.visualizer.spectroscope.falloff.speed"
+		thumb="cfg.slider.thumb"
+		hoverThumb="cfg.slider.thumb.hover"
+		downThumb="cfg.slider.thumb.down"
+		low="0"
+		high="4"
+		tooltip="Change Spectroscope's Falloff Speed (Range: 0-4)"/>
+	<text:slider x="14" y="31" text="Slow         Default           Fast"/>
+	<Button x="5" y="56" id="cfg.button.main.player.visualizer.spectroscope.falloff.speed"       image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change the rise and fall speed|of the Spectroscope"/>
+	<Button x="5" y="79" id="cfg.button.main.player.visualizer.spectroscope.falloff.speed.peaks" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change the rise and fall speed|of the Spectroscope's peaks"/>
+	<Text   x="5" y="55" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Spectroscope"/>
+	<Text   x="5" y="78" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Peaks"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.visualizer.oscilloscope.style">
+	<Button x="5" y="7"  id="cfg.button.main.player.visualizer.oscilloscope.style.dots"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Oscilloscope's style to dots"/>
+	<Button x="5" y="30" id="cfg.button.main.player.visualizer.oscilloscope.style.lines" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Oscilloscope's style to lines"/>
+	<Button x="5" y="53" id="cfg.button.main.player.visualizer.oscilloscope.style.solid" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Oscilloscope's style to solid"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Dots"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Lines"/>
+	<Text   x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Solid"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.visualizer.spectroscope.peaks.hide.show">
+	<Button x="5"  y="7" id="cfg.button.main.player.visualizer.spectroscope.peaks.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide Spectroscope's peaks"/>
+	<Button x="91" y="7" id="cfg.button.main.player.visualizer.spectroscope.peaks.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show Spectroscope's peaks"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.visualizer.spectroscope.bandwidth">
+	<Button x="5" y="7"  id="cfg.button.main.player.visualizer.spectroscope.bandwidth.thin"           image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change style of the Spectroscope to thin"/>
+	<Button x="5" y="30" id="cfg.button.main.player.visualizer.spectroscope.bandwidth.wide.grid.hide" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change style of the Spectroscope to wide (and hide Grid)"/>
+	<Button x="5" y="53" id="cfg.button.main.player.visualizer.spectroscope.bandwidth.wide.grid.show" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change style of the Spectroscope to wide (and show Grid)"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Thin"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Wide (hide Grid)"/>
+	<Text   x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Wide (show Grid)"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.main.player.visualizer.spectroscope.color.style">
+	<Button x="5" y="7"  id="cfg.button.main.player.visualizer.spectroscope.color.style.classic" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Spectroscope's color style to Classic"/>
+	<Button x="5" y="30" id="cfg.button.main.player.visualizer.spectroscope.color.style.modern"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Spectroscope's color style to Modern"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Classic"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Modern"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.button.color">
+	<Button x="5" y="7"  id="cfg.button.miscellaneous.button.color.darkblue"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change button color to dark blue"/>
+	<Button x="5" y="30" id="cfg.button.miscellaneous.button.color.lightblue" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change button color to light blue"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Dark Blue"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Light Blue"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.component.background">
+	<Button x="5" y="7"  id="cfg.button.miscellaneous.component.background.skin.classic" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Switch to Classic Skin look"/>
+	<Button x="5" y="30" id="cfg.button.miscellaneous.component.background.skin.modern"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Switch to Modern Skin look"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Classic Skin"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Modern Skin"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.display.light">
+	<!-- DISPLAY LIGHT: HIDE/SHOW -->
+	<Button x="5"  y="7"  id="cfg.button.miscellaneous.display.light.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide display light on component"/>
+	<Button x="91" y="7"  id="cfg.button.miscellaneous.display.light.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show display light on component"/>
+	<Text   x="5"  y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+	<!-- COLOR: WHITE/YELLOW -->
+	<Text   x="0"  y="32" bold="1" color="color.cfg.text.window" font="Verdana" fontsize="16" text=" Color"/>
+	<Layer  x="53" y="40" w="257" h="3" image="wasabi.groupbox.top"/>
+	<Button x="5"  y="59" id="cfg.button.miscellaneous.display.light.white"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change display light color to white"/>
+	<Button x="5"  y="82" id="cfg.button.miscellaneous.display.light.yellow" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change display light color to yellow"/>
+	<Text   x="5"  y="58" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     White"/>
+	<Text   x="5"  y="81" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Yellow"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.light.reflection">
+	<Layer x="29" y="11" w="255" h="6" image="cfg.bar.orange"/>
+	<Layer x="29" y="11" w="0"   h="6" id="cfg.layer.bar.miscellaneous.light.reflection" image="cfg.bar.green"/>
+	<Slider
+		x="7" y="4" w="300" h="22"
+		id="cfg.slider.miscellaneous.light.reflection"
+		thumb="cfg.slider.thumb"
+		hoverThumb="cfg.slider.thumb.hover"
+		downThumb="cfg.slider.thumb.down"
+		low="0"
+		high="255"
+		tooltip="Change light reflection's opacity"/>
+	<text:slider       x="14" y="31" text="Transparent                                        Opaque"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.options">
+	<Wasabi:CheckBox x="5" y="7"  cfgattrib="{280876CF-48C0-40BC-8E86-73CE6BB462E5};Always on top" text=""/>
+	<Text            x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Always On Top"/>
+	<Wasabi:CheckBox x="5" y="30" cfgattrib="{9149C445-3C30-4E04-8433-5A518ED0FDDE};Enable tooltips" text=""/>
+	<Text            x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Enable Tooltips"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.side.panel">
+	<!-- SIDE PANEL HIDE/SHOW -->
+	<Button x="5"  y="7"  id="cfg.button.miscellaneous.side.panel.reflection.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide light reflection on Side Panel"/>
+	<Button x="91" y="7"  id="cfg.button.miscellaneous.side.panel.reflection.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show light reflection on Side Panel"/>
+	<Text   x="5"  y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+	<!-- WIDTH -->
+	<Text   x="0"   y="32" bold="1" color="color.cfg.text.window" font="Verdana" fontsize="16" text=" Side Panel Width"/>
+	<Layer  x="130" y="40" w="100" h="3" image="wasabi.groupbox.top"/>
+	<Button x="5"   y="59" id="cfg.button.miscellaneous.side.panel.width.thin" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Side Panel width to thin"/>
+	<Button x="5"   y="82" id="cfg.button.miscellaneous.side.panel.width.wide" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Side Panel width to wide"/>
+	<Text   x="5"   y="58" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Thin"/>
+	<Text   x="5"   y="81" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Wide"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.miscellaneous.time.format">
+	<Button x="5" y="7"  id="cfg.button.miscellaneous.time.format.long"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show time on Playlist Editor (OPTIONS)| in long form: HH:MM:SS"/>
+	<Button x="5" y="30" id="cfg.button.miscellaneous.time.format.short" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Show time on Playlist Editor (OPTIONS)| in short form: MM:SS"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Long (0:00:00)"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Short (0:00)"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.hide.show">
+	<Button x="5"  y="7" id="cfg.button.notification.hide" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Hide Notifications on the Desktop|at title change"/>
+	<Button x="91" y="7" id="cfg.button.notification.show" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Show Notifications on the Desktop|at title change"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hide"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Show"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.effect">
+	<!-- NOTIFICATION: FADE-IN/FADE-OUT -->
+	<Button x="5"  y="7" id="cfg.button.notification.effect.fade.in"  image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Select Fade-In feature"/>
+	<Button x="91" y="7" id="cfg.button.notification.effect.fade.out" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Select Fade-Out feature"/>
+	<Text   x="5"  y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Fade-In"/>
+	<Text   x="91" y="6" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Fade-Out"/>
+	<!-- NOTIFICATION: EFFECT -->
+	<Text   x="0"  y="32"  bold="1" color="color.cfg.text.window" font="Verdana" fontsize="16" text=" Effect"/>
+	<Layer  x="60" y="39"  w="169" h="3" image="wasabi.groupbox.top"/>
+	<Button x="5"  y="60"  id="cfg.button.notification.effect.alpha.blending"   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Use Alpha Blending effect|while showing Notification"/>
+	<Button x="5"  y="83"  id="cfg.button.notification.effect.slide.horizontal" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Use Horizontal Slide effect|while showing Notification"/>
+	<Button x="5"  y="106" id="cfg.button.notification.effect.slide.vertical"   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Use Vertical Slide effect|while showing Notification"/>
+	<Text   x="5"  y="59"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Alpha Blending"/>
+	<Text   x="5"  y="82"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Horizontal Slide"/>
+	<Text   x="5"  y="105" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Vertical Slide"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.location.on.display">
+	<Button x="5"   y="13" id="cfg.button.notification.location.on.display.top.left"      image="cfg.radio.location" hoverImage="cfg.radio.location.hover" activeImage="cfg.radio.location.active" tooltip="Set position on display:|top left"/>
+	<Button x="137" y="13" id="cfg.button.notification.location.on.display.top"           image="cfg.radio.location" hoverImage="cfg.radio.location.hover" activeImage="cfg.radio.location.active" tooltip="Set position on display:|top"/>
+	<Button x="269" y="13" id="cfg.button.notification.location.on.display.top.right"     image="cfg.radio.location" hoverImage="cfg.radio.location.hover" activeImage="cfg.radio.location.active" tooltip="Set position on display:|top right"/>
+	<Button x="5"   y="37" id="cfg.button.notification.location.on.display.bottom.left"   image="cfg.radio.location" hoverImage="cfg.radio.location.hover" activeImage="cfg.radio.location.active" tooltip="Set position on display:|bottom left"/>
+	<Button x="137" y="37" id="cfg.button.notification.location.on.display.bottom"        image="cfg.radio.location" hoverImage="cfg.radio.location.hover" activeImage="cfg.radio.location.active" tooltip="Set position on display:|bottom"/>
+	<Button x="269" y="37" id="cfg.button.notification.location.on.display.bottom.right"  image="cfg.radio.location" hoverImage="cfg.radio.location.hover" activeImage="cfg.radio.location.active" tooltip="Set position on display:|bottom right"/>
+	<Text   x="5"   y="11" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Top Left"/>
+	<Text   x="137" y="11" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Top"/>
+	<Text   x="269" y="11" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Top Right"/>
+	<Text   x="5"   y="35" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Bottom Left"/>
+	<Text   x="137" y="35" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Bottom"/>
+	<Text   x="269" y="35" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Bottom Right"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.relative.to">
+	<Button x="5" y="7"  id="cfg.button.notification.relative.to.monitor"  image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Set Notifier's position relative to|the entire monitor size"/>
+	<Button x="5" y="30" id="cfg.button.notification.relative.to.viewport" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Set Notifier's position relative to|the desktop size"/>
+	<Text   x="5" y="5"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Monitor"/>
+	<Text   x="5" y="28" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Viewport"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.offset">
+	<Layer x="34" y="11" w="255" h="6" image="cfg.bar.orange"/>
+	<Layer x="34" y="11" w="0"   h="6" id="cfg.layer.bar.notification.offset" image="cfg.bar.green"/>
+	<Slider
+		x="12" y="4" w="300" h="22"
+		id="cfg.slider.notification.offset"
+		thumb="cfg.slider.thumb"
+		hoverThumb="cfg.slider.thumb.hover"
+		downThumb="cfg.slider.thumb.down"
+		low="0"
+		high="255"
+		tooltip="Change Notifier's position on the x-/y-axis"/>
+	<text:slider x="25" y="31" text="0 px                                                    255 px"/>
+	<Text   x="142" y="31" w="60" h="19" id="cfg.offset.value" font="Verdana" fontsize="16" color="color.cfg.text.radio.button" text="0"/>
+	<Button x="98"  y="57" id="cfg.button.notification.offset.x" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Set Notifier's position on the X-axis (horizontal)"/>
+	<Button x="184" y="57" id="cfg.button.notification.offset.y" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Set Notifier's position on the Y-axis (vertical)"/>
+	<Text   x="98"  y="56" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     X-axis"/>
+	<Text   x="184" y="56" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Y-axis"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.time">
+	<Layer x="34" y="11" w="255" h="6" image="cfg.bar.orange"/>
+	<Layer x="34" y="11" w="0"   h="6" id="cfg.layer.bar.notification.time" image="cfg.bar.green"/>
+	<Slider
+		x="12" y="4" w="300" h="22"
+		id="cfg.slider.notification.time"
+		thumb="cfg.slider.thumb"
+		hoverThumb="cfg.slider.thumb.hover"
+		downThumb="cfg.slider.thumb.down"
+		low="1"
+		high="10"
+		tooltip="Change Notifier's time settings"/>
+	<text:slider x="25" y="31" text="1 sec                                                   10 sec"/>
+	<Text   x="142" y="31" w="60" h="19" id="cfg.time.value" font="Verdana" fontsize="16" color="color.cfg.text.radio.button" text="0"/>
+	<Button x="46"  y="57" id="cfg.button.notification.time.fade.in"  image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Select Fade-In feature"/>
+	<Button x="132" y="57" id="cfg.button.notification.time.hold"     image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Select Hold feature"/>
+	<Button x="218" y="57" id="cfg.button.notification.time.fade.out" image="cfg.radio.hide.show" hoverImage="cfg.radio.hide.show.hover" activeImage="cfg.radio.hide.show.active" tooltip="Select Fade-Out feature"/>
+	<Text   x="46"  y="56" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Fade-In"/>
+	<Text   x="132" y="56" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Hold"/>
+	<Text   x="218" y="56" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Fade-Out"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.miscellaneous">
+	<Wasabi:CheckBox x="5" y="7"  id="cfg.checkbox.notification.miscellaneous.cover.art"      text=""/>
+	<Wasabi:CheckBox x="5" y="30" id="cfg.checkbox.notification.miscellaneous.track.duration" text=""/>
+	<Wasabi:CheckBox x="5" y="53" id="cfg.checkbox.notification.miscellaneous.track.number"   text=""/>
+	<Text            x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Cover Art"/>
+	<Text            x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Track Duration"/>
+	<Text            x="5" y="52" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Track Number"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.notification.size">
+	<Button x="5" y="7"  id="cfg.button.notification.size.big"   image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Notifier's size to big"/>
+	<Button x="5" y="30" id="cfg.button.notification.size.small" image="cfg.radio" hoverImage="cfg.radio.hover" activeImage="cfg.radio.active" tooltip="Change Notifier's size to small"/>
+	<Text   x="5" y="6"  w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Big"/>
+	<Text   x="5" y="29" w="0" relatw="1" color="color.cfg.text.radio.button" font="Verdana" fontsize="16" ghost="1" text="     Small"/>
+</groupdef>
+<groupdef id="cfg.group.titlebox.update.check">
+	<Browser x="0" y="0" w="0" h="0" id="cfg.browser.webpage"/>
+	<Button            x="28" y="11" id="cfg.button.update.check" image="cfg.blue" hoverImage="cfg.blue.hover" downImage="cfg.blue.down" activeImage="cfg.blue.down" tooltip="Check whether there is a new|version of the skin"/>
+	<text:button.label x="28" y="11" text=" Check for Update "/>
+</groupdef>
+<groupdef id="cfg.group.page.color.theme">
+	<Wasabi:TitleBox x="160" y="14"  w="328" h="82"  content="cfg.group.titlebox.export" title=" Export "/>
+	<Wasabi:TitleBox x="160" y="109" w="328" h="178" content="cfg.group.titlebox.import" title=" Import "/>
+</groupdef>
+<groupdef id="cfg.group.page.component.label">
+	<Wasabi:TitleBox x="20"  y="14"  w="230" h="163" content="cfg.group.titlebox.component.label"                  title=" Component "/>
+	<Wasabi:TitleBox x="20"  y="191" w="230" h="71"  content="cfg.group.titlebox.component.label.main.player"      title=" Main Player Label "/>
+	<Wasabi:TitleBox x="269" y="14"  w="359" h="163" content="cfg.group.titlebox.component.label.hide.show"        title=" Component Label (top)"/>
+	<Wasabi:TitleBox x="269" y="191" w="359" h="71"  content="cfg.group.titlebox.component.label.bottom.hide.show" title=" Component Label (bottom)"/>
+</groupdef>
+<groupdef id="cfg.group.page.led.color">
+	<Wasabi:TitleBox x="20"  y="14"  w="190" h="71"  content="cfg.group.titlebox.led.color.equalizer"       title=" Equalizer "/>
+	<Wasabi:TitleBox x="20"  y="98"  w="190" h="94"  content="cfg.group.titlebox.led.color.main.player"     title=" Main Player "/>
+	<Wasabi:TitleBox x="229" y="14"  w="190" h="209" content="cfg.group.titlebox.led.color.playlist.editor" title=" Playlist Editor "/>
+	<Wasabi:TitleBox x="438" y="14"  w="190" h="48"  content="cfg.group.titlebox.led.color.visualizations"  title=" Visualizations "/>
+	<Wasabi:TitleBox x="438" y="75"  w="190" h="117" content="cfg.group.titlebox.led.color.bgry"            title=" LED Color "/>
+</groupdef>
+<groupdef id="cfg.group.page.main.player">
+	<Wasabi:TitleBox x="20"  y="14"  w="190" h="48"  content="cfg.group.titlebox.main.player.beats.per.minute.hide.show"              title=" Beats per Minute "/>
+	<Wasabi:TitleBox x="20"  y="75"  w="190" h="94"  content="cfg.group.titlebox.main.player.playback.status"                         title=" Playback Status "/>
+	<Wasabi:TitleBox x="20"  y="182" w="190" h="94"  content="cfg.group.titlebox.main.player.songticker.scrolling"                    title=" Songticker Scrolling "/>
+	<Wasabi:TitleBox x="20"  y="289" w="239" h="119" content="cfg.group.titlebox.main.player.timer"                                   title=" Timer "/>
+	<Wasabi:TitleBox x="229" y="14"  w="190" h="48"  content="cfg.group.titlebox.main.player.beat.visualization.hide.show"            title=" Beat Visualization "/>
+	<Wasabi:TitleBox x="229" y="75"  w="190" h="94"  content="cfg.group.titlebox.main.player.vu.meter.hide.show"                      title=" VU Meter "/>
+	<Wasabi:TitleBox x="229" y="182" w="190" h="94"  content="cfg.group.titlebox.main.player.visualizer.hide.show"                    title=" Visualizer "/>
+	<Wasabi:TitleBox x="278" y="289" w="231" h="119" content="cfg.group.titlebox.main.player.visualizer.spectroscope.falloff.speed"   title=" Falloff Speed "/>
+	<Wasabi:TitleBox x="438" y="121" w="190" h="48"  content="cfg.group.titlebox.main.player.visualizer.spectroscope.peaks.hide.show" title=" Spectroscope Peaks "/>
+	<Wasabi:TitleBox x="438" y="182" w="190" h="94"  content="cfg.group.titlebox.main.player.visualizer.spectroscope.bandwidth"       title=" Spectroscope Bandwidth "/>
+	<Wasabi:TitleBox x="438" y="14"  w="190" h="94"  content="cfg.group.titlebox.main.player.visualizer.oscilloscope.style"           title=" Oscilloscope Style "/>
+	<Wasabi:TitleBox x="528" y="289" w="100" h="119" content="cfg.group.titlebox.main.player.visualizer.spectroscope.color.style"     title=" Color Style "/>
+</groupdef>
+<groupdef id="cfg.group.page.miscellaneous">
+	<Wasabi:TitleBox x="20"  y="14"  w="330" h="71"  content="cfg.group.titlebox.miscellaneous.button.color"         title=" Button Color "/>
+	<Wasabi:TitleBox x="20"  y="98"  w="330" h="123" content="cfg.group.titlebox.miscellaneous.display.light"        title=" Display Light on Component "/>
+	<Wasabi:TitleBox x="20"  y="234" w="331" h="71"  content="cfg.group.titlebox.miscellaneous.light.reflection"     title=" Light Reflection on Display "/>
+	<Wasabi:Titlebox x="20"  y="318" w="331" h="71"  content="cfg.group.titlebox.miscellaneous.time.format"          title=" Time Format on Playlist Editor (OPTIONS)" />
+	<Wasabi:TitleBox x="369" y="14"  w="250" h="71"  content="cfg.group.titlebox.miscellaneous.component.background" title=" Component Background "/>
+	<Wasabi:TitleBox x="369" y="98"  w="250" h="123" content="cfg.group.titlebox.miscellaneous.side.panel"           title=" Light Reflection on Side Panel "/>
+	<Wasabi:TitleBox x="370" y="234" w="250" h="71"  content="cfg.group.titlebox.miscellaneous.options"              title=" Options "/>
+</groupdef>
+<groupdef id="cfg.group.page.notification">
+	<Wasabi:TitleBox x="20"  y="14"  w="249" h="48"  content="cfg.group.titlebox.notification.hide.show"           title=" Notification "/>
+	<Wasabi:TitleBox x="20"  y="75"  w="249" h="146" content="cfg.group.titlebox.notification.effect"              title=" Fade "/>
+	<Wasabi:TitleBox x="20"  y="234" w="404" h="93"  content="cfg.group.titlebox.notification.location.on.display" title=" Location on Display "/>
+	<Wasabi:TitleBox x="20"  y="337" w="404" h="71"  content="cfg.group.titlebox.notification.relative.to"         title=" Relative to "/>
+	<Wasabi:TitleBox x="288" y="14"  w="340" h="97"  content="cfg.group.titlebox.notification.offset"              title=" Offset "/>
+	<Wasabi:TitleBox x="288" y="124" w="340" h="97"  content="cfg.group.titlebox.notification.time"                title=" Time "/>
+	<Wasabi:TitleBox x="443" y="337" w="185" h="71"  content="cfg.group.titlebox.notification.size"                title=" Size "/>
+	<Wasabi:TitleBox x="443" y="234" w="185" h="93"  content="cfg.group.titlebox.notification.miscellaneous"       title=" Miscellaneous "/>
+</groupdef>
+<groupdef id="cfg.group.page.update">
+    <Wasabi:TitleBox x="197" y="100" w="251" h="82" content="cfg.group.titlebox.update.check" title="Check for New Version"/>
+</groupdef>
+<groupdef id="cfg.group.all.pages">
+	<Group fitparent="1" id="cfg.group.page.color.theme"/>
+	<Group fitparent="1" id="cfg.group.page.component.label"/>
+	<Group fitparent="1" id="cfg.group.page.led.color"/>
+	<Group fitparent="1" id="cfg.group.page.main.player"/>
+	<Group fitparent="1" id="cfg.group.page.miscellaneous"/>
+	<Group fitparent="1" id="cfg.group.page.notification"/>
+	<Group fitparent="1" id="cfg.group.page.update"/>
+</groupdef>
+<groupdef id="cfg.group.content">
+	<Rect  x="0" y="0"  w="647" h="29"  color="#a9c8e1" filled="1"/> <!-- main selection background - same color as buttons #a9c8e1 -->
+	<Rect  x="0" y="29" w="647" h="427" color="#d9e7f1" filled="1"/> <!-- background light blue #d9e7f1 -->
+	<Rect  x="0" y="29" w="647" h="1"   color="#ffffff" filled="1"/> <!-- white line -->
+	<Layer x="0" y="29" image="cfg.bolt"/>
+	<Group
+		x="1" y="1" w="645" h="27"
+		id="cfg.group.button.tab"/>
+	<Group
+		x="0" y="29" w="647" h="427"
+		id="cfg.group.all.pages"/>
+</groupdef>
+<groupdef id="cfg.group.main" inherit_group="group.frame.noframe">
+	<Group
+		x="1" y="27" w="647" h="456"
+		id="cfg.group.content"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Configuration"/>
+	<script
+		file="SCRIPTS\configuration.maki"
+		param="@SKINPATH@SCRIPTS\|@SKINPATH@HTML\"/> <!-- keep the parameter in here and not in the script otherwise it will not work -->
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="649" default_h="484"
+	default_visible="0"
+	id="configuration"
+	name="Configuration"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="649" h="484"
+		id="normal"
+		background="base.texture"
+		resizable="0"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="cfg.group.main"/>
+	</Layout>
+</Container>

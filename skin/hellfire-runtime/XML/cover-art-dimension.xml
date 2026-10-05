@@ -1,0 +1,109 @@
+<!-- ***************************************** -->
+<!-- Filename: album-cover-dimension.xml       -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="cad.group.main" inherit_group="group.frame.standardframe">
+	<Layer
+		x="32" y="32" w="320" h="170"
+		image="filter.darkblue"
+		tile="1"/>
+	<Rect x="32"  y="32"  w="1"   h="170" color="color.filter.darkblue.left.top"/>
+	<Rect x="32"  y="32"  w="320" h="1"   color="color.filter.darkblue.left.top"/>
+	<Rect x="351" y="33"  w="1"   h="169" color="color.filter.darkblue.right.bottom"/>
+	<Rect x="33"  y="201" w="319" h="1"   color="color.filter.darkblue.right.bottom"/>
+	<Layer
+		x="43" y="43" w="298" h="80"
+		image="filter.lightblue"
+		tile="1"/>
+	<Rect x="43"  y="43"  w="1"   h="80" color="color.filter.lightblue.left.top"/>
+	<Rect x="43"  y="43"  w="298" h="1"  color="color.filter.lightblue.left.top"/>
+	<Rect x="340" y="44"  w="1"   h="79" color="color.filter.lightblue.right.bottom"/>
+	<Rect x="44"  y="122" w="297" h="1"  color="color.filter.lightblue.right.bottom"/>
+	<!-- COVER WIDTH -->
+	<text:info
+		x="65" y="63" w="103"
+		text="COVER WIDTH"/>
+	<!-- EDIT BOX: WIDTH -->
+	<Group
+		x="190" y="55" w="40" h="24"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="192" y="57" w="35" h="19"
+		id="cad.edit.width"/> <!-- numbers/text cannot be aligned by design -->
+	<Group
+		x="245" y="54" w="85" h="24"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "DEFAULT" (WIDTH) - image changeable via button-color.m script -->
+	<Button
+		x="247" y="56" w="80"  h="19"
+		id="cad.button.default.width"
+		tooltip="Set Cover Art window's width to default"/>
+	<Layer
+		x="59" y="83" w="114" h="1"
+		id="cad.layer.separator"
+		image="wasabi.groupbox.top"/>
+	<!-- COVER HEIGHT -->
+	<text:info
+		x="61" y="97" w="112"
+		text="COVER HEIGHT"/>
+	<!-- EDIT BOX: HEIGHT -->
+	<Group
+		x="190" y="89" w="40" h="24"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="192" y="91" w="35" h="19"
+		id="cad.edit.height"/> <!-- numbers/text cannot be aligned by design -->
+	<!-- BUTTON "DEFAULT" (HEIGHT) - image changeable via button-color.m script -->
+	<Group
+		x="245" y="88" w="85" h="24"
+		id="wasabi.objectframe.group"/>
+	<Button
+		x="247" y="90" w="80"  h="19"
+		id="cad.button.default.height"
+		tooltip="Set Cover Art window's height to default"/>
+	<!-- TEXT FIELD: DIMENSION -->
+	<text:field
+		x="43" y="133" w="298" h="25"
+		id="cad.text.dimension"/>
+	<Group
+		x="43" y="167" w="298" h="24"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "APPLY NEW DIMENSION" - image changeable via button-color.m script -->
+	<Button
+		x="45" y="169" w="228" h="19"
+		id="cad.button.apply.new.dimension"
+		tooltip="Resize Cover Art window"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Cover Art Dimension"/>
+	<!-- BUTTON "CLOSE" (BOTTOM) - image changeable via button-color.m script -->
+	<Button
+		x="275" y="169" w="63" h="19"
+		id="cad.button.close.bottom"
+		tooltip="Close Cover Art Dimension"/>
+	<script
+		file="SCRIPTS\cover-art-dimension.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="384" default_h="234"
+	default_visible="0"
+	id="cover.art.dimension"
+	name="Cover Art Dimension"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="384" h="234"
+		id="normal"
+		background="base.texture"
+		resizable="0"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="cad.group.main"/>
+	</Layout>
+</Container>

@@ -1,0 +1,60 @@
+<!-- ***************************************** -->
+<!-- Filename: vinyl-record.xml                -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="vr.group.vinyl.and.label"> <!-- keep it as group, we need it in script -->
+	<Layer
+		x="0" y="0"
+		id="vr.layer.vinyl"
+		image="vr.vinyl"/>
+	<Layer
+		x="159" y="159"
+		id="vr.layer.label"
+		image="vr.label"/>
+</groupdef>
+<groupdef id="vr.group.main">
+	<Group
+		x="0" y="0" w="560" h="474"
+		id="vr.group.vinyl.and.label"/>
+	<AlbumArt
+		x="10" y="10" w="454" h="454"
+		id="vr.albumart"
+		notfoundimage="not.found.image"
+		stretched="1"/>
+	<Layer
+		x="0" y="0"
+		id="vr.layer.used.effect"
+		image="vr.used.effect"/>
+	<Layer
+		fitparent="1"
+		id="vr.layer.context.menu"/> <!-- area for component's own context menu -->
+	<!-- BUTTON "CLOSE" BIG -->
+	<Button
+		x="484" y="10"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close Vinyl Record"/>
+	<script
+		file="SCRIPTS\vinyl-record.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="710" default_h="474"
+	default_visible="0"
+	id="vinyl.record"
+	name="Vinyl Record"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="710" h="474"
+		id="normal"
+		alphabackground="vr.background.alpha">
+		<Group
+			fitparent="1"
+			id="vr.group.main"/>
+	</Layout>
+</Container>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<WinampAbstractionLayer version="1.36">
+	<skininfo>
+		<author>PeterK.</author>
+		<comment>NEOWULF design and Studio engines; original Quinto Black CT 5.1 by PeterK.</comment>
+		<email>peter_ka@gmx.net</email>
+		<homepage>https://quinto-black-ct.info</homepage>
+		<name>NEOWULF From Hell · Quinto CT 5.1</name>
+		<screenshot>screenshot.png</screenshot>
+		<version>6.0 Hellfire Studio</version>
+	</skininfo>
+
+	<include file="XML\accelerators.xml"/>
+	<include file="XML\elements.xml"/>
+	<include file="XML\gammaset.xml"/>
+	<include file="XML\standard-objects.xml"/>
+<include file="XML\neowulf-elements.xml"/>
+
+	<!-- MAIN COMPONENTS -->
+	<include file="XML\main-player.xml"/>
+	<include file="XML\media-library.xml"/>
+	<include file="XML\playlist-editor.xml"/>
+	<include file="XML\tooltip.xml"/>
+	<include file="XML\video.xml"/>
+	<include file="XML\visualizations.xml"/>
+
+	<!-- CONTEXT MENU -->
+	<script  file="SCRIPTS\separator.maki" param="separator1"/>
+	<include file="XML\about.xml"/>
+	<script  file="SCRIPTS\separator.maki" param="separator2"/>
+	<include file="XML\configuration.xml"/>
+	<script  file="SCRIPTS\separator.maki" param="separator3"/>
+
+	<!-- SPACE FOR UP TO 15 ADDITIONAL COMPONENTS (18 XML FILES) -->
+	<include file="XML\album-cover-flow.xml"/>
+	<include file="XML\album-cover-flow-wallpaper.xml"/>
+	<include file="XML\compact-cassette.xml"/>
+	<include file="XML\compact-disc.xml"/>
+	<include file="XML\cover-art.xml"/>
+	<include file="XML\cover-art-dimension.xml"/>
+	<include file="XML\equalizer.xml"/>
+	<include file="XML\frequency-response-graph.xml"/>
+	<include file="XML\loudspeaker-left.xml"/>
+	<include file="XML\loudspeaker-right.xml"/>
+	<include file="XML\notification.xml"/>
+	<include file="XML\rgb-color-changer.xml"/>
+	<include file="XML\spectrum-analyzer.xml"/>
+	<include file="XML\vinyl-record.xml"/>
+	<include file="XML\vinyl-record-player.xml"/>
+	<include file="XML\vu-meter-analog.xml"/>
+	<include file="XML\vu-meter-digital-horizontal.xml"/>
+	<include file="XML\vu-meter-digital-vertical.xml"/>
+	<script file="SCRIPTS\separator.maki" param="separator4"/>
+<include file="XML\neowulf-decks.xml"/>
+</WinampAbstractionLayer>

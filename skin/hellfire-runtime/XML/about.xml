@@ -1,0 +1,80 @@
+<!-- ***************************************** -->
+<!-- Filename: about.xml                       -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="about.group.main">
+	<Layer
+		x="0" y="0" w="600" h="618"
+		id="about.layer.background"
+		image="about.background"/>
+	<Layer
+		x="0" y="0"
+		id="about.layer.screenshot"
+		image="about.screenshot"/>
+	<Layer
+		x="0" y="273"
+		id="about.layer.skin.name"
+		image="about.skin.name"/>
+	<Text x="40"  y="311" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Version:"/>
+	<Text x="100" y="311" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="5.1"/>
+	<Text x="40"  y="335" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Design/Coding:                (peter_ka@gmx.net)"/>
+	<Text x="145" y="335" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="PeterK."/>
+	<Text x="40"  y="352" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Songticker Font &quot;Monopoint&quot;:                    (www.volcano-type.de)"/>
+	<Text x="230" y="352" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Boris Kahl"/>
+	<Text x="40"  y="369" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Songinfo Font &quot;Arcade&quot;:                          (www.pizzadude.dk)"/>
+	<Text x="196" y="369" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Jakob Fischer"/>
+	<Text x="40"  y="386" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="VU Meter Analog Font &quot;Oblivious&quot;:                          (www.pizzadude.dk)"/>
+	<Text x="259" y="386" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Jakob Fischer"/>
+	<Text x="40"  y="403" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Cassette Sticker Font &quot;Mom's Typewriter&quot;:                                (www.dafont.com)"/>
+	<Text x="310" y="403" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Christoph Mueller"/>
+	<Text x="40"  y="420" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Component Label Font &quot;Orbitron&quot;:                             (https://fonts.google.com)"/>
+	<Text x="260" y="420" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Matt McInerney"/>
+	<Text x="40"  y="437" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Software used:"/>
+	<Text x="143" y="437" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Inkscape, blender, Visual Studio Code"/>
+	<Text x="40"  y="454" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Thanks to:                                           for comments, opinions and support"/>
+	<Text x="112" y="454" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Ariszló, Victhor, Aminifu"/>
+	<Text x="40"  y="471" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Thanks to:                     for his infinite enthusiasm and posts on FB"/>
+	<Text x="112" y="471" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="Ben Cleary"/>
+	<Text x="40"  y="488" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="Thanks to:                                  for skin release articles and download page"/>
+	<Text x="112" y="488" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="www.winaero.com"/>
+	<Text x="40"  y="511" bold="0" color="color.text.credits"      font="Verdana" fontsize="16" text="A big THANK YOU for useful tips goes to:"/>
+	<Text x="298" y="511" bold="1" color="color.text.credits.bold" font="Verdana" fontsize="16" text="martin.deimos"/>
+	<Layer
+		x="0" y="547"
+		id="about.layer.winamp"
+		image="about.winamp"/>
+	<Text x="40" y="552" bold="1" color="color.white" font="Verdana" fontsize="16" text="Quinto Black CT"/>
+	<Text x="40" y="569" bold="0" color="color.white" font="Verdana" fontsize="16" text="was created and tested using"/>
+	<Text x="40" y="586" bold="1" color="color.white" font="Verdana" fontsize="16" text="Winamp 5.666 Build 3516"/>
+	<!-- BUTTON "CLOSE" BIG -->
+	<Button
+		x="620" y="0"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close &quot;About&quot; Window"/>
+	<script
+		file="SCRIPTS\about.maki"/>
+</groupdef>
+<Container
+	default_x="0" default_y="0" default_w="6" default_h="6"
+	default_visible="0"
+	id="about"
+	name="About"
+	nomenu="1">
+	<Layout
+		x="0" y="0" w="6" h="6"
+		id="normal"
+		alphabackground="about.background.alpha"
+		move="0"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			x="0" y="0" w="658" h="618"
+			id="about.group.main"/>
+			<!-- x and y are computed in the script file, w="658" and not w="600" because we have the big close button -->
+	</Layout>
+</Container>

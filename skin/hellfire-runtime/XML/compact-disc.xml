@@ -1,0 +1,51 @@
+<!-- ***************************************** -->
+<!-- Filename: compact-disc.xml                -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="cd.group.main">
+	<Layer
+		x="0" y="0"
+		id="cd.layer.disc"
+		image="cd.disc"/>
+	<AlbumArt
+		x="67" y="17" w="458" h="458"
+		id="cd.albumart"
+		notfoundimage="not.found.image"
+		stretched="1"/>
+	<Layer
+		x="0" y="0"
+		id="cd.layer.case"
+		image="cd.case"/>
+	<Layer
+		fitparent="1"
+		id="cd.layer.context.menu"/> <!-- area for component's own context menu; keep as big as the layout -->
+	<!-- BUTTON "CLOSE" BIG -->
+	<Button
+		x="566" y="10"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close Compact Disc"/>
+	<script
+		file="SCRIPTS\compact-disc.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="800" default_h="492"
+	default_visible="0"
+	id="compact.disc"
+	name="Compact Disc"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="800" h="492"
+		id="normal"
+		alphabackground="cd.background.alpha">
+		<Group
+			fitparent="1"
+			id="cd.group.main"/>
+	</Layout>
+</Container>

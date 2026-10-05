@@ -1,0 +1,51 @@
+<!-- ***************************************** -->
+<!-- Filename: tooltip.xml                     -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="wasabi.tooltip.group">
+	<Grid
+		x="0" y="0" w="0" h="0" relatw="1" relath="1"
+		id="tooltip.grid"
+		topleft    ="tooltip.grid.top.left"
+		top        ="tooltip.grid.top"
+		topright   ="tooltip.grid.top.right"
+		left       ="tooltip.grid.left"
+		middle     ="tooltip.grid.middle"
+		right      ="tooltip.grid.right"
+		bottomleft ="tooltip.grid.bottom.left"
+		bottom     ="tooltip.grid.bottom"
+		bottomright="tooltip.grid.bottom.right"
+		sysregion="1"/> <!-- id cannot be changed -->
+	<Text
+		id="tooltip.text"
+		visible="0"/> <!-- id cannot be changed -->
+	<Text
+		x="10" y="4" w="-20" h="20" relatw="1"
+		id="tooltip.text.line1"
+		align="left"
+		color="color.tooltip.text"
+		font="Verdana"
+		fontsize="20"
+		text=""/>
+	<Text
+		x="10" y="24" w="-20" h="20" relatw="1"
+		id="tooltip.text.line2"
+		align="left"
+		color="color.tooltip.text"
+		font="Verdana"
+		fontsize="20"
+		text=""/>
+	<Text
+		x="10" y="44" w="-20" h="20" relatw="1"
+		id="tooltip.text.line3"
+		align="left"
+		color="color.tooltip.text"
+		font="Verdana"
+		fontsize="20"
+		text=""/>
+	<script
+		file="SCRIPTS\tooltip.maki"/>
+</groupdef>

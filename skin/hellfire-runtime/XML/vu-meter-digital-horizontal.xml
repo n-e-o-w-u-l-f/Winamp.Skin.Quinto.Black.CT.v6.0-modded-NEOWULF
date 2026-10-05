@@ -1,0 +1,151 @@
+<!-- ***************************************** -->
+<!-- Filename: vu-meter-digital-horizontal.xml -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="vu.mdh.group.main">
+	<!-- COMPONENT BASE: do not remove width and height because we use setXmlParam() -->
+	<Layer
+		x="0" y="0" w="638" h="208"
+		id="vu.mdh.layer.base"/>
+	<!-- COMPONENT BACKGROUND -->
+	<Layer
+		x="54" y="14" w="530" h="170"
+		id="vu.mdh.layer.component.filter.black"
+		image="filter.black"
+		tile="1"/>
+	<Layer
+		x="0" y="0" w="638" h="208"
+		id="vu.mdh.layer.component"
+		image="vu.mdh.component"/>
+	<!-- COMPONENT LABEL -->
+	<Layer
+		x="243" y="20"
+		id="vu.mdh.layer.label"
+		image="vu.mdh.label"/>
+	<!-- COMPONENT LABEL BOTTOM -->
+	<Layer
+		x="264" y="142"
+		id="vu.mdh.layer.label.bottom"
+		image="vu.mdh.label.bottom"/>
+	<!-- SIDE PANEL: do not remove width and height because we use setXmlParam -->
+	<Layer
+		x="39" y="10" w="20" h="178"
+		id="vu.mdh.layer.side.panel.width.thin.left"/>
+	<Layer
+		x="579" y="10" w="20" h="178"
+		id="vu.mdh.layer.side.panel.width.thin.right"/>
+	<Layer
+		x="19" y="10" w="40" h="178"
+		id="vu.mdh.layer.side.panel.width.wide.left"/>
+	<Layer
+		x="579" y="10" w="40" h="178"
+		id="vu.mdh.layer.side.panel.width.wide.right"/>
+	<!-- SIDE PANEL LIGHT REFLECTION -->
+	<Layer
+		x="39" y="-105" relaty="1"
+		id="vu.mdh.layer.side.panel.light.reflection.thin.left"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="vu.mdh.layer.side.panel.light.reflection.thin.right"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="19" y="-105" relaty="1"
+		id="vu.mdh.layer.side.panel.light.reflection.wide.left"
+		image="side.panel.light.reflection.wide"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="vu.mdh.layer.side.panel.light.reflection.wide.right"
+		image="side.panel.light.reflection.wide"/>
+	<!-- SIDE PANEL SHADOW -->
+	<Layer
+		x="59" y="14" w="10" h="170"
+		id="vu.mdh.layer.side.panel.shadow.left"
+		image="side.panel.shadow.left"/>
+	<Layer
+		x="569" y="14" w="10" h="170"
+		id="vu.mdh.layer.side.panel.shadow.right"
+		image="side.panel.shadow.right"/>
+	<!-- LED ANIMATION -->
+	<AnimatedLayer
+		x="75" y="52"
+		id="vu.mdh.animatedlayer.led.left"
+		image="vu.mdh.led.animation.blue.left"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="15"/>
+	<AnimatedLayer
+		x="75" y="92"
+		id="vu.mdh.animatedlayer.led.right"
+		image="vu.mdh.led.animation.blue.right"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="15"/>
+	<!-- LIGHT - OVERLAY - FRAME - LIGHT REFLECTION -->
+	<Layer
+		x="75" y="37" w="488" h="37"
+		id="vu.mdh.layer.display.light"
+		image="display.light.white"
+		tile="1"/>
+	<Layer
+		x="75" y="37" w="488" h="85"
+		id="vu.mdh.layer.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="71" y="33"
+		id="vu.mdh.layer.display.frame"
+		image="vu.mdh.display.frame"/>
+	<Layer
+		x="75" y="37"
+		id="vu.mdh.layer.light.reflection"
+		image="vu.mdh.light.reflection"/>
+	<!-- NSTATESBUTTON "COLOR" -->
+	<NStatesButton
+		x="499" y="131"
+		id="vu.mdh.nstatesbutton.color"
+		image="nstatesbutton.blue"
+		hoverImage="nstatesbutton.blue.hover"
+		downImage="nstatesbutton.blue.down"
+		cfgvals="1;2"
+		nstates="2"
+		tooltip="Change LED color"/> <!-- nstatesbutton is a special togglebutton + remember to use bitmap0, bitmap1, etc -->
+	<Layer
+		x="525" y="131"
+		id="vu.mdh.layer.led.background.blue"
+		image="led.background.blue"/>
+	<Layer
+		x="525" y="131"
+		id="vu.mdh.layer.led.color"
+		image="led.blue"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-108" y="17" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close VU Meter Digital Horizontal"/>
+	<!-- POWER INDICATOR -->
+	<Group
+		x="82" y="-70" relaty="1"
+		id="group.power.indicator"/>
+	<script
+		file="SCRIPTS\vu-meter-digital-horizontal.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="638" default_h="208"
+	default_visible="0"
+	id="vu.meter.digital.horizontal"
+	name="VU Meter Digital Horizontal"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="638" h="208"
+		id="normal"
+		alphabackground="vu.mdh.background.alpha">
+		<Group
+			fitparent="1"
+			id="vu.mdh.group.main"/>
+	</Layout>
+</Container>

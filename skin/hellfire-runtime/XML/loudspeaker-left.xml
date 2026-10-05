@@ -1,0 +1,76 @@
+<!-- ***************************************** -->
+<!-- Filename: loudspeaker-left.xml            -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="ls.left.group.main">
+	<Layer
+		x="0" y="0" w="298" h="348"
+		id="ls.left.layer.base"
+		image="ls.base"/>
+	<Layer
+		x="0" y="0"
+		id="ls.left.layer.box"
+		image="ls.box"/>
+	<Layer
+		x="0" y="0"
+		id="ls.left.layer.light.reflection"
+		image="ls.light.reflection"/>
+	<Layer
+		x="0" y="0"
+		id="ls.left.layer.cone"
+		image="ls.cone"/>
+	<AnimatedLayer
+		x="53" y="48"
+		id="ls.left.animatedlayer.cone"
+		image="ls.cone.animation"
+		autoplay="0"
+		autoreplay="0"
+		framewidth="144"/>
+	<!-- LAYER LED "POWER ON/OFF" -->
+	<Layer
+		x="27" y="99"
+		id="ls.left.layer.led.background.black"
+		image="led.background.black"/>
+	<Layer
+		x="27" y="99"
+		id="ls.left.layer.led.power"
+		image="led.off"/>
+	<!-- GRILLE -->
+	<Layer
+		x="0" y="0"
+		id="ls.left.layer.grille"
+		image="ls.grille"/>
+	<Layer
+		fitparent="1"
+		id="ls.left.layer.context.menu"/> <!-- area for component's own context menu -->
+	<!-- BUTTON "CLOSE" BIG -->
+	<Button
+		x="260" y="10"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close Loudspeakers"/>
+	<script
+		file="SCRIPTS\loudspeaker.maki"
+		param="left"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="298" default_h="348"
+	default_visible="0"
+	id="loudspeaker.left"
+	name="Loudspeaker Left"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="298" h="348"
+		id="normal"
+		alphabackground="ls.background.alpha">
+		<Group
+			fitparent="1"
+			id="ls.left.group.main"/>
+	</Layout>
+</Container>

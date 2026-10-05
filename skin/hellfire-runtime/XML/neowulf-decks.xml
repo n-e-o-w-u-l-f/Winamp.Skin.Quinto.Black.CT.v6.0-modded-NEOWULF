@@ -1,0 +1,120 @@
+<groupdef id="nw.deck.1">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · Electribe 2 Synth" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F01-574C-4600-8001-000100000001}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.1" name="NEOWULF · Electribe 2 Synth" component="guid:{4E454F01-574C-4600-8001-000100000001}" dynamic="1" default_x="105" default_y="105" default_w="980" default_h="650" default_visible="0">
+<Layout id="normal" w="980" h="650" minimum_w="740" minimum_h="560" background="nw.frame"><Group id="nw.deck.1" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.2">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · Electribe 2 Sampler" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F02-574C-4600-8001-000100000002}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.2" name="NEOWULF · Electribe 2 Sampler" component="guid:{4E454F02-574C-4600-8001-000100000002}" dynamic="1" default_x="130" default_y="130" default_w="980" default_h="650" default_visible="0">
+<Layout id="normal" w="980" h="650" minimum_w="740" minimum_h="560" background="nw.frame"><Group id="nw.deck.2" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.3">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · EMX-1" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F03-574C-4600-8001-000100000003}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.3" name="NEOWULF · EMX-1" component="guid:{4E454F03-574C-4600-8001-000100000003}" dynamic="1" default_x="155" default_y="155" default_w="980" default_h="650" default_visible="0">
+<Layout id="normal" w="980" h="650" minimum_w="740" minimum_h="560" background="nw.frame"><Group id="nw.deck.3" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.4">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · Oszillator" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F04-574C-4600-8001-000100000004}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.4" name="NEOWULF · Oszillator" component="guid:{4E454F04-574C-4600-8001-000100000004}" dynamic="1" default_x="180" default_y="180" default_w="850" default_h="430" default_visible="0">
+<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.4" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.5">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · Fire VU Stereo" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F05-574C-4600-8001-000100000005}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.5" name="NEOWULF · Fire VU Stereo" component="guid:{4E454F05-574C-4600-8001-000100000005}" dynamic="1" default_x="205" default_y="205" default_w="850" default_h="430" default_visible="0">
+<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.5" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.6">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · VU Horizontal" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F06-574C-4600-8001-000100000006}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.6" name="NEOWULF · VU Horizontal" component="guid:{4E454F06-574C-4600-8001-000100000006}" dynamic="1" default_x="230" default_y="230" default_w="850" default_h="430" default_visible="0">
+<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.6" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.7">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · VU Vertikal" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F07-574C-4600-8001-000100000007}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.7" name="NEOWULF · VU Vertikal" component="guid:{4E454F07-574C-4600-8001-000100000007}" dynamic="1" default_x="255" default_y="255" default_w="360" default_h="640" default_visible="0">
+<Layout id="normal" w="360" h="640" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.7" fitparent="1"/></Layout></Container>
+<groupdef id="nw.deck.8">
+<Layer fitparent="1" image="nw.frame" tile="1"/>
+<Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
+<Text x="14" y="8" w="-72" h="19" relatw="1" text="NEOWULF · Hellfire Virtualizer" font="Verdana" fontsize="12" bold="1" color="#e4c8c0" ghost="1"/>
+<Component x="5" y="33" w="-10" h="-39" relatw="1" relath="1" param="guid:{4E454F08-574C-4600-8001-000100000008}"/>
+<Layer id="nw.pulse" x="0" y="0" w="0" h="2" relatw="1" image="nw.led-red" ghost="1"/>
+<Button id="nw.close" x="-44" y="3" relatx="1" image="nw.close" tooltip="Deck schließen"/>
+<Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
+<script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container id="nw.deck.8" name="NEOWULF · Hellfire Virtualizer" component="guid:{4E454F08-574C-4600-8001-000100000008}" dynamic="1" default_x="280" default_y="280" default_w="850" default_h="430" default_visible="0">
+<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.8" fitparent="1"/></Layout></Container>
+<groupdef id="nw.speaker.tower-left"><Layer id="nw.cabinet" image="nw.speaker-tower-left" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-copper" x="46" y="42" w="80" h="80" ghost="1"/><Layer id="nw.cone2" image="nw.cone-black" x="49" y="250" w="77" h="77" ghost="1"/><Layer id="nw.cone3" image="nw.cone-black" x="49" y="370" w="77" h="77" ghost="1"/>
+<Layer id="nw.pulse" image="nw.led-red" x="72" y="567" ghost="1"/>
+<Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="0"/></groupdef>
+<Container id="nw.speaker.tower-left" name="Teufel Ultima Mk II · Front Links" default_x="100" default_y="120" default_w="174" default_h="590" default_visible="0" nomenu="0"><Layout id="normal" w="174" h="590" alphabackground="nw.speaker-tower-left"><Group id="nw.speaker.tower-left" fitparent="1"/></Layout></Container>
+<groupdef id="nw.speaker.tower-right"><Layer id="nw.cabinet" image="nw.speaker-tower-right" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-copper" x="46" y="42" w="80" h="80" ghost="1"/><Layer id="nw.cone2" image="nw.cone-black" x="49" y="250" w="77" h="77" ghost="1"/><Layer id="nw.cone3" image="nw.cone-black" x="49" y="370" w="77" h="77" ghost="1"/>
+<Layer id="nw.pulse" image="nw.led-red" x="72" y="567" ghost="1"/>
+<Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="1"/></groupdef>
+<Container id="nw.speaker.tower-right" name="Teufel Ultima Mk II · Front Rechts" default_x="100" default_y="120" default_w="174" default_h="590" default_visible="0" nomenu="0"><Layout id="normal" w="174" h="590" alphabackground="nw.speaker-tower-right"><Group id="nw.speaker.tower-right" fitparent="1"/></Layout></Container>
+<groupdef id="nw.speaker.bookshelf-left"><Layer id="nw.cabinet" image="nw.speaker-bookshelf-left" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-copper" x="51" y="157" w="115" h="115" ghost="1"/>
+<Layer id="nw.pulse" image="nw.led-red" x="95" y="307" ghost="1"/>
+<Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="0"/></groupdef>
+<Container id="nw.speaker.bookshelf-left" name="Teufel Ultima Mk II · Rear Links" default_x="100" default_y="120" default_w="220" default_h="330" default_visible="0" nomenu="0"><Layout id="normal" w="220" h="330" alphabackground="nw.speaker-bookshelf-left"><Group id="nw.speaker.bookshelf-left" fitparent="1"/></Layout></Container>
+<groupdef id="nw.speaker.bookshelf-right"><Layer id="nw.cabinet" image="nw.speaker-bookshelf-right" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-copper" x="51" y="157" w="115" h="115" ghost="1"/>
+<Layer id="nw.pulse" image="nw.led-red" x="95" y="307" ghost="1"/>
+<Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="1"/></groupdef>
+<Container id="nw.speaker.bookshelf-right" name="Teufel Ultima Mk II · Rear Rechts" default_x="100" default_y="120" default_w="220" default_h="330" default_visible="0" nomenu="0"><Layout id="normal" w="220" h="330" alphabackground="nw.speaker-bookshelf-right"><Group id="nw.speaker.bookshelf-right" fitparent="1"/></Layout></Container>
+<groupdef id="nw.speaker.center"><Layer id="nw.cabinet" image="nw.speaker-center" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-copper" x="57" y="60" w="99" h="99" ghost="1"/><Layer id="nw.cone2" image="nw.cone-copper" x="335" y="60" w="99" h="99" ghost="1"/>
+<Layer id="nw.pulse" image="nw.led-red" x="230" y="167" ghost="1"/>
+<Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="2"/></groupdef>
+<Container id="nw.speaker.center" name="Teufel Ultima Mk II · Center" default_x="100" default_y="120" default_w="490" default_h="190" default_visible="0" nomenu="0"><Layout id="normal" w="490" h="190" alphabackground="nw.speaker-center"><Group id="nw.speaker.center" fitparent="1"/></Layout></Container>
+<groupdef id="nw.speaker.sub"><Layer id="nw.cabinet" image="nw.speaker-sub" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-black" x="56" y="68" w="167" h="167" ghost="1"/>
+<Layer id="nw.pulse" image="nw.led-red" x="127" y="281" ghost="1"/>
+<Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="2"/></groupdef>
+<Container id="nw.speaker.sub" name="Teufel Ultima Mk II · Subwoofer" default_x="100" default_y="120" default_w="285" default_h="304" default_visible="0" nomenu="0"><Layout id="normal" w="285" h="304" alphabackground="nw.speaker-sub"><Group id="nw.speaker.sub" fitparent="1"/></Layout></Container>

@@ -1,0 +1,715 @@
+<!-- ***************************************** -->
+<!-- Filename: main-player.xml                 -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="skin.about.group" w="0" h="0" relatw="1" relath="1" rectrgn="1">
+	<Layer
+		x="0" y="0"
+		image="current.skin"/> <!-- do not change the name of the group, nor remove rectrgn="1" -->
+</groupdef>
+<groupdef id="mp.group.beat.visualization">
+	<animatedlayer
+		x="0" y="0" w="65" h="38"
+		id="mp.animatedlayer.beat.visualization.left"
+		image="mp.beat.visualization.left"
+		autoplay="0"
+		autoreplay="0"
+		ghost="1"
+		move="0"/>
+	<animatedlayer
+		x="65" y="0" w="65" h="38"
+		id="mp.animatedlayer.beat.visualization.right"
+		image="mp.beat.visualization.right"
+		autoplay="0"
+		autoreplay="0"
+		ghost="1"
+		move="0"/>
+</groupdef>
+<groupdef id="mp.group.vis.classic">
+	<Layer
+		x="0" y="0" w="130" h="37"
+		id="mp.layer.vis.classic.background"
+		image="mp.vis.classic.background"
+		tile="1"/>
+	<Layer
+		x="2" y="3" w="127" h="32"
+		id="mp.layer.vis.classic.bars"
+		image="mp.vis.classic.bars"
+		tile="1"/>
+	<!-- VISUALIZER CLASSIC -->
+	<!-- do not change the width: changing the width will change the width of all columns -->
+	<Vis
+		x="3" y="3" w="125" h="32"
+		id="mp.vis.classic"
+		channel="3"
+		colorbandpeak="#969696"
+		colorband16  ="#ffffff"
+		colorband15  ="#ce2910"
+		colorband14  ="#d65a00"
+		colorband13  ="#d66600"
+		colorband12  ="#d67300"
+		colorband11  ="#c67b08"
+		colorband10  ="#dea518"
+		colorband9   ="#d6b521"
+		colorband8   ="#bdde29"
+		colorband7   ="#94de21"
+		colorband6   ="#29ce10"
+		colorband5   ="#32be10"
+		colorband4   ="#39b510"
+		colorband3   ="#319c08"
+		colorband2   ="#299400"
+		colorband1   ="#188408"
+		colorosc5    ="#949ca5"
+		colorosc4    ="#a0aaaf"
+		colorosc3    ="#b5bdbd"
+		colorosc2    ="#d6d6de"
+		colorosc1    ="#ffffff"
+		ghost="1"/>
+	<Layer
+		x="2" y="2" w="127" h="35"
+		id="mp.layer.vis.classic.grid"
+		image="mp.vis.classic.grid"
+		tile="1"/>
+	<Layer
+		x="8" y="3" w="27" h="32"
+		id="mp.layer.vis.classic.cover"
+		image="mp.vis.classic.cover"
+		tile="1"/> <!-- make all bars look equally wide -->
+</groupdef>
+<groupdef id="mp.group.vis.modern">
+	<Layer
+		x="0" y="0" w="130" h="37"
+		id="mp.layer.vis.modern.background"
+		image="mp.vis.modern.background"
+		tile="1"/>
+	<Layer
+		x="2" y="3" w="127" h="32"
+		id="mp.layer.vis.modern.bars"
+		image="mp.vis.modern.bars"
+		tile="1"/>
+	<!-- VISUALIZER MODERN -->
+	<!-- do not change the width: changing the width will change the width of all columns -->
+	<Vis
+		x="3" y="3" w="125" h="32"
+		id="mp.vis.modern"
+		channel="3"
+		colorallbands="#808080"
+		colorallosc  ="#808080"
+		gammagroup="gamma.main.player.visualizer"
+		ghost="1"/>
+	<Layer
+		x="2" y="2" w="127" h="35"
+		id="mp.layer.vis.modern.grid"
+		image="mp.vis.modern.grid"
+		tile="1"/>
+	<Layer
+		x="8" y="3" w="27" h="32"
+		id="mp.layer.vis.modern.cover"
+		image="mp.vis.modern.cover"
+		tile="1"/> <!-- make all bars look equally wide -->
+</groupdef>
+<groupdef id="mp.group.vu.mdh">
+	<Layer
+		x="0" y="0"
+		id="mp.layer.vu.mdh.LR"
+		image="mp.LR"/>
+	<!-- VU METER DIGITAL HORIZONTAL LED ANIMATION -->
+	<Layer
+		x="18" y="0"
+		id="mp.layer.vu.mdh.led.animation.background"
+		image="mp.vu.mdh.led.animation.background"/>
+	<AnimatedLayer
+		x="22" y="5"
+		id="mp.animatedlayer.vu.mdh.led.left"
+		image="mp.vu.mdh.led.animation.left.blue"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="6"/>
+	<AnimatedLayer
+		x="22" y="13"
+		id="mp.animatedlayer.vu.mdh.led.right"
+		image="mp.vu.mdh.led.animation.right.blue"
+		autoplay="0"
+		autoreplay="0"
+		frameheight="6"/>
+</groupdef>
+<groupdef id="mp.group.main">
+	<!-- COMPONENT BASE: do not remove width and height because we use setXmlParam() -->
+	<Layer
+		x="0" y="0" w="638" h="246"
+		id="mp.layer.base"/>
+	<!-- COMPONENT BACKGROUND -->
+	<Layer
+		x="54" y="14" w="530" h="208"
+		id="mp.layer.component.filter.black"
+		image="filter.black"
+		tile="1"/>
+	<Layer
+		x="0" y="0" w="638" h="246"
+		id="mp.layer.component"
+		image="mp.component"/>
+	<!-- COMPONENT LABEL (QUINTO BLACK CT or WINAMP)-->
+	<Layer
+		x="248" y="20"
+		id="mp.layer.label"
+		image="mp.label.quinto.black.ct"/>
+	<!-- SIDE PANEL: do not remove width and height because we use setXmlParam -->
+	<Layer
+		x="39" y="10" w="20" h="216"
+		id="mp.layer.side.panel.width.thin.left"/>
+	<Layer
+		x="579" y="10" w="20" h="216"
+		id="mp.layer.side.panel.width.thin.right"/>
+	<Layer
+		x="19" y="10" w="40" h="216"
+		id="mp.layer.side.panel.width.wide.left"/>
+	<Layer
+		x="579" y="10" w="40" h="216"
+		id="mp.layer.side.panel.width.wide.right"/>
+	<!-- SIDE PANEL LIGHT REFLECTION -->
+	<Layer
+		x="39" y="-105" relaty="1"
+		id="mp.layer.side.panel.light.reflection.thin.left"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="mp.layer.side.panel.light.reflection.thin.right"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="19" y="-105" relaty="1"
+		id="mp.layer.side.panel.light.reflection.wide.left"
+		image="side.panel.light.reflection.wide"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="mp.layer.side.panel.light.reflection.wide.right"
+		image="side.panel.light.reflection.wide"/>
+	<!-- SIDE PANEL SHADOW -->
+	<Layer
+		x="59" y="14" w="10" h="208"
+		id="mp.layer.side.panel.shadow.left"
+		image="side.panel.shadow.left"/>
+	<Layer
+		x="569" y="14" w="10" h="208"
+		id="mp.layer.side.panel.shadow.right"
+		image="side.panel.shadow.right"/>
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="75" y="37" w="488" h="22"
+		id="mp.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="74" y="37" w="488" h="22"
+		id="mp.layer.display.grid"
+		image="display.grid"
+		tile="1"/> <!-- do not change the values - has to do with the songticker font -->
+	<Layer
+		x="75" y="37" w="488" h="22"
+		id="mp.layer.display.shadow"
+		image="display.shadow"/>
+	<Text
+		x="87" y="37" w="462" h="22"
+		id="mp.text.songticker"
+		align="center"
+		altfont="Verdana"
+		color="color.display.info"
+		dblclickaction="trackinfo"
+		display="SONGNAME"
+		font="bitmapfont.songticker"
+		fontsize="24"
+		rightclickaction="trackmenu"
+		visible="0"/> <!-- do not delete color and fontsize: needed for altfont; width= 33*14=462 -->
+	<SongTicker
+		x="87" y="37" w="462" h="22"
+		id="mp.songticker"
+		align="center"
+		altfont="Verdana"
+		color="color.display.info"
+		dblclickaction="trackinfo"
+		display="SONGNAME"
+		font="bitmapfont.songticker"
+		fontsize="24"
+		rightclickaction="trackmenu"
+		visible="0"/> <!-- do not delete color and fontsize: needed for altfont; width= 33*14=462 -->
+	<Text
+		x="87" y="37" w="462" h="22"
+		id="mp.text.infoticker"
+		align="center"
+		altfont="Verdana"
+		color="color.display.info"
+		font="bitmapfont.songticker"
+		fontsize="24"
+		ghost="1"/> <!-- do not delete color and fontsize: needed for altfont; width= 33*14=462 -->
+	<!-- PLAYBACK STATUS: if activated -->
+	<Status
+		x="79" y="66"
+		id="mp.status.symbol"
+		playBitmap="mp.status.symbol.play"
+		pauseBitmap="mp.status.symbol.pause"
+		stopBitmap="mp.status.symbol.stop"/>
+	<Status
+		x="79" y="66"
+		id="mp.status.text"
+		playBitmap="mp.status.text.play"
+		pauseBitmap="mp.status.text.pause"
+		stopBitmap="mp.status.text.stop"/>
+	<AnimatedLayer
+		x="79" y="79"
+		id="mp.animatedlayer.status"
+		image="mp.status.animation"
+		autoplay="0"
+		autoreplay="1"
+		frameheight="13"
+		speed="1000"/>
+	<!-- TIMER -->
+	<!-- timeroffstyle: How to display an empty timer (onStop): -->
+	<!-- "0" = "  : " or "1" = "00:00" or "2"="" or "3"="0:00:00" or "4"=" :  :  " - we use visible -->
+	<!-- timerhours="1" shows 1:00:00 instead of 60:00 but the minus sign appears after it is less than 1 hour -->
+	<Text
+		x="115" y="69" w="150" h="23"
+		id="mp.text.timer"
+		align="center"
+		display="TIME"
+		font="bitmapfont.timer"
+		ghost="0"
+		timecolonwidth="10"
+		tooltip="Toggle between &quot;Time elapsed&quot; and &quot;Time remaining&quot;"/>
+	<!-- TEXT MIN SEC: if activated -->
+	<Layer
+		x="0" y="98"
+		id="mp.layer.MIN.SEC"
+		image="mp.MIN.SEC"/>
+	<!-- CHANNEL -->
+	<Layer
+		x="276" y="65"
+		id="mp.layer.CHANNEL"
+		image="mp.CHANNEL.none"/> <!-- NONE/MONO/STEREO/SURROUND -->
+	<!-- TOGGLEBUTTON "SHUFFLE": just text on display -->
+	<ToggleButton
+		x="276" y="80"
+		id="mp.togglebutton.SHUFFLE"
+		image="mp.SHUFFLE.off"
+		activeImage="mp.SHUFFLE.on"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Shuffle"
+		ghost="1"/>
+	<!-- NSTATESBUTTON "REPEAT": just text on display -->
+	<NStatesButton
+		x="276" y="95"
+		id="mp.nstatesbutton.REPEAT"
+		image="mp.REPEAT"
+		activeImage="mp.REPEAT"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Repeat"
+		cfgvals="0;1;-1"
+		ghost="1"
+		nstates="3"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- TOGGLEBUTTON "EQUALIZER": just text on display -->
+	<ToggleButton
+		x="276" y="110"
+		id="mp.togglebutton.EQUALIZER"
+		image="mp.EQUALIZER.off"
+		activeImage="mp.EQUALIZER.on"
+		action="eq_toggle"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- KBPS -->
+	<Layer
+		x="390" y="65"
+		id="mp.layer.KBPS"
+		image="mp.KBPS"/>
+	<Text
+		x="433" y="65" w="45" h="7"
+		id="mp.text.info.bitrate"
+		align="left"
+		font="bitmapfont.songinfo.data"/>
+	<!-- KHZ -->
+	<Layer
+		x="484" y="65"
+		id="mp.layer.KHZ"
+		image="mp.KHZ"/>
+	<Text
+		x="518" y="65" w="38" h="7"
+		id="mp.text.info.frequency"
+		align="left"
+		font="bitmapfont.songinfo.data"/>
+	<!-- BEATS PER MINUTE: if activated -->
+	<Layer
+		x="353" y="80"
+		id="mp.layer.BPM"
+		image="mp.BPM"/>
+	<Text
+		x="387" y="80" w="28" h="7"
+		id="mp.text.info.bpm"
+		align="left"
+		font="bitmapfont.songinfo.data"/>
+	<!-- BEAT VISUALIZATION: if activated -->
+	<Group
+		x="427" y="83" w="130" h="38"
+		id="mp.group.beat.visualization"/>
+	<!-- VISUALIZER: if activated -->
+	<Group
+		x="427" y="79" w="130" h="38"
+		id="mp.group.vis.classic"/>
+	<Group
+		x="427" y="79" w="130" h="38"
+		id="mp.group.vis.modern"/>
+	<!-- VU METER: if activated -->
+	<Group
+		x="427" y="87" w="130" h="22"
+		id="mp.group.vu.mdh"/>
+	<!-- TOGGLEBUTTON "ML" + glow effect -->
+	<ToggleButton
+		x="84" y="110"
+		id="mp.togglebutton.ML"
+		image="mp.ML"
+		downImage="mp.ML.down"
+		activeImage="mp.ML.active"
+		action="toggle"
+		param="guid:{6b0edf80-c9a5-11d3-9f26-00c04f39ffc6}"
+		rectrgn="1"
+		tooltip="Open/Close Media Library "/> <!-- do not translate tooltip -->
+	<Layer
+		x="84" y="110"
+		id="mp.layer.ml.glow"
+		image="mp.ml.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.togglebutton.ML|mp.layer.ml.glow"/>
+	<!-- TOGGLEBUTTON "PE" + glow effect -->
+	<ToggleButton
+		x="134" y="110"
+		id="mp.togglebutton.PE"
+		image="mp.PE"
+		downImage="mp.PE.down"
+		activeImage="mp.PE.active"
+		action="toggle"
+		param="guid:{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d}"
+		rectrgn="1"
+		tooltip="Open/Close Playlist Editor "/> <!-- do not translate tooltip -->
+	<Layer
+		x="134" y="110"
+		id="mp.layer.PE.glow"
+		image="mp.PE.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.togglebutton.PE|mp.layer.PE.glow"/>
+	<!-- TOGGLEBUTTON "VID" + glow effect -->
+	<ToggleButton
+		x="184" y="110"
+		id="mp.togglebutton.VID"
+		image="mp.VID"
+		downImage="mp.VID.down"
+		activeImage="mp.VID.active"
+		action="toggle"
+		param="guid:{f0816d7b-fffc-4343-80f2-e8199aa15cc3}"
+		rectrgn="1"
+		tooltip="Open/Close Video "/> <!-- do not translate tooltip -->
+	<Layer
+		x="184" y="110"
+		id="mp.layer.VID.glow"
+		image="mp.VID.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.togglebutton.VID|mp.layer.VID.glow"/>
+	<!-- TOGGLEBUTTON "VIS" + glow effect -->
+	<ToggleButton
+		x="234" y="110"
+		id="mp.togglebutton.VIS"
+		image="mp.VIS"
+		downImage="mp.VIS.down"
+		activeImage="mp.VIS.active"
+		action="toggle"
+		param="guid:{0000000a-000c-0010-ff7b-01014263450c}"
+		rectrgn="1"
+		tooltip="Open/Close Visualizations window"/> <!-- do not translate tooltip -->
+	<Layer
+		x="234" y="110"
+		id="mp.layer.VIS.glow"
+		image="mp.VIS.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.togglebutton.VIS|mp.layer.VIS.glow"/>
+	<!-- TOGGLEBUTTON "MUTE" + glow effect -->
+	<ToggleButton
+		x="365" y="110"
+		id="mp.togglebutton.MUTE"
+		image="mp.MUTE"
+		downImage="mp.MUTE.down"
+		activeImage="mp.MUTE.active"
+		rectrgn="1"
+		tooltip="Mute "/> <!-- do not translate tooltip -->
+	<Layer
+		x="365" y="110"
+		id="mp.layer.MUTE.glow"
+		image="mp.MUTE.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.togglebutton.MUTE|mp.layer.MUTE.glow"/>
+	<!-- BUTTON LED "MUTE" (ghost) -->
+	<Layer
+		x="402" y="124"
+		image="led.background.black"/>
+	<Button
+		x="402" y="124"
+		id="mp.button.led.MUTE"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"/>  <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- LIGHT - OVERLAY - FRAME - LIGHT REFLECTION -->
+	<Layer
+		x="71" y="33" w="492" h="37"
+		id="mp.layer.display.light"
+		alpha="0"
+		image="display.light.white"
+		ghost="1"
+		tile="1"/>
+	<Layer
+		x="75" y="37" w="488" h="85"
+		id="mp.layer.display.overlay"
+		alpha="140"
+		image="display.overlay"
+		ghost="1"/> <!-- keep overlay here, otherwise PAUSE background will be visible while STATUS_STOPPED -->
+	<Layer
+		x="71" y="33"
+		id="mp.layer.display.frame"
+		image="mp.display.frame"
+		ghost="1"/>
+	<Layer
+		x="75" y="37"
+		id="mp.layer.light.reflection"
+		image="mp.light.reflection"
+		ghost="1"/>
+	<!-- SLIDER PROGRESS -->
+	<ProgressGrid
+		x="88" y="162" w="460" h="4"
+		id="mp.progress.grid"
+		middle="progress.grid"/> <!-- left and right are visible before playback hence only middle -->
+	<Slider
+		x="81" y="156" w="476" h="19"
+		id="slider.progress"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		action="seek"/>
+	<Slider
+		x="81" y="156" w="476" h="19"
+		id="slider.progress.ghost"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		action="seek"
+		tooltip="Seek "/> <!-- do not translate tooltip -->
+	<!-- SLIDER VOLUME -->
+	<Layer
+		x="449" y="139" w="100" h="4"
+		id="mp.layer.bar.volume"
+		image="bar.volume"/>
+	<Slider
+		x="436" y="135" w="128" h="16"
+		id="slider.volume"
+		thumb="slider.volume.thumb"
+		hoverThumb="slider.volume.thumb.hover"
+		downThumb="slider.volume.thumb.down"
+		action="volume"
+		tooltip="Volume "/> <!-- volume slider is wider than volume bar: do not translate tooltip -->
+	<!-- BUTTON "PREV" + glow effect -->
+	<Button
+		x="71" y="181"
+		id="mp.button.prev"
+		image="mp.prev"
+		downImage="mp.prev.down"
+		action="prev"
+		tooltip="Previous "/> <!-- do not translate tooltip -->
+	<Layer
+		x="71" y="181"
+		id="mp.layer.prev.glow"
+		image="mp.prev.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.button.prev|mp.layer.prev.glow"/>
+	<!-- BUTTON "PLAY" + glow effect -->
+	<Button
+		x="132" y="181"
+		id="mp.button.play"
+		image="mp.play"
+		downImage="mp.play.down"
+		action="play"
+		tooltip="Play/Restart "/> <!-- do not translate tooltip -->
+	<Status
+		x="132" y="181" w="60" h="40"
+		id="mp.status.play"
+		playBitmap="mp.status.play"
+		ghost="1"/> <!-- keep width and height for "active" button -->
+	<Layer
+		x="132" y="181"
+		id="mp.layer.play.glow"
+		image="mp.play.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.button.play|mp.layer.play.glow"/>
+	<!-- BUTTON "PAUSE" + glow effect -->
+	<Button
+		x="193" y="181"
+		id="mp.button.pause"
+		image="mp.pause"
+		downImage="mp.pause.down"
+		action="pause"
+		tooltip="Pause/Unpause "/> <!-- do not translate tooltip -->
+	<Status
+		x="193" y="181" w="60" h="40"
+		id="mp.status.pause"
+		pauseBitmap="mp.status.pause"
+		ghost="1"/> <!-- keep width and height for "active" button -->
+	<Layer
+		x="193" y="181"
+		id="mp.layer.pause.glow"
+		image="mp.pause.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.button.pause|mp.layer.pause.glow"/>
+	<!-- BUTTON "STOP" + glow effect -->
+	<Button
+		x="254" y="181"
+		id="mp.button.stop"
+		image="mp.stop"
+		downImage="mp.stop.down"
+		action="stop"
+		tooltip="Stop "/> <!-- do not translate tooltip -->
+	<Status
+		x="254" y="181" w="60" h="40"
+		id="mp.status.stop"
+		stopBitmap="mp.status.stop"
+		ghost="1"/> <!-- keep width and height for "active" button -->
+	<Layer
+		x="254" y="181"
+		id="mp.layer.stop.glow"
+		image="mp.stop.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.button.stop|mp.layer.stop.glow"/>
+	<!-- BUTTON "NEXT" + glow effect -->
+	<Button
+		x="315" y="181"
+		id="mp.button.next"
+		image="mp.next"
+		downImage="mp.next.down"
+		action="next"
+		tooltip="Next "/> <!-- do not translate tooltip -->
+	<Layer
+		x="315" y="181"
+		id="mp.layer.next.glow"
+		image="mp.next.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.button.next|mp.layer.next.glow"/>
+	<!-- BUTTON "EJECT" + glow effect -->
+	<Button
+		x="378" y="181"
+		id="mp.button.eject"
+		image="mp.eject"
+		downImage="mp.eject.down"
+		action="eject"
+		tooltip="Open a File "/> <!-- do not translate tooltip -->
+	<Layer
+		x="378" y="181"
+		id="mp.layer.eject.glow"
+		image="mp.eject.glow"
+		ghost="1"/>
+	<script
+		file="SCRIPTS\hover-glow.maki"
+		param="mp.button.eject|mp.layer.eject.glow"/>
+	<!-- NSTATESBUTTON "REPEAT" -->
+	<NStatesButton
+		x="428" y="177"
+		id="mp.nstatesbutton.repeat"
+		image="nstatesbutton.black"
+		hoverImage="nstatesbutton.black.hover"
+		downImage="nstatesbutton.black.down"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Repeat"
+		cfgvals="0;1;-1"
+		nstates="3"
+		tooltip="Repeat: Off |Repeat: All |Repeat: Track "/> <!-- do not translate tooltip -->
+	<!-- NSTATESBUTTON LED "REPEAT" -->
+	<Layer
+		x="454" y="177"
+		image="led.background.black"/>
+	<NStatesButton
+		x="454" y="177"
+		id="mp.nstatesbutton.led.repeat"
+		autoelements="0"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Repeat"
+		cfgvals="0;1;-1"
+		image="led.off"
+		activeImage="led.blue"
+		ghost="1"
+		nstates="3"/> <!-- do not remove autoelements="0" & ghost=1 => remove Winamp's default hover state -->
+	<!-- TOGGLEBUTTON "SHUFFLE" -->
+	<ToggleButton
+		x="484" y="177"
+		id="mp.togglebutton.shuffle"
+		image="togglebutton.black"
+		hoverImage="togglebutton.black.hover"
+		downImage="togglebutton.black.down"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Shuffle"
+		tooltip="Shuffle: Off |Shuffle: On "/> <!-- do not translate tooltip -->
+	<!-- TOGGLEBUTTON LED "SHUFFLE" (ghost) -->
+	<Layer
+		x="510" y="177"
+		image="led.background.black"/>
+	<ToggleButton
+		x="510" y="177"
+		id="mp.togglebutton.led.shuffle"
+		image="led.off"
+		activeImage="led.blue"
+		cfgattrib="{45f3f7c1-a6f3-4ee6-a15e-125e92fc3f8d};Shuffle"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- BUTTON "BOLT" -->
+	<Button
+		x="543" y="186"
+		id="mp.button.bolt"
+		image="mp.bolt"
+		hoverImage="mp.bolt.hover"
+		downImage="mp.bolt.down"
+		action="toggle"
+		param="guid:{d6201408-476a-4308-bf1b-7baca1124b12}"
+		tooltip="Show &quot;About Winamp&quot;"/>
+	<!-- BUTTON "MINIMIZE" -->
+	<button:minimize
+		x="-136" y="17" relatx="1"
+		id="button.minimize"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-108" y="17" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Winamp"/>
+	<script
+		file="SCRIPTS\main-player.maki"/>
+<Layer id="nw.pulse" fitparent="1" image="nw.main-pulse" ghost="1"/><script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container
+	default_x="0" default_y="0" default_w="638" default_h="246"
+	default_visible="1"
+	droptarget="pldr"
+	id="main"
+	name="Main Player"> <!-- do not change the id to "main.player"! -->
+	<Layout
+		x="0" y="0" w="638" h="246"
+		id="normal"
+		alphabackground="mp.background.alpha">
+		<Group
+			fitparent="1"
+			id="mp.group.main"/>
+	</Layout>
+</Container>

@@ -1,0 +1,1191 @@
+<!-- ***************************************** -->
+<!-- Filename: elements.xml                    -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<elements>
+	<!-- CONTAINER: ABOUT -->
+	<bitmap id="about.background.alpha" file="PNG\window-frame.png" x="34" y="34" w="6" h="6"/>
+	<bitmap id="about.background"       file="PNG\window-frame.png" x="43" y="34" w="6" h="6"/>
+	<bitmap id="about.screenshot"       file="PNG\current-skin.png" x="0" y="0" w="600" h="253"/>
+	<bitmap id="about.skin.name"        file="PNG\winamp-logo.png" x="0" y="0"  w="600" h="60"/>
+	<bitmap id="about.winamp"           file="PNG\winamp-logo.png" x="0" y="63" w="600" h="60"/>
+
+	<!-- CONTAINER: ALBUM COVER FLOW -->
+	<bitmap id="acf.albumart.shadow"          file="PNG\not-found-image.png" x="0" y="253" w="60" h="40"/>
+	<bitmap id="acf.background.alpha"         file="PNG\window-frame.png" x="61" y="34" w="6" h="6"/>
+	<bitmap id="acf.background.gradient"      file="$gradient" gradient_x1="0.0" gradient_y1="0.0" gradient_x2="0.0" gradient_y2="1.0" points="0.0=200,235,250,200;1.0=0,25,35,200" w="800" h="479"/>
+	<bitmap id="acf.progress.grid.background" file="PNG\slider-elements.png" x="79" y="34" w="4" h="11"/>
+	<bitmap id="acf.progress.grid"            file="PNG\progress-grid.png" x="4" y="0" w="1" h="11" gammagroup="gamma.main.player.slider.bar.progress"/>
+	<bitmap id="acf.rating.star.active"       file="PNG\rating-star.png" x="0" y="0"  w="28" h="28" gammagroup=""/>
+	<bitmap id="acf.rating.star.base"         file="PNG\rating-star.png" x="0" y="31" w="28" h="28" gammagroup="gamma.miscellaneous.album.cover.flow.songinfo"/>
+	<bitmap id="acf.slider.ghost"             file="PNG\slider-elements.png" x="86" y="34" w="4" h="11"/>
+
+	<!-- CONTAINER: ALBUM COVER FLOW WALLPAPER -->
+	<bitmap id="acfw.apply.new.wallpaper.darkblue"             file="PNG\button-darkblue.png" x="0"   y="264" w="228" h="19"/>
+	<bitmap id="acfw.apply.new.wallpaper.hover.darkblue"       file="PNG\button-darkblue.png" x="0"   y="286" w="228" h="19"/>
+	<bitmap id="acfw.apply.new.wallpaper.down.darkblue"        file="PNG\button-darkblue.png" x="0"   y="308" w="228" h="19"/>
+	<bitmap id="acfw.close.bottom.darkblue"                    file="PNG\button-darkblue.png" x="189" y="198" w="63"  h="19"/>
+	<bitmap id="acfw.close.bottom.hover.darkblue"              file="PNG\button-darkblue.png" x="189" y="220" w="63"  h="19"/>
+	<bitmap id="acfw.close.bottom.down.darkblue"               file="PNG\button-darkblue.png" x="189" y="242" w="63"  h="19"/>
+	<bitmap id="acfw.select.new.wallpaper.file.darkblue"       file="PNG\button-darkblue.png" x="231" y="264" w="293" h="19"/>
+	<bitmap id="acfw.select.new.wallpaper.file.hover.darkblue" file="PNG\button-darkblue.png" x="231" y="286" w="293" h="19"/>
+	<bitmap id="acfw.select.new.wallpaper.file.down.darkblue"  file="PNG\button-darkblue.png" x="231" y="308" w="293" h="19"/>
+
+	<bitmap id="acfw.apply.new.wallpaper.lightblue"             file="PNG\button-lightblue.png" x="0"   y="264" w="228" h="19"/>
+	<bitmap id="acfw.apply.new.wallpaper.hover.lightblue"       file="PNG\button-lightblue.png" x="0"   y="286" w="228" h="19"/>
+	<bitmap id="acfw.apply.new.wallpaper.down.lightblue"        file="PNG\button-lightblue.png" x="0"   y="308" w="228" h="19"/>
+	<bitmap id="acfw.close.bottom.lightblue"                    file="PNG\button-lightblue.png" x="189" y="198" w="63"  h="19"/>
+	<bitmap id="acfw.close.bottom.hover.lightblue"              file="PNG\button-lightblue.png" x="189" y="220" w="63"  h="19"/>
+	<bitmap id="acfw.close.bottom.down.lightblue"               file="PNG\button-lightblue.png" x="189" y="242" w="63"  h="19"/>
+	<bitmap id="acfw.select.new.wallpaper.file.lightblue"       file="PNG\button-lightblue.png" x="231" y="264" w="293" h="19"/>
+	<bitmap id="acfw.select.new.wallpaper.file.hover.lightblue" file="PNG\button-lightblue.png" x="231" y="286" w="293" h="19"/>
+	<bitmap id="acfw.select.new.wallpaper.file.down.lightblue"  file="PNG\button-lightblue.png" x="231" y="308" w="293" h="19"/>
+
+	<bitmap id="acfw.no.preview" file="PNG\no-preview.png"/>
+
+	<!-- CONTAINER: COMPACT CASSETTE -->
+	<bitmap id="cc.background.alpha" file="PNG\cc-elements.png" x="0" y="0"   w="460" h="281"/>
+	<bitmap id="cc.front"            file="PNG\cc-elements.png" x="0" y="284" w="460" h="281"/>
+	<bitmap id="cc.light"            file="PNG\cc-elements.png" x="0" y="568" w="460" h="80"/>
+	<bitmap id="cc.paper"            file="PNG\cc-elements.png" x="0" y="651" w="460" h="281"/>
+	<bitmap id="cc.sticker"          file="PNG\cc-elements.png" x="0" y="935" w="460" h="27"/>
+
+	<bitmap id="cc.reel31" file="PNG\cc-reel.png" x="0"    y="0" w="204" h="204"/>
+	<bitmap id="cc.reel30" file="PNG\cc-reel.png" x="204"  y="0" w="204" h="204"/>
+	<bitmap id="cc.reel29" file="PNG\cc-reel.png" x="408"  y="0" w="204" h="204"/>
+	<bitmap id="cc.reel28" file="PNG\cc-reel.png" x="612"  y="0" w="204" h="204"/>
+	<bitmap id="cc.reel27" file="PNG\cc-reel.png" x="816"  y="0" w="204" h="204"/>
+	<bitmap id="cc.reel26" file="PNG\cc-reel.png" x="1020" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel25" file="PNG\cc-reel.png" x="1224" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel24" file="PNG\cc-reel.png" x="1428" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel23" file="PNG\cc-reel.png" x="1632" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel22" file="PNG\cc-reel.png" x="1836" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel21" file="PNG\cc-reel.png" x="2040" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel20" file="PNG\cc-reel.png" x="2244" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel19" file="PNG\cc-reel.png" x="2448" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel18" file="PNG\cc-reel.png" x="2652" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel17" file="PNG\cc-reel.png" x="2856" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel16" file="PNG\cc-reel.png" x="3060" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel15" file="PNG\cc-reel.png" x="3264" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel14" file="PNG\cc-reel.png" x="3468" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel13" file="PNG\cc-reel.png" x="3672" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel12" file="PNG\cc-reel.png" x="3876" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel11" file="PNG\cc-reel.png" x="4080" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel10" file="PNG\cc-reel.png" x="4284" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel9"  file="PNG\cc-reel.png" x="4488" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel8"  file="PNG\cc-reel.png" x="4692" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel7"  file="PNG\cc-reel.png" x="4896" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel6"  file="PNG\cc-reel.png" x="5100" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel5"  file="PNG\cc-reel.png" x="5304" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel4"  file="PNG\cc-reel.png" x="5508" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel3"  file="PNG\cc-reel.png" x="5712" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel2"  file="PNG\cc-reel.png" x="5916" y="0" w="204" h="204"/>
+	<bitmap id="cc.reel1"  file="PNG\cc-reel.png" x="6120" y="0" w="204" h="204"/>
+
+	<bitmap id="cc.tape.left31"  file="PNG\cc-tape.png" x="0"    y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left30"  file="PNG\cc-tape.png" x="200"  y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left29"  file="PNG\cc-tape.png" x="400"  y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left28"  file="PNG\cc-tape.png" x="600"  y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left27"  file="PNG\cc-tape.png" x="800"  y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left26"  file="PNG\cc-tape.png" x="1000" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left25"  file="PNG\cc-tape.png" x="1200" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left24"  file="PNG\cc-tape.png" x="1400" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left23"  file="PNG\cc-tape.png" x="1600" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left22"  file="PNG\cc-tape.png" x="1800" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left21"  file="PNG\cc-tape.png" x="2000" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left20"  file="PNG\cc-tape.png" x="2200" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left19"  file="PNG\cc-tape.png" x="2400" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left18"  file="PNG\cc-tape.png" x="2600" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left17"  file="PNG\cc-tape.png" x="2800" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left16"  file="PNG\cc-tape.png" x="3000" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left15"  file="PNG\cc-tape.png" x="3200" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left14"  file="PNG\cc-tape.png" x="3400" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left13"  file="PNG\cc-tape.png" x="3600" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left12"  file="PNG\cc-tape.png" x="3800" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left11"  file="PNG\cc-tape.png" x="4000" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left10"  file="PNG\cc-tape.png" x="4200" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left9"   file="PNG\cc-tape.png" x="4400" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left8"   file="PNG\cc-tape.png" x="4600" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left7"   file="PNG\cc-tape.png" x="4800" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left6"   file="PNG\cc-tape.png" x="5000" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left5"   file="PNG\cc-tape.png" x="5200" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left4"   file="PNG\cc-tape.png" x="5400" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left3"   file="PNG\cc-tape.png" x="5600" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left2"   file="PNG\cc-tape.png" x="5800" y="0" w="200" h="200"/>
+	<bitmap id="cc.tape.left1"   file="PNG\cc-tape.png" x="6000" y="0" w="200" h="200"/>
+
+	<bitmap id="cc.tape.right31" file="PNG\cc-tape.png" x="0"    y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right30" file="PNG\cc-tape.png" x="200"  y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right29" file="PNG\cc-tape.png" x="400"  y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right28" file="PNG\cc-tape.png" x="600"  y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right27" file="PNG\cc-tape.png" x="800"  y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right26" file="PNG\cc-tape.png" x="1000" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right25" file="PNG\cc-tape.png" x="1200" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right24" file="PNG\cc-tape.png" x="1400" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right23" file="PNG\cc-tape.png" x="1600" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right22" file="PNG\cc-tape.png" x="1800" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right21" file="PNG\cc-tape.png" x="2000" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right20" file="PNG\cc-tape.png" x="2200" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right19" file="PNG\cc-tape.png" x="2400" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right18" file="PNG\cc-tape.png" x="2600" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right17" file="PNG\cc-tape.png" x="2800" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right16" file="PNG\cc-tape.png" x="3000" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right15" file="PNG\cc-tape.png" x="3200" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right14" file="PNG\cc-tape.png" x="3400" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right13" file="PNG\cc-tape.png" x="3600" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right12" file="PNG\cc-tape.png" x="3800" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right11" file="PNG\cc-tape.png" x="4000" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right10" file="PNG\cc-tape.png" x="4200" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right9"  file="PNG\cc-tape.png" x="4400" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right8"  file="PNG\cc-tape.png" x="4600" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right7"  file="PNG\cc-tape.png" x="4800" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right6"  file="PNG\cc-tape.png" x="5000" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right5"  file="PNG\cc-tape.png" x="5200" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right4"  file="PNG\cc-tape.png" x="5400" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right3"  file="PNG\cc-tape.png" x="5600" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right2"  file="PNG\cc-tape.png" x="5800" y="203" w="200" h="200"/>
+	<bitmap id="cc.tape.right1"  file="PNG\cc-tape.png" x="6000" y="203" w="200" h="200"/>
+
+	<bitmap id="cc.wheel" file="PNG\cc-wheel.png"/>
+
+	<!-- CONTAINER: COMPACT DISC -->
+	<bitmap id="cd.background.alpha" file="PNG\cd-elements.png" x="0" y="0"   w="800" h="492"/>
+	<bitmap id="cd.case"             file="PNG\cd-elements.png" x="0" y="495" w="800" h="492"/>
+	<bitmap id="cd.disc" file="PNG\cd.png"/>
+
+	<!-- CONTAINER: CONFIGURATION -->
+	<bitmap id="cfg.bar.green"              file="PNG\configuration-elements.png" x="213" y="110" w="2"   h="6"/>
+	<bitmap id="cfg.bar.orange"             file="PNG\configuration-elements.png" x="220" y="110" w="2"   h="6"/>
+	<bitmap id="cfg.blue"                   file="PNG\configuration-elements.png" x="0"   y="0"   w="178" h="33"/>
+	<bitmap id="cfg.blue.hover"             file="PNG\configuration-elements.png" x="0"   y="36"  w="178" h="33"/>
+	<bitmap id="cfg.blue.down"              file="PNG\configuration-elements.png" x="0"   y="72"  w="178" h="33"/>
+	<bitmap id="cfg.blue.active"            file="PNG\configuration-elements.png" x="0"   y="107" w="178" h="33"/>
+	<bitmap id="cfg.radio"                  file="PNG\configuration-elements.png" x="0"   y="108" w="200" h="15"/>
+	<bitmap id="cfg.radio.hover"            file="PNG\configuration-elements.png" x="0"   y="126" w="200" h="15"/>
+	<bitmap id="cfg.radio.active"           file="PNG\configuration-elements.png" x="0"   y="144" w="200" h="15"/>
+	<bitmap id="cfg.radio.location"         file="PNG\configuration-elements.png" x="0"   y="108" w="128" h="15"/>
+	<bitmap id="cfg.radio.location.hover"   file="PNG\configuration-elements.png" x="0"   y="126" w="128" h="15"/>
+	<bitmap id="cfg.radio.location.active"  file="PNG\configuration-elements.png" x="0"   y="144" w="128" h="15"/>
+	<bitmap id="cfg.radio.hide.show"        file="PNG\configuration-elements.png" x="0"   y="108" w="82"  h="15"/>
+	<bitmap id="cfg.radio.hide.show.hover"  file="PNG\configuration-elements.png" x="0"   y="126" w="82"  h="15"/>
+	<bitmap id="cfg.radio.hide.show.active" file="PNG\configuration-elements.png" x="0"   y="144" w="82"  h="15"/>
+	<bitmap id="cfg.help"                   file="PNG\configuration-elements.png" x="181" y="0"   w="44"  h="33"/>
+	<bitmap id="cfg.help.hover"             file="PNG\configuration-elements.png" x="181" y="36"  w="44"  h="33"/>
+	<bitmap id="cfg.help.down"              file="PNG\configuration-elements.png" x="181" y="72"  w="44"  h="33"/>
+	<bitmap id="cfg.tab"                    file="PNG\configuration-elements.png" x="228" y="0"   w="132" h="27"/>
+	<bitmap id="cfg.tab.hover"              file="PNG\configuration-elements.png" x="228" y="30"  w="132" h="27"/>
+	<bitmap id="cfg.tab.down"               file="PNG\configuration-elements.png" x="228" y="60"  w="132" h="27"/>
+	<bitmap id="cfg.tab.active"             file="PNG\configuration-elements.png" x="228" y="90"  w="132" h="27"/>
+	<bitmap id="cfg.slider.thumb"           file="PNG\configuration-elements.png" x="216" y="120" w="46"  h="22"/>
+	<bitmap id="cfg.slider.thumb.hover"     file="PNG\configuration-elements.png" x="265" y="120" w="46"  h="22"/>
+	<bitmap id="cfg.slider.thumb.down"      file="PNG\configuration-elements.png" x="314" y="120" w="46"  h="22"/>
+
+	<bitmap id="cfg.bolt" file="PNG\bolt.png"/>
+
+	<!-- CONTAINER: COVER ART DIMENSION -->
+	<bitmap id="cad.apply.new.dimension.darkblue"       file="PNG\button-darkblue.png" x="273" y="132" w="228" h="19"/>
+	<bitmap id="cad.apply.new.dimension.hover.darkblue" file="PNG\button-darkblue.png" x="273" y="154" w="228" h="19"/>
+	<bitmap id="cad.apply.new.dimension.down.darkblue"  file="PNG\button-darkblue.png" x="273" y="176" w="228" h="19"/>
+	<bitmap id="cad.close.bottom.darkblue"              file="PNG\button-darkblue.png" x="189" y="198" w="63"  h="19"/>
+	<bitmap id="cad.close.bottom.hover.darkblue"        file="PNG\button-darkblue.png" x="189" y="220" w="63"  h="19"/>
+	<bitmap id="cad.close.bottom.down.darkblue"         file="PNG\button-darkblue.png" x="189" y="242" w="63"  h="19"/>
+	<bitmap id="cad.default.height.darkblue"            file="PNG\button-darkblue.png" x="255" y="198" w="80"  h="19"/>
+	<bitmap id="cad.default.height.hover.darkblue"      file="PNG\button-darkblue.png" x="255" y="220" w="80"  h="19"/>
+	<bitmap id="cad.default.height.down.darkblue"       file="PNG\button-darkblue.png" x="255" y="242" w="80"  h="19"/>
+	<bitmap id="cad.default.width.darkblue"             file="PNG\button-darkblue.png" x="255" y="198" w="80"  h="19"/>
+	<bitmap id="cad.default.width.hover.darkblue"       file="PNG\button-darkblue.png" x="255" y="220" w="80"  h="19"/>
+	<bitmap id="cad.default.width.down.darkblue"        file="PNG\button-darkblue.png" x="255" y="242" w="80"  h="19"/>
+
+	<bitmap id="cad.apply.new.dimension.lightblue"       file="PNG\button-lightblue.png" x="273" y="132" w="228" h="19"/>
+	<bitmap id="cad.apply.new.dimension.hover.lightblue" file="PNG\button-lightblue.png" x="273" y="154" w="228" h="19"/>
+	<bitmap id="cad.apply.new.dimension.down.lightblue"  file="PNG\button-lightblue.png" x="273" y="176" w="228" h="19"/>
+	<bitmap id="cad.close.bottom.lightblue"              file="PNG\button-lightblue.png" x="189" y="198" w="63"  h="19"/>
+	<bitmap id="cad.close.bottom.hover.lightblue"        file="PNG\button-lightblue.png" x="189" y="220" w="63"  h="19"/>
+	<bitmap id="cad.close.bottom.down.lightblue"         file="PNG\button-lightblue.png" x="189" y="242" w="63"  h="19"/>
+	<bitmap id="cad.default.height.lightblue"            file="PNG\button-lightblue.png" x="255" y="198" w="80"  h="19"/>
+	<bitmap id="cad.default.height.hover.lightblue"      file="PNG\button-lightblue.png" x="255" y="220" w="80"  h="19"/>
+	<bitmap id="cad.default.height.down.lightblue"       file="PNG\button-lightblue.png" x="255" y="242" w="80"  h="19"/>
+	<bitmap id="cad.default.width.lightblue"             file="PNG\button-lightblue.png" x="255" y="198" w="80"  h="19"/>
+	<bitmap id="cad.default.width.hover.lightblue"       file="PNG\button-lightblue.png" x="255" y="220" w="80"  h="19"/>
+	<bitmap id="cad.default.width.down.lightblue"        file="PNG\button-lightblue.png" x="255" y="242" w="80"  h="19"/>
+
+	<!-- CONTAINER: EQUALIZER -->
+	<bitmap id="eq.background.alpha" file="PNG\background-alpha.png" x="0" y="0" w="638" h="246"/>
+	<bitmap id="eq.base.thin"        file="PNG\base-thin.png" x="0" y="0" w="638" h="246"/>
+	<bitmap id="eq.base.wide"        file="PNG\base-wide.png" x="0" y="0" w="638" h="246"/>
+	<bitmap id="eq.component" file="PNG\NEOWULF\eq.png" w="638" h="246"/>
+	<bitmap id="eq.label" file="PNG\NEOWULF\label-eq.png" w="81" h="9"/>
+	<bitmap id="eq.light.reflection" file="PNG\light-reflection.png" x="0" y="0" w="494" h="24"/>
+
+	<bitmap id="eq.bar" file="PNG\display-elements.png" x="0" y="0" w="4" h="4" gammagroup="gamma.miscellaneous.equalizer.slider.bar"/>
+
+	<bitmap id="eq.frequency.mode.iso"    file="PNG\frequency-mode.png" x="0" y="0"  w="496" h="8"/>
+	<bitmap id="eq.frequency.mode.winamp" file="PNG\frequency-mode.png" x="0" y="11" w="496" h="8"/>
+
+	<bitmap id="eq.slider.thumb"       file="PNG\slider-elements.png" x="72" y="0"  w="17" h="31"/>
+	<bitmap id="eq.slider.thumb.hover" file="PNG\slider-elements.png" x="92" y="0"  w="17" h="31"/>
+	<bitmap id="eq.slider.thumb.down"  file="PNG\slider-elements.png" x="92" y="0"  w="17" h="31"/>
+
+	<bitmap id="eq.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="216" gammagroup="gamma.miscellaneous.side.panel"/>
+	<bitmap id="eq.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="40" h="216" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- CONTAINER: FREQUENCY RESPONSE GRAPH -->
+	<bitmap id="frg.background.alpha" file="PNG\background-alpha.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="frg.base.thin"        file="PNG\base-thin.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="frg.base.wide"        file="PNG\base-wide.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="frg.component"        file="PNG\component.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="frg.display.frame"    file="PNG\display-frame.png" x="0" y="0" w="496" h="83"/>
+	<bitmap id="frg.label"            file="PNG\label-component.png" x="0" y="12" w="211" h="9"/>
+	<bitmap id="frg.light.reflection" file="PNG\light-reflection.png" x="0" y="0" w="488" h="75"/>
+
+	<bitmap id="frg.frequency.mode.iso"    file="PNG\frequency-mode.png" x="0" y="22" w="496" h="8"/>
+	<bitmap id="frg.frequency.mode.winamp" file="PNG\frequency-mode.png" x="0" y="33" w="496" h="8"/>
+
+	<bitmap id="frg.knob.animation" file="PNG\knob-animation.png"/>
+	<bitmap id="frg.knob.map" file="PNG\knob-map.png"/>
+	<bitmap id="frg.knob.scale.animation" file="PNG\knob-scale-animation.png"/>
+
+	<bitmap id="frg.BASS"   file="PNG\display-text.png" x="0" y="0"   w="36" h="7" gammagroup="gamma.display.text"/>
+	<bitmap id="frg.TREBLE" file="PNG\display-text.png" x="0" y="145" w="54" h="7" gammagroup="gamma.display.text"/>
+
+	<bitmap id="frg.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="196" gammagroup="gamma.miscellaneous.side.panel"/>
+	<bitmap id="frg.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="40" h="196" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- CONTAINER: LOUDSPEAKER -->
+	<bitmap id="ls.background.alpha" file="PNG\ls-elements.png" x="0"    y="0" w="298" h="348" gammagroup=""/>
+	<bitmap id="ls.base"             file="PNG\ls-elements.png" x="301"  y="0" w="298" h="348" gammagroup=""/>
+	<bitmap id="ls.box"              file="PNG\ls-elements.png" x="602"  y="0" w="298" h="348" gammagroup="gamma.miscellaneous.loudspeaker.box"/>
+	<bitmap id="ls.cone"             file="PNG\ls-elements.png" x="903"  y="0" w="298" h="348" gammagroup=""/>
+	<bitmap id="ls.grille"           file="PNG\ls-elements.png" x="1204" y="0" w="298" h="348" gammagroup=""/>
+	<BITMAP id="ls.light.reflection" file="PNG\ls-elements.png" x="1505" y="0" w="298" h="348" gammagroup=""/>
+
+	<bitmap id="ls.cone.animation" file="PNG\ls-cone-animation.png"/>
+
+	<!-- CONTAINER: MAIN PLAYER -->
+	<bitmap id="current.skin" file="PNG\current-skin.png"/>
+
+	<bitmap id="mp.background.alpha" file="PNG\background-alpha.png" x="0" y="0" w="638" h="246"/>
+	<bitmap id="mp.base.thin" file="PNG\NEOWULF\base.png" w="638" h="246"/>
+	<bitmap id="mp.base.wide" file="PNG\NEOWULF\base.png" w="638" h="246"/>
+	<bitmap id="mp.component" file="PNG\NEOWULF\main.png" w="638" h="246"/>
+	<bitmap id="mp.display.frame"    file="PNG\display-frame.png" x="0" y="86" w="496" h="93"/>
+	<bitmap id="mp.light.reflection" file="PNG\light-reflection.png" x="0" y="0" w="488" h="85"/>
+
+	<bitmap id="mp.label.quinto.black.ct" file="PNG\NEOWULF\label-main.png" w="130" h="9"/>
+	<bitmap id="mp.label.winamp" file="PNG\NEOWULF\label-main.png" w="130" h="9"/> <!-- width must be the same because of "image" -->
+
+	<!-- hover bitmaps are not included because there is a glow layer -->
+	<bitmap id="mp.prev"         file="PNG\button-playback.png" x="0"   y="0"  w="60" h="40"/>
+	<bitmap id="mp.prev.down"    file="PNG\button-playback.png" x="0"   y="43" w="60" h="40"/>
+	<bitmap id="mp.play"         file="PNG\button-playback.png" x="63"  y="0"  w="60" h="40"/>
+	<bitmap id="mp.play.down"    file="PNG\button-playback.png" x="63"  y="43" w="60" h="40"/>
+	<bitmap id="mp.pause"        file="PNG\button-playback.png" x="126" y="0"  w="60" h="40"/>
+	<bitmap id="mp.pause.down"   file="PNG\button-playback.png" x="126" y="43" w="60" h="40"/>
+	<bitmap id="mp.stop"         file="PNG\button-playback.png" x="189" y="0"  w="60" h="40"/>
+	<bitmap id="mp.stop.down"    file="PNG\button-playback.png" x="189" y="43" w="60" h="40"/>
+	<bitmap id="mp.next"         file="PNG\button-playback.png" x="252" y="0"  w="60" h="40"/>
+	<bitmap id="mp.next.down"    file="PNG\button-playback.png" x="252" y="43" w="60" h="40"/>
+	<bitmap id="mp.eject"        file="PNG\button-playback.png" x="315" y="0"  w="40" h="40"/>
+	<bitmap id="mp.eject.down"   file="PNG\button-playback.png" x="315" y="43" w="40" h="40"/>
+
+	<bitmap id="mp.status.play"  file="PNG\button-playback.png" x="63"  y="86" w="60" h="40"/>
+	<bitmap id="mp.status.pause" file="PNG\button-playback.png" x="126" y="86" w="60" h="40"/>
+	<bitmap id="mp.status.stop"  file="PNG\button-playback.png" x="189" y="86" w="60" h="40"/>
+
+	<bitmap id="mp.prev.glow"  file="PNG\button-playback-glow.png" x="0"  y="0" w="60" h="40" gammagroup="gamma.main.player.button.glow"/>
+	<bitmap id="mp.play.glow"  file="PNG\button-playback-glow.png" x="0"  y="0" w="60" h="40" gammagroup="gamma.main.player.button.glow"/>
+	<bitmap id="mp.pause.glow" file="PNG\button-playback-glow.png" x="0"  y="0" w="60" h="40" gammagroup="gamma.main.player.button.glow"/>
+	<bitmap id="mp.stop.glow"  file="PNG\button-playback-glow.png" x="0"  y="0" w="60" h="40" gammagroup="gamma.main.player.button.glow"/>
+	<bitmap id="mp.next.glow"  file="PNG\button-playback-glow.png" x="0"  y="0" w="60" h="40" gammagroup="gamma.main.player.button.glow"/>
+	<bitmap id="mp.eject.glow" file="PNG\button-playback-glow.png" x="63" y="0" w="40" h="40" gammagroup="gamma.main.player.button.glow"/>
+
+	<bitmap id="mp.bolt"       file="PNG\button-bolt.png" x="0" y="0"  w="26" h="26"/>
+	<bitmap id="mp.bolt.hover" file="PNG\button-bolt.png" x="0" y="29" w="26" h="26"/>
+	<bitmap id="mp.bolt.down"  file="PNG\button-bolt.png" x="0" y="58" w="26" h="26"/>
+
+	<!-- hover bitmaps are not included because there is a glow layer -->
+	<bitmap id="mp.ML"          file="PNG\button-ml-pe-vid-vis-mute.png" x="0"   y="0"   w="36" h="41"/>
+	<bitmap id="mp.ML.glow"     file="PNG\button-ml-pe-vid-vis-mute.png" x="0"   y="44"  w="36" h="41"/>
+	<bitmap id="mp.ML.down"     file="PNG\button-ml-pe-vid-vis-mute.png" x="0"   y="88"  w="36" h="41"/>
+	<bitmap id="mp.ML.active"   file="PNG\button-ml-pe-vid-vis-mute.png" x="0"   y="132" w="36" h="41"/>
+	<bitmap id="mp.MUTE"        file="PNG\button-ml-pe-vid-vis-mute.png" x="156" y="0"   w="36" h="41"/>
+	<bitmap id="mp.MUTE.glow"   file="PNG\button-ml-pe-vid-vis-mute.png" x="156" y="44"  w="36" h="41"/>
+	<bitmap id="mp.MUTE.down"   file="PNG\button-ml-pe-vid-vis-mute.png" x="156" y="88"  w="36" h="41"/>
+	<bitmap id="mp.MUTE.active" file="PNG\button-ml-pe-vid-vis-mute.png" x="156" y="132" w="36" h="41"/>
+	<bitmap id="mp.PE"          file="PNG\button-ml-pe-vid-vis-mute.png" x="39"  y="0"   w="36" h="41"/>
+	<bitmap id="mp.PE.glow"     file="PNG\button-ml-pe-vid-vis-mute.png" x="39"  y="44"  w="36" h="41"/>
+	<bitmap id="mp.PE.down"     file="PNG\button-ml-pe-vid-vis-mute.png" x="39"  y="88"  w="36" h="41"/>
+	<bitmap id="mp.PE.active"   file="PNG\button-ml-pe-vid-vis-mute.png" x="39"  y="132" w="36" h="41"/>
+	<bitmap id="mp.VID"         file="PNG\button-ml-pe-vid-vis-mute.png" x="78"  y="0"   w="36" h="41"/>
+	<bitmap id="mp.VID.glow"    file="PNG\button-ml-pe-vid-vis-mute.png" x="78"  y="44"  w="36" h="41"/>
+	<bitmap id="mp.VID.down"    file="PNG\button-ml-pe-vid-vis-mute.png" x="78"  y="88"  w="36" h="41"/>
+	<bitmap id="mp.VID.active"  file="PNG\button-ml-pe-vid-vis-mute.png" x="78"  y="132" w="36" h="41"/>
+	<bitmap id="mp.VIS"         file="PNG\button-ml-pe-vid-vis-mute.png" x="117" y="0"   w="36" h="41"/>
+	<bitmap id="mp.VIS.glow"    file="PNG\button-ml-pe-vid-vis-mute.png" x="117" y="44"  w="36" h="41"/>
+	<bitmap id="mp.VIS.down"    file="PNG\button-ml-pe-vid-vis-mute.png" x="117" y="88"  w="36" h="41"/>
+	<bitmap id="mp.VIS.active"  file="PNG\button-ml-pe-vid-vis-mute.png" x="117" y="132" w="36" h="41"/>
+
+	<!-- "off" and "on" bitmaps must have the same width -->
+	<bitmap id="mp.BPM"              file="PNG\display-text.png" x="0" y="10"  w="34"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.CHANNEL.MONO"     file="PNG\display-text.png" x="0" y="20"  w="97"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.CHANNEL.STEREO"   file="PNG\display-text.png" x="0" y="30"  w="97"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.CHANNEL.SURROUND" file="PNG\display-text.png" x="0" y="40"  w="97"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.EQUALIZER.on"     file="PNG\display-text.png" x="0" y="50"  w="81"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.KBPS"             file="PNG\display-text.png" x="0" y="60"  w="45"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.KHZ"              file="PNG\display-text.png" x="0" y="70"  w="36"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.LR"               file="PNG\display-text.png" x="0" y="80"  w="7"   h="22" gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.MIN.SEC"          file="PNG\display-text.png" x="0" y="105" w="79"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.REPEAT0"          file="PNG\display-text.png" x="0" y="155" w="106" h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.REPEAT1"          file="PNG\display-text.png" x="0" y="115" w="106" h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.REPEAT2"          file="PNG\display-text.png" x="0" y="125" w="106" h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.SHUFFLE.on"       file="PNG\display-text.png" x="0" y="135" w="63"  h="7"  gammagroup="gamma.main.player.songinfo.text"/>
+
+	<bitmap id="mp.CHANNEL.none"     file="PNG\display-text.png" x="0" y="155" w="97"  h="7"  gammagroup=""/>
+	<bitmap id="mp.EQUALIZER.off"    file="PNG\display-text.png" x="0" y="155" w="81"  h="7"  gammagroup=""/>
+	<bitmap id="mp.SHUFFLE.off"      file="PNG\display-text.png" x="0" y="155" w="63"  h="7"  gammagroup=""/>
+
+	<bitmap id="mp.status.animation"    file="PNG\mp-status-animation.png"/>
+	<bitmap id="mp.status.symbol.play"  file="PNG\mp-status.png" x="0"   y="42" w="47" h="39" gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.status.symbol.pause" file="PNG\mp-status.png" x="50"  y="42" w="47" h="39" gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.status.symbol.stop"  file="PNG\mp-status.png" x="100" y="42" w="47" h="39" gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.status.text.play"    file="PNG\mp-status.png" x="0"   y="0"  w="47" h="39" gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.status.text.pause"   file="PNG\mp-status.png" x="50"  y="0"  w="47" h="39" gammagroup="gamma.main.player.songinfo.text"/>
+	<bitmap id="mp.status.text.stop"    file="PNG\mp-status.png" x="100" y="0"  w="47" h="39" gammagroup="gamma.main.player.songinfo.text"/>
+
+	<bitmap id="mp.beat.visualization.left"  file="PNG\mp-beat-visualization.png" x="0"  y="0" w="65" h="380" gammagroup="gamma.main.player.beat.visualization"/>
+	<bitmap id="mp.beat.visualization.right" file="PNG\mp-beat-visualization.png" x="65" y="0" w="65" h="380" gammagroup="gamma.main.player.beat.visualization"/>
+
+	<bitmap id="mp.vis.classic.background" file="PNG\mp-vis-elements.png" x="0" y="0"  w="4" h="4"  gammagroup=""/>
+	<bitmap id="mp.vis.classic.bars"       file="PNG\mp-vis-elements.png" x="0" y="7"  w="7" h="4"  gammagroup=""/>
+	<bitmap id="mp.vis.classic.cover"      file="PNG\mp-vis-elements.png" x="3" y="0"  w="7" h="1"  gammagroup=""/>
+	<bitmap id="mp.vis.classic.grid"       file="PNG\mp-vis-elements.png" x="0" y="14" w="7" h="38" gammagroup=""/>
+
+	<bitmap id="mp.vis.modern.background" file="PNG\mp-vis-elements.png" x="0" y="0"  w="4" h="4"  gammagroup="gamma.main.player.visualizer"/>
+	<bitmap id="mp.vis.modern.bars"       file="PNG\mp-vis-elements.png" x="0" y="7"  w="7" h="4"  gammagroup="gamma.main.player.visualizer"/>
+	<bitmap id="mp.vis.modern.cover"      file="PNG\mp-vis-elements.png" x="3" y="0"  w="7" h="1"  gammagroup="gamma.main.player.visualizer"/>
+	<bitmap id="mp.vis.modern.grid"       file="PNG\mp-vis-elements.png" x="0" y="14" w="7" h="38" gammagroup="gamma.main.player.visualizer"/>
+
+	<bitmap id="mp.vu.mdh.led.animation.background"  file="PNG\mp-vu-mdh-led-animation-background.png"/>
+	<bitmap id="mp.vu.mdh.led.animation.left.blue"   file="PNG\mp-vu-mdh-led-animation.png" x="0"   y="0" w="100" h="120"/>
+	<bitmap id="mp.vu.mdh.led.animation.right.blue"  file="PNG\mp-vu-mdh-led-animation.png" x="103" y="0" w="100" h="120"/>
+	<bitmap id="mp.vu.mdh.led.animation.left.green"  file="PNG\mp-vu-mdh-led-animation.png" x="206" y="0" w="100" h="120"/>
+	<bitmap id="mp.vu.mdh.led.animation.right.green" file="PNG\mp-vu-mdh-led-animation.png" x="309" y="0" w="100" h="120"/>
+
+	<bitmap id="mp.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="216" gammagroup="gamma.miscellaneous.side.panel"/>
+	<bitmap id="mp.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="40" h="216" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- CONTAINER: NOTIFICATION -->
+	<bitmap id="notification.grid.top.left"     file="PNG\notification-background.png" x="0"  y="0"  w="24" h="24" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.top"          file="PNG\notification-background.png" x="24" y="0"  w="24" h="24" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.top.right"    file="PNG\notification-background.png" x="48" y="0"  w="24" h="24" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.left"         file="PNG\notification-background.png" x="0"  y="24" w="24" h="52" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.middle"       file="PNG\notification-background.png" x="24" y="24" w="24" h="52" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.right"        file="PNG\notification-background.png" x="48" y="24" w="24" h="52" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.bottom.left"  file="PNG\notification-background.png" x="0"  y="76" w="24" h="24" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.bottom"       file="PNG\notification-background.png" x="24" y="76" w="24" h="24" gammagroup="gamma.notification.background"/>
+	<bitmap id="notification.grid.bottom.right" file="PNG\notification-background.png" x="48" y="76" w="24" h="24" gammagroup="gamma.notification.background"/>
+
+	<bitmap id="notification.not.found.image.big"   file="PNG\notification-not-found-image.png" x="0"  y="0"  w="92" h="92"/>
+	<bitmap id="notification.not.found.image.small" file="PNG\notification-not-found-image.png" x="10" y="10" w="72" h="72"/>
+
+	<bitmap id="notification.webcover.big"   file="PNG\notification-webcover.png" x="0"  y="0"  w="92" h="92"/>
+	<bitmap id="notification.webcover.small" file="PNG\notification-webcover.png" x="10" y="10" w="72" h="72"/>
+
+	<!-- CONTAINER: PLAYLIST EDITOR -->
+	<bitmap id="pe.bar"            file="PNG\slider-elements.png" x="72" y="34" w="4"   h="6"/> <!-- progress bar on MENU -->
+	<bitmap id="pe.bar.background" file="PNG\slider-elements.png" x="0"  y="95" w="169" h="10"/>
+
+	<bitmap id="pe.cuelist.background"            file="PNG\bolt.png" x="103" y="0" w="422" h="422"/>
+	<bitmap id="pe.searchlist.background"         file="$solid" color="#24242d"/>
+	<bitmap id="pe.online.radio"                  file="PNG\online-radio.png"/>
+	<bitmap id="pe.online.radio.sender.animation" file="PNG\online-radio-sender-animation.png"/>
+
+	<bitmap id="pe.delete.down"  file="PNG\window-elements.png" x="63" y="25" w="16" h="16"/>
+	<bitmap id="pe.delete.hover" file="PNG\window-elements.png" x="44" y="25" w="16" h="16"/>
+	<bitmap id="pe.delete"       file="PNG\window-elements.png" x="25" y="25" w="16" h="16"/>
+	<bitmap id="pe.find.icon"    file="PNG\window-elements.png" x="82" y="25" w="16" h="16"/>
+	<bitmap id="pe.forward"      file="PNG\window-elements.png" x="98" y="8"  w="16" h="8"/>
+	<bitmap id="pe.minus"        file="PNG\window-elements.png" x="98" y="16" w="16" h="8"/>
+	<bitmap id="pe.next"         file="PNG\window-elements.png" x="82" y="8"  w="16" h="8"/>
+	<bitmap id="pe.plus"         file="PNG\window-elements.png" x="82" y="16" w="16" h="8"/>
+	<bitmap id="pe.prev"         file="PNG\window-elements.png" x="98" y="0"  w="16" h="8"/>
+	<bitmap id="pe.rewind"       file="PNG\window-elements.png" x="82" y="0"  w="16" h="8"/>
+
+	<bitmap id="pe.add.darkblue"                   file="PNG\button-darkblue.png" x="0"   y="66"  w="45"  h="19"/>
+	<bitmap id="pe.add.hover.darkblue"             file="PNG\button-darkblue.png" x="0"   y="88"  w="45"  h="19"/>
+	<bitmap id="pe.add.down.darkblue"              file="PNG\button-darkblue.png" x="0"   y="110" w="45"  h="19"/>
+	<bitmap id="pe.manage.playlist.darkblue"       file="PNG\button-darkblue.png" x="259" y="66"  w="153" h="19"/>
+	<bitmap id="pe.manage.playlist.hover.darkblue" file="PNG\button-darkblue.png" x="259" y="88"  w="153" h="19"/>
+	<bitmap id="pe.manage.playlist.down.darkblue"  file="PNG\button-darkblue.png" x="259" y="110" w="153" h="19"/>
+	<bitmap id="pe.misc.darkblue"                  file="PNG\button-darkblue.png" x="198" y="66"  w="58"  h="19"/>
+	<bitmap id="pe.misc.hover.darkblue"            file="PNG\button-darkblue.png" x="198" y="88"  w="58"  h="19"/>
+	<bitmap id="pe.misc.down.darkblue"             file="PNG\button-darkblue.png" x="198" y="110" w="58"  h="19"/>
+	<bitmap id="pe.options.darkblue"               file="PNG\button-darkblue.png" x="189" y="132" w="81"  h="19"/>
+	<bitmap id="pe.options.hover.darkblue"         file="PNG\button-darkblue.png" x="189" y="154" w="81"  h="19"/>
+	<bitmap id="pe.options.down.darkblue"          file="PNG\button-darkblue.png" x="189" y="176" w="81"  h="19"/>
+	<bitmap id="pe.remove.darkblue"                file="PNG\button-darkblue.png" x="48"  y="66"  w="72"  h="19"/>
+	<bitmap id="pe.remove.hover.darkblue"          file="PNG\button-darkblue.png" x="48"  y="88"  w="72"  h="19"/>
+	<bitmap id="pe.remove.down.darkblue"           file="PNG\button-darkblue.png" x="48"  y="110" w="72"  h="19"/>
+	<bitmap id="pe.select.darkblue"                file="PNG\button-darkblue.png" x="123" y="66"  w="72"  h="19"/>
+	<bitmap id="pe.select.hover.darkblue"          file="PNG\button-darkblue.png" x="123" y="88"  w="72"  h="19"/>
+	<bitmap id="pe.select.down.darkblue"           file="PNG\button-darkblue.png" x="123" y="110" w="72"  h="19"/>
+
+	<bitmap id="pe.add.lightblue"                   file="PNG\button-lightblue.png" x="0"   y="66"  w="45"  h="19"/>
+	<bitmap id="pe.add.hover.lightblue"             file="PNG\button-lightblue.png" x="0"   y="88"  w="45"  h="19"/>
+	<bitmap id="pe.add.down.lightblue"              file="PNG\button-lightblue.png" x="0"   y="110" w="45"  h="19"/>
+	<bitmap id="pe.manage.playlist.lightblue"       file="PNG\button-lightblue.png" x="259" y="66"  w="153" h="19"/>
+	<bitmap id="pe.manage.playlist.hover.lightblue" file="PNG\button-lightblue.png" x="259" y="88"  w="153" h="19"/>
+	<bitmap id="pe.manage.playlist.down.lightblue"  file="PNG\button-lightblue.png" x="259" y="110" w="153" h="19"/>
+	<bitmap id="pe.misc.lightblue"                  file="PNG\button-lightblue.png" x="198" y="66"  w="58"  h="19"/>
+	<bitmap id="pe.misc.hover.lightblue"            file="PNG\button-lightblue.png" x="198" y="88"  w="58"  h="19"/>
+	<bitmap id="pe.misc.down.lightblue"             file="PNG\button-lightblue.png" x="198" y="110" w="58"  h="19"/>
+	<bitmap id="pe.options.lightblue"               file="PNG\button-lightblue.png" x="189" y="132" w="81"  h="19"/>
+	<bitmap id="pe.options.hover.lightblue"         file="PNG\button-lightblue.png" x="189" y="154" w="81"  h="19"/>
+	<bitmap id="pe.options.down.lightblue"          file="PNG\button-lightblue.png" x="189" y="176" w="81"  h="19"/>
+	<bitmap id="pe.remove.lightblue"                file="PNG\button-lightblue.png" x="48"  y="66"  w="72"  h="19"/>
+	<bitmap id="pe.remove.hover.lightblue"          file="PNG\button-lightblue.png" x="48"  y="88"  w="72"  h="19"/>
+	<bitmap id="pe.remove.down.lightblue"           file="PNG\button-lightblue.png" x="48"  y="110" w="72"  h="19"/>
+	<bitmap id="pe.select.lightblue"                file="PNG\button-lightblue.png" x="123" y="66"  w="72"  h="19"/>
+	<bitmap id="pe.select.hover.lightblue"          file="PNG\button-lightblue.png" x="123" y="88"  w="72"  h="19"/>
+	<bitmap id="pe.select.down.lightblue"           file="PNG\button-lightblue.png" x="123" y="110" w="72"  h="19"/>
+
+	<!-- CONTAINER: RGB COLOR CHANGER -->
+	<bitmap id="rgb.cc.primary.colors"      file="PNG\button-primary-colors.png" x="0"   y="0"   w="182" h="258"/>
+	<bitmap id="rgb.cc.primary.color01"     file="PNG\button-primary-colors.png" x="3"   y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color02"     file="PNG\button-primary-colors.png" x="28"  y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color03"     file="PNG\button-primary-colors.png" x="53"  y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color04"     file="PNG\button-primary-colors.png" x="78"  y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color05"     file="PNG\button-primary-colors.png" x="103" y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color06"     file="PNG\button-primary-colors.png" x="128" y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color07"     file="PNG\button-primary-colors.png" x="153" y="3"   w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color08"     file="PNG\button-primary-colors.png" x="3"   y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color09"     file="PNG\button-primary-colors.png" x="28"  y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color10"     file="PNG\button-primary-colors.png" x="53"  y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color11"     file="PNG\button-primary-colors.png" x="78"  y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color12"     file="PNG\button-primary-colors.png" x="103" y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color13"     file="PNG\button-primary-colors.png" x="128" y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color14"     file="PNG\button-primary-colors.png" x="153" y="23"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color15"     file="PNG\button-primary-colors.png" x="3"   y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color16"     file="PNG\button-primary-colors.png" x="28"  y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color17"     file="PNG\button-primary-colors.png" x="53"  y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color18"     file="PNG\button-primary-colors.png" x="78"  y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color19"     file="PNG\button-primary-colors.png" x="103" y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color20"     file="PNG\button-primary-colors.png" x="128" y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color21"     file="PNG\button-primary-colors.png" x="153" y="43"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color22"     file="PNG\button-primary-colors.png" x="3"   y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color23"     file="PNG\button-primary-colors.png" x="28"  y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color24"     file="PNG\button-primary-colors.png" x="53"  y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color25"     file="PNG\button-primary-colors.png" x="78"  y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color26"     file="PNG\button-primary-colors.png" x="103" y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color27"     file="PNG\button-primary-colors.png" x="128" y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color28"     file="PNG\button-primary-colors.png" x="153" y="63"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color29"     file="PNG\button-primary-colors.png" x="3"   y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color30"     file="PNG\button-primary-colors.png" x="28"  y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color31"     file="PNG\button-primary-colors.png" x="53"  y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color32"     file="PNG\button-primary-colors.png" x="78"  y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color33"     file="PNG\button-primary-colors.png" x="103" y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color34"     file="PNG\button-primary-colors.png" x="128" y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color35"     file="PNG\button-primary-colors.png" x="153" y="83"  w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color36"     file="PNG\button-primary-colors.png" x="3"   y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color37"     file="PNG\button-primary-colors.png" x="28"  y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color38"     file="PNG\button-primary-colors.png" x="53"  y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color39"     file="PNG\button-primary-colors.png" x="78"  y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color40"     file="PNG\button-primary-colors.png" x="103" y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color41"     file="PNG\button-primary-colors.png" x="128" y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color42"     file="PNG\button-primary-colors.png" x="153" y="103" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color43"     file="PNG\button-primary-colors.png" x="3"   y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color44"     file="PNG\button-primary-colors.png" x="28"  y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color45"     file="PNG\button-primary-colors.png" x="53"  y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color46"     file="PNG\button-primary-colors.png" x="78"  y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color47"     file="PNG\button-primary-colors.png" x="103" y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color48"     file="PNG\button-primary-colors.png" x="128" y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color49"     file="PNG\button-primary-colors.png" x="153" y="123" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color50"     file="PNG\button-primary-colors.png" x="3"   y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color51"     file="PNG\button-primary-colors.png" x="28"  y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color52"     file="PNG\button-primary-colors.png" x="53"  y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color53"     file="PNG\button-primary-colors.png" x="78"  y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color54"     file="PNG\button-primary-colors.png" x="103" y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color55"     file="PNG\button-primary-colors.png" x="128" y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color56"     file="PNG\button-primary-colors.png" x="153" y="143" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color57"     file="PNG\button-primary-colors.png" x="3"   y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color58"     file="PNG\button-primary-colors.png" x="28"  y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color59"     file="PNG\button-primary-colors.png" x="53"  y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color60"     file="PNG\button-primary-colors.png" x="78"  y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color61"     file="PNG\button-primary-colors.png" x="103" y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color62"     file="PNG\button-primary-colors.png" x="128" y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color63"     file="PNG\button-primary-colors.png" x="153" y="163" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color64"     file="PNG\button-primary-colors.png" x="3"   y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color65"     file="PNG\button-primary-colors.png" x="28"  y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color66"     file="PNG\button-primary-colors.png" x="53"  y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color67"     file="PNG\button-primary-colors.png" x="78"  y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color68"     file="PNG\button-primary-colors.png" x="103" y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color69"     file="PNG\button-primary-colors.png" x="128" y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color70"     file="PNG\button-primary-colors.png" x="153" y="183" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color71"     file="PNG\button-primary-colors.png" x="3"   y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color72"     file="PNG\button-primary-colors.png" x="28"  y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color73"     file="PNG\button-primary-colors.png" x="53"  y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color74"     file="PNG\button-primary-colors.png" x="78"  y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color75"     file="PNG\button-primary-colors.png" x="103" y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color76"     file="PNG\button-primary-colors.png" x="128" y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color77"     file="PNG\button-primary-colors.png" x="153" y="203" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color78"     file="PNG\button-primary-colors.png" x="3"   y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color79"     file="PNG\button-primary-colors.png" x="28"  y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color80"     file="PNG\button-primary-colors.png" x="53"  y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color81"     file="PNG\button-primary-colors.png" x="78"  y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color82"     file="PNG\button-primary-colors.png" x="103" y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color83"     file="PNG\button-primary-colors.png" x="128" y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color84"     file="PNG\button-primary-colors.png" x="153" y="235" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color.hover" file="PNG\button-primary-colors.png" x="0"   y="261" w="25"  h="20"/>
+	<bitmap id="rgb.cc.primary.color.down"  file="PNG\button-primary-colors.png" x="28"  y="261" w="25"  h="20"/>
+
+	<bitmap id="rgb.cc.apply.new.color.darkblue"       file="PNG\button-darkblue.png" x="232" y="330" w="246" h="19"/>
+	<bitmap id="rgb.cc.apply.new.color.hover.darkblue" file="PNG\button-darkblue.png" x="232" y="352" w="246" h="19"/>
+	<bitmap id="rgb.cc.apply.new.color.down.darkblue"  file="PNG\button-darkblue.png" x="232" y="374" w="246" h="19"/>
+	<bitmap id="rgb.cc.close.bottom.darkblue"          file="PNG\button-darkblue.png" x="189" y="198" w="63"  h="19"/>
+	<bitmap id="rgb.cc.close.bottom.hover.darkblue"    file="PNG\button-darkblue.png" x="189" y="220" w="63"  h="19"/>
+	<bitmap id="rgb.cc.close.bottom.down.darkblue"     file="PNG\button-darkblue.png" x="189" y="242" w="63"  h="19"/>
+	<bitmap id="rgb.cc.default.darkblue"               file="PNG\button-darkblue.png" x="255" y="198" w="80"  h="19"/>
+	<bitmap id="rgb.cc.default.hover.darkblue"         file="PNG\button-darkblue.png" x="255" y="220" w="80"  h="19"/>
+	<bitmap id="rgb.cc.default.down.darkblue"          file="PNG\button-darkblue.png" x="255" y="242" w="80"  h="19"/>
+	<bitmap id="rgb.cc.select.item.darkblue"           file="PNG\button-darkblue.png" x="0"   y="330" w="229" h="19"/>
+	<bitmap id="rgb.cc.select.item.hover.darkblue"     file="PNG\button-darkblue.png" x="0"   y="352" w="229" h="19"/>
+	<bitmap id="rgb.cc.select.item.down.darkblue"      file="PNG\button-darkblue.png" x="0"   y="374" w="229" h="19"/>
+
+	<bitmap id="rgb.cc.apply.new.color.lightblue"       file="PNG\button-lightblue.png" x="232" y="330" w="246" h="19"/>
+	<bitmap id="rgb.cc.apply.new.color.hover.lightblue" file="PNG\button-lightblue.png" x="232" y="352" w="246" h="19"/>
+	<bitmap id="rgb.cc.apply.new.color.down.lightblue"  file="PNG\button-lightblue.png" x="232" y="374" w="246" h="19"/>
+	<bitmap id="rgb.cc.close.bottom.lightblue"          file="PNG\button-lightblue.png" x="189" y="198" w="63"  h="19"/>
+	<bitmap id="rgb.cc.close.bottom.hover.lightblue"    file="PNG\button-lightblue.png" x="189" y="220" w="63"  h="19"/>
+	<bitmap id="rgb.cc.close.bottom.down.lightblue"     file="PNG\button-lightblue.png" x="189" y="242" w="63"  h="19"/>
+	<bitmap id="rgb.cc.default.lightblue"               file="PNG\button-lightblue.png" x="255" y="198" w="80"  h="19"/>
+	<bitmap id="rgb.cc.default.hover.lightblue"         file="PNG\button-lightblue.png" x="255" y="220" w="80"  h="19"/>
+	<bitmap id="rgb.cc.default.down.lightblue"          file="PNG\button-lightblue.png" x="255" y="242" w="80"  h="19"/>
+	<bitmap id="rgb.cc.select.item.lightblue"           file="PNG\button-lightblue.png" x="0"   y="330" w="229" h="19"/>
+	<bitmap id="rgb.cc.select.item.hover.lightblue"     file="PNG\button-lightblue.png" x="0"   y="352" w="229" h="19"/>
+	<bitmap id="rgb.cc.select.item.down.lightblue"      file="PNG\button-lightblue.png" x="0"   y="374" w="229" h="19"/>
+
+	<!-- CONTAINER: SPECTRUM ANALYZER -->
+	<bitmap id="sa.background.alpha" file="PNG\background-alpha.png" x="0" y="478" w="638" h="208"/>
+	<bitmap id="sa.base.thin"        file="PNG\base-thin.png" x="0" y="478" w="638" h="208"/>
+	<bitmap id="sa.base.wide"        file="PNG\base-wide.png" x="0" y="478" w="638" h="208"/>
+	<bitmap id="sa.component" file="PNG\NEOWULF\sa.png" w="638" h="208"/>
+	<bitmap id="sa.display.frame"    file="PNG\display-frame.png" x="0" y="86" w="496" h="93"/>
+	<bitmap id="sa.label" file="PNG\NEOWULF\label-sa.png" w="108" h="9"/>
+	<bitmap id="sa.label.bottom"     file="PNG\label-component.png" x="0" y="84" w="222" h="24"/>
+	<bitmap id="sa.light.reflection" file="PNG\light-reflection.png" x="0" y="0" w="488" h="85"/>
+
+	<bitmap id="sa.menu"       file="PNG\button-menu.png" x="0" y="0"  w="58" h="20"/>
+	<bitmap id="sa.menu.hover" file="PNG\button-menu.png" x="0" y="23" w="58" h="20"/>
+	<bitmap id="sa.menu.down"  file="PNG\button-menu.png" x="0" y="46" w="58" h="20"/>
+
+	<bitmap id="sa.vis.classic.background" file="PNG\sa-vis-elements.png" x="0" y="0"  w="4"  h="4"  gammagroup=""/>
+	<bitmap id="sa.vis.classic.bars"       file="PNG\sa-vis-elements.png" x="0" y="7"  w="54" h="4"  gammagroup=""/>
+	<bitmap id="sa.vis.classic.cover"      file="PNG\sa-vis-elements.png" x="0" y="0"  w="1"  h="1"  gammagroup=""/>
+	<bitmap id="sa.vis.classic.grid"       file="PNG\sa-vis-elements.png" x="0" y="14" w="54" h="75" gammagroup=""/>
+
+	<bitmap id="sa.vis.modern.background" file="PNG\sa-vis-elements.png" x="0" y="0"  w="4"  h="4"  gammagroup="gamma.miscellaneous.spectrum.analyzer"/>
+	<bitmap id="sa.vis.modern.bars"       file="PNG\sa-vis-elements.png" x="0" y="7"  w="54" h="4"  gammagroup="gamma.miscellaneous.spectrum.analyzer"/>
+	<bitmap id="sa.vis.modern.cover"      file="PNG\sa-vis-elements.png" x="0" y="0"  w="1"  h="1"  gammagroup="gamma.miscellaneous.spectrum.analyzer"/>
+	<bitmap id="sa.vis.modern.grid"       file="PNG\sa-vis-elements.png" x="0" y="14" w="54" h="75" gammagroup="gamma.miscellaneous.spectrum.analyzer"/>
+
+	<bitmap id="sa.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="178" gammagroup="gamma.miscellaneous.side.panel"/>
+	<bitmap id="sa.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="40" h="178" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- CONTAINER: VIDEO -->
+	<bitmap id="vid.1x.darkblue"               file="PNG\button-darkblue.png" x="111" y="132" w="36"  h="19"/>
+	<bitmap id="vid.1x.hover.darkblue"         file="PNG\button-darkblue.png" x="111" y="154" w="36"  h="19"/>
+	<bitmap id="vid.1x.down.darkblue"          file="PNG\button-darkblue.png" x="111" y="176" w="36"  h="19"/>
+	<bitmap id="vid.2x.darkblue"               file="PNG\button-darkblue.png" x="150" y="132" w="36"  h="19"/>
+	<bitmap id="vid.2x.hover.darkblue"         file="PNG\button-darkblue.png" x="150" y="154" w="36"  h="19"/>
+	<bitmap id="vid.2x.down.darkblue"          file="PNG\button-darkblue.png" x="150" y="176" w="36"  h="19"/>
+	<bitmap id="vid.fullscreen.darkblue"       file="PNG\button-darkblue.png" x="0"   y="132" w="108" h="19"/>
+	<bitmap id="vid.fullscreen.hover.darkblue" file="PNG\button-darkblue.png" x="0"   y="154" w="108" h="19"/>
+	<bitmap id="vid.fullscreen.down.darkblue"  file="PNG\button-darkblue.png" x="0"   y="176" w="108" h="19"/>
+	<bitmap id="vid.options.darkblue"          file="PNG\button-darkblue.png" x="189" y="132" w="81"  h="19"/>
+	<bitmap id="vid.options.hover.darkblue"    file="PNG\button-darkblue.png" x="189" y="154" w="81"  h="19"/>
+	<bitmap id="vid.options.down.darkblue"     file="PNG\button-darkblue.png" x="189" y="176" w="81"  h="19"/>
+
+	<bitmap id="vid.1x.lightblue"               file="PNG\button-lightblue.png" x="111" y="132" w="36"  h="19"/>
+	<bitmap id="vid.1x.hover.lightblue"         file="PNG\button-lightblue.png" x="111" y="154" w="36"  h="19"/>
+	<bitmap id="vid.1x.down.lightblue"          file="PNG\button-lightblue.png" x="111" y="176" w="36"  h="19"/>
+	<bitmap id="vid.2x.lightblue"               file="PNG\button-lightblue.png" x="150" y="132" w="36"  h="19"/>
+	<bitmap id="vid.2x.hover.lightblue"         file="PNG\button-lightblue.png" x="150" y="154" w="36"  h="19"/>
+	<bitmap id="vid.2x.down.lightblue"          file="PNG\button-lightblue.png" x="150" y="176" w="36"  h="19"/>
+	<bitmap id="vid.fullscreen.lightblue"       file="PNG\button-lightblue.png" x="0"   y="132" w="108" h="19"/>
+	<bitmap id="vid.fullscreen.hover.lightblue" file="PNG\button-lightblue.png" x="0"   y="154" w="108" h="19"/>
+	<bitmap id="vid.fullscreen.down.lightblue"  file="PNG\button-lightblue.png" x="0"   y="176" w="108" h="19"/>
+	<bitmap id="vid.options.lightblue"          file="PNG\button-lightblue.png" x="189" y="132" w="81"  h="19"/>
+	<bitmap id="vid.options.hover.lightblue"    file="PNG\button-lightblue.png" x="189" y="154" w="81"  h="19"/>
+	<bitmap id="vid.options.down.lightblue"     file="PNG\button-lightblue.png" x="189" y="176" w="81"  h="19"/>
+
+	<!-- CONTAINER: VINYL RECORD -->
+	<bitmap id="vr.background.alpha" file="PNG\vr-elements.png" x="0" y="0" w="710" h="474"/>
+	<bitmap id="vr.label"            file="PNG\vr-label.png" x="189" y="189" w="156" h="156"/>
+	<bitmap id="vr.used.effect"      file="PNG\vr-elements.png" x="0" y="477" w="710" h="474"/>
+	<bitmap id="vr.vinyl"            file="PNG\vr.png"/>
+
+	<!-- CONTAINER: VINYL RECORD PLAYER -->
+	<bitmap id="vrp.background.alpha" file="PNG\vrp.png"/>
+	<bitmap id="vrp.label" file="PNG\vr-label.png"/>
+	<bitmap id="vrp.tonearm" file="PNG\vrp-tonearm.png"/>
+
+	<bitmap id="vrp.16.led"                    file="PNG\vrp-button.png" x="164" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.33.45.led"                 file="PNG\vrp-button.png" x="123" y="118" w="38"  h="38"/>
+	<bitmap id="vrp.33"                        file="PNG\vrp-button.png" x="164" y="118" w="38"  h="38"/>
+	<bitmap id="vrp.45"                        file="PNG\vrp-button.png" x="205" y="118" w="38"  h="38"/>
+	<bitmap id="vrp.50.led"                    file="PNG\vrp-button.png" x="123" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.8.led"                     file="PNG\vrp-button.png" x="205" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.33.45"                     file="PNG\vrp-button.png" x="0"   y="118" w="38"  h="38"/>
+	<bitmap id="vrp.33.45.down"                file="PNG\vrp-button.png" x="82"  y="118" w="38"  h="38"/>
+	<bitmap id="vrp.33.45.hover"               file="PNG\vrp-button.png" x="41"  y="118" w="38"  h="38"/>
+	<bitmap id="vrp.on.off"                    file="PNG\vrp-button.png" x="246" y="118" w="38"  h="38"/>
+	<bitmap id="vrp.on.off.hover"              file="PNG\vrp-button.png" x="287" y="118" w="38"  h="38"/>
+	<bitmap id="vrp.on.off.down"               file="PNG\vrp-button.png" x="328" y="118" w="38"  h="38"/>
+	<bitmap id="vrp.playback.status.animation" file="PNG\vrp-button.png" x="231" y="0"   w="148" h="74"/>
+	<bitmap id="vrp.reset0"                    file="PNG\vrp-button.png" x="246" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.reset.hover0"              file="PNG\vrp-button.png" x="287" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.reset.down0"               file="PNG\vrp-button.png" x="328" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.reset1"                    file="PNG\vrp-button.png" x="246" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.reset.hover1"              file="PNG\vrp-button.png" x="287" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.reset.down1"               file="PNG\vrp-button.png" x="328" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.reset.led"                 file="PNG\vrp-button.png" x="369" y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.start.stop"                file="PNG\vrp-button.png" x="0"   y="0"   w="74"  h="74"/>
+	<bitmap id="vrp.start.stop.glow"           file="PNG\vrp-button.png" x="305" y="0"   w="74"  h="74"/>
+	<bitmap id="vrp.start.stop.down"           file="PNG\vrp-button.png" x="77"  y="0"   w="74"  h="74"/>
+	<bitmap id="vrp.status.start.stop"         file="PNG\vrp-button.png" x="154" y="0"   w="74"  h="74"/>
+	<bitmap id="vrp.tempo.range0"              file="PNG\vrp-button.png" x="0"   y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range.hover0"        file="PNG\vrp-button.png" x="41"  y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range.down0"         file="PNG\vrp-button.png" x="82"  y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range1"              file="PNG\vrp-button.png" x="0"   y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range.hover1"        file="PNG\vrp-button.png" x="41"  y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range.down1"         file="PNG\vrp-button.png" x="82"  y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range2"              file="PNG\vrp-button.png" x="0"   y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range.hover2"        file="PNG\vrp-button.png" x="41"  y="77"  w="38"  h="38"/>
+	<bitmap id="vrp.tempo.range.down2"         file="PNG\vrp-button.png" x="82"  y="77"  w="38"  h="38"/>
+
+	<bitmap id="vrp.table.stop"   file="PNG\vrp-table.png" x="0"   y="0"   w="554" h="554"/>
+	<bitmap id="vrp.table.play"   file="PNG\vrp-table.png" x="0"   y="557" w="554" h="554"/>
+	<bitmap id="vrp.table.shadow" file="PNG\vrp-table.png" x="256" y="267" w="28"  h="28"/>
+
+	<bitmap id="vrp.slider.tempo.thumb"       file="PNG\slider-elements.png" x="112" y="0" w="24" h="29"/>
+	<bitmap id="vrp.slider.tempo.thumb.hover" file="PNG\slider-elements.png" x="112" y="0" w="24" h="29"/>
+	<bitmap id="vrp.slider.tempo.thumb.down"  file="PNG\slider-elements.png" x="112" y="0" w="24" h="29"/>
+
+	<!-- CONTAINER: VISUALIZATIONS/MILKDROP -->
+	<bitmap id="vis.fullscreen.darkblue"       file="PNG\button-darkblue.png" x="0"   y="132" w="108" h="19"/>
+	<bitmap id="vis.fullscreen.hover.darkblue" file="PNG\button-darkblue.png" x="0"   y="154" w="108" h="19"/>
+	<bitmap id="vis.fullscreen.down.darkblue"  file="PNG\button-darkblue.png" x="0"   y="176" w="108" h="19"/>
+	<bitmap id="vis.menu.darkblue"             file="PNG\button-darkblue.png" x="415" y="66"  w="54"  h="19"/>
+	<bitmap id="vis.menu.hover.darkblue"       file="PNG\button-darkblue.png" x="415" y="88"  w="54"  h="19"/>
+	<bitmap id="vis.menu.down.darkblue"        file="PNG\button-darkblue.png" x="415" y="110" w="54"  h="19"/>
+	<bitmap id="vis.next.darkblue"             file="PNG\button-darkblue.png" x="57"  y="198" w="54"  h="19"/>
+	<bitmap id="vis.next.hover.darkblue"       file="PNG\button-darkblue.png" x="57"  y="220" w="54"  h="19"/>
+	<bitmap id="vis.next.down.darkblue"        file="PNG\button-darkblue.png" x="57"  y="242" w="54"  h="19"/>
+	<bitmap id="vis.options.darkblue"          file="PNG\button-darkblue.png" x="189" y="132" w="81"  h="19"/>
+	<bitmap id="vis.options.hover.darkblue"    file="PNG\button-darkblue.png" x="189" y="154" w="81"  h="19"/>
+	<bitmap id="vis.options.down.darkblue"     file="PNG\button-darkblue.png" x="189" y="176" w="81"  h="19"/>
+	<bitmap id="vis.prev.darkblue"             file="PNG\button-darkblue.png" x="0"   y="198" w="54"  h="19"/>
+	<bitmap id="vis.prev.hover.darkblue"       file="PNG\button-darkblue.png" x="0"   y="220" w="54"  h="19"/>
+	<bitmap id="vis.prev.down.darkblue"        file="PNG\button-darkblue.png" x="0"   y="242" w="54"  h="19"/>
+	<bitmap id="vis.random.darkblue"           file="PNG\button-darkblue.png" x="114" y="198" w="72"  h="19"/>
+	<bitmap id="vis.random.hover.darkblue"     file="PNG\button-darkblue.png" x="114" y="220" w="72"  h="19"/>
+	<bitmap id="vis.random.down.darkblue"      file="PNG\button-darkblue.png" x="114" y="242" w="72"  h="19"/>
+
+	<bitmap id="vis.fullscreen.lightblue"       file="PNG\button-lightblue.png" x="0"   y="132" w="108" h="19"/>
+	<bitmap id="vis.fullscreen.hover.lightblue" file="PNG\button-lightblue.png" x="0"   y="154" w="108" h="19"/>
+	<bitmap id="vis.fullscreen.down.lightblue"  file="PNG\button-lightblue.png" x="0"   y="176" w="108" h="19"/>
+	<bitmap id="vis.menu.lightblue"             file="PNG\button-lightblue.png" x="415" y="66"  w="54"  h="19"/>
+	<bitmap id="vis.menu.hover.lightblue"       file="PNG\button-lightblue.png" x="415" y="88"  w="54"  h="19"/>
+	<bitmap id="vis.menu.down.lightblue"        file="PNG\button-lightblue.png" x="415" y="110" w="54"  h="19"/>
+	<bitmap id="vis.next.lightblue"             file="PNG\button-lightblue.png" x="57"  y="198" w="54"  h="19"/>
+	<bitmap id="vis.next.hover.lightblue"       file="PNG\button-lightblue.png" x="57"  y="220" w="54"  h="19"/>
+	<bitmap id="vis.next.down.lightblue"        file="PNG\button-lightblue.png" x="57"  y="242" w="54"  h="19"/>
+	<bitmap id="vis.options.lightblue"          file="PNG\button-lightblue.png" x="189" y="132" w="81"  h="19"/>
+	<bitmap id="vis.options.hover.lightblue"    file="PNG\button-lightblue.png" x="189" y="154" w="81"  h="19"/>
+	<bitmap id="vis.options.down.lightblue"     file="PNG\button-lightblue.png" x="189" y="176" w="81"  h="19"/>
+	<bitmap id="vis.prev.lightblue"             file="PNG\button-lightblue.png" x="0"   y="198" w="54"  h="19"/>
+	<bitmap id="vis.prev.hover.lightblue"       file="PNG\button-lightblue.png" x="0"   y="220" w="54"  h="19"/>
+	<bitmap id="vis.prev.down.lightblue"        file="PNG\button-lightblue.png" x="0"   y="242" w="54"  h="19"/>
+	<bitmap id="vis.random.lightblue"           file="PNG\button-lightblue.png" x="114" y="198" w="72"  h="19"/>
+	<bitmap id="vis.random.hover.lightblue"     file="PNG\button-lightblue.png" x="114" y="220" w="72"  h="19"/>
+	<bitmap id="vis.random.down.lightblue"      file="PNG\button-lightblue.png" x="114" y="242" w="72"  h="19"/>
+
+	<!-- CONTAINER: VU METER ANALOG -->
+	<bitmap id="vu.ma.background.alpha"       file="PNG\background-alpha.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="vu.ma.base.thin"              file="PNG\base-thin.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="vu.ma.base.wide"              file="PNG\base-wide.png" x="0" y="249" w="638" h="226"/>
+	<bitmap id="vu.ma.component"              file="PNG\component.png" x="0" y="938" w="638" h="226"/>
+	<bitmap id="vu.ma.display.frame"          file="PNG\display-frame.png" x="0" y="182" w="244" h="112"/>
+	<bitmap id="vu.ma.display.light.bottom"   file="PNG\display-frame.png" x="0" y="297" w="244" h="112"/>
+	<bitmap id="vu.ma.label"                  file="PNG\label-component.png" x="0" y="48" w="292" h="9"/>
+	<bitmap id="vu.ma.label.bottom"           file="PNG\label-component.png" x="0" y="111" w="112" h="21"/>
+	<bitmap id="vu.ma.light.reflection.left"  file="PNG\light-reflection.png" x="0" y="0" w="236" h="104"/>
+	<bitmap id="vu.ma.light.reflection.right" file="PNG\light-reflection.png" x="252" y="0" w="236" h="104"/>
+
+	<bitmap id="vu.ma.display.background"    file="PNG\vu-ma-display.png" x="0" y="0"   w="4"   h="4"   gammagroup="gamma.vu.ma.display.background"/>
+	<bitmap id="vu.ma.display.needle"        file="PNG\vu-ma-display.png" x="0" y="7"   w="244" h="244" gammagroup="gamma.vu.ma.display.needle"/> <!-- must be a 1:1 square -->
+	<bitmap id="vu.ma.display.scale.db"      file="PNG\vu-ma-display.png" x="0" y="254" w="244" h="112" gammagroup="gamma.vu.ma.display.scale.db"/>
+	<bitmap id="vu.ma.display.scale.peak"    file="PNG\vu-ma-display.png" x="0" y="369" w="244" h="112" gammagroup="gamma.vu.ma.display.scale.peak"/>
+	<bitmap id="vu.ma.display.scale.percent" file="PNG\vu-ma-display.png" x="0" y="484" w="244" h="112" gammagroup="gamma.vu.ma.display.scale.percent"/>
+
+	<bitmap id="vu.ma.menu"       file="PNG\button-menu.png" x="0" y="0"  w="58" h="20"/>
+	<bitmap id="vu.ma.menu.hover" file="PNG\button-menu.png" x="0" y="23" w="58" h="20"/>
+	<bitmap id="vu.ma.menu.down"  file="PNG\button-menu.png" x="0" y="46" w="58" h="20"/>
+
+	<bitmap id="vu.ma.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="196" gammagroup="gamma.miscellaneous.side.panel"/>
+	<bitmap id="vu.ma.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="40" h="196" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- CONTAINER: VU METER DIGITAL HORIZONTAL -->
+	<bitmap id="vu.mdh.background.alpha" file="PNG\background-alpha.png" x="0" y="478" w="638" h="208"/>
+	<bitmap id="vu.mdh.base.thin"        file="PNG\base-thin.png" x="0" y="478" w="638" h="208"/>
+	<bitmap id="vu.mdh.base.wide"        file="PNG\base-wide.png" x="0" y="478" w="638" h="208"/>
+	<bitmap id="vu.mdh.component"        file="PNG\component.png" x="0" y="1167" w="638" h="208"/>
+	<bitmap id="vu.mdh.display.frame"    file="PNG\display-frame.png" x="0" y="86" w="496" h="93"/>
+	<bitmap id="vu.mdh.label"            file="PNG\label-component.png" x="0" y="60" w="140" h="9"/>
+	<bitmap id="vu.mdh.label.bottom"     file="PNG\label-component.png" x="0" y="111" w="112" h="21"/>
+	<bitmap id="vu.mdh.light.reflection" file="PNG\light-reflection.png" x="0" y="0" w="488" h="85"/>
+
+	<bitmap id="vu.mdh.led.animation.blue.left"   file="PNG\vu-mdh-led-animation.png" x="0"    y="0" w="488" h="300"/>
+	<bitmap id="vu.mdh.led.animation.blue.right"  file="PNG\vu-mdh-led-animation.png" x="491"  y="0" w="488" h="300"/>
+	<bitmap id="vu.mdh.led.animation.green.left"  file="PNG\vu-mdh-led-animation.png" x="982"  y="0" w="488" h="300"/>
+	<bitmap id="vu.mdh.led.animation.green.right" file="PNG\vu-mdh-led-animation.png" x="1473" y="0" w="488" h="300"/>
+
+	<bitmap id="vu.mdh.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="178" gammagroup="gamma.miscellaneous.side.panel"/>
+	<bitmap id="vu.mdh.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="40" h="178" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- CONTAINER: VU METER DIGITAL VERTICAL -->
+	<bitmap id="vu.mdv.background.alpha" file="PNG\background-alpha.png" x="641" y="0" w="300" h="468"/>
+	<bitmap id="vu.mdv.base.thin"        file="PNG\base-thin.png" x="641" y="0" w="300" h="468"/>
+	<bitmap id="vu.mdv.base.wide"        file="PNG\base-thin.png" x="641" y="0" w="300" h="468"/> <!-- same layout: thin and wide -->
+	<bitmap id="vu.mdv.component"        file="PNG\component.png" x="0" y="1378" w="300" h="468"/>
+	<bitmap id="vu.mdv.display.frame"    file="PNG\display-frame.png" x="499" y="0" w="158" h="319"/>
+	<bitmap id="vu.mdv.label.bottom"     file="PNG\label-component.png" x="0" y="111" w="112" h="21"/>
+	<bitmap id="vu.mdv.light.reflection" file="PNG\light-reflection.png" x="283" y="0" w="150" h="114"/>
+
+	<bitmap id="vu.mdv.led.animation.blue.left"   file="PNG\vu-mdv-led-animation.png" x="0"   y="0" w="67" h="3110"/>
+	<bitmap id="vu.mdv.led.animation.blue.right"  file="PNG\vu-mdv-led-animation.png" x="70"  y="0" w="67" h="3110"/>
+	<bitmap id="vu.mdv.led.animation.green.left"  file="PNG\vu-mdv-led-animation.png" x="140" y="0" w="67" h="3110"/>
+	<bitmap id="vu.mdv.led.animation.green.right" file="PNG\vu-mdv-led-animation.png" x="210" y="0" w="67" h="3110"/>
+
+	<bitmap id="vu.mdv.side.panel.width.thin" file="PNG\side-panel.png" x="0" y="0" w="20" h="216" gammagroup="gamma.miscellaneous.side.panel"/> <!-- thin = wide -->
+	<bitmap id="vu.mdv.side.panel.width.wide" file="PNG\side-panel.png" x="0" y="0" w="20" h="216" gammagroup="gamma.miscellaneous.side.panel"/>
+
+	<!-- BITMAPFONT -->
+	<bitmap
+		id="font.text.info"
+		file="PNG\font-text-info.png"/>
+	<bitmapfont
+		id="bitmapfont.text.info"
+		file="font.text.info"
+		charwidth="7"
+		charheight="7"
+		hspacing="2"
+		vspacing="0"/>
+	<bitmap
+		id="font.data"
+		file="PNG\font-data.png"
+		gammagroup="gamma.display.text"/>
+	<bitmapfont
+		id="bitmapfont.data"
+		file="font.data"
+		charwidth="9"
+		charheight="7"
+		hspacing="0"
+		vspacing="0"/> <!-- for Equalizer and Frequency Response Graph display -->
+	<bitmap
+		id="font.songinfo.data"
+		file="PNG\font-songinfo-data.png"
+		gammagroup="gamma.main.player.songinfo.data"/>
+	<bitmapfont
+		id="bitmapfont.songinfo.data"
+		file="font.songinfo.data"
+		charwidth="9"
+		charheight="7"
+		hspacing="0"
+		vspacing="0"/> <!-- for Main Player display -->
+	<bitmap
+		id="font.songticker"
+		file="PNG\font-songticker.png"
+		gammagroup="gamma.display.text"/>
+	<bitmapfont
+		id="bitmapfont.songticker"
+		file="font.songticker"
+		charwidth="14"
+		charheight="22"
+		hspacing="0"
+		vspacing="0"/>
+	<bitmap
+		id="font.timer"
+		file="PNG\font-timer.png"
+		gammagroup="gamma.main.player.timer"/>
+	<bitmapfont
+		id="bitmapfont.timer"
+		file="font.timer"
+		charwidth="15"
+		charheight="23"
+		hspacing="7"
+		vspacing="0"/>
+
+	<!-- BUTTON CAPTION: CLOSE + CLOSE BIG -->
+	<bitmap id="caption.close"               file="PNG\button-caption.png" x="0"   y="0"  w="18" h="12"/>
+	<bitmap id="caption.close.hover"         file="PNG\button-caption.png" x="0"   y="15" w="18" h="12"/>
+	<bitmap id="caption.close.down"          file="PNG\button-caption.png" x="0"   y="30" w="18" h="12"/>
+	<bitmap id="caption.close.big"           file="PNG\button-caption.png" x="84"  y="0"  w="38" h="38"/>
+	<bitmap id="caption.close.big.hover"     file="PNG\button-caption.png" x="125" y="0"  w="38" h="38"/>
+	<bitmap id="caption.close.big.down"      file="PNG\button-caption.png" x="166" y="0"  w="38" h="38"/>
+
+	<!-- BUTTON CAPTION: MINIMIZE -->
+	<bitmap id="caption.minimize"            file="PNG\button-caption.png" x="21" y="0"  w="18" h="12"/>
+	<bitmap id="caption.minimize.hover"      file="PNG\button-caption.png" x="21" y="15" w="18" h="12"/>
+	<bitmap id="caption.minimize.down"       file="PNG\button-caption.png" x="21" y="30" w="18" h="12"/>
+
+	<!-- BUTTON CAPTION: SYSMENU -->
+	<bitmap id="caption.sysmenu"             file="PNG\button-caption.png" x="42" y="0"  w="18" h="12"/>
+	<bitmap id="caption.sysmenu.hover"       file="PNG\button-caption.png" x="42" y="15" w="18" h="12"/>
+	<bitmap id="caption.sysmenu.down"        file="PNG\button-caption.png" x="42" y="30" w="18" h="12"/>
+
+	<!-- NSTATESBUTTON CAPTION: FRAME (3 STATES) -->
+	<bitmap id="nstatesbutton.frame0"       file="PNG\button-caption.png" x="63" y="0"  w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame.hover0" file="PNG\button-caption.png" x="63" y="15" w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame.down0"  file="PNG\button-caption.png" x="63" y="30" w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame1"       file="PNG\button-caption.png" x="63" y="0"  w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame.hover1" file="PNG\button-caption.png" x="63" y="15" w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame.down1"  file="PNG\button-caption.png" x="63" y="30" w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame2"       file="PNG\button-caption.png" x="63" y="0"  w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame.hover2" file="PNG\button-caption.png" x="63" y="15" w="18" h="12"/>
+	<bitmap id="nstatesbutton.frame.down2"  file="PNG\button-caption.png" x="63" y="30" w="18" h="12"/>
+
+	<!-- BUTTON DARKBLUE ON BLUE AREA (ML, PE, VID, VIS) -->
+	<bitmap id="prev.darkblue"        file="PNG\button-darkblue.png" x="0"   y="0"  w="40" h="19"/>
+	<bitmap id="prev.down.darkblue"   file="PNG\button-darkblue.png" x="0"   y="44" w="40" h="19"/>
+	<bitmap id="prev.hover.darkblue"  file="PNG\button-darkblue.png" x="0"   y="22" w="40" h="19"/>
+	<bitmap id="play.darkblue"        file="PNG\button-darkblue.png" x="43"  y="0"  w="40" h="19"/>
+	<bitmap id="play.down.darkblue"   file="PNG\button-darkblue.png" x="43"  y="44" w="40" h="19"/>
+	<bitmap id="play.hover.darkblue"  file="PNG\button-darkblue.png" x="43"  y="22" w="40" h="19"/>
+	<bitmap id="pause.darkblue"       file="PNG\button-darkblue.png" x="86"  y="0"  w="40" h="19"/>
+	<bitmap id="pause.down.darkblue"  file="PNG\button-darkblue.png" x="86"  y="44" w="40" h="19"/>
+	<bitmap id="pause.hover.darkblue" file="PNG\button-darkblue.png" x="86"  y="22" w="40" h="19"/>
+	<bitmap id="stop.darkblue"        file="PNG\button-darkblue.png" x="129" y="0"  w="40" h="19"/>
+	<bitmap id="stop.down.darkblue"   file="PNG\button-darkblue.png" x="129" y="44" w="40" h="19"/>
+	<bitmap id="stop.hover.darkblue"  file="PNG\button-darkblue.png" x="129" y="22" w="40" h="19"/>
+	<bitmap id="next.darkblue"        file="PNG\button-darkblue.png" x="172" y="0"  w="40" h="19"/>
+	<bitmap id="next.down.darkblue"   file="PNG\button-darkblue.png" x="172" y="44" w="40" h="19"/>
+	<bitmap id="next.hover.darkblue"  file="PNG\button-darkblue.png" x="172" y="22" w="40" h="19"/>
+	<bitmap id="eject.darkblue"       file="PNG\button-darkblue.png" x="215" y="0"  w="40" h="19"/>
+	<bitmap id="eject.down.darkblue"  file="PNG\button-darkblue.png" x="215" y="44" w="40" h="19"/>
+	<bitmap id="eject.hover.darkblue" file="PNG\button-darkblue.png" x="215" y="22" w="40" h="19"/>
+	<bitmap id="mute.darkblue"        file="PNG\button-darkblue.png" x="258" y="0"  w="54" h="19"/>
+	<bitmap id="mute.down.darkblue"   file="PNG\button-darkblue.png" x="258" y="44" w="54" h="19"/>
+	<bitmap id="mute.hover.darkblue"  file="PNG\button-darkblue.png" x="258" y="22" w="54" h="19"/>
+
+	<!-- BUTTON LIGHTBLUE ON BLUE AREA (ML, PE, VID, VIS) -->
+	<bitmap id="prev.down.lightblue"   file="PNG\button-lightblue.png" x="0"   y="44" w="40" h="19"/>
+	<bitmap id="prev.hover.lightblue"  file="PNG\button-lightblue.png" x="0"   y="22" w="40" h="19"/>
+	<bitmap id="prev.lightblue"        file="PNG\button-lightblue.png" x="0"   y="0"  w="40" h="19"/>
+	<bitmap id="play.down.lightblue"   file="PNG\button-lightblue.png" x="43"  y="44" w="40" h="19"/>
+	<bitmap id="play.hover.lightblue"  file="PNG\button-lightblue.png" x="43"  y="22" w="40" h="19"/>
+	<bitmap id="play.lightblue"        file="PNG\button-lightblue.png" x="43"  y="0"  w="40" h="19"/>
+	<bitmap id="pause.down.lightblue"  file="PNG\button-lightblue.png" x="86"  y="44" w="40" h="19"/>
+	<bitmap id="pause.hover.lightblue" file="PNG\button-lightblue.png" x="86"  y="22" w="40" h="19"/>
+	<bitmap id="pause.lightblue"       file="PNG\button-lightblue.png" x="86"  y="0"  w="40" h="19"/>
+	<bitmap id="stop.down.lightblue"   file="PNG\button-lightblue.png" x="129" y="44" w="40" h="19"/>
+	<bitmap id="stop.hover.lightblue"  file="PNG\button-lightblue.png" x="129" y="22" w="40" h="19"/>
+	<bitmap id="stop.lightblue"        file="PNG\button-lightblue.png" x="129" y="0"  w="40" h="19"/>
+	<bitmap id="next.down.lightblue"   file="PNG\button-lightblue.png" x="172" y="44" w="40" h="19"/>
+	<bitmap id="next.hover.lightblue"  file="PNG\button-lightblue.png" x="172" y="22" w="40" h="19"/>
+	<bitmap id="next.lightblue"        file="PNG\button-lightblue.png" x="172" y="0"  w="40" h="19"/>
+	<bitmap id="eject.down.lightblue"  file="PNG\button-lightblue.png" x="215" y="44" w="40" h="19"/>
+	<bitmap id="eject.hover.lightblue" file="PNG\button-lightblue.png" x="215" y="22" w="40" h="19"/>
+	<bitmap id="eject.lightblue"       file="PNG\button-lightblue.png" x="215" y="0"  w="40" h="19"/>
+	<bitmap id="mute.down.lightblue"   file="PNG\button-lightblue.png" x="258" y="44" w="54" h="19"/>
+	<bitmap id="mute.hover.lightblue"  file="PNG\button-lightblue.png" x="258" y="22" w="54" h="19"/>
+	<bitmap id="mute.lightblue"        file="PNG\button-lightblue.png" x="258" y="0"  w="54" h="19"/>
+
+	<!-- BUTTON BLACK -->
+	<bitmap id="button.black"               file="PNG\button-toggle.png" x="0" y="0"  w="30" h="30"/> <!-- PLAYLIST EDITOR (MENU) -->
+	<bitmap id="button.black.hover"         file="PNG\button-toggle.png" x="0" y="33" w="30" h="30"/>
+	<bitmap id="button.black.down"          file="PNG\button-toggle.png" x="0" y="66" w="30" h="30"/>
+	<bitmap id="button.black.active"        file="PNG\button-toggle.png" x="0" y="99" w="30" h="30"/>
+
+	<!-- TOGGLEBUTTON BLACK -->
+	<bitmap id="togglebutton.black"         file="PNG\button-toggle.png" x="0" y="0"  w="30" h="30"/> <!-- SHUFFLE -->
+	<bitmap id="togglebutton.black.hover"   file="PNG\button-toggle.png" x="0" y="33" w="30" h="30"/>
+	<bitmap id="togglebutton.black.down"    file="PNG\button-toggle.png" x="0" y="66" w="30" h="30"/>
+
+	<!-- NSTATESBUTTON BLACK (3 STATES) -->
+	<bitmap id="nstatesbutton.black0"       file="PNG\button-toggle.png" x="0" y="0"  w="30" h="30"/> <!-- REPEAT (OFF/ALL/TRACK) -->
+	<bitmap id="nstatesbutton.black.hover0" file="PNG\button-toggle.png" x="0" y="33" w="30" h="30"/>
+	<bitmap id="nstatesbutton.black.down0"  file="PNG\button-toggle.png" x="0" y="66" w="30" h="30"/>
+	<bitmap id="nstatesbutton.black1"       file="PNG\button-toggle.png" x="0" y="0"  w="30" h="30"/>
+	<bitmap id="nstatesbutton.black.hover1" file="PNG\button-toggle.png" x="0" y="33" w="30" h="30"/>
+	<bitmap id="nstatesbutton.black.down1"  file="PNG\button-toggle.png" x="0" y="66" w="30" h="30"/>
+	<bitmap id="nstatesbutton.black2"       file="PNG\button-toggle.png" x="0" y="0"  w="30" h="30"/>
+	<bitmap id="nstatesbutton.black.hover2" file="PNG\button-toggle.png" x="0" y="33" w="30" h="30"/>
+	<bitmap id="nstatesbutton.black.down2"  file="PNG\button-toggle.png" x="0" y="66" w="30" h="30"/>
+
+	<!-- BUTTON BLUE -->
+	<bitmap id="button.blue"                file="PNG\button-toggle.png" x="33" y="0"  w="30" h="30"/> <!-- EQUALIZER: PRESETS -->
+	<bitmap id="button.blue.hover"          file="PNG\button-toggle.png" x="33" y="33" w="30" h="30"/>
+	<bitmap id="button.blue.down"           file="PNG\button-toggle.png" x="33" y="66" w="30" h="30"/>
+
+	<!-- TOGGLEBUTTON BLUE -->
+	<bitmap id="togglebutton.blue"          file="PNG\button-toggle.png" x="33" y="0"  w="30" h="30"/> <!-- EQUALIZER: EQ/AUTO -->
+	<bitmap id="togglebutton.blue.hover"    file="PNG\button-toggle.png" x="33" y="33" w="30" h="30"/>
+	<bitmap id="togglebutton.blue.down"     file="PNG\button-toggle.png" x="33" y="66" w="30" h="30"/>
+
+	<!-- NSTATESBUTTON BLUE (2 STATES) -->
+	<bitmap id="nstatesbutton.blue0"        file="PNG\button-toggle.png" x="33" y="0"  w="30" h="30"/> <!-- VU METER: COLOR (BLUE/GREEN) -->
+	<bitmap id="nstatesbutton.blue.hover0"  file="PNG\button-toggle.png" x="33" y="33" w="30" h="30"/>
+	<bitmap id="nstatesbutton.blue.down0"   file="PNG\button-toggle.png" x="33" y="66" w="30" h="30"/>
+	<bitmap id="nstatesbutton.blue1"        file="PNG\button-toggle.png" x="33" y="0"  w="30" h="30"/>
+	<bitmap id="nstatesbutton.blue.hover1"  file="PNG\button-toggle.png" x="33" y="33" w="30" h="30"/>
+	<bitmap id="nstatesbutton.blue.down1"   file="PNG\button-toggle.png" x="33" y="66" w="30" h="30"/>
+
+	<!-- PLAYBACK STATUS LAYER ON BLUE AREA (ML, PE, VID, VIS) -->
+	<bitmap id="status.play"  file="PNG\button-status.png" x="0"   y="0" w="80" h="40"/>
+	<bitmap id="status.pause" file="PNG\button-status.png" x="80"  y="0" w="80" h="40"/>
+	<bitmap id="status.stop"  file="PNG\button-status.png" x="160" y="0" w="80" h="40"/>
+
+	<!-- COLOR -->
+	<color id="color.black"                         value="#000000"/>
+	<color id="color.cfg.text.button.label"         value="#fdf6e3"/> <!-- configuration window: button label -->
+	<color id="color.cfg.text.window"               value="#073642"/> <!-- configuration window text -->
+	<color id="color.cfg.text.radio.button"         value="#0b5566"/> <!-- configuration window text radio button -->
+	<color id="color.component.name"                value="#dde5ee"/> <!-- component's name on Title Bar of a standard window -->
+	<color id="color.filter.darkblue.left.top"      value="#5d6f82"/> <!-- light reflection on top and left side on objectframe area on darker background -->
+	<color id="color.filter.darkblue.right.bottom"  value="#202730"/> <!-- shadow for darkblue window objectframe area -->
+	<color id="color.filter.lightblue.left.top"     value="#758ba3"/> <!-- light reflection on top and left side on objectframe area on brighter background -->
+	<color id="color.filter.lightblue.right.bottom" value="#202730"/> <!-- shadow for lightblue window objectframe area -->
+	<color id="color.objectframe.background"        value="#192129"/> <!-- additional objectframe background on wasabi group -->
+	<color id="color.text.credits"                  value="#aedcf0"/> <!-- text in "About" window -->
+	<color id="color.text.credits.bold"             value="#dce8f0"/> <!-- text in "About" window (bold) -->
+	<color id="color.text.field"                    value="#9ba9b2"/> <!-- string in text fields -->
+	<color id="color.white"                         value="#ffffff"/>
+
+	<color id="color.album.cover.flow.track" value="#808080" gammagroup="gamma.miscellaneous.album.cover.flow.songinfo"/>
+	<color id="color.album.cover.flow.album" value="#707070" gammagroup="gamma.miscellaneous.album.cover.flow.songinfo"/>
+	<color id="color.display.info"           value="#808080" gammagroup="gamma.display.text"/>
+	<color id="color.equalizer.band.value"   value="#808080" gammagroup="gamma.display.text"/>
+	<color id="color.notification.songinfo"  value="#808080" gammagroup="gamma.notification.songinfo"/>
+	<color id="color.notification.title"     value="#808080" gammagroup="gamma.notification.title"/>
+	<color id="color.tooltip.text"           value="#808080" gammagroup="gamma.tooltip.text"/>
+
+	<!-- DISPLAY & DISPLAY LIGHT (WHITE/YELLOW) -->
+	<bitmap id="display.background" file="PNG\display-elements.png" x="0" y="0" w="4" h="4" gammagroup="gamma.display.background"/>
+	<bitmap id="display.grid"       file="PNG\display-elements.png" x="0" y="7" w="4" h="4" gammagroup="gamma.display.grid"/>
+
+	<bitmap id="display.big.frame.left"     file="PNG\display-frame.png" x="314" y="182" w="30" h="26"/>
+	<bitmap id="display.big.frame.center"   file="PNG\display-frame.png" x="344" y="182" w="4"  h="26"/>
+	<bitmap id="display.big.frame.right"    file="PNG\display-frame.png" x="348" y="182" w="30" h="26"/>
+	<bitmap id="display.overlay"            file="PNG\display-frame.png" x="448" y="182" w="10" h="10"/>
+	<bitmap id="display.small.frame.left"   file="PNG\display-frame.png" x="247" y="182" w="30" h="21"/>
+	<bitmap id="display.small.frame.center" file="PNG\display-frame.png" x="277" y="182" w="4"  h="21"/>
+	<bitmap id="display.small.frame.right"  file="PNG\display-frame.png" x="281" y="182" w="30" h="21"/>
+
+	<bitmap id="display.light.white.small"  file="PNG\display-frame.png" x="374" y="257" w="122" h="26"/>
+	<bitmap id="display.light.yellow.small" file="PNG\display-frame.png" x="374" y="214" w="122" h="26"/>
+	<bitmap id="display.light.white"        file="PNG\display-frame.png" x="247" y="257" w="124" h="37"/>
+	<bitmap id="display.light.yellow"       file="PNG\display-frame.png" x="247" y="214" w="124" h="37"/>
+
+	<bitmap id="display.shadow" file="$gradient" gradient_x1="0.0" gradient_y1="0.0" gradient_x2="0.0" gradient_y2="1.0" points="0.0=0,0,0,125;1.0=0,0,0,0" w="1" h="26"/> <!-- RGBA -->
+
+	<!-- LABEL REPEAT & SHUFFLE -->
+	<bitmap id="label.repeat"  file="PNG\label-repeat-shuffle.png" x="0" y="0"  w="32" h="15"/>
+	<bitmap id="label.shuffle" file="PNG\label-repeat-shuffle.png" x="0" y="18" w="32" h="15"/>
+
+	<!-- LEDs -->
+	<bitmap id="led.background.black" file="PNG\led.png" x="0" y="0"   w="30" h="30"/>
+	<bitmap id="led.background.blue"  file="PNG\led.png" x="0" y="33"  w="30" h="30"/>
+	<bitmap id="led.off"              file="PNG\led.png" x="0" y="66"  w="30" h="30"/>
+	<bitmap id="led.beige"            file="PNG\led.png" x="0" y="99"  w="30" h="30"/>
+	<bitmap id="led.blue" file="PNG\NEOWULF\led-red.png" w="30" h="30"/>
+	<bitmap id="led.green"            file="PNG\led.png" x="0" y="165" w="30" h="30"/>
+	<bitmap id="led.peak"             file="PNG\led.png" x="0" y="198" w="30" h="30"/>
+	<bitmap id="led.red"              file="PNG\led.png" x="0" y="231" w="30" h="30"/>
+	<bitmap id="led.yellow"           file="PNG\led.png" x="0" y="264" w="30" h="30"/>
+
+	<!-- NOT FOUND IMAGE -->
+	<bitmap id="not.found.image" file="PNG\not-found-image.png" x="0" y="0" w="250" h="250"/>
+
+	<!-- PLAYLIST DIRECTORY -->
+	<bitmap id="pe.pldir.background" file="PNG\playlist-directory.png" x="0"   y="0" w="1"   h="1"/>
+	<bitmap id="pe.pldir.fill.in"    file="PNG\playlist-directory.png" x="144" y="0" w="1"   h="20"/>
+	<bitmap id="pe.pldir.items"      file="PNG\playlist-directory.png" x="145" y="0" w="68"  h="20"/>
+	<bitmap id="pe.pldir.time"       file="PNG\playlist-directory.png" x="213" y="0" w="73"  h="20"/>
+	<bitmap id="pe.pldir.title"      file="PNG\playlist-directory.png" x="0"   y="0" w="144" h="20"/>
+
+	<!-- POWER INDICATOR -->
+	<bitmap id="power.label" file="PNG\label-component.png" x="0" y="72" w="45" h="9"/>
+	<bitmap id="power.off"   file="PNG\power-indicator.png" x="0" y="0"  w="44" h="20"/>
+	<bitmap id="power.on"    file="PNG\power-indicator.png" x="0" y="23" w="44" h="20"/>
+
+	<!-- SIDE PANEL REFLECTION & SHADOW -->
+	<bitmap id="side.panel.light.reflection.thin" file="PNG\side-panel.png" x="43" y="0"  w="20" h="37" gammagroup=""/>
+	<bitmap id="side.panel.light.reflection.wide" file="PNG\side-panel.png" x="43" y="0"  w="40" h="37" gammagroup=""/>
+	<bitmap id="side.panel.shadow.left"           file="PNG\side-panel.png" x="43" y="40" w="10" h="10" gammagroup=""/>
+	<bitmap id="side.panel.shadow.right"          file="PNG\side-panel.png" x="56" y="40" w="10" h="10" gammagroup=""/>
+
+	<!-- SLIDER -->
+	<bitmap id="progress.grid" file="PNG\progress-grid.png" x="0" y="0" w="1" h="4" gammagroup="gamma.main.player.slider.bar.progress"/> <!-- keep w=1 -->
+	<bitmap id="bar.volume"    file="PNG\progress-grid.png" x="0" y="7" w="1" h="4" gammagroup="gamma.main.player.slider.bar.volume"/>
+
+	<bitmap id="slider.progress.background.left"   file="PNG\slider-elements.png" x="0"  y="66" w="28" h="26"/>
+	<bitmap id="slider.progress.background.center" file="PNG\slider-elements.png" x="31" y="66" w="3"  h="26"/>
+	<bitmap id="slider.progress.background.right"  file="PNG\slider-elements.png" x="37" y="66" w="28" h="26"/>
+	<bitmap id="slider.progress.thumb"             file="PNG\slider-elements.png" x="0"  y="0"  w="37" h="19"/> <!-- thumb and ghost share the same bitmap -->
+	<bitmap id="slider.progress.thumb.hover"       file="PNG\slider-elements.png" x="0"  y="22" w="37" h="19"/>
+	<bitmap id="slider.progress.thumb.down"        file="PNG\slider-elements.png" x="0"  y="44" w="37" h="19"/>
+	<bitmap id="slider.volume.thumb"               file="PNG\slider-elements.png" x="40" y="0"  w="29" h="16"/>
+	<bitmap id="slider.volume.thumb.hover"         file="PNG\slider-elements.png" x="40" y="19" w="29" h="16"/>
+	<bitmap id="slider.volume.thumb.down"          file="PNG\slider-elements.png" x="40" y="38" w="29" h="16"/>
+	<bitmap id="volume.background.left"            file="PNG\slider-elements.png" x="68" y="66" w="20" h="19"/>
+	<bitmap id="volume.background.center"          file="PNG\slider-elements.png" x="91" y="66" w="3"  h="19"/>
+	<bitmap id="volume.background.right"           file="PNG\slider-elements.png" x="97" y="66" w="20" h="19"/>
+
+	<!-- STANDARDFRAME -->
+	<bitmap id="base.texture" file="PNG\window-frame.png" x="52" y="34" w="6" h="6"/>
+
+	<bitmap id="filter.black"     file="PNG\component.png" x="303" y="1378" w="100" h="50"/>
+	<bitmap id="filter.darkblue"  file="PNG\component.png" x="406" y="1378" w="30"  h="20"/>
+	<bitmap id="filter.lightblue" file="PNG\component.png" x="439" y="1378" w="30"  h="20"/>
+
+	<bitmap id="noframe.top.left"           file="PNG\window-frame.png" x="0"  y="122" w="48" h="27"/>
+	<bitmap id="noframe.top"                file="PNG\window-frame.png" x="48" y="122" w="4"  h="27"/>
+	<bitmap id="noframe.top.right"          file="PNG\window-frame.png" x="52" y="122" w="48" h="27"/>
+	<bitmap id="noframe.left"               file="PNG\window-frame.png" x="0"  y="149" w="1"  h="2"/>
+	<bitmap id="noframe.right"              file="PNG\window-frame.png" x="99" y="149" w="1"  h="2"/>
+	<bitmap id="noframe.bottom.left"        file="PNG\window-frame.png" x="0"  y="151" w="1"  h="3"/>
+	<bitmap id="noframe.bottom"             file="PNG\window-frame.png" x="1"  y="153" w="98" h="1"/>
+	<bitmap id="noframe.bottom.right"       file="PNG\window-frame.png" x="99" y="151" w="1"  h="3"/>
+
+	<bitmap id="standardframe.top.left"     file="PNG\window-frame.png" x="0"  y="0"   w="48" h="32"/>
+	<bitmap id="standardframe.top"          file="PNG\window-frame.png" x="48" y="0"   w="4"  h="32"/>
+	<bitmap id="standardframe.top.right"    file="PNG\window-frame.png" x="52" y="0"   w="48" h="32"/>
+	<bitmap id="standardframe.left"         file="PNG\window-frame.png" x="0"  y="32"  w="32" h="3"/>
+	<bitmap id="standardframe.right"        file="PNG\window-frame.png" x="68" y="32"  w="32" h="3"/>
+	<bitmap id="standardframe.bottom.left"  file="PNG\window-frame.png" x="0"  y="35"  w="32" h="84"/>
+	<bitmap id="standardframe.bottom"       file="PNG\window-frame.png" x="32" y="87"  w="36" h="32"/>
+	<bitmap id="standardframe.bottom.right" file="PNG\window-frame.png" x="68" y="35"  w="32" h="84"/>
+
+	<!-- TOOLTIP -->
+	<bitmap id="tooltip.grid.top.left"     file="PNG\tooltip-background.png" x="0"  y="0"  w="10" h="8"  gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.top"          file="PNG\tooltip-background.png" x="10" y="0"  w="10" h="8"  gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.top.right"    file="PNG\tooltip-background.png" x="20" y="0"  w="10" h="8"  gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.left"         file="PNG\tooltip-background.png" x="0"  y="8"  w="10" h="15" gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.middle"       file="PNG\tooltip-background.png" x="10" y="8"  w="10" h="15" gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.right"        file="PNG\tooltip-background.png" x="20" y="8"  w="10" h="15" gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.bottom.left"  file="PNG\tooltip-background.png" x="0"  y="23" w="10" h="7"  gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.bottom"       file="PNG\tooltip-background.png" x="10" y="23" w="10" h="7"  gammagroup="gamma.tooltip.background"/>
+	<bitmap id="tooltip.grid.bottom.right" file="PNG\tooltip-background.png" x="20" y="23" w="10" h="7"  gammagroup="gamma.tooltip.background"/>
+
+	<!-- WASABI COLOR -->
+	<color id="wasabi.border.sunken"                          value="#808080" gammagroup="gamma.window.border.sunken"/>
+	<color id="wasabi.button.text"                            value="#808080" gammagroup="gamma.window.button.text"/>
+	<color id="wasabi.list.background"                        value="#808080" gammagroup="gamma.list.background"/>
+	<color id="wasabi.list.background.alternate"              value="#808080" gammagroup="gamma.list.background.alternate"/>
+	<color id="wasabi.list.column.background"                 value="#808080" gammagroup="gamma.list.column.background"/>
+	<color id="wasabi.list.column.empty"                      value="#808080" gammagroup="gamma.list.column.empty"/>
+	<color id="wasabi.list.column.frame.bottom"               value="#808080" gammagroup="gamma.list.column.frame.bottom"/>
+	<color id="wasabi.list.column.frame.middle"               value="#808080" gammagroup="gamma.list.column.frame.middle"/>
+	<color id="wasabi.list.column.frame.top"                  value="#808080" gammagroup="gamma.list.column.frame.top"/>
+	<color id="wasabi.list.column.text"                       value="#808080" gammagroup="gamma.list.column.text"/>
+	<color id="wasabi.list.item.focused"                      value="#808080" gammagroup="gamma.list.text.selected.background"/> <!-- same color as in playlist -->
+	<color id="wasabi.list.text"                              value="#808080" gammagroup="gamma.list.text"/>
+	<color id="wasabi.list.text.alternate"                    value="#808080" gammagroup="gamma.list.text.alternate"/>
+	<color id="wasabi.list.text.current"                      value="#808080" gammagroup="gamma.list.text.current"/>
+	<color id="wasabi.list.text.selected"                     value="#808080" gammagroup="gamma.list.text.selected"/>
+	<color id="wasabi.list.text.selected.background"          value="#808080" gammagroup="gamma.list.text.selected.background"/>
+	<color id="wasabi.list.text.selected.background.inactive" value="#808080" gammagroup="gamma.list.text.selected.background.inactive"/>
+	<color id="wasabi.list.text.selected.inactive"            value="#808080" gammagroup="gamma.list.text.selected.inactive"/>
+	<color id="wasabi.popupmenu.background"                   value="#808080" gammagroup="gamma.popupmenu.background"/>
+	<color id="wasabi.popupmenu.background.selected"          value="#808080" gammagroup="gamma.popupmenu.background.selected"/>
+	<color id="wasabi.popupmenu.frame"                        value="#808080" gammagroup="gamma.popupmenu.separator"/>
+	<color id="wasabi.popupmenu.separator"                    value="#808080" gammagroup="gamma.popupmenu.separator"/>
+	<color id="wasabi.popupmenu.text"                         value="#808080" gammagroup="gamma.popupmenu.text"/>
+	<color id="wasabi.popupmenu.text.inactive"                value="#808080" gammagroup="gamma.popupmenu.text.inactive"/>
+	<color id="wasabi.popupmenu.text.selected"                value="#808080" gammagroup="gamma.popupmenu.text.selected"/>
+	<color id="wasabi.window.background"                      value="#808080" gammagroup="gamma.window.background"/>
+	<color id="wasabi.window.text"                            value="#808080" gammagroup="gamma.window.text"/>
+
+	<!-- WASABI OBJECT: checkbox -->
+	<bitmap id="wasabi.button.checkbox"         file="PNG\window-elements.png" x="0" y="104" w="120" h="15"/>
+	<bitmap id="wasabi.button.checkbox.pressed" file="PNG\window-elements.png" x="0" y="122" w="120" h="15"/>
+
+	<!-- WASABI OBJECT: button - no hover bitmap because it does not work: standard = hover (Media Library) -->
+	<bitmap id="wasabi.button.top.left"             file="PNG\button-wasabi.png" x="0"  y="0"  w="4" h="4" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.top"                  file="PNG\button-wasabi.png" x="4"  y="0"  w="8" h="4" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.top.right"            file="PNG\button-wasabi.png" x="12" y="0"  w="4" h="4" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.left"                 file="PNG\button-wasabi.png" x="0"  y="4"  w="4" h="8" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.middle"               file="PNG\button-wasabi.png" x="4"  y="4"  w="8" h="8" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.right"                file="PNG\button-wasabi.png" x="12" y="4"  w="4" h="8" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.bottom.left"          file="PNG\button-wasabi.png" x="0"  y="12" w="4" h="4" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.bottom"               file="PNG\button-wasabi.png" x="4"  y="12" w="8" h="4" gammagroup="gamma.window.button"/>
+	<bitmap id="wasabi.button.bottom.right"         file="PNG\button-wasabi.png" x="12" y="12" w="4" h="4" gammagroup="gamma.window.button"/>
+
+	<bitmap id="wasabi.button.pressed.top.left"     file="PNG\button-wasabi.png" x="19" y="0"  w="4" h="4" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.top"          file="PNG\button-wasabi.png" x="23" y="0"  w="8" h="4" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.top.right"    file="PNG\button-wasabi.png" x="31" y="0"  w="4" h="4" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.left"         file="PNG\button-wasabi.png" x="19" y="4"  w="4" h="8" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.middle"       file="PNG\button-wasabi.png" x="23" y="4"  w="8" h="8" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.right"        file="PNG\button-wasabi.png" x="31" y="4"  w="4" h="8" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.bottom.left"  file="PNG\button-wasabi.png" x="19" y="12" w="4" h="4" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.bottom"       file="PNG\button-wasabi.png" x="23" y="12" w="8" h="4" gammagroup="gamma.window.button.pressed"/>
+	<bitmap id="wasabi.button.pressed.bottom.right" file="PNG\button-wasabi.png" x="31" y="12" w="4" h="4" gammagroup="gamma.window.button.pressed"/>
+
+	<!-- WASABI OBJECT: groupbox -->
+	<bitmap id="wasabi.groupbox.top.left"     file="PNG\window-elements.png" x="19" y="58" h="3" w="3"/>
+	<bitmap id="wasabi.groupbox.top"          file="PNG\window-elements.png" x="22" y="58" h="3" w="8"/>
+	<bitmap id="wasabi.groupbox.top.right"    file="PNG\window-elements.png" x="30" y="58" h="3" w="3"/>
+	<bitmap id="wasabi.groupbox.left"         file="PNG\window-elements.png" x="19" y="61" h="8" w="3"/>
+	<bitmap id="wasabi.groupbox.right"        file="PNG\window-elements.png" x="30" y="61" h="8" w="3"/>
+	<bitmap id="wasabi.groupbox.bottom.left"  file="PNG\window-elements.png" x="19" y="69" h="3" w="3"/>
+	<bitmap id="wasabi.groupbox.bottom"       file="PNG\window-elements.png" x="22" y="69" h="3" w="8"/>
+	<bitmap id="wasabi.groupbox.bottom.right" file="PNG\window-elements.png" x="30" y="69" h="3" w="3"/>
+
+	<!-- WASABI OBJECT: objectframe.group -->
+	<bitmap id="wasabi.objectframe.top.left"     file="PNG\window-elements.png" x="0"  y="57" w="2"  h="2"/>
+	<bitmap id="wasabi.objectframe.top"          file="PNG\window-elements.png" x="2"  y="57" w="12" h="2"/>
+	<bitmap id="wasabi.objectframe.top.right"    file="PNG\window-elements.png" x="14" y="57" w="2"  h="2"/>
+	<bitmap id="wasabi.objectframe.left"         file="PNG\window-elements.png" x="0"  y="59" w="2"  h="12"/>
+	<bitmap id="wasabi.objectframe.center"       file="PNG\window-elements.png" x="2"  y="59" w="12" h="12"/>
+	<bitmap id="wasabi.objectframe.right"        file="PNG\window-elements.png" x="14" y="59" w="2"  h="12"/>
+	<bitmap id="wasabi.objectframe.bottom.left"  file="PNG\window-elements.png" x="0"  y="71" w="2"  h="2"/>
+	<bitmap id="wasabi.objectframe.bottom"       file="PNG\window-elements.png" x="2"  y="71" w="12" h="2"/>
+	<bitmap id="wasabi.objectframe.bottom.right" file="PNG\window-elements.png" x="14" y="71" w="2"  h="2"/>
+
+	<!-- WASABI OBJECT: framewnd -->
+	<bitmap id="wasabi.framewnd.horizontaldivider" file="PNG\window-elements.png" x="0"  y="76" w="17" h="8"/>
+	<bitmap id="wasabi.framewnd.verticaldivider"   file="PNG\window-elements.png" x="20" y="76" w="8"  h="17"/>
+	<bitmap id="wasabi.framewnd.verticalgrabber"   file="PNG\window-elements.png" x="31" y="76" w="8"  h="20"/> <!-- keep w="8" & h="20" -->
+
+	<!-- WASABI OBJECT: wasabi.scrollbar.horizontal; do not change "pressed" to "down" -->
+	<bitmap id="wasabi.scrollbar.horizontal.background.left"   file="PNG\window-elements.png" x="36" y="56" w="2"  h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.background.middle" file="PNG\window-elements.png" x="36" y="56" w="2"  h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.background.right"  file="PNG\window-elements.png" x="36" y="56" w="2"  h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.button"            file="PNG\window-elements.png" x="0"  y="0"  w="22" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.button.hover"      file="PNG\window-elements.png" x="0"  y="19" w="22" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.button.pressed"    file="PNG\window-elements.png" x="0"  y="38" w="22" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.left"              file="PNG\window-elements.png" x="47" y="47" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.left.hover"        file="PNG\window-elements.png" x="47" y="66" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.left.pressed"      file="PNG\window-elements.png" x="47" y="85" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.right"             file="PNG\window-elements.png" x="66" y="47" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.right.hover"       file="PNG\window-elements.png" x="66" y="66" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.horizontal.right.pressed"     file="PNG\window-elements.png" x="66" y="85" w="16" h="16"/>
+
+	<!-- WASABI OBJECT: wasabi.scrollbar.vertical: do not change "pressed" to "down" -->
+	<bitmap id="wasabi.scrollbar.vertical.background.top"      file="PNG\window-elements.png" x="0"   y="87" w="16" h="2"/>
+	<bitmap id="wasabi.scrollbar.vertical.background.middle"   file="PNG\window-elements.png" x="0"   y="87" w="16" h="2"/>
+	<bitmap id="wasabi.scrollbar.vertical.background.bottom"   file="PNG\window-elements.png" x="0"   y="87" w="16" h="2"/>
+	<bitmap id="wasabi.scrollbar.vertical.button"              file="PNG\window-elements.png" x="25"  y="0"  w="16" h="22"/>
+	<bitmap id="wasabi.scrollbar.vertical.button.hover"        file="PNG\window-elements.png" x="44"  y="0"  w="16" h="22"/>
+	<bitmap id="wasabi.scrollbar.vertical.button.pressed"      file="PNG\window-elements.png" x="63"  y="0"  w="16" h="22"/>
+	<bitmap id="wasabi.scrollbar.vertical.left"                file="PNG\window-elements.png" x="85"  y="47" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.vertical.left.hover"          file="PNG\window-elements.png" x="85"  y="66" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.vertical.left.pressed"        file="PNG\window-elements.png" x="85"  y="85" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.vertical.right"               file="PNG\window-elements.png" x="104" y="47" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.vertical.right.hover"         file="PNG\window-elements.png" x="104" y="66" w="16" h="16"/>
+	<bitmap id="wasabi.scrollbar.vertical.right.pressed"       file="PNG\window-elements.png" x="104" y="85" w="16" h="16"/>
+</elements>

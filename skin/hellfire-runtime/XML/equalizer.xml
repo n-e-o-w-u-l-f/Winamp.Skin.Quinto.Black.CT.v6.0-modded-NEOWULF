@@ -1,0 +1,232 @@
+<!-- ***************************************** -->
+<!-- Filename: equalizer.xml                   -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="eq.group.bar">
+	<Layer x="0"   y="0" w="6" h="74" id="eq.layer.bar0"       image="eq.bar"/>
+	<Layer x="38"  y="0" w="6" h="74" id="eq.layer.bar1"       image="eq.bar"/>
+	<Layer x="76"  y="0" w="6" h="74" id="eq.layer.bar2"       image="eq.bar"/>
+	<Layer x="114" y="0" w="6" h="74" id="eq.layer.bar3"       image="eq.bar"/>
+	<Layer x="152" y="0" w="6" h="74" id="eq.layer.bar4"       image="eq.bar"/>
+	<Layer x="190" y="0" w="6" h="74" id="eq.layer.bar5"       image="eq.bar"/>
+	<Layer x="228" y="0" w="6" h="74" id="eq.layer.bar6"       image="eq.bar"/>
+	<Layer x="266" y="0" w="6" h="74" id="eq.layer.bar7"       image="eq.bar"/>
+	<Layer x="304" y="0" w="6" h="74" id="eq.layer.bar8"       image="eq.bar"/>
+	<Layer x="342" y="0" w="6" h="74" id="eq.layer.bar9"       image="eq.bar"/>
+	<Layer x="428" y="0" w="6" h="74" id="eq.layer.bar.preamp" image="eq.bar"/>
+</groupdef>
+<groupdef id="eq.group.slider">
+	<Slider x="0"   y="0" w="17" h="85" id="eq.slider0"       action="eq_band" param="1"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="38"  y="0" w="17" h="85" id="eq.slider1"       action="eq_band" param="2"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="76"  y="0" w="17" h="85" id="eq.slider2"       action="eq_band" param="3"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="114" y="0" w="17" h="85" id="eq.slider3"       action="eq_band" param="4"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="152" y="0" w="17" h="85" id="eq.slider4"       action="eq_band" param="5"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="190" y="0" w="17" h="85" id="eq.slider5"       action="eq_band" param="6"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="228" y="0" w="17" h="85" id="eq.slider6"       action="eq_band" param="7"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="266" y="0" w="17" h="85" id="eq.slider7"       action="eq_band" param="8"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="304" y="0" w="17" h="85" id="eq.slider8"       action="eq_band" param="9"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="342" y="0" w="17" h="85" id="eq.slider9"       action="eq_band" param="10"     thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="428" y="0" w="17" h="85" id="eq.slider.preamp" action="eq_band" param="preamp" thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+</groupdef>
+<groupdef id="eq.group.main">
+	<!-- COMPONENT BASE: do not remove width and height because we use setXmlParam() -->
+	<Layer
+		x="0" y="0" w="638" h="246"
+		id="eq.layer.base"/>
+	<!-- COMPONENT BACKGROUND -->
+	<Layer
+		x="54" y="14" w="530" h="208"
+		id="eq.layer.component.filter.black"
+		image="filter.black"
+		tile="1"/>
+	<Layer
+		x="0" y="0" w="638" h="246"
+		id="eq.layer.component"
+		image="eq.component"/>
+	<!-- COMPONENT LABEL -->
+	<Layer
+		x="0" y="20"
+		id="eq.layer.label"
+		image="eq.label"/>
+	<!-- SIDE PANEL: do not remove width and height because we use setXmlParam -->
+	<Layer
+		x="39" y="10" w="20" h="216"
+		id="eq.layer.side.panel.width.thin.left"/>
+	<Layer
+		x="579" y="10" w="20" h="216"
+		id="eq.layer.side.panel.width.thin.right"/>
+	<Layer
+		x="19" y="10" w="40" h="216"
+		id="eq.layer.side.panel.width.wide.left"/>
+	<Layer
+		x="579" y="10" w="40" h="216"
+		id="eq.layer.side.panel.width.wide.right"/>
+	<!-- SIDE PANEL LIGHT REFLECTION -->
+	<Layer
+		x="39" y="-105" relaty="1"
+		id="eq.layer.side.panel.light.reflection.thin.left"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="eq.layer.side.panel.light.reflection.thin.right"
+		image="side.panel.light.reflection.thin"/>
+	<Layer
+		x="19" y="-105" relaty="1"
+		id="eq.layer.side.panel.light.reflection.wide.left"
+		image="side.panel.light.reflection.wide"/>
+	<Layer
+		x="579" y="-105" relaty="1"
+		id="eq.layer.side.panel.light.reflection.wide.right"
+		image="side.panel.light.reflection.wide"/>
+	<!-- SIDE PANEL SHADOW -->
+	<Layer
+		x="59" y="14" w="10" h="208"
+		id="eq.layer.side.panel.shadow.left"
+		image="side.panel.shadow.left"/>
+	<Layer
+		x="569" y="14" w="10" h="208"
+		id="eq.layer.side.panel.shadow.right"
+		image="side.panel.shadow.right"/>
+	<!-- keep both groups separated, sliders are longer than bars -->
+	<Group
+		x="102" y="40" w="435" h="74"
+		id="eq.group.bar"/>
+	<Group
+		x="98" y="35" w="445" h="85"
+		id="eq.group.slider"/> <!-- 255 (127 * 2 + 1 = center) / 3 = 85 -->
+	<Layer
+		x="71" y="125"
+		id="eq.layer.frequency.mode"/> <!-- ISO or Winamp frequency - image changeable via equalizer.m script -->
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Layer
+		x="71" y="137" w="496" h="26"
+		id="eq.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="71" y="137" w="496" h="26"
+		id="eq.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="71" y="137" w="496" h="26"
+		id="eq.layer.display.shadow"
+		image="display.shadow"/>
+	<Text x="87"  y="142" w="36" h="16" id="eq.text.band0.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="125" y="142" w="36" h="16" id="eq.text.band1.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="163" y="142" w="36" h="16" id="eq.text.band2.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="201" y="142" w="36" h="16" id="eq.text.band3.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="239" y="142" w="36" h="16" id="eq.text.band4.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="277" y="142" w="36" h="16" id="eq.text.band5.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="315" y="142" w="36" h="16" id="eq.text.band6.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="353" y="142" w="36" h="16" id="eq.text.band7.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="391" y="142" w="36" h="16" id="eq.text.band8.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="429" y="142" w="36" h="16" id="eq.text.band9.value"  align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<Text x="473" y="142" w="36" h="16" id="eq.text.dB"           align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="[dB]"/>
+	<Text x="515" y="142" w="36" h="16" id="eq.text.preamp.value" align="center" color="color.equalizer.band.value" font="Verdana" fontsize="16" text="0.0"/>
+	<!-- OVERLAY - FRAME -->
+	<Layer
+		x="72" y="138" w="494" h="24"
+		id="eq.layer.display.overlay"
+		image="display.overlay"/>
+	<Layer
+		x="71" y="137"
+		id="eq.layer.display.frame.left"
+		image="eq.display.big.frame.left"/>
+	<Layer
+		x="101" y="137" w="436"
+		id="eq.layer.display.frame.center"
+		image="eq.display.big.frame.center"/> <!-- x="30+0": width frame left + objectframe -->
+	<Layer
+		x="537" y="137"
+		id="eq.layer.display.frame.right"
+		image="eq.display.big.frame.right"/>
+	<Layer
+		x="72" y="138"
+		id="eq.layer.light.reflection"
+		image="eq.light.reflection"/>
+	<!-- TOGGLEBUTTON "EQ" ON/OFF -->
+	<ToggleButton
+		x="157" y="168"
+		id="eq.togglebutton.eq"
+		image="togglebutton.blue"
+		hoverImage="togglebutton.blue.hover"
+		downImage="togglebutton.blue.down"
+		action="eq_toggle"
+		tooltip="Equalizer on/off "/> <!-- do not translate tooltip -->
+	<!-- TOGGLEBUTTON LED "EQ" (ghost) -->
+	<Layer
+		x="187" y="168"
+		id="eq.layer.led.background.blue1"
+		image="led.background.blue"/>
+	<ToggleButton
+		x="187" y="168"
+		id="eq.togglebutton.led.eq"
+		image="led.off"
+		activeImage="led.blue"
+		action="eq_toggle"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- TOGGLEBUTTON "AUTO" ON/OFF -->
+	<ToggleButton
+		x="225" y="168"
+		id="eq.togglebutton.auto"
+		image="togglebutton.blue"
+		hoverImage="togglebutton.blue.hover"
+		downImage="togglebutton.blue.down"
+		action="eq_auto"
+		tooltip="Auto on/off "/> <!-- do not translate tooltip -->
+	<!-- TOGGLEBUTTON LED "AUTO" (ghost) -->
+	<Layer
+		x="255" y="168"
+		id="eq.layer.led.background.blue2"
+		image="led.background.blue"/>
+	<ToggleButton
+		x="255" y="168"
+		id="eq.togglebutton.led.auto"
+		image="led.off"
+		activeImage="led.blue"
+		action="eq_auto"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<!-- BUTTON "PRESETS" -->
+	<Button
+		x="303" y="168"
+		id="eq.button.presets"
+		image="button.blue"
+		hoverImage="button.blue.hover"
+		downImage="button.blue.down"
+		activeImage="button.blue.down"
+		action="menu"
+		param="presets"
+		tooltip="Load a Preset "/> <!-- do not translate tooltip -->
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-108" y="17" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Equalizer "/> <!-- do not translate tooltip -->
+	<!-- POWER INDICATOR -->
+	<Group
+		x="82" y="-70" relaty="1"
+		id="group.power.indicator"/>
+	<script
+		file="SCRIPTS\equalizer.maki"/>
+<Layer id="nw.pulse" fitparent="1" image="nw.eq-pulse" ghost="1"/><script file="SCRIPTS\neowulf-deck.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="638" default_h="246"
+	id="equalizer"
+	name="Equalizer"
+	default_visible="0"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="638" h="246"
+		id="normal"
+		alphabackground="eq.background.alpha">
+		<Group
+			fitparent="1"
+			id="eq.group.main"/>
+	</Layout>
+</Container>

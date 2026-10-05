@@ -1,0 +1,18 @@
+<groupdef id="nw.vinyl.deck">
+<Layer image="nw.turntable" x="0" y="0" move="1"/>
+<Layer id="nw.vinyl" image="nw.vinyl" x="40" y="40" ghost="1"/>
+<Layer image="nw.vinyl-reflection" x="40" y="40" ghost="1"/>
+<Layer image="nw.tonearm-fixed" x="0" y="0" ghost="1"/>
+<Layer id="nw.pulse" image="nw.turntable-pulse" x="0" y="0" ghost="1"/>
+<Button id="nw.power" image="nw.power" x="555" y="247" tooltip="Plattentellermotor ein/aus"/>
+<Button id="nw.rpm33" image="nw.rpm33" x="555" y="206" tooltip="33⅓ Umdrehungen pro Minute"/>
+<Button id="nw.rpm45" image="nw.rpm45" x="613" y="206" tooltip="45 Umdrehungen pro Minute"/>
+<Button image="nw.power" x="555" y="457" action="play" tooltip="Winamp: Wiedergabe"/>
+<Text x="555" y="464" w="74" h="20" align="center" text="PLAY" color="#ed9b87" fontsize="10" ghost="1"/>
+<Button image="nw.power" x="635" y="457" action="stop" tooltip="Winamp: Stopp"/>
+<Text x="635" y="464" w="74" h="20" align="center" text="STOP" color="#ed9b87" fontsize="10" ghost="1"/>
+<Slider id="nw.pitch" x="555" y="437" w="146" h="13" low="0" high="100" position="50" thumb="slider.volume.thumb" orientation="horizontal" tooltip="Visuelle Drehgeschwindigkeit ±8 %"/>
+<Button id="nw.close" x="-46" y="8" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-vinyl.maki"/>
+</groupdef>
+<Container id="vinyl.record.player" name="NEOWULF · Vinyl From Hell" default_x="60" default_y="300" default_w="728" default_h="554" default_visible="0" nomenu="0">
+<Layout id="normal" w="728" h="554" alphabackground="nw.turntable"><Group id="nw.vinyl.deck" fitparent="1"/></Layout></Container>

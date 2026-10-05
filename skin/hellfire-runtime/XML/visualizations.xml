@@ -1,0 +1,114 @@
+<!-- ***************************************** -->
+<!-- Filename: visualizations.xml              -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="vis.group.frame.playback" inherit_group="group.frame.standardframe">
+	<Group
+		x="32" y="-146" w="-64" h="114" relaty="1" relatw="1"
+		id="group.playback"/>
+	<Group
+		x="43" y="-136" w="299" h="24" relaty="1"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "FULLSCREEN" - image changeable via button-color.m script -->
+	<Button
+		x="45" y="-134" w="108" h="19" relaty="1"
+		id="vis.button.fullscreen"
+		action="VIS_FS"
+		tooltip="Show the window on the entire|area of the desktop "/> <!-- do not translate tooltip -->
+	<!-- BUTTON "PREV" - image changeable via button-color.m script -->
+	<Button
+		x="155" y="-134" w="54" h="19" relaty="1"
+		id="vis.button.prev"
+		action="VIS_Prev"
+		tooltip="Previous visualization"/>
+	<!-- BUTTON "NEXT" - image changeable via button-color.m script -->
+	<Button
+		x="211" y="-134" w="54" h="19" relaty="1"
+		id="vis.button.next"
+		action="VIS_Next"
+		tooltip="Next visualization"/>
+	<!-- TOGGLEBUTTON "RANDOM" - image changeable via button-color.m script -->
+	<ToggleButton
+		x="267" y="-134" w="72" h="19" relaty="1"
+		id="vis.button.random"
+		cfgattrib="{0000000a-000c-0010-ff7b-01014263450c};Random"
+		tooltip="Toggle random visualization"/> <!-- keep this togglebutton as button so buton-color.m script will work -->
+	<Layer
+		x="342" y="-139" relaty="1"
+		id="vis.layer.led.background.blue"
+		image="led.background.blue"/>
+	<!-- TOGGLEBUTTON LED "RANDOM" (ghost) -->
+	<ToggleButton
+		x="342" y="-139" relaty="1"
+		id="vis.togglebutton.led.random"
+		image="led.off"
+		activeImage="led.blue"
+		cfgattrib="{0000000a-000c-0010-ff7b-01014263450c};Random"
+		ghost="1"/> <!-- ghost="1" => remove Winamp's default hover state (on/off state only) -->
+	<Group
+		x="-185" y="-136" w="142" h="24" relatx="1" relaty="1"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "MENU" - image changeable via button-color.m script -->
+	<Button
+		x="-183" y="-134" w="54" h="19" relatx="1" relaty="1"
+		id="vis.button.menu"
+		action="VIS_CFG"
+		tooltip="Show additional configuration options"/>
+	<!-- BUTTON "OPTIONS" - image changeable via button-color.m script -->
+	<Button
+		x="-127" y="-134" w="81" h="19" relatx="1" relaty="1"
+		id="vis.button.options"
+		tooltip="Resize and move |the window on the desktop|using keyboard shortcuts"/>
+</groupdef>
+<groupdef id="vis.group.component">
+	<Component
+		fitparent="1"
+		param="guid:{0000000a-000c-0010-ff7b-01014263450c}"/>
+</groupdef>
+<groupdef id="vis.group.main">
+	<Group
+		fitparent="1"
+		id="group.frame.noframe"/>
+	<Group
+		fitparent="1"
+		id="group.frame.standardframe"/>
+	<Group
+		fitparent="1"
+		id="vis.group.frame.playback"/> <!-- three different frames: NoFrame, Standard, Playback -->
+	<Group
+		fitparent="1"
+		id="vis.group.component"/> <!-- x, y, w, h values are assigned via window-frame.m script -->
+	<!-- NSTATESBUTTON "FRAME" -->
+	<nstatesbutton:frame
+		x="-104" y="6" relatx="1"
+		id="nstatesbutton.frame"
+		inactiveAlpha="0"/> <!-- keep inactiveAlpha="0" in here and not in standard-objects.xml -->
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Visualizations window"/>
+	<script
+		file="SCRIPTS\visualizations.maki"/>
+</groupdef>
+<Container
+	component="guid:{0000000a-000c-0010-ff7b-01014263450c}"
+	default_x="100" default_y="100"	default_w="530" default_h="287"
+	default_visible="0"
+	dynamic="1"
+	id="AVS"
+	name="Visualizations">
+	<Layout
+		x="100" y="100"	w="530" h="287" minimum_w="530" minimum_h="287"
+		id="normal"
+		background="base.texture"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="vis.group.main"/>
+	</Layout>
+</Container>

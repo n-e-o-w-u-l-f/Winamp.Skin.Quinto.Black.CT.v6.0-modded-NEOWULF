@@ -1,0 +1,159 @@
+<!-- ***************************************** -->
+<!-- Filename: album-cover-flow.xml            -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="acf.group.xui.albumart" embed_xui="xui.albumart" xuitag="album:art">
+	<AlbumArt
+		x="0" y="0" w="0" h="60" relatw="1" relath="2"
+		id="acf.albumart"
+		notfoundimage="not.found.image"
+		stretched="1"/>
+	<Layer
+		x="0" y="61" w="0" h="40" relaty="2" relatw="1" relath="2"
+		id="acf.layer.albumart.reflection"
+		image="acf.albumart.shadow"
+		visible="0"/> <!-- either Album Cover from radioparadise or saved Online Stream Cover Art -->
+	<Layer
+		x="0" y="60" w="0" h="10" relaty="2" relatw="1" relath="2"
+		id="acf.layer.albumart.shadow"
+		image="acf.albumart.shadow"/>
+</groupdef>
+<groupdef id="acf.group.albumart">
+	<!-- 1         9 -->
+	<!--  2       8  -->
+	<!--   3     7   -->
+	<!--    4   6    -->
+	<!--      5      -->
+	<album:art id="acf.group.albumart1" visible="0"/>
+	<album:art id="acf.group.albumart9" visible="0"/>
+	<album:art id="acf.group.albumart2" visible="0"/>
+	<album:art id="acf.group.albumart8" visible="0"/>
+	<album:art id="acf.group.albumart3" visible="0"/>
+	<album:art id="acf.group.albumart7" visible="0"/>
+	<album:art id="acf.group.albumart4" visible="0"/>
+	<album:art id="acf.group.albumart6" visible="0"/>
+	<album:art id="acf.group.albumart5" visible="0"/> <!-- do not remove visible="0" -->
+</groupdef>
+<groupdef id="acf.group.rating.star">
+	<Layer
+		x="0" y="0" w="140" h="28"
+		id="acf.layer.rating.star.base"
+		image="acf.rating.star.base"
+		tile="1"/>
+	<Layer
+		x="0" y="0" w="140" h="28"
+		id="acf.layer.rating.star.active"
+		image="acf.rating.star.active"
+		tile="1"/>
+	<Button x="0" y="0" w="28" h="28" id="acf.button.rating.star1" cursor="IDC_HAND" rectrgn="1"/>
+	<Button x="0" y="0" w="28" h="28" id="acf.button.rating.star2" cursor="IDC_HAND" rectrgn="1"/>
+	<Button x="0" y="0" w="28" h="28" id="acf.button.rating.star3" cursor="IDC_HAND" rectrgn="1"/>
+	<Button x="0" y="0" w="28" h="28" id="acf.button.rating.star4" cursor="IDC_HAND" rectrgn="1"/>
+	<Button x="0" y="0" w="28" h="28" id="acf.button.rating.star5" cursor="IDC_HAND" rectrgn="1"/>
+</groupdef>
+<groupdef id="acf.group.progress.grid">
+	<Layer
+		x="0" y="0" w="0" h="11" relatw="1"
+		id="acf.layer.progress.grid.background"
+		image="acf.progress.grid.background"/>
+	<ProgressGrid
+		x="0" y="0" w="0" h="11" relatw="1"
+		id="acf.progress.grid"
+		middle="acf.progress.grid"/>
+	<Slider
+		x="0" y="0" w="0" h="11" relatw="1"
+		id="acf.slider.ghost"
+		thumb="acf.slider.ghost"
+		hoverThumb="acf.slider.ghost"
+		downThumb="acf.slider.ghost"
+		action="seek"
+		tooltip="Seek "/> <!-- do not translate tooltip -->
+</groupdef>
+<groupdef id="acf.group.content">
+	<Group
+		x="0" y="0" w="100" h="100" relatw="2" relath="2"
+		id="acf.group.albumart"/>
+	<Text
+		x="2" y="-118" w="0" h="40" relaty="1" relatw="1"
+		id="acf.text.info.track.shadow"
+		alpha="110"
+		align="center"
+		altfont="Verdana"
+		color="color.black"
+		bold="1"
+		font="Bahnschrift"
+		fontsize="40"
+		ghost="1"/> <!-- h is higher than fontsize -->
+	<Text
+		x="0" y="-120" w="0" h="40" relaty="1" relatw="1"
+		id="acf.text.info.track"
+		align="center"
+		altfont="Verdana"
+		color="color.album.cover.flow.track"
+		bold="1"
+		font="Bahnschrift"
+		fontsize="40"
+		ghost="1"/> <!-- h is higher than fontsize -->
+	<Text
+		x="0" y="-80" w="0" h="30" relaty="1" relatw="1"
+		id="acf.text.info.album"
+		align="center"
+		altfont="Verdana"
+		color="color.album.cover.flow.album"
+		font="Bahnschrift"
+		fontsize="30"
+		ghost="1"/> <!-- h is higher than fontsize -->
+	<Layer
+		x="1" y="27" w="-2" h="-28" relatw="1" relath="1"
+		id="acf.layer.context.menu"/> <!-- area for component's own context menu -->
+	<Group
+		x="0" y="-45" w="0" h="45" relaty="1" relatw="1"
+		id="acf.group.rating.star"/>
+	<Group
+		x="0" y="-11" w="0" h="11" relaty="1" relatw="1"
+		id="acf.group.progress.grid"/>
+</groupdef>
+<groupdef id="acf.group.main">
+	<Group
+		fitparent="1"
+		id="group.frame.noframe"/> <!-- do not use inherit_group in here otherwise Guru message -->
+	<Group
+		x="1" y="27" w="-2" h="-28" relatw="1" relath="1"
+		id="acf.group.content"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close Album Cover Flow"/>
+	<!-- BUTTON "CLOSE" BIG -->
+	<Button
+		x="-38" y="10" relatx="1"
+		id="button.close.big"
+		image="caption.close.big"
+		hoverImage="caption.close.big.hover"
+		downImage="caption.close.big.down"
+		inactiveAlpha="0"
+		tooltip="Close Album Cover Flow"/>
+	<script
+		file="SCRIPTS\album-cover-flow.maki"/>
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="800" default_h="479"
+	default_visible="0"
+	id="album.cover.flow"
+	name="Album Cover Flow"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="800" h="479" minimum_w="800" minimum_h="479"
+		id="normal"
+		alphabackground="acf.background.gradient"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="acf.group.main"/>
+	</Layout>
+</Container>

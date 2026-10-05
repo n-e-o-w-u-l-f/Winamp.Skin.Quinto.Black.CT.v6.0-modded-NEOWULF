@@ -1,0 +1,394 @@
+<!-- ***************************************** -->
+<!-- Filename: rgb-color-changer.xml           -->
+<!-- Author:   PeterK.                         -->
+<!-- E-Mail:   peter_ka@gmx.net                -->
+<!-- Webpage:  https://quinto-black-ct.info    -->
+<!-- ***************************************** -->
+
+<groupdef id="rgb.cc.group.slider.red">   <!-- keep slider as a group, it must have x="0" -->
+	<Slider
+		x="0" y="0" w="291" h="19"
+		id="rgb.cc.slider.red"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		tooltip="Change red channel's value (0-255)"/> <!-- 0-255 = width 255 + thumb -->
+	<Layer
+		x="0" y="0"
+		id="rgb.cc.layer.thumb.red"
+		image="slider.progress.thumb"
+		ghost="1"
+		visible="0"/>
+</groupdef>
+<groupdef id="rgb.cc.group.slider.green"> <!-- keep slider as a group, it must have x="0" -->
+	<Slider
+		x="0" y="0" w="291" h="19"
+		id="rgb.cc.slider.green"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		tooltip="Change green channel's value (0-255)"/> <!-- 0-255 = width 255 + thumb -->
+	<Layer
+		x="0" y="0"
+		id="rgb.cc.layer.thumb.green"
+		image="slider.progress.thumb"
+		ghost="1"
+		visible="0"/>
+</groupdef>
+<groupdef id="rgb.cc.group.slider.blue">  <!-- keep slider as a group, it must have x="0" -->
+	<Slider
+		x="0" y="0" w="291" h="19"
+		id="rgb.cc.slider.blue"
+		thumb="slider.progress.thumb"
+		hoverThumb="slider.progress.thumb.hover"
+		downThumb="slider.progress.thumb.down"
+		tooltip="Change blue channel's value (0-255)"/> <!-- 0-255 = width 255 + thumb -->
+	<Layer
+		x="0" y="0"
+		id="rgb.cc.layer.thumb.blue"
+		image="slider.progress.thumb"
+		ghost="1"
+		visible="0"/>
+</groupdef>
+<groupdef id="rgb.cc.group.slider.background">
+	<Group
+		x="0" y="0" w="316" h="31"
+		id="wasabi.objectframe.group"/>
+	<Layer
+		x="2" y="2"
+		id="rgb.cc.layer.background.left"
+		image="slider.progress.background.left"/>
+	<Layer
+		x="30" y="2" w="255"
+		id="rgb.cc.layer.background.center"
+		image="slider.progress.background.center"/>
+	<Layer
+		x="285" y="2"
+		id="rgb.cc.layer.background.right"
+		image="slider.progress.background.right"/>
+</groupdef>
+<groupdef id="rgb.cc.group.slider.background.red" inherit_group="rgb.cc.group.slider.background">
+	<Gradient
+		x="30" y="13" w="255" h="4"
+		id="rgb.cc.gradient.bar.red"
+		gradient_x1="0.0"
+		gradient_y1="0.0"
+		gradient_x2="1.0"
+		gradient_y2="1.0"
+		points="0.0=0,0,0,255;1.0=255,0,0,255"/>
+	<Group
+		x="12" y="8" w="290" h="19"
+		id="rgb.cc.group.slider.red"/>
+</groupdef>
+<groupdef id="rgb.cc.group.slider.background.green" inherit_group="rgb.cc.group.slider.background">
+	<Gradient
+		x="30" y="13" w="255" h="4"
+		id="rgb.cc.gradient.bar.green"
+		gradient_x1="0.0"
+		gradient_y1="0.0"
+		gradient_x2="1.0"
+		gradient_y2="1.0"
+		points="0.0=0,0,0,255;1.0=0,255,0,255"/>
+	<Group
+		x="12" y="8" w="290" h="19"
+		id="rgb.cc.group.slider.green"/> <!-- 0-255 = width 255 + thumb -->
+</groupdef>
+<groupdef id="rgb.cc.group.slider.background.blue" inherit_group="rgb.cc.group.slider.background">
+	<Gradient
+		x="30" y="13" w="255" h="4"
+		id="rgb.cc.gradient.bar.blue"
+		gradient_x1="0.0"
+		gradient_y1="0.0"
+		gradient_x2="1.0"
+		gradient_y2="1.0"
+		points="0.0=0,0,0,255;1.0=0,0,255,255"/>
+	<Group
+		x="12" y="8" w="290" h="19"
+		id="rgb.cc.group.slider.blue"/> <!-- 0-255 = width 255 + thumb -->
+</groupdef>
+<groupdef id="rgb.cc.group.main" inherit_group="group.frame.standardframe">
+	<Layer
+		x="32" y="32" w="556" h="367"
+		image="filter.darkblue"
+		tile="1"/>
+	<Rect x="32"  y="32"  w="1"   h="367" color="color.filter.darkblue.left.top"/>
+	<Rect x="32"  y="32"  w="556" h="1"   color="color.filter.darkblue.left.top"/>
+	<Rect x="587" y="33"  w="1"   h="366" color="color.filter.darkblue.right.bottom"/>
+	<Rect x="33"  y="398" w="555" h="1"   color="color.filter.darkblue.right.bottom"/>
+	<!-- BACKGROUND - GRID - SHADOW -->
+	<Group
+		x="43" y="43" w="534" h="31"
+		id="wasabi.objectframe.group"/>
+	<Layer
+		x="45" y="45" w="529" h="26"
+		id="rgb.cc.layer.display.background"
+		image="display.background"/>
+	<Layer
+		x="45" y="45" w="529" h="26"
+		id="rgb.cc.layer.display.grid"
+		image="display.grid"
+		tile="1"/>
+	<Layer
+		x="45" y="45" w="529" h="26"
+		id="rgb.cc.layer.display.shadow"
+		image="display.shadow"/>
+	<Text
+		x="47" y="46" w="521" h="22"
+		id="rgb.cc.text.item"
+		align="center"
+		font="bitmapfont.songticker"
+		text="ITEM FROM DROP-DOWN LIST"/> <!-- width should be 518 -->
+	<Layer
+		x="45" y="45"
+		id="rgb.cc.layer.display.frame.left"
+		image="display.big.frame.left"/> <!-- x="0+2" (objectframe) -->
+	<Layer
+		x="75" y="45" w="469"
+		id="rgb.cc.layer.display.frame.center"
+		image="display.big.frame.center"/> <!-- x="30+2" width of frame left + 2px from objectframe -->
+	<Layer
+		x="544" y="45"
+		id="rgb.cc.layer.display.frame.right"
+		image="display.big.frame.right"/> <!-- w="32+470" -->
+	<Group
+		x="43" y="84" w="316" h="24"
+		id="wasabi.objectframe.group"/>
+	<!-- BUTTON "SELECT ITEM" - image changeable via button-color.m script -->
+	<Button
+		x="45" y="86" w="229" h="19"
+		id="rgb.cc.button.select.item"
+		tooltip="Select an item whose color you wish to change"/>
+	<!-- BUTTON "DEFAULT" - image changeable via button-color.m script -->
+	<Button
+		x="276" y="86" w="80" h="19"
+		id="rgb.cc.button.default"
+		tooltip="Switch back to default color values of selected item"/>
+	<Group
+		x="43" y="118" w="316" h="31"
+		id="rgb.cc.group.slider.background.red"/>
+	<Group
+		x="43" y="159" w="316" h="31"
+		id="rgb.cc.group.slider.background.green"/>
+	<Group
+		x="43" y="200" w="316" h="31"
+		id="rgb.cc.group.slider.background.blue"/>
+	<!-- PRIMARY COLORS -->
+	<Layer
+		x="369" y="84" w="208" h="304"
+		id="rgb.frame.sunken"
+		image="filter.darkblue"
+		tile="1"/>
+	<Rect x="369" y="84"  w="1"   h="304" color="color.filter.darkblue.right.bottom"/>
+	<Rect x="369" y="84"  w="208" h="1"   color="color.filter.darkblue.right.bottom"/>
+	<Rect x="576" y="85"  w="1"   h="303" color="color.filter.darkblue.left.top"/>
+	<Rect x="370" y="387" w="207" h="1"   color="color.filter.darkblue.left.top"/> <!-- inverted colors because frame sunken -->
+	<text:info
+		x="412" y="96" w="130"
+		text="PRIMARY COLORS"/>
+	<Group
+		x="380" y="114" w="186" h="263"
+		id="wasabi.objectframe.group"/>
+	<Layer
+		x="382" y="116" w="181" h="258"
+		id="rgb.cc.layer.primary.colors"
+		image="rgb.cc.primary.colors"/>
+	<Button x="385"  y="119" id="rgb.cc.button.primary.color01" image="rgb.cc.primary.color01" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="119" id="rgb.cc.button.primary.color02" image="rgb.cc.primary.color02" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="119" id="rgb.cc.button.primary.color03" image="rgb.cc.primary.color03" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="119" id="rgb.cc.button.primary.color04" image="rgb.cc.primary.color04" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="119" id="rgb.cc.button.primary.color05" image="rgb.cc.primary.color05" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="119" id="rgb.cc.button.primary.color06" image="rgb.cc.primary.color06" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="119" id="rgb.cc.button.primary.color07" image="rgb.cc.primary.color07" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="139" id="rgb.cc.button.primary.color08" image="rgb.cc.primary.color08" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="139" id="rgb.cc.button.primary.color09" image="rgb.cc.primary.color09" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="139" id="rgb.cc.button.primary.color10" image="rgb.cc.primary.color10" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="139" id="rgb.cc.button.primary.color11" image="rgb.cc.primary.color11" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="139" id="rgb.cc.button.primary.color12" image="rgb.cc.primary.color12" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="139" id="rgb.cc.button.primary.color13" image="rgb.cc.primary.color13" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="139" id="rgb.cc.button.primary.color14" image="rgb.cc.primary.color14" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="159" id="rgb.cc.button.primary.color15" image="rgb.cc.primary.color15" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="159" id="rgb.cc.button.primary.color16" image="rgb.cc.primary.color16" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="159" id="rgb.cc.button.primary.color17" image="rgb.cc.primary.color17" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="159" id="rgb.cc.button.primary.color18" image="rgb.cc.primary.color18" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="159" id="rgb.cc.button.primary.color19" image="rgb.cc.primary.color19" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="159" id="rgb.cc.button.primary.color20" image="rgb.cc.primary.color20" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="159" id="rgb.cc.button.primary.color21" image="rgb.cc.primary.color21" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="179" id="rgb.cc.button.primary.color22" image="rgb.cc.primary.color22" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="179" id="rgb.cc.button.primary.color23" image="rgb.cc.primary.color23" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="179" id="rgb.cc.button.primary.color24" image="rgb.cc.primary.color24" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="179" id="rgb.cc.button.primary.color25" image="rgb.cc.primary.color25" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="179" id="rgb.cc.button.primary.color26" image="rgb.cc.primary.color26" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="179" id="rgb.cc.button.primary.color27" image="rgb.cc.primary.color27" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="179" id="rgb.cc.button.primary.color28" image="rgb.cc.primary.color28" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="199" id="rgb.cc.button.primary.color29" image="rgb.cc.primary.color29" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="199" id="rgb.cc.button.primary.color30" image="rgb.cc.primary.color30" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="199" id="rgb.cc.button.primary.color31" image="rgb.cc.primary.color31" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="199" id="rgb.cc.button.primary.color32" image="rgb.cc.primary.color32" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="199" id="rgb.cc.button.primary.color33" image="rgb.cc.primary.color33" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="199" id="rgb.cc.button.primary.color34" image="rgb.cc.primary.color34" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="199" id="rgb.cc.button.primary.color35" image="rgb.cc.primary.color35" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="219" id="rgb.cc.button.primary.color36" image="rgb.cc.primary.color36" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="219" id="rgb.cc.button.primary.color37" image="rgb.cc.primary.color37" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="219" id="rgb.cc.button.primary.color38" image="rgb.cc.primary.color38" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="219" id="rgb.cc.button.primary.color39" image="rgb.cc.primary.color39" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="219" id="rgb.cc.button.primary.color40" image="rgb.cc.primary.color40" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="219" id="rgb.cc.button.primary.color41" image="rgb.cc.primary.color41" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="219" id="rgb.cc.button.primary.color42" image="rgb.cc.primary.color42" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="239" id="rgb.cc.button.primary.color43" image="rgb.cc.primary.color43" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="239" id="rgb.cc.button.primary.color44" image="rgb.cc.primary.color44" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="239" id="rgb.cc.button.primary.color45" image="rgb.cc.primary.color45" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="239" id="rgb.cc.button.primary.color46" image="rgb.cc.primary.color46" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="239" id="rgb.cc.button.primary.color47" image="rgb.cc.primary.color47" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="239" id="rgb.cc.button.primary.color48" image="rgb.cc.primary.color48" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="239" id="rgb.cc.button.primary.color49" image="rgb.cc.primary.color49" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="259" id="rgb.cc.button.primary.color50" image="rgb.cc.primary.color50" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="259" id="rgb.cc.button.primary.color51" image="rgb.cc.primary.color51" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="259" id="rgb.cc.button.primary.color52" image="rgb.cc.primary.color52" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="259" id="rgb.cc.button.primary.color53" image="rgb.cc.primary.color53" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="259" id="rgb.cc.button.primary.color54" image="rgb.cc.primary.color54" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="259" id="rgb.cc.button.primary.color55" image="rgb.cc.primary.color55" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="259" id="rgb.cc.button.primary.color56" image="rgb.cc.primary.color56" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="279" id="rgb.cc.button.primary.color57" image="rgb.cc.primary.color57" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="279" id="rgb.cc.button.primary.color58" image="rgb.cc.primary.color58" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="279" id="rgb.cc.button.primary.color59" image="rgb.cc.primary.color59" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="279" id="rgb.cc.button.primary.color60" image="rgb.cc.primary.color60" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="279" id="rgb.cc.button.primary.color61" image="rgb.cc.primary.color61" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="279" id="rgb.cc.button.primary.color62" image="rgb.cc.primary.color62" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="279" id="rgb.cc.button.primary.color63" image="rgb.cc.primary.color63" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="299" id="rgb.cc.button.primary.color64" image="rgb.cc.primary.color64" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="299" id="rgb.cc.button.primary.color65" image="rgb.cc.primary.color65" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="299" id="rgb.cc.button.primary.color66" image="rgb.cc.primary.color66" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="299" id="rgb.cc.button.primary.color67" image="rgb.cc.primary.color67" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="299" id="rgb.cc.button.primary.color68" image="rgb.cc.primary.color68" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="299" id="rgb.cc.button.primary.color69" image="rgb.cc.primary.color69" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="299" id="rgb.cc.button.primary.color70" image="rgb.cc.primary.color70" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="319" id="rgb.cc.button.primary.color71" image="rgb.cc.primary.color71" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="319" id="rgb.cc.button.primary.color72" image="rgb.cc.primary.color72" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="319" id="rgb.cc.button.primary.color73" image="rgb.cc.primary.color73" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="319" id="rgb.cc.button.primary.color74" image="rgb.cc.primary.color74" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="319" id="rgb.cc.button.primary.color75" image="rgb.cc.primary.color75" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="319" id="rgb.cc.button.primary.color76" image="rgb.cc.primary.color76" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="319" id="rgb.cc.button.primary.color77" image="rgb.cc.primary.color77" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="385"  y="351" id="rgb.cc.button.primary.color78" image="rgb.cc.primary.color78" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="410"  y="351" id="rgb.cc.button.primary.color79" image="rgb.cc.primary.color79" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="435"  y="351" id="rgb.cc.button.primary.color80" image="rgb.cc.primary.color80" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="460"  y="351" id="rgb.cc.button.primary.color81" image="rgb.cc.primary.color81" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="485"  y="351" id="rgb.cc.button.primary.color82" image="rgb.cc.primary.color82" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="510"  y="351" id="rgb.cc.button.primary.color83" image="rgb.cc.primary.color83" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Button x="535"  y="351" id="rgb.cc.button.primary.color84" image="rgb.cc.primary.color84" hoverImage="rgb.cc.primary.color.hover" downImage="rgb.cc.primary.color.down"/>
+	<Layer
+		x="43" y="241" w="316" h="113"
+		image="filter.lightblue"
+		tile="1"/>
+	<Rect x="43"  y="241" w="1"   h="113" color="color.filter.lightblue.left.top"/>
+	<Rect x="43"  y="241" w="316" h="1"   color="color.filter.lightblue.left.top"/>
+	<Rect x="358" y="242" w="1"   h="112" color="color.filter.lightblue.right.bottom"/>
+	<Rect x="44"  y="353" w="315" h="1"   color="color.filter.lightblue.right.bottom"/>
+	<text:info
+		x="62" y="249" w="121"
+		text="COLOR PREVIEW"/>
+	<Layer
+		x="54" y="263" w="177" h="40"
+		id="rgb.frame.sunken"
+		image="filter.darkblue"
+		tile="1"/>
+	<Rect x="54"  y="263" w="1"   h="40" color="color.filter.darkblue.right.bottom"/>
+	<Rect x="54"  y="263" w="177" h="1"  color="color.filter.darkblue.right.bottom"/>
+	<Rect x="230" y="264" w="1"   h="39" color="color.filter.darkblue.left.top"/>
+	<Rect x="55"  y="302" w="176" h="1"  color="color.filter.darkblue.left.top"/> <!-- inverted colors because frame sunken -->
+	<Group
+		x="60" y="269" w="165" h="28"
+		id="wasabi.objectframe.group"/>
+	<Rect
+		x="62" y="271" w="161" h="24"
+		id="rgb.cc.rect.color.preview"
+		color="color.black"
+		filled="1"/> <!-- field which changes its color within COLOR PREVIEW area -->
+	<!-- EDIT BOX: HEXADECIMAL -->
+	<Rect
+		x="54" y="308" w="177" h="35"
+		color="color.filter.lightblue.left.top"
+		filled="0"/>
+	<text:info
+		x="62" y="321" w="103"
+		text="HEXADECIMAL"/>
+	<Group
+		x="169" y="314" w="55" h="24"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="171" y="316" w="50" h="19"
+		id="rgb.cc.edit.hex"/> <!-- numbers/text cannot be aligned by design -->
+	<Rect
+		x="241" y="252" w="107" h="91"
+		color="color.filter.lightblue.left.top"
+		filled="0"/>
+	<!-- EDIT BOX: RED -->
+	<text:info
+		x="253" y="266" w="31"
+		text="RED"/>
+	<Group
+		x="309" y="258" w="33" h="24"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="311" y="260" w="28" h="19"
+		id="rgb.cc.edit.red"/> <!-- numbers/text cannot be aligned by design -->
+	<!-- EDIT BOX: GREEN -->
+	<text:info
+		x="253" y="294" w="49"
+		text="GREEN"/>
+	<Group
+		x="309" y="286" w="33" h="24"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="311" y="288" w="28" h="19"
+		id="rgb.cc.edit.green"/> <!-- numbers/text cannot be aligned by design -->
+	<!-- EDIT BOX: BLUE -->
+	<text:info
+		x="253" y="322" w="40"
+		text="BLUE"/>
+	<Group
+		x="309" y="314" w="33" h="24"
+		id="wasabi.objectframe.group"/>
+	<Edit
+		x="311" y="316" w="28" h="19"
+		id="rgb.cc.edit.blue"/> <!-- numbers/text cannot be aligned by design -->
+	<!-- BUTTON "APPLY NEW COLOR" - image changeable via button-color.m script -->
+	<Group
+		x="43" y="364" w="316" h="24"
+		id="wasabi.objectframe.group"/>
+	<Button
+		x="45" y="366" w="246" h="19"
+		id="rgb.cc.button.apply.new.color"
+		tooltip="Apply selected color to the item of your choice"/>
+	<!-- XUI BUTTON "CLOSE" -->
+	<button:close
+		x="-48" y="6" relatx="1"
+		id="button.close"/>
+	<SendParams
+		target="xui.button.close"
+		tooltip="Close RGB Color Changer"/>
+	<!-- BUTTON "CLOSE" (BOTTOM) - image changeable via button-color.m script -->
+	<Button
+		x="293" y="366" w="63" h="19"
+		id="rgb.cc.button.close.bottom"
+		tooltip="Close RGB Color Changer"/>
+	<script
+		file="SCRIPTS\rgb-color-changer.maki"
+		param="@SKINPATH@SCRIPTS\"/> <!-- keep the parameter in here and not in the script otherwise it will not work -->
+</groupdef>
+<Container
+	default_x="100" default_y="100" default_w="620" default_h="431"
+	default_visible="0"
+	id="rgb.color.changer"
+	name="RGB Color Changer"
+	nomenu="1">
+	<Layout
+		x="100" y="100" w="620" h="431"
+		id="normal"
+		background="base.texture"
+		resizable="0"> <!-- entry name="odim" value="6,6" from studio.xnf since w="6" and h="6" and keep x,y,w,h in <Layout> -->
+		<Group
+			fitparent="1"
+			id="rgb.cc.group.main"/>
+	</Layout>
+</Container>
