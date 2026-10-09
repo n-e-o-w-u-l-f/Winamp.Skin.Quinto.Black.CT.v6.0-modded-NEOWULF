@@ -6,6 +6,8 @@ The native builder now produces 24 independently named containers. Six speaker c
 
 The main player has native transport, song/time displays and interactive volume. Its compiled MAKI animates a separate vinyl layer, a slowly eased arm, stationary reflection and power lighting. The static artwork is not runtime evidence. The native system-menu action, copied from the original Quinto implementation, keeps the windows accessible from the upper-left screw. Native menu enumeration is still to be observed in Winamp.
 
+The reported vinyl bounce has an evidenced LayerFX cause: with a 1x1 grid and wrap disabled, Winamp clamps the four rotated texture corners before interpolating. At diagonal angles this changes the record’s apparent radius by about 42%. Both the main player and recovered standalone deck now use an unclamped Cartesian rotation, cached sine/cosine and a stationary native Region. The main artwork is centered under the fixed spindle; the Region prevents repeated texture copies at the corners. Original vinyl art and static reflection remain pinned and unchanged. New source and matching binaries are recorded in `skin/maki-lock.json`; a changed source or stale binary makes packaging fail.
+
 Classic Winamp mini-Vis data is mono. An unsupported XML `channel` attribute cannot create stereo waveforms; it has been removed. The three native oscillator cards use waveform, waveform plus separate native L/R levels, and spectrum. True separate PCM and FFT channels are implemented by the DSP/WebView renderer. A missing right PCM channel is zero-filled and identified as L-only instead of copied from the left. Normalized PCM and legacy data are clamped so extreme inputs cannot create infinite canvas coordinates. Primary maintainer evidence for the mini-Vis limitation: <https://getwacup.com/community/index.php?topic=1757.0>.
 
 Studio instruments retain their original software audio engine. Synth and Sampler have 16 parts and up to 64 steps; EMX has 14 parts and up to 128 steps. Pads, controls and sequencing are implemented in source, with a separate sequencer view. These are original software instruments, not proprietary Korg firmware or exact hardware emulation. Model validation tests do not establish actual audio output.
@@ -17,10 +19,15 @@ Build from the verified Quinto CT 5.1 archive:
 ```sh
 python3 -B tools/build_reference_skin.py --base PATH_TO_VERIFIED_ZIP --output BUILD
 python3 -B tests/test_reference_layout.py BUILD/skin
+python3 -B tests/test_vinyl_rotation.py --stage BUILD/skin
 node tests/test_signal_contract.cjs
 ```
 
 `--compiler PATH_TO_MC_EXE` recompiles the main script when the real compiler and its pinned `lib/std.mi`/NSCRT are available. Otherwise the source-pinned compiled main binary and unchanged recovered speaker binary are packaged. Do not modify MAKI source and claim its old binary compiled the change.
+
+The vinyl repair was compiled with Nullsoft MC 1.2.0 under Wine 11.19 on Legion, in an isolated task directory/prefix with Xvfb. SDK files match the Git blobs in `tools/prepare_hellfire_base.py` and `skin/maki-lock.json`. Recompiling the unchanged main source reproduced the previous binary exactly; each corrected source was compiled twice with identical results. Copy each `.m` into the owned SDK directory containing `mc.exe`, `nscrt.dll` and `lib/std.mi`, then run `WINEPREFIX=OWNED_PREFIX WINEDEBUG=-all xvfb-run -a wine mc.exe SOURCE.m` from that directory. The matching `.maki` is written beside it. Update the lock only after checking source/output hashes and successful compilation.
+
+The 720-angle regression executes actual callback expressions using the source-derived signed 16.16 native corner mapping. It verifies invariant spindle/radius/area, rejects the old clamp, checks mask symmetry/sampler margins and checks actual packaged mask, bounds and spindle parameters with `--stage`. This deterministic transform test does not establish observed Winamp paint. Evidence: `docs/verification/20261009-vinyl-motion.json` and `20261009-vinyl-build.json`. Two full builds were byte-identical; ZIP CRC and all 166 member bytes matched the stage.
 
 Build staging is recreated from the verified archive, preventing stale files from leaking into the WAL. ZIP member ordering, timestamps and permissions are fixed. Validation checks XML, actual PNG bounds and references, compiled signatures, all required containers, drag surfaces, menu/volume/EQ controls, includes and cone sockets. Negative tests mutate the real generated stage and restore its original bytes in `finally`.
 

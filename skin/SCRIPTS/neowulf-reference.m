@@ -7,6 +7,7 @@ Global List ledsL, ledsR;
 Global Double levelL, levelR;
 Global Double rotation, leftAngle, rightAngle, brightness;
 Global Double phase, speed, armAngle;
+Global Double phaseCos, phaseSin, vinylPivotX, vinylPivotY;
 Global Int lastTime, sampleTime, frameCount;
 Global Int drag, mouseY, initialVolume, kind;
 Function setup(Layer target);
@@ -16,13 +17,23 @@ setup(Layer target) {
   target.fx_setLocalized(1); target.fx_setRealtime(0); target.fx_setEnabled(1);
 }
 System.onScriptLoaded() {
-  g=getScriptGroup(); kind=System.stringToInteger(getParam());
+  g=getScriptGroup(); kind=System.stringToInteger(System.getToken(getParam(),"|",0));
+  vinylPivotX=System.stringToFloat(System.getToken(getParam(),"|",1));
+  vinylPivotY=System.stringToFloat(System.getToken(getParam(),"|",2));
+  phaseCos=1;phaseSin=0;
   closeButton=g.findObject("ref.close"); resetButton=g.findObject("ref.reset");
   volume=g.findObject("ref.volume"); pulse=g.findObject("ref.pulse");
   vinyl=g.findObject("ref.vinyl");arm=g.findObject("ref.arm");chassisOn=g.findObject("ref.chassis.on");
   needleL=g.findObject("ref.needle.left"); needleR=g.findObject("ref.needle.right");
   if(volume!=NULL)setup(volume);
-  if(vinyl!=NULL)setup(vinyl);
+  if(vinyl!=NULL){
+    // Unclamped affine mapping. wrap=0 clips mesh corners before interpolation
+    // and enlarges the record at diagonal angles. A fixed Region clips copies.
+    Region disc=new Region;disc.loadFromBitmap("ref.vinyl.clip");
+    vinyl.setRegion(disc);delete disc;
+    setup(vinyl);vinyl.fx_setWrap(1);vinyl.fx_setRect(1);vinyl.fx_setClear(1);
+    vinyl.fx_update();
+  }
   if(arm!=NULL){setup(arm);arm.fx_setRect(1);}
   if(needleL!=NULL)setup(needleL); if(needleR!=NULL)setup(needleR);
   rotation=0; leftAngle=0; rightAngle=0; brightness=0;
@@ -44,7 +55,8 @@ volume.onMouseMove(Int x, Int y) { if(drag){Int v=initialVolume+(mouseY-y)*2;if(
 volume.onMouseWheelUp(Int clicked, Int lines) { Int v=System.getVolume()+5;if(v>255)v=255;System.setVolume(v); return 1; }
 volume.onMouseWheelDown(Int clicked, Int lines) { Int v=System.getVolume()-5;if(v<0)v=0;System.setVolume(v); return 1; }
 volume.fx_onGetPixelR(Double r, Double d, Double x, Double y) { return r+rotation; }
-vinyl.fx_onGetPixelR(Double r, Double d, Double x, Double y) { return r+phase; }
+vinyl.fx_onGetPixelX(Double r, Double d, Double x, Double y) { return vinylPivotX+x*phaseCos-y*phaseSin; }
+vinyl.fx_onGetPixelY(Double r, Double d, Double x, Double y) { return vinylPivotY+x*phaseSin+y*phaseCos; }
 // Winamp's documented LayerFX x/y range is -1..1. Rotate about the mounting
 // attachment in physical layer pixels rather than the bitmap centre.
 arm.fx_onGetPixelX(Double r, Double d, Double x, Double y) {
@@ -65,6 +77,7 @@ tick.onTimer() {
   Double speedTarget=0,armTarget=-0.45;if(System.getStatus()==1){speedTarget=33.333333;armTarget=0;}
   speed=speed+(speedTarget-speed)*(1-System.pow(2.718281828,-dt/0.65));
   phase=phase+6.28318530718*speed*dt/60;if(phase>6.28318530718)phase=phase-6.28318530718;
+  phaseCos=System.cos(phase);phaseSin=System.sin(phase);
   armAngle=armAngle+(armTarget-armAngle)*(1-System.pow(2.718281828,-dt/0.8));
   if(vinyl!=NULL&&speed>0.01)vinyl.fx_update();if(arm!=NULL)arm.fx_update();
   Double l=System.getLeftVuMeter()/255.0, r=System.getRightVuMeter()/255.0;

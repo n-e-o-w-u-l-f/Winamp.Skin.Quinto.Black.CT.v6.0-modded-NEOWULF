@@ -1,0 +1,44 @@
+{
+  "source_predecessor": "2cee3fd02ffbd1538f785f031a9816693d570d1d",
+  "native_runtime_verified": false,
+  "installed_runtime_revision": "UNKNOWN",
+  "compiler_environment": "Legion / Linux 7.2.8-arch1-2 / Wine 11.19 / isolated Wine prefix and Xvfb",
+  "unchanged_baseline_recompiled_byte_exact": true,
+  "baseline_maki_sha256": "129880e6690360095f2f0372504beb7d25a4c34d009f00f09bb40650e1ef3914",
+  "repeated_compilation_identical": true,
+  "compilation_lock": {
+    "compiler": "Nullsoft MAKI Compiler 1.2.0 / Winamp 5.66",
+    "toolchain_repository": "captbaritone/webamp",
+    "toolchain_revision": "88ed5815d968c201962f6549915579b3d2f93c5e",
+    "sdk_git_blobs": {
+      "mc.exe": "b1f34e3ea047c42a808802f7082fa85b4f90091e",
+      "nscrt.dll": "b369695870c03bc0f915e86918a07c8932dff777",
+      "lib/std.mi": "352e0a2f2a199ecce938fee3c1e78e709fe84935"
+    },
+    "scripts": [
+      {
+        "source": "skin/SCRIPTS/neowulf-reference.m",
+        "source_sha256": "4696941f509c524b675334f6a1673f24cf0b2810015cad23ee87b2952511525f",
+        "binary": "skin/SCRIPTS/neowulf-reference.maki",
+        "binary_sha256": "082fa29f38893fc128d99e7f4d3e9db72fdad9333ebb54f62a2207edaea1577b",
+        "bytes": 9345
+      },
+      {
+        "source": "skin/hellfire-runtime/SCRIPTS/neowulf-vinyl.m",
+        "source_sha256": "8d450738a95a5f08a907ace98a3f38579cfa31adbb6d515869c6f3f0c9847ff9",
+        "binary": "skin/hellfire-runtime/SCRIPTS/neowulf-vinyl.maki",
+        "binary_sha256": "d06557f7d90a81ffc939469cb60eb6edf29b928f9c973cc0b31d57516d440224",
+        "bytes": 4404
+      }
+    ]
+  },
+  "wal_sha256": "c7dede03c6fe462704acc8b2e1c3d9b731d6736c72fe1444682d31924206d945",
+  "repeated_wal_identical": true,
+  "zip_crc_and_all_members_match": true,
+  "native_containers": 24,
+  "motion_report": "20261009-vinyl-motion.json",
+  "layout_negative_checks": true,
+  "stale_source_and_binary_rejected": true,
+  "design_sha256": "c30cbc667325b5c8b2238dafaf54aea6006d0631f0795bb6221554c19a7e02b3",
+  "native_host": "BMAX offline; installation and observed motion acceptance pending"
+}

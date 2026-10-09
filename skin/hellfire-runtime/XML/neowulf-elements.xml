@@ -23,6 +23,7 @@
 <bitmap id="nw.sa" file="PNG\NEOWULF\sa.png" w="638" h="208"/>
 <bitmap id="nw.power" file="PNG\NEOWULF\power.png" w="74" h="28"/>
 <bitmap id="nw.vinyl" file="PNG\NEOWULF\vinyl.png" w="474" h="474"/>
+<bitmap id="nw.vinyl.clip" file="PNG/NEOWULF/vinyl-clip.png" w="474" h="474"/>
 <bitmap id="nw.cone-black" file="PNG\NEOWULF\cone-black.png" w="160" h="160"/>
 <bitmap id="nw.speaker-tower-left" file="PNG\NEOWULF\speaker-tower-left.png" w="174" h="590"/>
 <bitmap id="nw.speaker-bookshelf-right" file="PNG\NEOWULF\speaker-bookshelf-right.png" w="220" h="330"/>

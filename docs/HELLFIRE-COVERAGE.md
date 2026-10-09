@@ -6,7 +6,7 @@ Reference: `design/approved-reference.png`, SHA256 c30cbc667325b5c8b2238dafaf54a
 
 | Required item | Current implemented source / evidence | Remaining acceptance and dependency |
 |---|---|---|
-| Main player and vinyl | Native transport, live song/time, volume drag/wheel; separate spinning vinyl, fixed reflection, slowly moving arm, power easing; compiled main script pinned | Windows: live controls, mounting/lighting/spin/arm appearance; dynamic album-art label still open |
+| Main player and vinyl | Native transport, live song/time, volume drag/wheel; vinyl corner-clamp repair with fixed Region/spindle and newly compiled main/standalone scripts; 720-angle source-derived motion check; fixed reflection and eased arm | Windows: observe corrected motion, live controls, mounting/lighting/arm appearance; dynamic album-art label still open |
 | Equalizer | Ten native band parameters, reset and enable controls; real asset/control mappings validated | Windows: band order, response, preamp, reset and geometry |
 | Three distinct oscillator decks | Native waveform, waveform with separate L/R levels, spectrum; three independent IDs | Windows: independent display modes and controls. Legacy waveform is mono; stereo PCM belongs to WebView |
 | Oscilloscope | Native audio-driven waveform plus separate DSP/WebView oscillator renderer | Real one-sided PCM test through installed bridge; scope geometry and waveform behavior |

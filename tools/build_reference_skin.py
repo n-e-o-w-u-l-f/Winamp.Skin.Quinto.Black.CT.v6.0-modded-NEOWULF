@@ -8,6 +8,7 @@ from pathlib import Path
 import argparse, hashlib, json, re, shutil, subprocess, zipfile
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw
+from vinyl_rotation import main_geometry, region_mask, verify_compiled_scripts
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_HASH = 'd926537bd21978d498d9781b15e733bab21ab28da0bf696e1307132d2e6066d1'
@@ -35,7 +36,10 @@ def deck(key, name, inner, regions, ident=None, guid=None, pos=(0,0), visible=0,
     closeaction=' action="close"' if ident=='main' else ''
     content+=f'<Button id="{closeid}" x="{w-27}" y="9" w="16" h="16" image="ref.transparent"{closeaction} tooltip="Fenster schließen"/>'
     if speaker_channel is not None: content+='<script file="SCRIPTS/neowulf-speaker.maki" param="'+str(speaker_channel)+'"/>'
-    elif script: content+='<script file="SCRIPTS/neowulf-reference.maki" param="'+('1' if ident=='main' else '0')+'"/>'
+    elif script:
+        param='0'
+        if ident=='main':param='1|'+'|'.join(format(p,'.12f') for p in main_geometry()['pivot'])
+        content+='<script file="SCRIPTS/neowulf-reference.maki" param="'+param+'"/>'
     return f'<groupdef id="{ident}.group">{content}</groupdef>\n<Container id="{ident}" name="{name}"{component} default_x="{pos[0]}" default_y="{pos[1]}" default_w="{w}" default_h="{h}" default_visible="{visible}" droptarget="pldr"><Layout id="normal" w="{w}" h="{h}" alphabackground="ref.{key}"><Group id="{ident}.group" fitparent="1"/></Layout></Container>\n'
 
 def vis(x,y,w,h,channel=3,mode=2,flip=0):
@@ -52,6 +56,7 @@ def meter(x,y,w,h):
 
 def make_skin(base, output, compiler):
     if hashlib.sha256(base.read_bytes()).hexdigest()!=BASE_HASH: raise ValueError('Quinto archive pin changed')
+    if compiler is None:verify_compiled_scripts()
     manifest=json.loads((ROOT/'design/reference-regions.json').read_text()); regions=manifest['regions']
     assets=json.loads((ROOT/'design/assets/manifest.json').read_text())
     regions['sub']=[0,0,240,240]
@@ -107,6 +112,9 @@ def make_skin(base, output, compiler):
     for key,box in {'top':(35,90,2105,144),'bottom':(35,537,2105,72),'left':(35,234,96,303),'right':(2044,234,96,303)}.items():
         xx,yy,ww,hh=box;elements.append(f'<bitmap id="ref.tv.{key}" file="PNG/NEOWULF/scope-chassis-v1.png" x="{xx}" y="{yy}" w="{ww}" h="{hh}"/>')
     elements.append('<bitmap id="ref.vinyl" file="PNG/NEOWULF/vinyl-texture-flat-v1.png"/>')
+    geometry=main_geometry()
+    region_mask(geometry['size'],geometry['source_size'],geometry['radius']).save(stage/'PNG/NEOWULF/vinyl-clip.png')
+    elements.append('<bitmap id="ref.vinyl.clip" file="PNG/NEOWULF/vinyl-clip.png"/>')
     elements.append('<bitmap id="ref.arm" file="PNG/NEOWULF/tonearm-v1.png" x="0" y="0" w="1840" h="768"/>')
     from apply_neowulf_v6_reference_design import fixed_reflection
     fixed_reflection(size=1024).save(stage/'PNG/NEOWULF/reflection.png')
@@ -196,6 +204,7 @@ def make_skin(base, output, compiler):
         if not made.exists():raise ValueError('Compiler did not create output')
         shutil.copyfile(made,binary)
     if not binary.exists():raise ValueError('Compile neowulf-reference.m before packaging')
+    verify_compiled_scripts()
     shutil.copyfile(binary,stage/'SCRIPTS/neowulf-reference.maki')
     shutil.copyfile(ROOT/'skin/hellfire-runtime/SCRIPTS/neowulf-speaker.maki',stage/'SCRIPTS/neowulf-speaker.maki')
     validate(stage,regions)
@@ -237,6 +246,16 @@ def validate(stage,regions):
     required={'main','equalizer','AVS','ref.analog','ref.digital','ref.horizontal','ref.oscilloscope'}|{'ref.oscillator.'+str(i) for i in range(1,4)}|{'nw.deck.'+str(i) for i in range(1,9)}|{'ref.speaker.'+key for key in ['tower_left','tower_right','rear_left','rear_right','center','sub']}
     if set(containers)!=required:raise ValueError('Missing/unexpected deck: '+str(set(containers)^required))
     groups={g.attrib['id']:g for g in decks.iter('groupdef')}
+    geometry=main_geometry()
+    disc=groups['main.group'].find("Layer[@id='ref.vinyl']")
+    if disc is None or tuple(float(disc.attrib[k]) for k in ['x','y','w','h'])!=(140,25,510,140):raise ValueError('Vinyl footprint changed')
+    clip=bitmaps.get('ref.vinyl.clip')
+    if clip is None:raise ValueError('Missing fixed vinyl Region')
+    with Image.open(stage/clip.attrib['file']) as mask:
+        expected=region_mask(geometry['size'],geometry['source_size'],geometry['radius'])
+        if mask.size!=expected.size or mask.convert('RGBA').tobytes()!=expected.tobytes():raise ValueError('Invalid fixed vinyl Region')
+    script=groups['main.group'].find("script[@file='SCRIPTS/neowulf-reference.maki']")
+    if script is None or script.get('param')!='1|'+'|'.join(format(p,'.12f') for p in geometry['pivot']):raise ValueError('Vinyl spindle calibration changed')
     for ident,container in containers.items():
         layout=container.find('Layout');group=groups[layout.find('Group').attrib['id']]
         ids=[n.attrib['id'] for n in group if 'id' in n.attrib]

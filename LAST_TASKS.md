@@ -1,6 +1,6 @@
 # Hellfire current work
 
-State: **IN_PROGRESS / native acceptance pending**. Active execution is this interactive session; there is no autonomous background build.
+State: **IN_PROGRESS / vinyl source repair compiled and packaged; native acceptance pending**. Active execution is this interactive session; there is no autonomous background build.
 
 ## Objective and decisions
 
@@ -10,9 +10,9 @@ Canonical requester preference `Agent-Governance/governance/preferences/neowulf.
 
 ## Current source and verified safe state
 
-Repository: `n-e-o-w-u-l-f/Winamp.Skin.Quinto.Black.CT.v6.0-modded-NEOWULF`, main. Published implementation: **b31334a0e597d6b0bb9aa33ce8066097e5fe8ccb**; fresh fetch verified exact tree **effd34df4142524ce37f141544741e85c1c66e8b** and all 13 intended file bytes. Local checkout reconciled CLEAN. Predecessor 2ad21fdef12cd608617382e3b922d484b6cce365 is retained in history. This record update checkpoints that verified publication; its containing revision is discoverable from Git rather than a self-referential hash.
+Repository: `n-e-o-w-u-l-f/Winamp.Skin.Quinto.Black.CT.v6.0-modded-NEOWULF`, main. Published predecessor: **2cee3fd02ffbd1538f785f031a9816693d570d1d**, tree **d744d2f70859cb59912dcbd0ddded25364101876**; its implementation b31334a0e597d6b0bb9aa33ce8066097e5fe8ccb and all 13 intended file bytes were independently verified. Local checkout reconciled CLEAN. Predecessor 2ad21fdef12cd608617382e3b922d484b6cce365 is retained in history. This record update checkpoints that verified publication; its containing revision is discoverable from Git rather than a self-referential hash.
 
-The verified base ZIP and original isolated Windows installation/package remain preserved. Main MAKI binary is 8680 bytes, SHA256 129880e6690360095f2f0372504beb7d25a4c34d009f00f09bb40650e1ef3914; unchanged speaker MAKI is reused from the recovered pinned runtime. No unsupported new compilation is claimed.
+The verified base ZIP and original isolated Windows installation/package remain preserved. Previous main MAKI (8680 bytes, SHA256 129880e6690360095f2f0372504beb7d25a4c34d009f00f09bb40650e1ef3914) was reproduced exactly with pinned MC 1.2.0 under isolated Wine 11.19 on Legion. Corrected main is 9345 bytes, SHA256 082fa29f38893fc128d99e7f4d3e9db72fdad9333ebb54f62a2207edaea1577b; corrected standalone vinyl is 4404 bytes, SHA256 d06557f7d90a81ffc939469cb60eb6edf29b928f9c973cc0b31d57516d440224. Both repeated compilations matched. The source/binary lock rejects stale packaging. Unchanged speaker MAKI is preserved.
 
 ## Executed and verified
 
@@ -25,7 +25,7 @@ The verified base ZIP and original isolated Windows installation/package remain 
 
 ## Blockers and uncertainty
 
-BMAX-B6 remains OFFLINE (last seen 14h at this re-entry); current process/runtime state is UNKNOWN. No current package installation, native docking/audio/animation acceptance or measured Winamp FPS is claimed. Local Chromium is absent after an invalid download; no equivalent retry without changed cause. Native bridge C++ source is absent; original binaries are pinned. Full detailed 4K coverage, matched left/right perspective, editable native headers, dynamic vinyl album art and native TV CRT remain open.
+BMAX-B6 remains OFFLINE (last seen 15h at the fresh post-build check); current process/runtime state is UNKNOWN. No current package installation, native docking/audio/animation acceptance or measured Winamp FPS is claimed. Local Chromium is absent after an invalid download; no equivalent retry without changed cause. Native bridge C++ source is absent; original binaries are pinned. Full detailed 4K coverage, matched left/right perspective, editable native headers, dynamic vinyl album art and native TV CRT remain open.
 
 Global governance Winamp route/index is **OUT_OF_SYNC / not registered**. Required normal local-first publication cannot proceed: BMAX offline; inspected Legion user ChatGPT has no gh login or Git credential helper. Do not rewrite global governance via a substitute route; this project record is subordinate.
 
@@ -38,3 +38,11 @@ Source, documentation and deterministic archive readback are complete for the pu
 Next scoped changes: only uncovered rows in the acceptance matrix, their native/XML/MAKI/UI sources and directly relevant verification. Compiler-dependent MAKI changes require a matching new binary before packaging. No speculative uncompiled source is represented as deployed.
 
 Native acceptance cannot run while BMAX is unavailable; local browser download integrity has not been resolved. These are capability dependencies, not failed skin tests. Normal global governance publication additionally requires an authorized host's ordinary owner login. No safety control is bypassed and no false final completion is asserted. Continue directly from the preserved full scope when capability changes; there is no unattended continuation job.
+
+## Current repair — reported vinyl bounce
+
+START: inspect the actual rotation/pivot/geometry and repair the reported hopping within the full Hellfire task. Safe source predecessor is 2cee3fd02ffbd1538f785f031a9816693d570d1d; installed runtime revision is UNKNOWN. BMAX remains offline. Legion's current user ChatGPT, Linux 7.2.8-arch1-2, Wine 11.19 and Xvfb are directly observed as an independent compiler capability candidate, not as Windows runtime acceptance.
+
+RESULT: native source proves wrap=0 clamps mesh corners before interpolation, producing about 42% apparent record growth at 45°. Both current main and recovered standalone vinyl use unclamped Cartesian rotation with a fixed native Region and stationary spindle. Only texture rotates. Matching binaries compiled twice identically; original main compilation reproduced exactly. Source-derived checks across 720 phases and real-stage geometry/mask checks PASS; old mapping is rejected. New WAL SHA256 c7dede03c6fe462704acc8b2e1c3d9b731d6736c72fe1444682d31924206d945; two builds match, CRC/all 166 member bytes verified. Evidence: verification/20261009-vinyl-motion.json, verification/20261009-vinyl-build.json; source/binary pairs in skin/maki-lock.json.
+
+NEXT: observe this exact package in the existing isolated Winamp profile when BMAX returns; full scope stays open. Compiler capability is restored independently, but native installation and actual motion/audio/FPS acceptance remain pending. Publish this checkpoint and verify exact tree/member bytes. No drug-related task is inferred from the rhetorical complaint.

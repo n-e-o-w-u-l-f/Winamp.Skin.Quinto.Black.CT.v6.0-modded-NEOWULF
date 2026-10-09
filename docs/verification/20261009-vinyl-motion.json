@@ -1,0 +1,20 @@
+{
+  "main": {
+    "phases": 720,
+    "max_center_error": 8.60414139225658e-09,
+    "max_radius_error": 2.4671826803768226e-08,
+    "max_area_error": 3.384394653416223e-08,
+    "old_corner_clamp_rejected": true,
+    "fixed_mask_sampler_margin_verified": true
+  },
+  "standalone": {
+    "phases": 720,
+    "max_center_error": 2.2762855006404148e-08,
+    "max_radius_error": 6.51978327992353e-08,
+    "max_area_error": 8.955741592764355e-08,
+    "old_corner_clamp_rejected": true,
+    "fixed_mask_sampler_margin_verified": true
+  },
+  "previous_45deg_growth": 1.4202059927221327,
+  "native_runtime_verified": false
+}
