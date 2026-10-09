@@ -1,21 +1,9 @@
-# NEOWULF v6
+# NEOWULF Hellfire
 
-NEOWULF is a Quinto Black CT based Winamp Modern skin overhaul using a high-detail Black Steel / machined-metal / restrained red-white illumination language.
+Aktueller Stand: **Reference R2 / IN PROGRESS**. Verbindlich ist `design/approved-reference.png`, die am 5. Oktober 2026 erneut bestätigte Metall-/Fire-LED-Vorlage. Die älteren R4.1/R5-Daten bleiben als Quellgeschichte erhalten.
 
-## Current milestone: R4.1 Ultra Detail
+`tools/build_reference_skin.py` erzeugt daraus individuelle Modern-Skin-Fenster auf der hashgeprüften Quinto-Black-CT-5.1-Grundlage. `design/assets/` enthält getrennte neu erzeugte Produktionsgrafiken mit tatsächlichen Bildabmessungen und SHA256-Hashes. Eine Vergrößerung der ursprünglichen Vorlage wird nicht als neue 4K-Detailzeichnung ausgegeben.
 
-- truecolor 32-bit RGBA runtime artwork;
-- 8x supersampled artwork generation (4K+ working canvases for major components);
-- no black boxes around generic LEDs;
-- no round framed “clown nose” power/indicator LEDs;
-- digital LEFT/RIGHT VU instead of an analog needle face;
-- 120-frame red + white-hot audio-driven VU response on pure black glass;
-- three native-audio oscillator decks visible on first load;
-- 298x1044 Teufel MK Ultra style tower pair;
-- right tower and right driver animation are true mirrors of the left;
-- native song-driven spectrum/oscilloscope data;
-- R3 physically-correct LP retained: vinyl rotates, fixed lighting does not.
+`studio/engines/` enthält die wiederhergestellten eigenen Audio-Instrumente und das an die Vorlage angepasste Frontpanel. Canvas-Anzeigen arbeiten mit einem gemeinsamen 30-Hz-Zeichenbudget, getrennten Stereo-Daten, sanftem Angriff/Abfall und auslesbarer Bildratenmessung. Die Sequencer-Zeitbasis bleibt unabhängig vom Zeichentakt.
 
-The large generated WAL/animation atlases are build products. The repository carries the runtime MAKI sources/binaries, XML contracts, deterministic generators and validators.
-
-See `docs/R4.1-ULTRA-DETAIL.md` and `docs/TURNTABLE-REFERENCE-DESIGN.md`.
+Build, Archiv-/XML-Prüfung, echte Winamp-Laufzeit und Audio-/Dockingprüfung sind getrennte Abnahmeschritte. Der volle Umfang und die konkreten Restarbeiten stehen in `LAST_TASKS.md` und `docs/REFERENCE-TRANSFER.md`. Die vorhandenen nativen Bridge-DLLs sind hashgesicherte Alt-Binaries; ihr C++-Buildquelltext fehlt derzeit. Das Gesamtpaket ist noch nicht vollständig abgenommen.

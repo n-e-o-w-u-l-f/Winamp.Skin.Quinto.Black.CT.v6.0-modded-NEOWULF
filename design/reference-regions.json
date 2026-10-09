@@ -1,0 +1,155 @@
+{
+  "source": "approved-reference.png",
+  "sha256": "c30cbc667325b5c8b2238dafaf54aea6006d0631f0795bb6221554c19a7e02b3",
+  "size": [
+    1672,
+    941
+  ],
+  "rule": "One non-tiled chassis per deck; cover pictorial signal/readout/control states with live rendering.",
+  "regions": {
+    "main": [
+      32,
+      0,
+      836,
+      356
+    ],
+    "equalizer": [
+      853,
+      47,
+      587,
+      202
+    ],
+    "digital": [
+      861,
+      248,
+      579,
+      127
+    ],
+    "vertical": [
+      1444,
+      9,
+      218,
+      367
+    ],
+    "scope": [
+      43,
+      355,
+      615,
+      157
+    ],
+    "analog": [
+      663,
+      373,
+      480,
+      138
+    ],
+    "horizontal": [
+      1141,
+      375,
+      504,
+      135
+    ],
+    "oscillator": [
+      198,
+      509,
+      601,
+      208
+    ],
+    "instrument": [
+      800,
+      508,
+      665,
+      262
+    ],
+    "tower_left": [
+      19,
+      510,
+      179,
+      423
+    ],
+    "tower_right": [
+      1475,
+      511,
+      177,
+      422
+    ],
+    "rear_left": [
+      336,
+      717,
+      178,
+      217
+    ],
+    "rear_right": [
+      1157,
+      768,
+      180,
+      166
+    ],
+    "center": [
+      609,
+      770,
+      449,
+      156
+    ],
+    "button_prev": [
+      76,
+      246,
+      46,
+      46
+    ],
+    "button_play": [
+      126,
+      246,
+      48,
+      46
+    ],
+    "button_pause": [
+      178,
+      246,
+      48,
+      46
+    ],
+    "button_stop": [
+      229,
+      246,
+      49,
+      46
+    ],
+    "button_next": [
+      281,
+      246,
+      49,
+      46
+    ],
+    "volume": [
+      746,
+      231,
+      82,
+      82
+    ],
+    "eq_thumb": [
+      964,
+      126,
+      23,
+      27
+    ],
+    "knob": [
+      1014,
+      573,
+      45,
+      42
+    ],
+    "pad": [
+      1002,
+      663,
+      37,
+      39
+    ],
+    "red_led": [
+      911,
+      110,
+      8,
+      10
+    ]
+  }
+}

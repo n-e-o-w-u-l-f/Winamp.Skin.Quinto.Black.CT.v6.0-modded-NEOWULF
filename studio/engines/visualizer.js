@@ -1,20 +1,29 @@
 /* Render at display resolution. Waveforms are acquired, never synthesized for show. */
 (()=>{
-const q=new URLSearchParams(location.search),mode=q.get('mode')||'fire',canvas=document.getElementById('visual'),ctx=canvas.getContext('2d'),source=document.getElementById('source');
+const q=new URLSearchParams(location.search),mode=q.get('mode')||'fire',canvas=document.getElementById('visual'),ctx=canvas.getContext('2d',{alpha:false}),source=document.getElementById('source');
 if(q.get('embed')==='1')document.body.classList.add('embedded');if(mode==='vertical')document.body.classList.add('vertical');
 const names={osc:'NEOWULF · OSZILLATOR',fire:'NEOWULF · FIRE VU STEREO',horizontal:'NEOWULF · VU HORIZONTAL',vertical:'NEOWULF · VU VERTIKAL',virtualizer:'NEOWULF · HELLFIRE VIRTUALIZER'};
 document.getElementById('title').textContent=names[mode];document.title=names[mode];let variant=0;
 document.getElementById('variant').onclick=()=>{variant=(variant+1)%3;document.getElementById('variant').textContent=['MODE 1','MODE 2','MODE 3'][variant];};document.getElementById('crt').onclick=()=>{document.body.classList.toggle('crt');};
-let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=0,left=0,right=0,peaks=[0,0],trail=[],spectral=new Float32Array(256),particles=[];
+let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=0,left=0,right=0,particles=[];
+const spectral=new Float32Array(256),spectralL=new Float32Array(256),spectralR=new Float32Array(256),re=new Float32Array(512),im=new Float32Array(512),clock=new HellfireRenderClock(mode);
 const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;
-function receive(data){if(!data||typeof data!=='object')return;if(data.pcmScale){data.pcmLeft=data.pcmLeft.map(x=>x/data.pcmScale);data.pcmRight=data.pcmRight.map(x=>x/data.pcmScale);delete data.pcmScale;}packet=data;lastPacket=performance.now();if(data.pcmLeft){const a=data.pcmLeft,b=data.pcmRight||a;fftSpectrum(a,b);}}
+function receive(data){
+ if(!data||typeof data!=='object')return;
+ const clean=a=>Array.isArray(a)||ArrayBuffer.isView(a)?Array.from(a,x=>Number.isFinite(x)?x:0):null;
+ const scale=Number.isFinite(data.pcmScale)&&data.pcmScale>0?data.pcmScale:1,a=clean(data.pcmLeft),b=clean(data.pcmRight);
+ packet={playing:data.playing!==false,left:Number.isFinite(data.left)?data.left:0,right:Number.isFinite(data.right)?data.right:0,
+  spectrum:clean(data.spectrum)||Array(75).fill(0),wave:clean(data.wave)||Array(75).fill(0),
+  pcmLeft:a?.map(x=>x/scale),pcmRight:(b||a)?.map(x=>x/scale),sampleRate:data.sampleRate||48000};
+ lastPacket=performance.now();if(packet.pcmLeft){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
+}
 window.neowulfAudio=receive;window.chrome?.webview?.addEventListener('message',e=>{if(source.value==='winamp')receive(e.data);});ch?.addEventListener('message',e=>{if(source.value==='studio')receive(e.data);});
-function fftSpectrum(l,r){
- const N=512,re=new Float32Array(N),im=new Float32Array(N);
- for(let i=0;i<N;i++)re[i]=((l[i]||0)+(r[i]||0))*.5*(.5-.5*Math.cos(2*Math.PI*i/(N-1)));
+function fftSpectrum(samples,out){
+ const N=512;im.fill(0);
+ for(let i=0;i<N;i++)re[i]=(samples[i]||0)*(.5-.5*Math.cos(2*Math.PI*i/(N-1)));
  for(let i=1,j=0;i<N;i++){let bit=N>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){[re[i],re[j]]=[re[j],re[i]];}}
  for(let len=2;len<=N;len<<=1){const angle=-2*Math.PI/len;for(let base=0;base<N;base+=len)for(let k=0;k<len/2;k++){const c=Math.cos(angle*k),s=Math.sin(angle*k),u=base+k,v=u+len/2,tr=re[v]*c-im[v]*s,ti=re[v]*s+im[v]*c;re[v]=re[u]-tr;im[v]=im[u]-ti;re[u]+=tr;im[u]+=ti;}}
- for(let i=0;i<256;i++)spectral[i]=Math.min(1,Math.hypot(re[i],im[i])/36);
+ for(let i=0;i<256;i++)out[i]=Math.min(1,Math.hypot(re[i],im[i])/36);
 }
 function gradient(y,h){const g=ctx.createLinearGradient(0,y+h,0,y);g.addColorStop(0,'#fff0b9');g.addColorStop(.12,'#ffc34f');g.addColorStop(.32,'#ff6822');g.addColorStop(.62,'#d62614');g.addColorStop(1,'#440406');return g;}
 function interpolate(a,x){const p=x*(a.length-1),i=Math.floor(p),t=p-i;return (a[i]||0)*(1-t)+(a[Math.min(a.length-1,i+1)]||0)*t;}
@@ -43,7 +52,7 @@ function drawFire(w,h,now){
   const ox=w*(c?.54:.07),width=w*.39,height=h*.9,base=h*.95,energy=Math.sqrt(levels[c]);
   const g=gradient(base-height,height);ctx.fillStyle=g;ctx.shadowColor='#f53213';ctx.shadowBlur=12;
   ctx.beginPath();ctx.moveTo(ox,base);
-  for(let i=0;i<=100;i++){const t=i/100,x=ox+t*width,edge=Math.sin(Math.PI*t)**.45,ripple=.10*Math.sin(i*.43+now*.009)+.05*Math.sin(i*.94-now*.006),freq=packet.pcmLeft?interpolate(spectral,t):interpolate(packet.spectrum,t)/16;const y=base-height*energy*edge*Math.max(.05,.72+ripple+freq*.25);ctx.lineTo(x,y);}ctx.lineTo(ox+width,base);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
+  for(let i=0;i<=100;i++){const t=i/100,x=ox+t*width,edge=Math.sin(Math.PI*t)**.45,ripple=.10*Math.sin(i*.43+now*.009)+.05*Math.sin(i*.94-now*.006),freq=packet.pcmLeft?interpolate(c?spectralR:spectralL,t):interpolate(packet.spectrum,t)/16;const y=base-height*energy*edge*Math.max(.05,.72+ripple+freq*.25);ctx.lineTo(x,y);}ctx.lineTo(ox+width,base);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
   const strips=28;for(let i=0;i<strips;i++){const x=ox+i*width/strips,top=base-energy*height*(.32+.4*Math.sin(Math.PI*i/strips));ctx.globalAlpha=.22;ctx.fillStyle='#ffd88b';ctx.fillRect(x,top,width/strips*.18,base-top);ctx.globalAlpha=1;}
   ctx.fillStyle='#b04733';ctx.font=`${Math.max(10,h/20)}px Consolas,monospace`;ctx.fillText(c?'RIGHT':'LEFT',ox+width*.39,18);
   if(energy>.08&&particles.length<220){for(let i=0;i<Math.ceil(energy*3);i++)particles.push({x:ox+Math.random()*width,y:base-energy*height*.6,vy:20+Math.random()*60,life:.4+Math.random()*.8});}
@@ -56,12 +65,13 @@ function drawVirtual(w,h,now){
  ctx.shadowBlur=0;ctx.fillStyle='#9c4634';ctx.font=`${Math.max(9,h/20)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?'FFT · 512 PCM SAMPLES':'WINAMP · 75 FREQUENZBÄNDER',10,18);
 }
 let previous=performance.now();function draw(now){
+ requestAnimationFrame(draw);if(!clock.due(now))return;const started=performance.now();
  const delta=Math.min(.1,(now-previous)/1000);previous=now;const dpr=Math.min(devicePixelRatio||1,3),w=Math.round(canvas.clientWidth*dpr),h=Math.round(canvas.clientHeight*dpr);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
- const fresh=now-lastPacket<600,tl=fresh?Math.max(0,Math.min(1,packet.left/255)):0,tr=fresh?Math.max(0,Math.min(1,packet.right/255)):0;
+ const fresh=packet.playing&&now-lastPacket<600,tl=fresh?Math.max(0,Math.min(1,packet.left/255)):0,tr=fresh?Math.max(0,Math.min(1,packet.right/255)):0;
  left+=(tl-left)*(1-Math.exp(-delta/(tl>left?.025:.24)));right+=(tr-right)*(1-Math.exp(-delta/(tr>right?.025:.24)));
- if(!fresh){packet.wave=Array(75).fill(0);packet.spectrum=Array(75).fill(0);packet.pcmLeft=null;spectral.fill(0);}ctx.fillStyle='#010102';ctx.fillRect(0,0,w,h);
+ if(!fresh){packet.wave.fill(0);packet.spectrum.fill(0);packet.pcmLeft=null;packet.pcmRight=null;spectral.fill(0);spectralL.fill(0);spectralR.fill(0);}ctx.fillStyle='#010102';ctx.fillRect(0,0,w,h);
  if(mode==='osc')drawOsc(w,h);else if(mode==='horizontal')drawMeters(w,h,false);else if(mode==='vertical')drawMeters(w,h,true);else if(mode==='virtualizer')drawVirtual(w,h,now);else drawFire(w,h,now);
  particles=particles.filter(p=>p.life>0);for(const p of particles){p.life-=delta;p.y-=p.vy*delta;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle='#ffc478';ctx.fillRect(p.x,p.y,1.5*dpr,2*dpr);}ctx.globalAlpha=1;
- document.getElementById('meter').textContent=`L ${db(left)} dB · R ${db(right)} dB`;requestAnimationFrame(draw);
-}requestAnimationFrame(draw);window.neowulfVisualizer={receive,get packet(){return packet;}};
+ document.getElementById('meter').textContent=`L ${db(left)} dB · R ${db(right)} dB`;clock.record(now,performance.now()-started);
+}requestAnimationFrame(draw);window.neowulfVisualizer={receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};}};
 })();

@@ -57,6 +57,9 @@ def brushed_steel(size, dark=18, light=66, seed=SEED):
 
 def radial_record_base(size=LP_SIZE, scale=2):
     S=size*scale
+    # Geometry constants below are authored in LP_SIZE units. Supersampling
+    # and requested output size are independent; scale both before drawing.
+    scale=scale*size/LP_SIZE
     cx=cy=S//2
     r=S*0.487
     im=Image.new('RGBA',(S,S),(0,0,0,0))
@@ -86,7 +89,7 @@ def radial_record_base(size=LP_SIZE, scale=2):
         draw.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),outline=(c,c,c+2,a),width=1)
     # lead-in / run-out grooves
     for rad,color,a in [(int(r-9*scale),(95,96,97),70),(int(r-15*scale),(55,56,58),55),(int(90*scale),(55,20,17),70)]:
-        draw.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),outline=(*color,a),width=max(1,scale))
+        draw.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),outline=(*color,a),width=max(1,round(scale)))
 
     # red center label: dark, printed, not luminous
     lr=int(74*scale)
@@ -100,7 +103,7 @@ def radial_record_base(size=LP_SIZE, scale=2):
         ld.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),fill=(rr,gg,bb,255))
     # printed rings and microprint-like radial/tangential marks
     for rad in (lr-8*scale, lr-18*scale, 20*scale):
-        ld.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),outline=(225,55,35,100),width=max(1,scale))
+        ld.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),outline=(225,55,35,100),width=max(1,round(scale)))
     # small print-like dashes around the label, not a decorative sunburst.
     for i in range(36):
         ang=math.radians(i*10 + (i%3)*0.8)
@@ -109,7 +112,7 @@ def radial_record_base(size=LP_SIZE, scale=2):
         x=cx+math.cos(ang)*r1; y=cy+math.sin(ang)*r1
         tx=-math.sin(ang)*arc; ty=math.cos(ang)*arc
         alpha=25+(i%5)*6
-        ld.line((x-tx,y-ty,x+tx,y+ty),fill=(13,2,2,alpha),width=max(1,scale))
+        ld.line((x-tx,y-ty,x+tx,y+ty),fill=(13,2,2,alpha),width=max(1,round(scale)))
     # a few small label marks to make rotation perceptible, deliberately subtle
     for i in range(12):
         ang=math.radians(11+i*29)
@@ -127,7 +130,7 @@ def radial_record_base(size=LP_SIZE, scale=2):
         length=(1.5+rnd.random()*5.0)*scale
         tx=-math.sin(ang)*length; ty=math.cos(ang)*length
         a=16+rnd.randrange(0,24)
-        draw.line((x,y,x+tx,y+ty),fill=(145,145,145,a),width=max(1,scale//2))
+        draw.line((x,y,x+tx,y+ty),fill=(65,65,65,a),width=max(1,round(scale/2)))
 
     # center hole transparent/dark; the static spindle/shadow layer sits above it.
     hr=6*scale

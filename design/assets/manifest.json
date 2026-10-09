@@ -1,0 +1,184 @@
+{
+  "equalizer-chassis-v1.png": {
+    "size": [
+      2138,
+      736
+    ],
+    "bitmap_box": [
+      51,
+      56,
+      2038,
+      620
+    ],
+    "sha256": "f5d5188136450225caead2f25946516f81dce99879e426904b0efcedc66f2f2f"
+  },
+  "instrument-chassis-v1.png": {
+    "size": [
+      1983,
+      793
+    ],
+    "bitmap_box": [
+      40,
+      58,
+      1905,
+      691
+    ],
+    "sha256": "c9f653f16150fe3c7ceecc35c53b7998e3168533fd0b4cb9b03085a52170d144"
+  },
+  "main-chassis-v1.png": {
+    "size": [
+      1946,
+      808
+    ],
+    "bitmap_box": [
+      18,
+      5,
+      1927,
+      796
+    ],
+    "sha256": "c3a3bc1a41528ae91b2bb69736d5f79c92f66eca810fc5ebebf919042986c31b"
+  },
+  "scope-chassis-v1.png": {
+    "size": [
+      2173,
+      724
+    ],
+    "bitmap_box": [
+      35,
+      90,
+      2105,
+      519
+    ],
+    "sha256": "63b92736af17ca62ffa6a26b97458d19a4eea0e306128c7f0e3aa1071f883136"
+  },
+  "tonearm-v1.png": {
+    "size": [
+      2048,
+      768
+    ],
+    "bitmap_box": [
+      81,
+      15,
+      1935,
+      719
+    ],
+    "sha256": "524974b73ad8ff2b07e6de21262def7bb58b3c52efa2f1b4d3d23eebcec3da29"
+  },
+  "vinyl-texture-v1.png": {
+    "size": [
+      1254,
+      1254
+    ],
+    "bitmap_box": [
+      14,
+      0,
+      1222,
+      1254
+    ],
+    "sha256": "95ca3fb51820fc8e488aae87925635c350d0377d532c4633b39d2ec006f80a6b"
+  },
+  "main-chassis-off-v1.png": {
+    "size": [
+      1944,
+      809
+    ],
+    "bitmap_box": [
+      19,
+      0,
+      1925,
+      802
+    ],
+    "sha256": "58cc031e8ffa3dd1b518ce2c86350068046a54880c3dac067c9373299d179cef"
+  },
+  "knob-face-v1.png": {
+    "size": [
+      1254,
+      1254
+    ],
+    "bitmap_box": [
+      71,
+      68,
+      1113,
+      1111
+    ],
+    "sha256": "be832d39643c33aca71efb14f669f4b0bf36ce538774457610374ee7ad3ed372"
+  },
+  "vinyl-texture-flat-v1.png": {
+    "size": [
+      1254,
+      1254
+    ],
+    "bitmap_box": [
+      24,
+      20,
+      1205,
+      1211
+    ],
+    "sha256": "da0eea4c8d19b3fe9997a270206a29f9ed23dfd983dc83d539b94ca439c670b0"
+  },
+  "tower-chassis-v1.png": {
+    "size": [
+      887,
+      1774
+    ],
+    "bitmap_box": [
+      74,
+      8,
+      720,
+      1751
+    ],
+    "sha256": "f5df22de9e1882594e6ceb42ea429c66173bcd33ed3adba6db7d8837a2bf0f2e"
+  },
+  "bookshelf-chassis-v1.png": {
+    "size": [
+      1122,
+      1402
+    ],
+    "bitmap_box": [
+      97,
+      100,
+      930,
+      1202
+    ],
+    "sha256": "25db315faf61a0f2dfd6d6d633bf22146bb23a4d6d7b106db7721e9ab6bc2296"
+  },
+  "center-chassis-v1.png": {
+    "size": [
+      2069,
+      760
+    ],
+    "bitmap_box": [
+      35,
+      86,
+      1999,
+      581
+    ],
+    "sha256": "ecfc1f6378f6030003ede63c4b9070ca3102eb4c55dc15f09056e93e944ff1b6"
+  },
+  "sub-chassis-v1.png": {
+    "size": [
+      1254,
+      1254
+    ],
+    "bitmap_box": [
+      45,
+      43,
+      1165,
+      1164
+    ],
+    "sha256": "fd5e32993e9642fbd35ccf7ff87e529ca188e3298acc4c616d4c7fed6d02b447"
+  },
+  "woofer-cone-v1.png": {
+    "size": [
+      1254,
+      1254
+    ],
+    "bitmap_box": [
+      46,
+      44,
+      1159,
+      1154
+    ],
+    "sha256": "9cdaacaeaf9300182c5501bea0803d72c78ed49e16d197e5d38978604ad53591"
+  }
+}

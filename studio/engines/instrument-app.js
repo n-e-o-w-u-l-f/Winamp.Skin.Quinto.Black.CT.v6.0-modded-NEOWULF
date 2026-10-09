@@ -285,14 +285,17 @@ $('midi').onclick=async()=>{try{if(!navigator.requestMIDIAccess)throw Error('MID
 document.addEventListener('keydown',e=>{if(/input|select|textarea/i.test(e.target.tagName)||$('edit').open||e.ctrlKey||e.metaKey)return;if(e.code==='Space'){e.preventDefault();if(!e.repeat){if(engine.playing)stop();else play().catch(x=>toast(x.message));}}const i=keys.indexOf(e.key.toLowerCase());if(i>=0&&i<spec.parts&&!e.repeat)hitPad(i);});
 document.addEventListener('keyup',e=>{const i=keys.indexOf(e.key.toLowerCase());if(i>=0)releasePad(i);});window.addEventListener('blur',()=>{for(const i of [...held])releasePad(i);});
 let arpLast=0,arpIndex=0,audioSent=0;const audioChannel=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;const scope=$('scope'),sc=scope.getContext('2d'),data=new Float32Array(2048),pcmL=new Float32Array(512),pcmR=new Float32Array(512);
+const renderClock=new HellfireRenderClock("instrument-"+model);
 function draw(now){
+  requestAnimationFrame(draw);
   if(arp&&held.size&&engine.ctx?.state==='running'&&now-arpLast>60000/project.tempo/4){arpLast=now;const notes=[0,3,7,12];engine.hit(selected,Number($('note').value)+notes[arpIndex++%4]).catch(()=>{});}
+  if(!renderClock.due(now))return;const paintStarted=performance.now();
   const dpr=Math.min(devicePixelRatio||1,3),w=Math.round(scope.clientWidth*dpr),h=Math.round(scope.clientHeight*dpr);if(scope.width!==w||scope.height!==h){scope.width=w;scope.height=h;}
   sc.fillStyle='#050608';sc.fillRect(0,0,w,h);sc.strokeStyle='#55202045';sc.lineWidth=dpr;for(let x=0;x<w;x+=w/8){sc.beginPath();sc.moveTo(x,0);sc.lineTo(x,h);sc.stroke();}for(let y=0;y<h;y+=h/4){sc.beginPath();sc.moveTo(0,y);sc.lineTo(w,y);sc.stroke();}
   if(engine.graph){engine.graph.analyser.getFloatTimeDomainData(data);sc.strokeStyle='#ff6650';sc.shadowColor='#ff3218';sc.shadowBlur=7*dpr;sc.lineWidth=1.1*dpr;sc.beginPath();for(let i=0;i<data.length;i++){const x=i*w/(data.length-1),y=h/2-data[i]*h*.8;if(i===0)sc.moveTo(x,y);else sc.lineTo(x,y);}sc.stroke();sc.shadowBlur=0;}
-  if(audioChannel&&engine.graph&&now-audioSent>33){audioSent=now;engine.graph.leftAnalyser.getFloatTimeDomainData(pcmL);engine.graph.rightAnalyser.getFloatTimeDomainData(pcmR);const rms=a=>Math.min(255,Math.sqrt(a.reduce((s,v)=>s+v*v,0)/a.length)*255*2);audioChannel.postMessage({type:'instrument-audio',model,playing:engine.playing,left:rms(pcmL),right:rms(pcmR),pcmLeft:Array.from(pcmL),pcmRight:Array.from(pcmR),sampleRate:engine.ctx.sampleRate});}
-  requestAnimationFrame(draw);
+  if(audioChannel&&engine.graph&&now-audioSent>33){audioSent=now;engine.graph.leftAnalyser.getFloatTimeDomainData(pcmL);engine.graph.rightAnalyser.getFloatTimeDomainData(pcmR);const rms=a=>Math.min(255,Math.sqrt(a.reduce((s,v)=>s+v*v,0)/a.length)*255*2);const left=rms(pcmL),right=rms(pcmR);audioChannel.postMessage({type:'instrument-audio',model,playing:engine.playing||held.size>0||left>1||right>1,left,right,pcmLeft:Array.from(pcmL),pcmRight:Array.from(pcmR),sampleRate:engine.ctx.sampleRate});}
+  renderClock.record(now,performance.now()-paintStarted);
 }requestAnimationFrame(draw);
 restoreSamples().catch(e=>toast('Sample-Wiederherstellung: '+e.message));
-window.neowulf={get project(){return project;},get engine(){return engine;},selectPart,renderAll,validateProject,importProject,exportProject};
+window.neowulf={get renderStats(){return renderClock.stats;},get project(){return project;},get engine(){return engine;},selectPart,renderAll,validateProject,importProject,exportProject};
 window.addEventListener('beforeunload',()=>{try{localStorage.setItem(storageKey,JSON.stringify(project));}catch{}engine.dispose();channel?.close();});
