@@ -10,7 +10,7 @@ Canonical requester preference `Agent-Governance/governance/preferences/neowulf.
 
 ## Current source and verified safe state
 
-Repository: `n-e-o-w-u-l-f/Winamp.Skin.Quinto.Black.CT.v6.0-modded-NEOWULF`, main. Published predecessor: **2ad21fdef12cd608617382e3b922d484b6cce365**, independently fetched; exact source tree 6b93b8fd3e3045c462df1c7d1377e244ec66b79d. Current source edits and tests are awaiting one coherent commit/readback.
+Repository: `n-e-o-w-u-l-f/Winamp.Skin.Quinto.Black.CT.v6.0-modded-NEOWULF`, main. Published implementation: **b31334a0e597d6b0bb9aa33ce8066097e5fe8ccb**; fresh fetch verified exact tree **effd34df4142524ce37f141544741e85c1c66e8b** and all 13 intended file bytes. Local checkout reconciled CLEAN. Predecessor 2ad21fdef12cd608617382e3b922d484b6cce365 is retained in history. This record update checkpoints that verified publication; its containing revision is discoverable from Git rather than a self-referential hash.
 
 The verified base ZIP and original isolated Windows installation/package remain preserved. Main MAKI binary is 8680 bytes, SHA256 129880e6690360095f2f0372504beb7d25a4c34d009f00f09bb40650e1ef3914; unchanged speaker MAKI is reused from the recovered pinned runtime. No unsupported new compilation is claimed.
 
@@ -31,4 +31,10 @@ Global governance Winamp route/index is **OUT_OF_SYNC / not registered**. Requir
 
 ## Next
 
-Finish deterministic archive readback, current docs and source publication. When an authorized Windows test host is available, reconcile its actual repository/profile, compile any changed MAKI, copy only into the isolated installation, then run browser instrument audio/channel/cadence and real Winamp control/docking/FPS acceptance. Continue all unresolved coverage rather than issuing another concept preview.
+Source, documentation and deterministic archive readback are complete for the published implementation. Full skin delivery remains IN_PROGRESS. When an authorized Windows test host is available, reconcile its actual repository/profile, compile any changed MAKI, copy only into the isolated installation, then run browser instrument audio/channel/cadence and real Winamp control/docking/FPS acceptance. Continue all unresolved coverage rather than issuing another concept preview.
+
+## Planned files and stop justification
+
+Next scoped changes: only uncovered rows in the acceptance matrix, their native/XML/MAKI/UI sources and directly relevant verification. Compiler-dependent MAKI changes require a matching new binary before packaging. No speculative uncompiled source is represented as deployed.
+
+Native acceptance cannot run while BMAX is unavailable; local browser download integrity has not been resolved. These are capability dependencies, not failed skin tests. Normal global governance publication additionally requires an authorized host's ordinary owner login. No safety control is bypassed and no false final completion is asserted. Continue directly from the preserved full scope when capability changes; there is no unattended continuation job.
