@@ -1,0 +1,14 @@
+{
+  "environment": "Local Python archive/XML/PNG/control/MAKI validation; no Windows or audio runtime proof",
+  "wal_sha256": "52fe2a392e0328654177e1bdc16e81a23d35777226927cebf3f418c24d49ecc3",
+  "source_base_sha256": "d926537bd21978d498d9781b15e733bab21ab28da0bf696e1307132d2e6066d1",
+  "design_sha256": "c30cbc667325b5c8b2238dafaf54aea6006d0631f0795bb6221554c19a7e02b3",
+  "native_containers": 24,
+  "independent_cone_layers": 9,
+  "repeat_build_same_bytes": true,
+  "stale_stage_file_removed": true,
+  "archive_crc": "PASS",
+  "archive_matches_restored_stage": true,
+  "positive_and_negative_layout_checks": "PASS",
+  "runtime_verified": false
+}

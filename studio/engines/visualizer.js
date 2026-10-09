@@ -12,9 +12,10 @@ function receive(data){
  if(!data||typeof data!=='object')return;
  const clean=a=>Array.isArray(a)||ArrayBuffer.isView(a)?Array.from(a,x=>Number.isFinite(x)?x:0):null;
  const scale=Number.isFinite(data.pcmScale)&&data.pcmScale>0?data.pcmScale:1,a=clean(data.pcmLeft),b=clean(data.pcmRight);
+ const pcm=x=>Math.max(-1,Math.min(1,x/scale));
  packet={playing:data.playing!==false,left:Number.isFinite(data.left)?data.left:0,right:Number.isFinite(data.right)?data.right:0,
-  spectrum:clean(data.spectrum)||Array(75).fill(0),wave:clean(data.wave)||Array(75).fill(0),
-  pcmLeft:a?.map(x=>x/scale),pcmRight:(b||a)?.map(x=>x/scale),sampleRate:data.sampleRate||48000};
+  spectrum:(clean(data.spectrum)||Array(75).fill(0)).map(x=>Math.max(0,Math.min(16,x))),wave:(clean(data.wave)||Array(75).fill(0)).map(x=>Math.max(-16,Math.min(16,x))),
+  pcmLeft:a?.map(pcm),pcmRight:(b||(a?Array(a.length).fill(0):null))?.map(pcm),stereo:Boolean(a&&b),sampleRate:Number.isFinite(data.sampleRate)&&data.sampleRate>0?data.sampleRate:48000};
  lastPacket=performance.now();if(packet.pcmLeft){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
 }
 window.neowulfAudio=receive;window.chrome?.webview?.addEventListener('message',e=>{if(source.value==='winamp')receive(e.data);});ch?.addEventListener('message',e=>{if(source.value==='studio')receive(e.data);});
@@ -34,7 +35,7 @@ function drawOsc(w,h){
  ctx.lineWidth=Math.max(1,w/550);ctx.shadowBlur=8;ctx.shadowColor='#ff3e1b';
  if(variant===2&&packet.pcmLeft){ctx.beginPath();ctx.strokeStyle='#ff9662';const n=Math.min(a.length,b.length);for(let i=0;i<n;i++){const x=w/2+a[i]*w*.45,y=h/2-b[i]*h*.45;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}
  else{const rows=variant===1?1:2;for(let row=0;row<rows;row++){const arr=row?b:a,center=rows===1?h/2:h*(row?.74:.26),height=rows===1?h*.4:h*.21;ctx.strokeStyle=row?'#ffb270':'#ff5540';ctx.beginPath();for(let x=0;x<w;x++){const y=center-interpolate(arr,x/w)*height*2;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}}
- ctx.shadowBlur=0;ctx.fillStyle='#9a5142';ctx.font=`${Math.max(9,h/17)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?(variant===2?'STEREO XY · PCM':'STEREO PCM · L / R'):'WINAMP OSZILLOSKOP · LEGACY MONO',10,18);
+ ctx.shadowBlur=0;ctx.fillStyle='#9a5142';ctx.font=`${Math.max(9,h/17)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?(packet.stereo?(variant===2?'STEREO XY · PCM':'STEREO PCM · L / R'):'PCM · L ONLY'):'WINAMP OSZILLOSKOP · LEGACY MONO',10,18);
 }
 function drawMeters(w,h,vertical){
  const levels=[left,right];for(let c=0;c<2;c++){
@@ -48,13 +49,13 @@ function drawMeters(w,h,vertical){
  }
 }
 function drawFire(w,h,now){
- const levels=[left,right];for(let c=0;c<2;c++){
-  const ox=w*(c?.54:.07),width=w*.39,height=h*.9,base=h*.95,energy=Math.sqrt(levels[c]);
+ const rows=w/h>3,levels=[left,right];for(let c=0;c<2;c++){
+  const ox=rows?w*.055:w*(c?.54:.07),width=w*(rows?.93:.39),height=h*(rows?.36:.9),base=h*(rows?(c?.96:.48):.95),energy=Math.sqrt(levels[c]);
   const g=gradient(base-height,height);ctx.fillStyle=g;ctx.shadowColor='#f53213';ctx.shadowBlur=12;
   ctx.beginPath();ctx.moveTo(ox,base);
   for(let i=0;i<=100;i++){const t=i/100,x=ox+t*width,edge=Math.sin(Math.PI*t)**.45,ripple=.10*Math.sin(i*.43+now*.009)+.05*Math.sin(i*.94-now*.006),freq=packet.pcmLeft?interpolate(c?spectralR:spectralL,t):interpolate(packet.spectrum,t)/16;const y=base-height*energy*edge*Math.max(.05,.72+ripple+freq*.25);ctx.lineTo(x,y);}ctx.lineTo(ox+width,base);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
   const strips=28;for(let i=0;i<strips;i++){const x=ox+i*width/strips,top=base-energy*height*(.32+.4*Math.sin(Math.PI*i/strips));ctx.globalAlpha=.22;ctx.fillStyle='#ffd88b';ctx.fillRect(x,top,width/strips*.18,base-top);ctx.globalAlpha=1;}
-  ctx.fillStyle='#b04733';ctx.font=`${Math.max(10,h/20)}px Consolas,monospace`;ctx.fillText(c?'RIGHT':'LEFT',ox+width*.39,18);
+  ctx.fillStyle='#b04733';ctx.font=`${Math.max(9,Math.min(12,h/20))}px Consolas,monospace`;ctx.fillText(c?'R':'L',rows?3:ox+width*.39,rows?base-height*.35:18);
   if(energy>.08&&particles.length<220){for(let i=0;i<Math.ceil(energy*3);i++)particles.push({x:ox+Math.random()*width,y:base-energy*height*.6,vy:20+Math.random()*60,life:.4+Math.random()*.8});}
  }
 }

@@ -1,0 +1,80 @@
+{
+  "environment": "Node VM, controlled time, canvas command validation; no browser/audio-device or native Winamp proof",
+  "models": [
+    {
+      "model": "synth",
+      "parts": 16,
+      "maxSteps": 64,
+      "validation": true
+    },
+    {
+      "model": "sampler",
+      "parts": 16,
+      "maxSteps": 64,
+      "validation": true
+    },
+    {
+      "model": "emx",
+      "parts": 14,
+      "maxSteps": 128,
+      "validation": true
+    }
+  ],
+  "renderers": [
+    {
+      "mode": "osc",
+      "commands": 469664,
+      "simulatedCadenceFps": 29.99999999999999,
+      "stereoSeparation": true,
+      "missingChannelSilence": true,
+      "stopAndStaleFade": true,
+      "finiteCoordinates": true,
+      "extremeInputClamped": true,
+      "hiddenPaintPaused": true
+    },
+    {
+      "mode": "fire",
+      "commands": 67016,
+      "simulatedCadenceFps": 29.99999999999999,
+      "stereoSeparation": true,
+      "missingChannelSilence": true,
+      "stopAndStaleFade": true,
+      "finiteCoordinates": true,
+      "extremeInputClamped": true,
+      "hiddenPaintPaused": true
+    },
+    {
+      "mode": "horizontal",
+      "commands": 29744,
+      "simulatedCadenceFps": 29.99999999999999,
+      "stereoSeparation": true,
+      "missingChannelSilence": true,
+      "stopAndStaleFade": true,
+      "finiteCoordinates": true,
+      "extremeInputClamped": true,
+      "hiddenPaintPaused": true
+    },
+    {
+      "mode": "vertical",
+      "commands": 25584,
+      "simulatedCadenceFps": 29.99999999999999,
+      "stereoSeparation": true,
+      "missingChannelSilence": true,
+      "stopAndStaleFade": true,
+      "finiteCoordinates": true,
+      "extremeInputClamped": true,
+      "hiddenPaintPaused": true
+    },
+    {
+      "mode": "virtualizer",
+      "commands": 20384,
+      "simulatedCadenceFps": 29.99999999999999,
+      "stereoSeparation": true,
+      "missingChannelSilence": true,
+      "stopAndStaleFade": true,
+      "finiteCoordinates": true,
+      "extremeInputClamped": true,
+      "hiddenPaintPaused": true
+    }
+  ]
+}

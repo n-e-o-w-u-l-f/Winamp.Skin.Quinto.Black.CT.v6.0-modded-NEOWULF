@@ -29,8 +29,10 @@ jobs:
           python3 -m py_compile tools/validate_neowulf_v6_turntable.py
           python3 -m py_compile tools/apply_neowulf_v6_r41_ultra.py
           python3 -m py_compile tools/validate_neowulf_v6_r41.py
+          python3 -m py_compile tools/build_reference_skin.py
           python3 -m py_compile tests/test_display_pipeline.py
           python3 -m py_compile tests/test_turntable_source_assets.py
+          python3 -m py_compile tests/test_reference_layout.py
 
       - name: Run lightweight source invariants
         shell: bash
@@ -38,6 +40,7 @@ jobs:
         run: |
           python3 tests/test_display_pipeline.py
           python3 tests/test_turntable_source_assets.py
+          node tests/test_signal_contract.cjs
 
       - name: Verify committed MAKI binaries
         shell: bash
