@@ -1,0 +1,28 @@
+{
+  "phases": 720,
+  "probes_per_phase": 73,
+  "max_spindle_error_gui_px": 0.005759911132260977,
+  "max_projection_error_gui_px": 0.009252137112300636,
+  "native_runtime_verified": false,
+  "predecessor_center_offset_gui_px": [
+    1.153647611504141,
+    11.806532663316581
+  ],
+  "old_rectangle_rejected": true,
+  "clipped_mesh_corners_rejected": true,
+  "viewport": [
+    638,
+    264
+  ],
+  "rectangle": [
+    126,
+    17,
+    344,
+    94
+  ],
+  "spindle_gui_px": [
+    300.2937208095485,
+    60.69346733668342
+  ],
+  "measured_anchor_tolerance_gui_px": 0.6633165829145728
+}

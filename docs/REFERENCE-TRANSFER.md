@@ -6,11 +6,21 @@ The native builder now produces 24 independently named containers. Six speaker c
 
 The main player has native transport, song/time displays and interactive volume. Its compiled MAKI animates a separate vinyl layer, a slowly eased arm, stationary reflection and power lighting. The static artwork is not runtime evidence. The native system-menu action, copied from the original Quinto implementation, keeps the windows accessible from the upper-left screw. Native menu enumeration is still to be observed in Winamp.
 
-The reported vinyl bounce has an evidenced LayerFX cause: with a 1x1 grid and wrap disabled, Winamp clamps the four rotated texture corners before interpolating. At diagonal angles this changes the record’s apparent radius by about 42%. Both the main player and recovered standalone deck now use an unclamped Cartesian rotation, cached sine/cosine and a stationary native Region. The main artwork is centered under the fixed spindle; the Region prevents repeated texture copies at the corners. Original vinyl art and static reflection remain pinned and unchanged. New source and matching binaries are recorded in `skin/maki-lock.json`; a changed source or stale binary makes packaging fail.
+The reported vinyl bounce has an evidenced LayerFX cause: with a 1x1 grid and wrap disabled, Winamp clamps the four rotated texture corners before interpolating. At diagonal angles this changes the record’s apparent radius by about 42%. Both the main player and recovered standalone deck now use an unclamped Cartesian rotation, cached sine/cosine and a stationary native Region. That prior correction centres the texture under its configured spindle; it did not verify this configured position against the chassis artwork. In the 2026-10-10 source candidate, `design/layout-geometry.json` supplies the measured attachment and contour instead; the Region prevents repeated texture copies at the corners. Original vinyl art and static reflection remain pinned and unchanged. New source and matching binaries are recorded in `skin/maki-lock.json`; a changed source or stale binary makes packaging fail.
 
 Classic Winamp mini-Vis data is mono. An unsupported XML `channel` attribute cannot create stereo waveforms; it has been removed. The three native oscillator cards use waveform, waveform plus separate native L/R levels, and spectrum. True separate PCM and FFT channels are implemented by the DSP/WebView renderer. A missing right PCM channel is zero-filled and identified as L-only instead of copied from the left. Normalized PCM and legacy data are clamped so extreme inputs cannot create infinite canvas coordinates. Primary maintainer evidence for the mini-Vis limitation: <https://getwacup.com/community/index.php?topic=1757.0>.
 
 Studio instruments retain their original software audio engine. Synth and Sampler have 16 parts and up to 64 steps; EMX has 14 parts and up to 128 steps. Pads, controls and sequencing are implemented in source, with a separate sequencer view. These are original software instruments, not proprietary Korg firmware or exact hardware emulation. Model validation tests do not establish actual audio output.
+
+## 2026-10-10 geometry candidate
+
+The user requires configuration to follow the source graphics. [Artwork geometry](ARTWORK-GEOMETRY.md) records the pinned pixels, measurement tolerance, current change and open work. The first main player uses the 638-pixel rack width and an aspect-derived 264-pixel height. Its record projects into the measured chassis contour with a separately anchored spindle. Readouts and hit targets scale with the layout. Other deck widths and foot/docking measurements are still pending.
+
+This candidate changes native MAKI source without a new compiler output. Packaging must fail the existing source/binary lock until successful matching compilation and hash readback. Neither an updated WAL nor installed runtime is claimed. Its source-level regression runs independently:
+
+```sh
+python3 -B tests/test_platter_registration.py
+```
 
 ## Build and verification
 
