@@ -8,6 +8,9 @@ Global Double levelL, levelR;
 Global Double rotation, leftAngle, rightAngle, brightness;
 Global Double phase, speed, armAngle;
 Global Double phaseCos, phaseSin, vinylPivotX, vinylPivotY;
+Global Double vinylRadiusX, vinylRadiusY;
+Global Double vinylM00, vinylM01, vinylM02, vinylM10, vinylM11, vinylM12, vinylM20, vinylM21, vinylM22;
+Global Int vinylGridX, vinylGridY;
 Global Int lastTime, sampleTime, frameCount;
 Global Int drag, mouseY, initialVolume, kind;
 Function setup(Layer target);
@@ -20,6 +23,19 @@ System.onScriptLoaded() {
   g=getScriptGroup(); kind=System.stringToInteger(System.getToken(getParam(),"|",0));
   vinylPivotX=System.stringToFloat(System.getToken(getParam(),"|",1));
   vinylPivotY=System.stringToFloat(System.getToken(getParam(),"|",2));
+  vinylRadiusX=System.stringToFloat(System.getToken(getParam(),"|",3));
+  vinylRadiusY=System.stringToFloat(System.getToken(getParam(),"|",4));
+  vinylM00=System.stringToFloat(System.getToken(getParam(),"|",5));
+  vinylM01=System.stringToFloat(System.getToken(getParam(),"|",6));
+  vinylM02=System.stringToFloat(System.getToken(getParam(),"|",7));
+  vinylM10=System.stringToFloat(System.getToken(getParam(),"|",8));
+  vinylM11=System.stringToFloat(System.getToken(getParam(),"|",9));
+  vinylM12=System.stringToFloat(System.getToken(getParam(),"|",10));
+  vinylM20=System.stringToFloat(System.getToken(getParam(),"|",11));
+  vinylM21=System.stringToFloat(System.getToken(getParam(),"|",12));
+  vinylM22=System.stringToFloat(System.getToken(getParam(),"|",13));
+  vinylGridX=System.stringToInteger(System.getToken(getParam(),"|",14));
+  vinylGridY=System.stringToInteger(System.getToken(getParam(),"|",15));
   phaseCos=1;phaseSin=0;
   closeButton=g.findObject("ref.close"); resetButton=g.findObject("ref.reset");
   volume=g.findObject("ref.volume"); pulse=g.findObject("ref.pulse");
@@ -27,11 +43,13 @@ System.onScriptLoaded() {
   needleL=g.findObject("ref.needle.left"); needleR=g.findObject("ref.needle.right");
   if(volume!=NULL)setup(volume);
   if(vinyl!=NULL){
-    // Unclamped affine mapping. wrap=0 clips mesh corners before interpolation
-    // and enlarges the record at diagonal angles. A fixed Region clips copies.
+    // Map the projected chassis plane back into the physical record, then
+    // rotate its texture. The measured spindle and fixed ellipse stay put.
+    // wrap=0 still clips corners before interpolation: retain wrap=1 + Region.
     Region disc=new Region;disc.loadFromBitmap("ref.vinyl.clip");
     vinyl.setRegion(disc);delete disc;
     setup(vinyl);vinyl.fx_setWrap(1);vinyl.fx_setRect(1);vinyl.fx_setClear(1);
+    vinyl.fx_setGridSize(vinylGridX,vinylGridY);
     vinyl.fx_update();
   }
   if(arm!=NULL){setup(arm);arm.fx_setRect(1);}
@@ -55,8 +73,8 @@ volume.onMouseMove(Int x, Int y) { if(drag){Int v=initialVolume+(mouseY-y)*2;if(
 volume.onMouseWheelUp(Int clicked, Int lines) { Int v=System.getVolume()+5;if(v>255)v=255;System.setVolume(v); return 1; }
 volume.onMouseWheelDown(Int clicked, Int lines) { Int v=System.getVolume()-5;if(v<0)v=0;System.setVolume(v); return 1; }
 volume.fx_onGetPixelR(Double r, Double d, Double x, Double y) { return r+rotation; }
-vinyl.fx_onGetPixelX(Double r, Double d, Double x, Double y) { return vinylPivotX+x*phaseCos-y*phaseSin; }
-vinyl.fx_onGetPixelY(Double r, Double d, Double x, Double y) { return vinylPivotY+x*phaseSin+y*phaseCos; }
+vinyl.fx_onGetPixelX(Double r, Double d, Double x, Double y) { return vinylPivotX+vinylRadiusX*((vinylM00*x+vinylM01*y+vinylM02)*phaseCos-(vinylM10*x+vinylM11*y+vinylM12)*phaseSin)/(vinylM20*x+vinylM21*y+vinylM22); }
+vinyl.fx_onGetPixelY(Double r, Double d, Double x, Double y) { return vinylPivotY+vinylRadiusY*((vinylM00*x+vinylM01*y+vinylM02)*phaseSin+(vinylM10*x+vinylM11*y+vinylM12)*phaseCos)/(vinylM20*x+vinylM21*y+vinylM22); }
 // Winamp's documented LayerFX x/y range is -1..1. Rotate about the mounting
 // attachment in physical layer pixels rather than the bitmap centre.
 arm.fx_onGetPixelX(Double r, Double d, Double x, Double y) {

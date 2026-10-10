@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "rule": "Configuration follows pinned artwork pixels. Never change chassis proportions to accommodate control coordinates.",
+  "rack_width": 638,
+  "main": {
+    "asset": "main-chassis-v1.png",
+    "asset_sha256": "c3a3bc1a41528ae91b2bb69736d5f79c92f66eca810fc5ebebf919042986c31b",
+    "coordinate_space": "Uncropped source PNG pixels; origin at top left.",
+    "spindle": [925, 188],
+    "spindle_measurement_tolerance_source_px": 2,
+    "platter": {
+      "center": [918.1732045541505, 198.54435246365662],
+      "radii": [519.361122179601, 139.45450788768386],
+      "angle_radians": -0.00036301257690291136,
+      "measurement": "Robust ellipse fit to 180 radial edge samples of the pinned chassis image; the spindle attachment is a separate observed anchor."
+    },
+    "fx_grid": [22, 22],
+    "controls_coordinate_size": [836, 345]
+  },
+  "pending": [
+    "Per-deck control and foot/docking measurements beyond the main player",
+    "Uniform rack width across remaining decks",
+    "Power-state registration and fixed spindle/tonearm overlay calibration",
+    "Matching MAKI compilation and live Winamp verification"
+  ]
+}

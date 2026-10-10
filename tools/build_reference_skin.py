@@ -8,7 +8,8 @@ from pathlib import Path
 import argparse, hashlib, json, re, shutil, subprocess, zipfile
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw
-from vinyl_rotation import main_geometry, region_mask, verify_compiled_scripts
+from vinyl_rotation import main_geometry, main_script_param, verify_compiled_scripts
+from artwork_geometry import load_geometry, projected_region, scale_controls
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_HASH = 'd926537bd21978d498d9781b15e733bab21ab28da0bf696e1307132d2e6066d1'
@@ -38,7 +39,7 @@ def deck(key, name, inner, regions, ident=None, guid=None, pos=(0,0), visible=0,
     if speaker_channel is not None: content+='<script file="SCRIPTS/neowulf-speaker.maki" param="'+str(speaker_channel)+'"/>'
     elif script:
         param='0'
-        if ident=='main':param='1|'+'|'.join(format(p,'.12f') for p in main_geometry()['pivot'])
+        if ident=='main':param=main_script_param()
         content+='<script file="SCRIPTS/neowulf-reference.maki" param="'+param+'"/>'
     return f'<groupdef id="{ident}.group">{content}</groupdef>\n<Container id="{ident}" name="{name}"{component} default_x="{pos[0]}" default_y="{pos[1]}" default_w="{w}" default_h="{h}" default_visible="{visible}" droptarget="pldr"><Layout id="normal" w="{w}" h="{h}" alphabackground="ref.{key}"><Group id="{ident}.group" fitparent="1"/></Layout></Container>\n'
 
@@ -63,6 +64,8 @@ def make_skin(base, output, compiler):
     for key,name in CHASSIS.items():
         box=assets[name]['bitmap_box'];width=regions[key][2]
         regions[key]=[0,0,width,round(box[3]*width/box[2])]
+    geometry=main_geometry()
+    regions['main']=[0,0,*geometry['viewport']]
     regions['tv']=[0,0,615,390]
     reference=ROOT/'design/approved-reference.png'
     if hashlib.sha256(reference.read_bytes()).hexdigest()!=manifest['sha256']: raise ValueError('Canonical design changed')
@@ -112,8 +115,7 @@ def make_skin(base, output, compiler):
     for key,box in {'top':(35,90,2105,144),'bottom':(35,537,2105,72),'left':(35,234,96,303),'right':(2044,234,96,303)}.items():
         xx,yy,ww,hh=box;elements.append(f'<bitmap id="ref.tv.{key}" file="PNG/NEOWULF/scope-chassis-v1.png" x="{xx}" y="{yy}" w="{ww}" h="{hh}"/>')
     elements.append('<bitmap id="ref.vinyl" file="PNG/NEOWULF/vinyl-texture-flat-v1.png"/>')
-    geometry=main_geometry()
-    region_mask(geometry['size'],geometry['source_size'],geometry['radius']).save(stage/'PNG/NEOWULF/vinyl-clip.png')
+    projected_region(geometry).save(stage/'PNG/NEOWULF/vinyl-clip.png')
     elements.append('<bitmap id="ref.vinyl.clip" file="PNG/NEOWULF/vinyl-clip.png"/>')
     elements.append('<bitmap id="ref.arm" file="PNG/NEOWULF/tonearm-v1.png" x="0" y="0" w="1840" h="768"/>')
     from apply_neowulf_v6_reference_design import fixed_reflection
@@ -123,7 +125,7 @@ def make_skin(base, output, compiler):
     # Native slider tracks cover the frozen slider state in the reference.
     elements.append('<bitmap id="ref.track" file="$gradient" gradient_x1="0" gradient_y1="0" gradient_x2="0" gradient_y2="1" points="0.0=255,12,0,255;0.6=255,115,0,255;1.0=255,238,46,255" w="3" h="116"/>')
     elements.append('</elements>');(stage/'XML/reference-elements.xml').write_text('\n'.join(elements),encoding='utf-8')
-    main=layer('ref.main',0,0,836,regions['main'][3],id='ref.chassis.on',ghost=1)+black(324,240,360,61)
+    main=black(324,240,360,61)
     main+=text(324,244,330,17,'',display='SONGNAME',fontsize=13,color='#ff2415')
     main+=text(555,249,97,12,'',display='SONGINFO',fontsize=8,color='#ff2415')
     main+=text(581,278,72,25,'',display='TIME',fontsize=23,color='#ff2415')+vis(329,281,248,20,3,1)
@@ -132,12 +134,16 @@ def make_skin(base, output, compiler):
         main+=f'<Button x="{44+index*55}" y="243" w="53" h="52" image="ref.transparent" action="{action}" tooltip="{action}"/>'
     main+=layer('ref.knob.face',735,241,58,58,id='ref.volume',tooltip='Lautstärke · ziehen oder Mausrad')
     main+=layer('ref.red',742,236,3,7,id='ref.pulse',ghost=1)
-    main+=layer('ref.vinyl',140,25,510,140,id='ref.vinyl',ghost=1)
-    main+=layer('ref.reflection',140,25,510,140,ghost=1)
-    main+=layer('ref.arm',435,-8,289,170,id='ref.arm',ghost=1)
     # Original Quinto uses this native action for Winamp's main/window menu.
     # Keep every named deck reachable after its own close control hides it.
     main+='<Button id="ref.windows" x="9" y="9" w="25" h="25" image="ref.transparent" action="sysmenu" tooltip="Winamp-Menü · Fenster und Einstellungen"/>'
+    config,_=load_geometry()
+    main=scale_controls(main,config['main']['controls_coordinate_size'],geometry['viewport'])
+    main=layer('ref.main',0,0,*geometry['viewport'],id='ref.chassis.on',ghost=1)+main
+    main+=layer('ref.vinyl',*geometry['rect'],id='ref.vinyl',ghost=1)
+    main+=layer('ref.reflection',*geometry['rect'],ghost=1)
+    # Tonearm mounting calibration remains an explicit next-deck task.
+    main+=scale_controls(layer('ref.arm',435,-8,289,170,id='ref.arm',ghost=1),config['main']['controls_coordinate_size'],geometry['viewport'])
     xml=deck('main','NEOWULF · Main Player',main,regions,ident='main',pos=(20,20),visible=1)
     eq=''
     for i,xx in enumerate([122,161,200,239,278,317,356,395,434,473]):
@@ -193,7 +199,7 @@ def make_skin(base, output, compiler):
     (stage/'XML/reference-decks.xml').write_text(xml,encoding='utf-8')
     # Retain the Quinto media library/playlist/video components and author data.
     includes=['accelerators','elements','gammaset','standard-objects','reference-elements','reference-decks','tooltip','media-library','playlist-editor','video','about']
-    root='<?xml version="1.0" encoding="UTF-8"?><WinampAbstractionLayer version="1.36"><skininfo><author>PeterK. / NEOWULF</author><name>NEOWULF Hellfire · Reference</name><version>6.0 Reference R2</version><comment>Original Quinto CT 5.1 by PeterK.; canonical Hellfire design, separate live assets.</comment></skininfo>'+''.join(f'<include file="XML/{f}.xml"/>' for f in includes)+'</WinampAbstractionLayer>'
+    root='<?xml version="1.0" encoding="UTF-8"?><WinampAbstractionLayer version="1.36"><skininfo><author>PeterK. / NEOWULF</author><name>NEOWULF Hellfire · Reference</name><version>6.0 Reference R3</version><comment>Original Quinto CT 5.1 by PeterK.; canonical Hellfire design, separate live assets.</comment></skininfo>'+''.join(f'<include file="XML/{f}.xml"/>' for f in includes)+'</WinampAbstractionLayer>'
     (stage/'skin.xml').write_text(root,encoding='utf-8')
     scripts=output/'maki';scripts.mkdir(exist_ok=True)
     source=ROOT/'skin/SCRIPTS/neowulf-reference.m';shutil.copyfile(source,scripts/source.name)
@@ -248,14 +254,16 @@ def validate(stage,regions):
     groups={g.attrib['id']:g for g in decks.iter('groupdef')}
     geometry=main_geometry()
     disc=groups['main.group'].find("Layer[@id='ref.vinyl']")
-    if disc is None or tuple(float(disc.attrib[k]) for k in ['x','y','w','h'])!=(140,25,510,140):raise ValueError('Vinyl footprint changed')
+    if disc is None or tuple(float(disc.attrib[k]) for k in ['x','y','w','h'])!=geometry['rect']:raise ValueError('Vinyl footprint differs from measured chassis')
+    layout=containers['main'].find('Layout')
+    if tuple(int(layout.get(k)) for k in ['w','h'])!=geometry['viewport']:raise ValueError('Main viewport differs from artwork configuration')
     clip=bitmaps.get('ref.vinyl.clip')
     if clip is None:raise ValueError('Missing fixed vinyl Region')
     with Image.open(stage/clip.attrib['file']) as mask:
-        expected=region_mask(geometry['size'],geometry['source_size'],geometry['radius'])
+        expected=projected_region(geometry)
         if mask.size!=expected.size or mask.convert('RGBA').tobytes()!=expected.tobytes():raise ValueError('Invalid fixed vinyl Region')
     script=groups['main.group'].find("script[@file='SCRIPTS/neowulf-reference.maki']")
-    if script is None or script.get('param')!='1|'+'|'.join(format(p,'.12f') for p in geometry['pivot']):raise ValueError('Vinyl spindle calibration changed')
+    if script is None or script.get('param')!=main_script_param(geometry):raise ValueError('Vinyl spindle calibration changed')
     for ident,container in containers.items():
         layout=container.find('Layout');group=groups[layout.find('Group').attrib['id']]
         ids=[n.attrib['id'] for n in group if 'id' in n.attrib]

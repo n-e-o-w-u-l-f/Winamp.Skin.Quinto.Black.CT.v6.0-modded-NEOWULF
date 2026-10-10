@@ -1,6 +1,6 @@
 # Hellfire current work
 
-State: **IN_PROGRESS / vinyl source repair compiled and packaged; native acceptance pending**. Active execution is this interactive session; there is no autonomous background build.
+State: **IN_PROGRESS / main platter registration validated in source; new MAKI compilation and native acceptance pending**. Active execution is this interactive session; there is no autonomous background build.
 
 ## Objective and decisions
 
@@ -10,7 +10,7 @@ Canonical requester preference `Agent-Governance/governance/preferences/neowulf.
 
 ## Current source and verified safe state
 
-Repository: `n-e-o-w-u-l-f/Winamp.Skin.Quinto.Black.CT.v6.0-modded-NEOWULF`, main. Published predecessor: **2cee3fd02ffbd1538f785f031a9816693d570d1d**, tree **d744d2f70859cb59912dcbd0ddded25364101876**; its implementation b31334a0e597d6b0bb9aa33ce8066097e5fe8ccb and all 13 intended file bytes were independently verified. Local checkout reconciled CLEAN. Predecessor 2ad21fdef12cd608617382e3b922d484b6cce365 is retained in history. This record update checkpoints that verified publication; its containing revision is discoverable from Git rather than a self-referential hash.
+Repository: `n-e-o-w-u-l-f/Winamp.Skin.Quinto.Black.CT.v6.0-modded-NEOWULF`. Verified safe main baseline for the 2026-10-10 work: **9d16e9f76b53d1d0e1d1ef88e25f58884cc32bda**. New geometry changes are a review candidate, not an installed or packaged skin. Earlier published predecessor: **2cee3fd02ffbd1538f785f031a9816693d570d1d**, tree **d744d2f70859cb59912dcbd0ddded25364101876**; its implementation b31334a0e597d6b0bb9aa33ce8066097e5fe8ccb and all 13 intended file bytes were independently verified. Local checkout reconciled CLEAN. Predecessor 2ad21fdef12cd608617382e3b922d484b6cce365 is retained in history. This record update checkpoints that verified publication; its containing revision is discoverable from Git rather than a self-referential hash.
 
 The verified base ZIP and original isolated Windows installation/package remain preserved. Previous main MAKI (8680 bytes, SHA256 129880e6690360095f2f0372504beb7d25a4c34d009f00f09bb40650e1ef3914) was reproduced exactly with pinned MC 1.2.0 under isolated Wine 11.19 on Legion. Corrected main is 9345 bytes, SHA256 082fa29f38893fc128d99e7f4d3e9db72fdad9333ebb54f62a2207edaea1577b; corrected standalone vinyl is 4404 bytes, SHA256 d06557f7d90a81ffc939469cb60eb6edf29b928f9c973cc0b31d57516d440224. Both repeated compilations matched. The source/binary lock rejects stale packaging. Unchanged speaker MAKI is preserved.
 
@@ -46,3 +46,18 @@ START: inspect the actual rotation/pivot/geometry and repair the reported hoppin
 RESULT: native source proves wrap=0 clamps mesh corners before interpolation, producing about 42% apparent record growth at 45°. Both current main and recovered standalone vinyl use unclamped Cartesian rotation with a fixed native Region and stationary spindle. Only texture rotates. Matching binaries compiled twice identically; original main compilation reproduced exactly. Source-derived checks across 720 phases and real-stage geometry/mask checks PASS; old mapping is rejected. New WAL SHA256 c7dede03c6fe462704acc8b2e1c3d9b731d6736c72fe1444682d31924206d945; two builds match, CRC/all 166 member bytes verified. Evidence: verification/20261009-vinyl-motion.json, verification/20261009-vinyl-build.json; source/binary pairs in skin/maki-lock.json.
 
 NEXT: observe this exact package in the existing isolated Winamp profile when BMAX returns; full scope stays open. Compiler capability is restored independently, but native installation and actual motion/audio/FPS acceptance remain pending. Publish this checkpoint and verify exact tree/member bytes. No drug-related task is inferred from the rhetorical complaint.
+
+
+## 2026-10-10 — artwork coordinates govern configuration
+
+User steering: adjust template/configuration pixel sizes to the approved deck graphics; do not deform the deck to match incorrect settings. Continue the full 24-component scope deck by deck, including Teufel cabinets, detailed animation, consistent rack dimensions, transparent feet gaps and native docking.
+
+The original Quinto 5.1 ZIP was independently materialized and verified again (SHA256 d926537bd21978d498d9781b15e733bab21ab28da0bf696e1307132d2e6066d1; PeterK., skin version 5.1, 140 CRC-checked entries). Its backslash member names were normalized safely. Primary Winamp source is pinned at alexfreud/winamp 0954e03b3acbc11b6c90298598db6b6469568d72. Native Layout enables docking by default; named XML snap-adjust attributes exist. Their sign/foot-edge calibration and observed snapping remain open.
+
+`design/layout-geometry.json` now holds uncropped source-pixel measurements and the target 638-pixel rack width. The main crop is 1927×796 and becomes 638×264 without changing its proportions. The measured spindle is (925,188) source pixels with ±2-pixel measurement tolerance; a 180-sample ellipse fit supplies the projected platter contour. The previous rectangle's centre was +1.15365 x / +11.80653 y GUI pixels from this anchor at 638 width. The new projective disk mapping preserves the contour and attachment together; main readouts/hit targets scale with the viewport.
+
+PASS: Python syntax checks; `python3 tests/test_platter_registration.py`; 720 phases ×73 probes, source-derived native 16.16 mesh interpolation. Maximum projected mapping error 0.009253 GUI pixels, spindle error 0.005760. The old rectangle and corner-clamping mapping are rejected. Measurement tolerance is separate from arithmetic error. New geometry and MAKI parameters are checked by actual-stage validators once a matching binary exists. Unchanged image hashes are retained.
+
+Do not package or deploy this candidate with the predecessor MAKI. `skin/maki-lock.json` remains pinned to the last actually compiled source/binary pair; its refusal of changed source is intentional. The main script must be compiled with the pinned SDK and its matching binary/hash recorded before WAL construction. Legion's RDC surface was listed online but a command returned Not connected; ordinary authorized SSH was unavailable. Spinnennet is a connected Linux source-validation host without Wine; BMAX Windows remained offline. No system installation or access-control bypass was attempted.
+
+NEXT: compile the new main script, calibrate power-state/spindle/tonearm overlays, transfer and calibrate the next rack deck, then measure all case/foot/docking edges and speaker cone sockets against their actual assets. Remaining deck widths, complete 4K detail, mirrored cabinets, editable headers, vinyl album art, CRT and actual Windows audio/docking/FPS acceptance stay open. This is source progress, not full-skin delivery, and no unattended continuation is running. Global governance route remains OUT_OF_SYNC; this scoped checkpoint does not replace its ordinary owner-login workflow.

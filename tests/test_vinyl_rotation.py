@@ -12,7 +12,9 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
-from vinyl_rotation import main_geometry, region_mask, required, verify_compiled_scripts
+from vinyl_rotation import main_geometry, main_script_param, region_mask, required, verify_compiled_scripts
+from artwork_geometry import projected_region
+from test_platter_registration import check_projected_motion
 
 
 def expressions(source):
@@ -84,9 +86,8 @@ def main():
     geometry = main_geometry()
     main_source = required('skin/SCRIPTS/neowulf-reference.m').read_text()
     old_source = required('skin/hellfire-runtime/SCRIPTS/neowulf-vinyl.m').read_text()
-    results = {}
+    results = {'main': check_projected_motion(main_source, geometry)}
     for label, source, pivot, size, bitmap in [
-            ('main', main_source, geometry['pivot'], geometry['source_size'], 'ref.vinyl.clip'),
             ('standalone', old_source, (0, 0), (474, 474), 'nw.vinyl.clip')]:
         for setting in ('Wrap', 'Rect', 'Clear'):
             assert 'vinyl.fx_set' + setting + '(1)' in source, setting
@@ -104,17 +105,17 @@ def main():
         else:
             raise AssertionError('Regression did not reject corner clipping')
 
-    mask = region_mask(geometry['size'], geometry['source_size'], geometry['radius'])
+    mask = projected_region(geometry)
     if args.stage:
         stage = args.stage.resolve()
         assert stage.is_dir(), 'Missing actual skin stage: ' + str(stage)
         decks = ET.fromstring('<root>' + (stage/'XML/reference-decks.xml').read_text() + '</root>')
         group = decks.find("groupdef[@id='main.group']")
         vinyl = group.find("Layer[@id='ref.vinyl']")
-        assert tuple(float(vinyl.get(k)) for k in ('x', 'y', 'w', 'h')) == (140, 25, 510, 140)
+        assert tuple(float(vinyl.get(k)) for k in ('x', 'y', 'w', 'h')) == geometry['rect']
         assert group.find("Layer[@image='ref.reflection']").get('id') is None
-        tokens = group.find("script[@file='SCRIPTS/neowulf-reference.maki']").get('param').split('|')
-        assert tokens[0] == '1' and math.dist(tuple(map(float, tokens[1:])), geometry['pivot']) < 1e-10
+        param = group.find("script[@file='SCRIPTS/neowulf-reference.maki']").get('param')
+        assert param == main_script_param(geometry)
         actual = Image.open(stage/'PNG/NEOWULF/vinyl-clip.png').convert('RGBA')
         assert actual.size == mask.size and actual.tobytes() == mask.tobytes()
 
@@ -124,7 +125,6 @@ def main():
     legacy = Image.open(required('skin/hellfire-runtime/PNG/NEOWULF/vinyl-clip.png')).convert('RGBA')
     assert legacy.tobytes() == region_mask((474, 474), (474, 474), 234).tobytes()
     for label, image, source_size, pivot in [
-            ('main', mask, geometry['source_size'], geometry['pivot']),
             ('standalone', legacy, (474, 474), (0, 0))]:
         alpha = image.getchannel('A')
         assert alpha.tobytes() == alpha.transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes()

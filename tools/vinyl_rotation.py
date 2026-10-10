@@ -2,6 +2,7 @@
 from pathlib import Path
 import hashlib, json
 from PIL import Image
+from artwork_geometry import main_projection
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,12 +19,22 @@ def main_geometry():
     info = assets['vinyl-texture-flat-v1.png']
     width, height = info['size']
     bx, by, bw, bh = info['bitmap_box']
-    # Recenter the source artwork under a stationary GUI spindle. Keep the
-    # clip inside the record and texture bounds, including the sampler margin.
+    # Texture coordinates and chassis coordinates are separate calibrations.
+    # The latter come from the pinned, uncropped chassis pixels.
     radius = min(bw, bh) / 2 - 2.5
-    return dict(size=(510, 140), source_size=(width, height), radius=radius,
-                pivot=(2 * (bx + bw / 2) / width - 1,
-                       2 * (by + bh / 2) / height - 1))
+    geometry = main_projection()
+    geometry.update(size=geometry['rect'][2:], source_size=(width, height), radius=radius,
+                    texture_radius=(2 * radius / width, 2 * radius / height),
+                    pivot=(2 * (bx + bw / 2) / width - 1,
+                           2 * (by + bh / 2) / height - 1))
+    return geometry
+
+
+def main_script_param(geometry=None):
+    geometry = main_geometry() if geometry is None else geometry
+    values = (*geometry['pivot'], *geometry['texture_radius'],
+              *(v for row in geometry['inverse'] for v in row), *geometry['grid'])
+    return '1|' + '|'.join(format(v, '.12f') for v in values)
 
 
 def verify_compiled_scripts():
