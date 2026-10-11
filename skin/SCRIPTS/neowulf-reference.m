@@ -31,7 +31,10 @@ System.onScriptLoaded() {
     // and enlarges the record at diagonal angles. A fixed Region clips copies.
     Region disc=new Region;disc.loadFromBitmap("ref.vinyl.clip");
     vinyl.setRegion(disc);delete disc;
-    setup(vinyl);vinyl.fx_setWrap(1);vinyl.fx_setRect(1);vinyl.fx_setClear(1);
+    setup(vinyl);vinyl.fx_setBgFx(1);vinyl.fx_setWrap(1);vinyl.fx_setRect(1);vinyl.fx_setClear(0);
+    // Transform the prepainted vinyl at GUI resolution (510x140), rather
+    // than rebuilding a 1254x1254 surface for each frame. Keep its FX buffer;
+    // clearing before a cache hit erases the stationary record.
     vinyl.fx_update();
   }
   if(arm!=NULL){setup(arm);arm.fx_setRect(1);}

@@ -1,0 +1,26 @@
+{
+  "TASK_ID": "hellfire-native-20261011",
+  "PARENT_OBJECTIVE": "Full approved Hellfire Winamp skin",
+  "STATE": "IN_PROGRESS",
+  "RUNNER_KIND": "CHAT_ONLY",
+  "ACTIVE_EXECUTION": "NO",
+  "SOURCE_PREDECESSOR": "9d16e9f76b53d1d0e1d1ef88e25f58884cc32bda",
+  "SOURCE_REVISION": "Containing source commit; resolve from Git",
+  "RECOVERY_CLASSIFICATION": "Prior publication completed; next native acceptance was waiting for BMAX capability. No prior active compiler observed.",
+  "LAST_COMPLETED_STEP": "Real isolated R4 Winamp motion/mount verification, actual three-instrument/five-visualizer Edge suite and source/binary/archive verification",
+  "LAST_OBSERVED_NATIVE_PID": 592,
+  "NATIVE_PROCESS_STARTED_UTC": "2026-10-11T05:41:48.5587266Z",
+  "NATIVE_WAL_SHA256": "e79b7dcf373f11e184d02c99829888722cba7b1763f3621a70ed9054c77d5296",
+  "NATIVE_RUNTIME_EVIDENCE": "docs/verification/20261011-native.json",
+  "BROWSER_EVIDENCE": "docs/verification/20261011-embedded.json",
+  "GOVERNANCE_REPAIR": "2d0617e499db97d781626d199f835ba5c1372832",
+  "KNOWN_OPEN_ACCEPTANCE": [
+    "Native WebView/DSP audio/control integration",
+    "Every native deck close/reopen/drag/docking",
+    "Native >=20 FPS and complete original design coverage",
+    "Bridge C++ build source absent"
+  ],
+  "NEXT_ATOMIC_STEP": "Inspect loaded native WebView/DSP integration on the existing owned R4 test profile, then verify every deck and visible cadence",
+  "LEASE_OWNER": "NONE",
+  "UPDATED_AT_UTC": "2026-10-11T05:57:03.038336+00:00"
+}

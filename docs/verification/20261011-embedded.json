@@ -1,0 +1,256 @@
+{
+  "observedUtc": "2026-10-11T05:36:42.256Z",
+  "environment": "BMAX Edge headless; embedded-size DPR2, not native Winamp paint proof",
+  "instruments": [
+    {
+      "model": "synth",
+      "startup": {
+        "renderer": "instrument-synth",
+        "targetFps": 30,
+        "frames": 29,
+        "measuredFps": 17.50109381836365,
+        "measuredSpanMs": 1599.8999999999999,
+        "paintP95Ms": 19.800000000745058,
+        "width": 314,
+        "height": 152
+      },
+      "stats": {
+        "renderer": "instrument-synth",
+        "targetFps": 30,
+        "frames": 67,
+        "measuredFps": 30.002727520683695,
+        "measuredSpanMs": 2199.8,
+        "paintP95Ms": 1.5,
+        "width": 314,
+        "height": 152
+      },
+      "control": {
+        "before": 5200,
+        "after": 4419.830607744572
+      },
+      "audio": {
+        "bytes": 744044,
+        "energy": 4131.41959364526,
+        "peak": 0.653076171875,
+        "sampleRate": 48000,
+        "state": "running"
+      },
+      "sample": {
+        "loop": true,
+        "decoded": 4800,
+        "changed": true,
+        "steps": 64
+      },
+      "storage": true
+    },
+    {
+      "model": "sampler",
+      "startup": {
+        "renderer": "instrument-sampler",
+        "targetFps": 30,
+        "frames": 25,
+        "measuredFps": 30,
+        "measuredSpanMs": 800,
+        "paintP95Ms": 4.300000000745058,
+        "width": 314,
+        "height": 152
+      },
+      "stats": {
+        "renderer": "instrument-sampler",
+        "targetFps": 30,
+        "frames": 66,
+        "measuredFps": 30.00230786983614,
+        "measuredSpanMs": 2166.5,
+        "paintP95Ms": 1.199999999254942,
+        "width": 314,
+        "height": 152
+      },
+      "control": {
+        "before": 17000,
+        "after": 14449.446217626486
+      },
+      "audio": {
+        "bytes": 744044,
+        "energy": 3864.8642580769956,
+        "peak": 0.650390625,
+        "sampleRate": 48000,
+        "state": "running"
+      },
+      "sample": {
+        "loop": true,
+        "decoded": 4800,
+        "changed": true,
+        "steps": 64
+      },
+      "storage": true
+    },
+    {
+      "model": "emx",
+      "startup": {
+        "renderer": "instrument-emx",
+        "targetFps": 30,
+        "frames": 22,
+        "measuredFps": 28.63766534842493,
+        "measuredSpanMs": 733.3,
+        "paintP95Ms": 1.300000000745058,
+        "width": 314,
+        "height": 152
+      },
+      "stats": {
+        "renderer": "instrument-emx",
+        "targetFps": 30,
+        "frames": 66,
+        "measuredFps": 30.00092310532631,
+        "measuredSpanMs": 2166.6000000000004,
+        "paintP95Ms": 1.4000000022351742,
+        "width": 314,
+        "height": 152
+      },
+      "control": {
+        "before": 5200,
+        "after": 4419.830607744572
+      },
+      "audio": {
+        "bytes": 744044,
+        "energy": 4131.463506640866,
+        "peak": 0.653076171875,
+        "sampleRate": 48000,
+        "state": "running"
+      },
+      "sample": {
+        "loop": true,
+        "decoded": 4800,
+        "changed": true,
+        "steps": 128
+      },
+      "storage": true
+    }
+  ],
+  "visualizers": [
+    {
+      "mode": "osc",
+      "stats": {
+        "renderer": "osc",
+        "targetFps": 30,
+        "frames": 73,
+        "measuredFps": 30.002500208350693,
+        "measuredSpanMs": 2399.8,
+        "paintP95Ms": 0.4000000022351742,
+        "width": 1094,
+        "height": 174
+      },
+      "levels": {
+        "left": 0.7843137254901961,
+        "right": 0
+      },
+      "spectra": {
+        "left": 1,
+        "right": 0
+      },
+      "silent": {
+        "left": 0.0030325153804817784,
+        "right": 0
+      }
+    },
+    {
+      "mode": "fire",
+      "stats": {
+        "renderer": "fire",
+        "targetFps": 30,
+        "frames": 72,
+        "measuredFps": 30.000845094228,
+        "measuredSpanMs": 2366.6000000000004,
+        "paintP95Ms": 0.4000000022351742,
+        "width": 1094,
+        "height": 174
+      },
+      "levels": {
+        "left": 0.7843137254901961,
+        "right": 0
+      },
+      "spectra": {
+        "left": 1,
+        "right": 0
+      },
+      "silent": {
+        "left": 0.00348386543210533,
+        "right": 0
+      }
+    },
+    {
+      "mode": "horizontal",
+      "stats": {
+        "renderer": "horizontal",
+        "targetFps": 30,
+        "frames": 74,
+        "measuredFps": 30.00041096453376,
+        "measuredSpanMs": 2433.3,
+        "paintP95Ms": 0.5,
+        "width": 1094,
+        "height": 174
+      },
+      "levels": {
+        "left": 0.7843137254901961,
+        "right": 0
+      },
+      "spectra": {
+        "left": 1,
+        "right": 0
+      },
+      "silent": {
+        "left": 0.003483865432105324,
+        "right": 0
+      }
+    },
+    {
+      "mode": "vertical",
+      "stats": {
+        "renderer": "vertical",
+        "targetFps": 30,
+        "frames": 73,
+        "measuredFps": 30.001250052085503,
+        "measuredSpanMs": 2399.9,
+        "paintP95Ms": 0.5,
+        "width": 284,
+        "height": 502
+      },
+      "levels": {
+        "left": 0.7843137254901961,
+        "right": 0
+      },
+      "spectra": {
+        "left": 1,
+        "right": 0
+      },
+      "silent": {
+        "left": 0.0034853173451629064,
+        "right": 0
+      }
+    },
+    {
+      "mode": "virtualizer",
+      "stats": {
+        "renderer": "virtualizer",
+        "targetFps": 30,
+        "frames": 72,
+        "measuredFps": 30.00211282484682,
+        "measuredSpanMs": 2366.5,
+        "paintP95Ms": 0.20000000298023224,
+        "width": 1094,
+        "height": 174
+      },
+      "levels": {
+        "left": 0.7843137254901961,
+        "right": 0
+      },
+      "spectra": {
+        "left": 1,
+        "right": 0
+      },
+      "silent": {
+        "left": 0.001514081675472711,
+        "right": 0
+      }
+    }
+  ]
+}

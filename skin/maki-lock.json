@@ -10,16 +10,16 @@
   "scripts": [
     {
       "source": "skin/SCRIPTS/neowulf-reference.m",
-      "source_sha256": "4696941f509c524b675334f6a1673f24cf0b2810015cad23ee87b2952511525f",
+      "source_sha256": "e5b0414c048d64826d201aa028cafc2df2d6b3db3cdac0dd27f89990e4a99c77",
       "binary": "skin/SCRIPTS/neowulf-reference.maki",
-      "binary_sha256": "082fa29f38893fc128d99e7f4d3e9db72fdad9333ebb54f62a2207edaea1577b",
-      "bytes": 9345
+      "binary_sha256": "47a19f4896ce9608b2617884864d83456f7464f8d8d470d0c8d14fcd818e2990",
+      "bytes": 9362
     },
     {
       "source": "skin/hellfire-runtime/SCRIPTS/neowulf-vinyl.m",
-      "source_sha256": "8d450738a95a5f08a907ace98a3f38579cfa31adbb6d515869c6f3f0c9847ff9",
+      "source_sha256": "e5245f8fdf3ed2c2e166cfed5b002f55eeae08806b6d27b803e037520e30df37",
       "binary": "skin/hellfire-runtime/SCRIPTS/neowulf-vinyl.maki",
-      "binary_sha256": "d06557f7d90a81ffc939469cb60eb6edf29b928f9c973cc0b31d57516d440224",
+      "binary_sha256": "47716559e5a5c6a22ef610f4f3498375fc72092c8e872b169517dd1ea7349985",
       "bytes": 4404
     }
   ]

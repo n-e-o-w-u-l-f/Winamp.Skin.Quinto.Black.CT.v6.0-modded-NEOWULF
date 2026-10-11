@@ -5,9 +5,10 @@ The user PNG is immutable. Winamp bitmap regions provide the separate assets;
 no frame is tiled or recreated from a generic procedural substitute.
 """
 from pathlib import Path
-import argparse, hashlib, json, re, shutil, subprocess, zipfile
+import argparse, hashlib, json, re, shutil, zipfile
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw
+from compile_maki import compile_bytes
 from vinyl_rotation import main_geometry, region_mask, verify_compiled_scripts
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -122,7 +123,7 @@ def make_skin(base, output, compiler):
 
     # Native slider tracks cover the frozen slider state in the reference.
     elements.append('<bitmap id="ref.track" file="$gradient" gradient_x1="0" gradient_y1="0" gradient_x2="0" gradient_y2="1" points="0.0=255,12,0,255;0.6=255,115,0,255;1.0=255,238,46,255" w="3" h="116"/>')
-    elements.append('</elements>');(stage/'XML/reference-elements.xml').write_text('\n'.join(elements),encoding='utf-8')
+    elements.append('</elements>');(stage/'XML/reference-elements.xml').write_bytes('\n'.join(elements).encode('utf-8'))
     main=layer('ref.main',0,0,836,regions['main'][3],id='ref.chassis.on',ghost=1)+black(324,240,360,61)
     main+=text(324,244,330,17,'',display='SONGNAME',fontsize=13,color='#ff2415')
     main+=text(555,249,97,12,'',display='SONGINFO',fontsize=8,color='#ff2415')
@@ -132,8 +133,9 @@ def make_skin(base, output, compiler):
         main+=f'<Button x="{44+index*55}" y="243" w="53" h="52" image="ref.transparent" action="{action}" tooltip="{action}"/>'
     main+=layer('ref.knob.face',735,241,58,58,id='ref.volume',tooltip='Lautstärke · ziehen oder Mausrad')
     main+=layer('ref.red',742,236,3,7,id='ref.pulse',ghost=1)
-    main+=layer('ref.vinyl',140,25,510,140,id='ref.vinyl',ghost=1)
-    main+=layer('ref.reflection',140,25,510,140,ghost=1)
+    main+=layer('ref.vinyl',*geometry['bounds'],id='ref.vinyl.base',ghost=1)
+    main+=layer('ref.vinyl',*geometry['bounds'],id='ref.vinyl',ghost=1)
+    main+=layer('ref.reflection',*geometry['bounds'],ghost=1)
     main+=layer('ref.arm',435,-8,289,170,id='ref.arm',ghost=1)
     # Original Quinto uses this native action for Winamp's main/window menu.
     # Keep every named deck reachable after its own close control hides it.
@@ -190,17 +192,17 @@ def make_skin(base, output, compiler):
         inner=''.join(layer('ref.woofer',xx,yy,size,size,id='nw.cone'+str(i),ghost=1) for i,(xx,yy,size) in enumerate(sockets[key],1))
         channel=1 if key.endswith('right') else 0 if key.endswith('left') else 2
         xml+=deck(key,'NEOWULF · Teufel '+name,inner,regions,ident='ref.speaker.'+key,pos=pos,visible=1,speaker_channel=channel)
-    (stage/'XML/reference-decks.xml').write_text(xml,encoding='utf-8')
+    (stage/'XML/reference-decks.xml').write_bytes(xml.encode('utf-8'))
     # Retain the Quinto media library/playlist/video components and author data.
     includes=['accelerators','elements','gammaset','standard-objects','reference-elements','reference-decks','tooltip','media-library','playlist-editor','video','about']
     root='<?xml version="1.0" encoding="UTF-8"?><WinampAbstractionLayer version="1.36"><skininfo><author>PeterK. / NEOWULF</author><name>NEOWULF Hellfire · Reference</name><version>6.0 Reference R2</version><comment>Original Quinto CT 5.1 by PeterK.; canonical Hellfire design, separate live assets.</comment></skininfo>'+''.join(f'<include file="XML/{f}.xml"/>' for f in includes)+'</WinampAbstractionLayer>'
-    (stage/'skin.xml').write_text(root,encoding='utf-8')
+    (stage/'skin.xml').write_bytes(root.encode('utf-8'))
     scripts=output/'maki';scripts.mkdir(exist_ok=True)
     source=ROOT/'skin/SCRIPTS/neowulf-reference.m';shutil.copyfile(source,scripts/source.name)
     binary=ROOT/'skin/SCRIPTS/neowulf-reference.maki'
     if compiler:
-        subprocess.run([str(compiler.resolve()),str((scripts/source.name).resolve())],cwd=compiler.parent,check=True)
         made=scripts/'neowulf-reference.maki'
+        made.write_bytes(compile_bytes(compiler,scripts/source.name))
         if not made.exists():raise ValueError('Compiler did not create output')
         shutil.copyfile(made,binary)
     if not binary.exists():raise ValueError('Compile neowulf-reference.m before packaging')
@@ -248,7 +250,9 @@ def validate(stage,regions):
     groups={g.attrib['id']:g for g in decks.iter('groupdef')}
     geometry=main_geometry()
     disc=groups['main.group'].find("Layer[@id='ref.vinyl']")
-    if disc is None or tuple(float(disc.attrib[k]) for k in ['x','y','w','h'])!=(140,25,510,140):raise ValueError('Vinyl footprint changed')
+    if disc is None or tuple(float(disc.attrib[k]) for k in ['x','y','w','h'])!=geometry['bounds']:raise ValueError('Vinyl footprint changed')
+    base_disc=groups['main.group'].find("Layer[@id='ref.vinyl.base']")
+    if base_disc is None or tuple(float(base_disc.attrib[k]) for k in ['x','y','w','h'])!=geometry['bounds']:raise ValueError('Missing calibrated prepainted vinyl')
     clip=bitmaps.get('ref.vinyl.clip')
     if clip is None:raise ValueError('Missing fixed vinyl Region')
     with Image.open(stage/clip.attrib['file']) as mask:

@@ -8,19 +8,19 @@ module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 stage=Path(sys.argv[1]);regions=json.loads((root/'design/reference-regions.json').read_text())['regions']
 module.validate(stage,regions)
 def rejected(filename,old,new,message):
-    target=stage/filename;original=target.read_text();assert old in original
+    target=stage/filename;raw=target.read_bytes();original=raw.decode('utf-8');assert old in original
     try:
-        target.write_text(original.replace(old,new),encoding='utf-8')
+        target.write_bytes(original.replace(old,new).encode('utf-8'))
         try:module.validate(stage,regions)
         except ValueError as error:assert message in str(error),str(error)
         else:raise AssertionError('Invalid actual skin was accepted')
-    finally:target.write_text(original,encoding='utf-8')
+    finally:target.write_bytes(raw)
 rejected('XML/reference-elements.xml','id="ref.woofer"','id="ref.woofer.missing"','Missing control bitmap')
 rejected('XML/reference-elements.xml','id="ref.eq_thumb"','id="ref.eq_thumb.missing"','Missing control bitmap')
 rejected('XML/reference-elements.xml','x="46" y="44"','x="999999" y="44"','Bitmap region outside asset')
 rejected('XML/reference-decks.xml','id="nw.cone1"','id="nw.missing"','Empty speaker socket')
 rejected('XML/reference-decks.xml','action="sysmenu"','action="missing"','Missing native window menu')
 rejected('XML/reference-elements.xml','id="ref.vinyl.clip"','id="ref.vinyl.clip.missing"','Missing fixed vinyl Region')
-rejected('XML/reference-decks.xml','image="ref.vinyl" x="140" y="25"','image="ref.vinyl" x="140" y="26"','Vinyl footprint changed')
+rejected('XML/reference-decks.xml','image="ref.vinyl" x="139" y="12"','image="ref.vinyl" x="139" y="13"','Vinyl footprint changed')
 module.validate(stage,regions)
 print('reference layout and negative asset/socket acceptance checks PASS')

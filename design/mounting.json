@@ -1,0 +1,10 @@
+{
+  "main": {
+    "asset": "main-chassis-v1.png",
+    "asset_sha256": "c3a3bc1a41528ae91b2bb69736d5f79c92f66eca810fc5ebebf919042986c31b",
+    "spindle_source_px": [927, 193],
+    "layout_width": 836,
+    "vinyl_size": [510, 140],
+    "observation": "Spindle base in the approved production chassis; original native Winamp gray platter capture confirms the shaft near client (394,82)."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "observed_utc": "2026-10-11T05:57:03.038336+00:00",
+  "environment": "BMAX-B6, owned real Winamp 5.9.2 isolated profile, screen capture",
+  "pid": 592,
+  "process_started": "2026-10-11T05:41:48.5587266Z",
+  "wal_sha256": "e79b7dcf373f11e184d02c99829888722cba7b1763f3621a70ed9054c77d5296",
+  "installed_wal": "C:\\Users\\megal\\source\\neowulf-hellfire-20261005\\winamp-test\\Skins\\NEOWULF-Hellfire-Reference-20261011-r4.wal",
+  "profile": "C:\\Users\\megal\\source\\neowulf-hellfire-20261005\\native-output\\20261011-gui-r4\\profile",
+  "archive_members": 166,
+  "archive_crc": "PASS",
+  "archive_member_bytes": "PASS",
+  "source_binary_lock": "PASS",
+  "installed_ui_bytes": "PASS",
+  "original_wal_preserved_sha256": "249b03cb2845ed4ebc8d1f925b541f6a1e5413726dcb2e430fdab87a50a61243",
+  "gen_dll_preserved_sha256": "b72bae9a09ea4d496b94cc0690b11dabb22b8d905d2a4f10b3085d6c66052de7",
+  "main_layout": [
+    836,
+    345
+  ],
+  "fixed_spindle": [
+    394,
+    82
+  ],
+  "vinyl_bounds": [
+    139,
+    12,
+    510,
+    140
+  ],
+  "spindle_basis": "design/mounting.json; immutable production chassis source shaft (927,193)",
+  "visible_motion_verified": true,
+  "full_window_sampling": {
+    "frames": 90,
+    "measured_span_seconds": 7.2434633,
+    "sampling_fps": 12.28694014367409,
+    "consecutive_visible_label_changes": 83,
+    "unique_label_images": 84,
+    "visible_change_fps_lower_bound": 11.45860710028033,
+    "playing_samples": 10,
+    "all_measured_playing": true,
+    "first_label_sha256": "c7b7fcfa949fb7333a0011cd0cc79a537fa3af8dc6c1593354524b3f7b72591a",
+    "last_label_sha256": "2ea1d7ee2acd6aff2535618aa0c58f58fec74dd521255ea7733937dd1edc65b1",
+    "interpretation": "Actual screen pixels of the native vinyl label only; lower bound, not every-deck FPS"
+  },
+  "label_sampling": {
+    "frames": 180,
+    "measured_span_seconds": 7.004822700000001,
+    "sampling_fps": 25.55382308248858,
+    "consecutive_visible_label_changes": 114,
+    "unique_label_images": 115,
+    "visible_change_fps_lower_bound": 16.27450185141731,
+    "playing_samples": 2,
+    "all_measured_playing": true,
+    "first_label_sha256": "ec6b321c63573c002db410b1000e2f3a8fca680d1d3d7fefc309bda674a2575a",
+    "last_label_sha256": "5560b4b222bdf686936aae6745c30fa11e50e0ffb1cfcd88abfd4d3fabfdd3cd",
+    "interpretation": "Actual screen pixels of the native vinyl label only; lower bound, not every-deck FPS"
+  },
+  "native_vinyl_20fps_lower_bound_verified": false,
+  "native_vinyl_30fps_lower_bound_verified": false,
+  "limitations": [
+    "FPS applies to the captured vinyl label only; other native decks remain open",
+    "Full-window capture cadence includes capture overhead",
+    "Menu inventory is not close/reopen/docking acceptance",
+    "Native WebView/DSP bridge and audible hardware output remain open",
+    "Dynamic album art and full design coverage remain open"
+  ],
+  "native_menu_items": 24
+}

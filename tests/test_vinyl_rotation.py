@@ -86,10 +86,13 @@ def main():
     old_source = required('skin/hellfire-runtime/SCRIPTS/neowulf-vinyl.m').read_text()
     results = {}
     for label, source, pivot, size, bitmap in [
-            ('main', main_source, geometry['pivot'], geometry['source_size'], 'ref.vinyl.clip'),
+            ('main', main_source, geometry['pivot'], geometry['render_size'], 'ref.vinyl.clip'),
             ('standalone', old_source, (0, 0), (474, 474), 'nw.vinyl.clip')]:
-        for setting in ('Wrap', 'Rect', 'Clear'):
+        for setting in ('Wrap', 'Rect'):
             assert 'vinyl.fx_set' + setting + '(1)' in source, setting
+        if label == 'main':
+            assert 'vinyl.fx_setBgFx(1)' in source, 'Main FX must sample the GUI-sized prepainted disc'
+        assert 'vinyl.fx_setClear(0)' in source, 'Cached stationary frame must survive repaint'
         assert 'disc.loadFromBitmap("' + bitmap + '")' in source
         assert 'vinyl.setRegion(disc)' in source
         assert 'phaseCos=System.cos(phase);phaseSin=System.sin(phase);' in source
@@ -111,7 +114,7 @@ def main():
         decks = ET.fromstring('<root>' + (stage/'XML/reference-decks.xml').read_text() + '</root>')
         group = decks.find("groupdef[@id='main.group']")
         vinyl = group.find("Layer[@id='ref.vinyl']")
-        assert tuple(float(vinyl.get(k)) for k in ('x', 'y', 'w', 'h')) == (140, 25, 510, 140)
+        assert tuple(float(vinyl.get(k)) for k in ('x', 'y', 'w', 'h')) == geometry['bounds']
         assert group.find("Layer[@image='ref.reflection']").get('id') is None
         tokens = group.find("script[@file='SCRIPTS/neowulf-reference.maki']").get('param').split('|')
         assert tokens[0] == '1' and math.dist(tuple(map(float, tokens[1:])), geometry['pivot']) < 1e-10
@@ -124,7 +127,7 @@ def main():
     legacy = Image.open(required('skin/hellfire-runtime/PNG/NEOWULF/vinyl-clip.png')).convert('RGBA')
     assert legacy.tobytes() == region_mask((474, 474), (474, 474), 234).tobytes()
     for label, image, source_size, pivot in [
-            ('main', mask, geometry['source_size'], geometry['pivot']),
+            ('main', mask, geometry['render_size'], geometry['pivot']),
             ('standalone', legacy, (474, 474), (0, 0))]:
         alpha = image.getchannel('A')
         assert alpha.tobytes() == alpha.transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes()

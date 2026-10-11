@@ -17,7 +17,7 @@ System.onScriptLoaded() {
   Region disc=new Region;disc.loadFromBitmap("nw.vinyl.clip");vinyl.setRegion(disc);delete disc;
   // Keep mesh corners unclamped; the stationary Region hides wrapped copies.
   vinyl.fx_setGridSize(1,1); vinyl.fx_setBgFx(0); vinyl.fx_setWrap(1);
-  vinyl.fx_setBilinear(1); vinyl.fx_setRect(1); vinyl.fx_setClear(1);
+  vinyl.fx_setBilinear(1); vinyl.fx_setRect(1); vinyl.fx_setClear(0);
   vinyl.fx_setLocalized(1); vinyl.fx_setRealtime(0); vinyl.fx_setEnabled(1);
   vinyl.fx_update(); clock = new Timer; clock.setDelay(16); clock.start();
 }

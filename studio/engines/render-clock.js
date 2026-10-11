@@ -8,10 +8,12 @@ class HellfireRenderClock {
     if (document.hidden) { this.next = null; return false; }
     if (this.next === null) this.next = now;
     if (now + .6 < this.next) return false;
-    const late = Math.max(0, now - this.next);
-    this.next = now + this.period - late % this.period;
+    // Keep the deadline phase when a callback arrives slightly early.
+    // Reanchoring to that early callback accumulates jitter and skips paints.
+    this.next += Math.max(1, Math.floor((now - this.next) / this.period) + 1) * this.period;
     return true;
   }
+  resetMeasurements() { this.samples = []; this.paintTimes = []; this.total = 0; }
   record(now, paintMs) {
     this.total++; this.samples.push(now); this.paintTimes.push(paintMs);
     if (this.samples.length > 300) { this.samples.shift(); this.paintTimes.shift(); }

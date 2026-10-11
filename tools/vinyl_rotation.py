@@ -21,7 +21,16 @@ def main_geometry():
     # Recenter the source artwork under a stationary GUI spindle. Keep the
     # clip inside the record and texture bounds, including the sampler margin.
     radius = min(bw, bh) / 2 - 2.5
-    return dict(size=(510, 140), source_size=(width, height), radius=radius,
+    mount = json.loads(required('design/mounting.json').read_text())['main']
+    chassis = assets[mount['asset']]
+    assert chassis['sha256'] == mount['asset_sha256'], 'Mount calibration asset changed'
+    cx, cy, cw, ch = chassis['bitmap_box']
+    scale = mount['layout_width'] / cw
+    sx, sy = mount['spindle_source_px']
+    center = (round((sx-cx)*scale), round((sy-cy)*scale))
+    size = tuple(mount['vinyl_size'])
+    bounds = (center[0]-size[0]//2, center[1]-size[1]//2, *size)
+    return dict(size=size, render_size=size, bounds=bounds, center=center, source_size=(width, height), radius=radius,
                 pivot=(2 * (bx + bw / 2) / width - 1,
                        2 * (by + bh / 2) / height - 1))
 
