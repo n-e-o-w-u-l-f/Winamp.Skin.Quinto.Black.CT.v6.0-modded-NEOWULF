@@ -17,6 +17,11 @@ jobs:
           rm -rf "$RUNNER_TEMP/neowulf-ci"
           git clone --depth 1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$RUNNER_TEMP/neowulf-ci"
           cd "$RUNNER_TEMP/neowulf-ci"
+          # PRs validate GitHub's merge ref; pushes validate the pushed ref.
+          # Never report PASS for default-branch code while checking a PR.
+          git fetch --no-tags --depth 1 origin "$GITHUB_REF"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           git rev-parse HEAD
 
       - name: Compile Python tooling
