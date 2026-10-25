@@ -10,13 +10,29 @@ const spectral=new Float32Array(256),spectralL=new Float32Array(256),spectralR=n
 const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;
 function receive(data){
  if(!data||typeof data!=='object')return;
- const clean=a=>Array.isArray(a)||ArrayBuffer.isView(a)?Array.from(a,x=>Number.isFinite(x)?x:0):null;
- const scale=Number.isFinite(data.pcmScale)&&data.pcmScale>0?data.pcmScale:1,a=clean(data.pcmLeft),b=clean(data.pcmRight);
- const pcm=x=>Math.max(-1,Math.min(1,x/scale));
- packet={playing:data.playing!==false,left:Number.isFinite(data.left)?data.left:0,right:Number.isFinite(data.right)?data.right:0,
-  spectrum:(clean(data.spectrum)||Array(75).fill(0)).map(x=>Math.max(0,Math.min(16,x))),wave:(clean(data.wave)||Array(75).fill(0)).map(x=>Math.max(-16,Math.min(16,x))),
-  pcmLeft:a?.map(pcm),pcmRight:(b||(a?Array(a.length).fill(0):null))?.map(pcm),stereo:Boolean(a&&b),sampleRate:Number.isFinite(data.sampleRate)&&data.sampleRate>0?data.sampleRate:48000};
- lastPacket=performance.now();if(packet.pcmLeft){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
+ // Bound untrusted DSP/WebView packets before allocation or pixel processing.
+ const clean=(v,limit)=>{
+  if(!Array.isArray(v)&&!(ArrayBuffer.isView(v)&&typeof v.length==='number'))return null;
+  const n=Math.min(v.length,limit),out=new Array(n);
+  for(let i=0;i<n;i++)out[i]=Number.isFinite(v[i])?v[i]:0;
+  return out;
+ };
+ const scale=Number.isFinite(data.pcmScale)&&data.pcmScale>0?data.pcmScale:1;
+ const rawL=clean(data.pcmLeft,8192),rawR=clean(data.pcmRight,8192);
+ const a=rawL&&rawL.length?rawL:null,b=rawR&&rawR.length?rawR:null;
+ const hasPcm=a!==null||b!==null,pcm=x=>Math.max(-1,Math.min(1,x/scale));
+ const l=Number.isFinite(data.left)?Math.max(0,Math.min(255,data.left)):0;
+ const r=Number.isFinite(data.right)?Math.max(0,Math.min(255,data.right)):0;
+ packet={playing:data.playing!==false,left:hasPcm&&!a?0:l,right:hasPcm&&!b?0:r,
+  spectrum:(clean(data.spectrum,75)||Array(75).fill(0)).map(x=>Math.max(0,Math.min(16,x))),
+  wave:(clean(data.wave,75)||Array(75).fill(0)).map(x=>Math.max(-16,Math.min(16,x))),
+  pcmLeft:hasPcm?(a||Array(b.length).fill(0)).map(pcm):null,
+  pcmRight:hasPcm?(b||Array(a.length).fill(0)).map(pcm):null,
+  stereo:Boolean(a&&b),pcmChannels:a?(b?'stereo':'left'):(b?'right':'legacy'),
+  sampleRate:Number.isFinite(data.sampleRate)&&data.sampleRate>0?data.sampleRate:48000};
+ lastPacket=performance.now();
+ if(hasPcm){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
+ else {spectral.fill(0);spectralL.fill(0);spectralR.fill(0);}
 }
 window.neowulfAudio=receive;window.chrome?.webview?.addEventListener('message',e=>{if(source.value==='winamp')receive(e.data);});ch?.addEventListener('message',e=>{if(source.value==='studio')receive(e.data);});
 function fftSpectrum(samples,out){
@@ -34,8 +50,8 @@ function drawOsc(w,h){
  grid(w,h);const a=packet.pcmLeft||packet.wave.map(x=>x/16),b=packet.pcmRight||a;
  ctx.lineWidth=Math.max(1,w/550);ctx.shadowBlur=8;ctx.shadowColor='#ff3e1b';
  if(variant===2&&packet.pcmLeft){ctx.beginPath();ctx.strokeStyle='#ff9662';const n=Math.min(a.length,b.length);for(let i=0;i<n;i++){const x=w/2+a[i]*w*.45,y=h/2-b[i]*h*.45;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}
- else{const rows=variant===1?1:2;for(let row=0;row<rows;row++){const arr=row?b:a,center=rows===1?h/2:h*(row?.74:.26),height=rows===1?h*.4:h*.21;ctx.strokeStyle=row?'#ffb270':'#ff5540';ctx.beginPath();for(let x=0;x<w;x++){const y=center-interpolate(arr,x/w)*height*2;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}}
- ctx.shadowBlur=0;ctx.fillStyle='#9a5142';ctx.font=`${Math.max(9,h/17)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?(packet.stereo?(variant===2?'STEREO XY · PCM':'STEREO PCM · L / R'):'PCM · L ONLY'):'WINAMP OSZILLOSKOP · LEGACY MONO',10,18);
+ else{const rows=variant===1?1:2;for(let row=0;row<rows;row++){const arr=row?b:(rows===1&&packet.pcmChannels==='right'?b:a),center=rows===1?h/2:h*(row?.74:.26),height=rows===1?h*.4:h*.21;ctx.strokeStyle=row?'#ffb270':'#ff5540';ctx.beginPath();for(let x=0;x<w;x++){const y=center-interpolate(arr,x/w)*height*2;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}}
+ ctx.shadowBlur=0;ctx.fillStyle='#9a5142';ctx.font=`${Math.max(9,h/17)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?(packet.stereo?(variant===2?'STEREO XY · PCM':'STEREO PCM · L / R'):(packet.pcmChannels==='right'?'PCM · R ONLY':'PCM · L ONLY')):'WINAMP OSZILLOSKOP · LEGACY MONO',10,18);
 }
 function drawMeters(w,h,vertical){
  const levels=[left,right];for(let c=0;c<2;c++){
