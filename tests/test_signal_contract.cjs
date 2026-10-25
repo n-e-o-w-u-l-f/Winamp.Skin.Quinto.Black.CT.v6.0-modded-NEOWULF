@@ -27,6 +27,11 @@ for(const mode of ['osc','fire','horizontal','vertical','virtualizer']){
  assert(v.levels.left>.78&&v.levels.right===0);assert(Math.max(...v.spectra.left)>.1);assert.equal(Math.max(...v.spectra.right),0);
  const simulatedFps=v.stats.measuredFps;assert(simulatedFps>29&&simulatedFps<31);
  v.receive({playing:true,left:200,right:0,pcmLeft:new Float32Array(left)});assert.equal(v.packet.stereo,false);assert.equal(Math.max(...v.spectra.right),0,'Missing R must never duplicate L');
+ v.receive({playing:true,left:200,right:230,pcmLeft:left});assert.equal(v.packet.right,0,'Missing R PCM must silence its level');assert.equal(v.packet.pcmChannels,'left');assert.equal(Math.max(...v.spectra.right),0);
+ v.receive({playing:true,left:230,right:200,pcmRight:left});assert.equal(v.packet.left,0,'Missing L PCM must silence its level');assert.equal(v.packet.pcmChannels,'right');assert(Math.max(...v.spectra.right)>.1);assert.equal(Math.max(...v.spectra.left),0);
+ v.receive({playing:true,left:200,right:230,pcmLeft:left,pcmRight:[]});assert.equal(v.packet.right,0,'Empty R PCM must silence its level');
+ v.receive({playing:true,left:200,right:230,spectrum:[8]});assert.equal(Math.max(...v.spectra.right),0,'Legacy packet clears stale PCM spectra');assert.equal(Math.max(...v.spectra.left),0);
+ v.receive({playing:true,left:200,right:230,pcmLeft:Array(9000).fill(.3),spectrum:Array(800).fill(4),wave:Array(800).fill(-5)});assert.equal(v.packet.pcmLeft.length,8192);assert.equal(v.packet.spectrum.length,75);assert.equal(v.packet.wave.length,75);assert.equal(v.packet.right,0);
  v.receive({playing:false,left:255,right:255});run(1300);assert(v.levels.left<.01&&v.levels.right<.01);assert.equal(Math.max(...v.spectra.left),0);
  run(800,{playing:true,left:200,right:0,pcmLeft:left,pcmRight:right});run(1900);assert(v.levels.left<.01,'Stale audio must fade');
  v.receive({playing:true,left:-40,right:Infinity,pcmLeft:new Float32Array([NaN,Infinity,1]),pcmScale:32768});run(100);assert(v.levels.left>=0&&v.levels.right===0);
