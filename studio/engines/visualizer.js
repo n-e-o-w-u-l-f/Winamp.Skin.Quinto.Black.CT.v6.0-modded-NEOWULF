@@ -8,8 +8,10 @@ document.getElementById('variant').onclick=()=>{variant=(variant+1)%3;document.g
 let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=0,left=0,right=0,particles=[];
 const spectral=new Float32Array(256),spectralL=new Float32Array(256),spectralR=new Float32Array(256),re=new Float32Array(512),im=new Float32Array(512),clock=new HellfireRenderClock(mode);
 const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;
-function receive(data){
- if(!data||typeof data!=='object')return;
+const transport={accepted:0,rejected:0,ignored:0,bySource:{direct:0,winamp:0,studio:0},lastOrigin:'none'};
+function receive(data,origin='direct'){
+ if(!data||typeof data!=='object'){transport.rejected++;return;}
+ transport.accepted++;transport.bySource[origin]++;transport.lastOrigin=origin;
  // Bound untrusted DSP/WebView packets before allocation or pixel processing.
  const clean=(v,limit)=>{
   if(!Array.isArray(v)&&!(ArrayBuffer.isView(v)&&typeof v.length==='number'))return null;
@@ -34,7 +36,19 @@ function receive(data){
  if(hasPcm){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
  else {spectral.fill(0);spectralL.fill(0);spectralR.fill(0);}
 }
-window.neowulfAudio=receive;window.chrome?.webview?.addEventListener('message',e=>{if(source.value==='winamp')receive(e.data);});ch?.addEventListener('message',e=>{if(source.value==='studio')receive(e.data);});
+function resetStream(){
+ lastPacket=0;left=0;right=0;particles=[];
+ packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0),pcmLeft:null,pcmRight:null,stereo:false,pcmChannels:'legacy'};
+ spectral.fill(0);spectralL.fill(0);spectralR.fill(0);
+}
+window.neowulfAudio=data=>receive(data,'direct');
+window.chrome?.webview?.addEventListener('message',e=>{
+ if(source.value==='winamp')receive(e.data,'winamp');else transport.ignored++;
+});
+ch?.addEventListener('message',e=>{
+ if(source.value==='studio')receive(e.data,'studio');else transport.ignored++;
+});
+source.addEventListener?.('change',resetStream);
 function fftSpectrum(samples,out){
  const N=512;im.fill(0);
  for(let i=0;i<N;i++)re[i]=(samples[i]||0)*(.5-.5*Math.cos(2*Math.PI*i/(N-1)));
@@ -90,5 +104,8 @@ let previous=performance.now();function draw(now){
  if(mode==='osc')drawOsc(w,h);else if(mode==='horizontal')drawMeters(w,h,false);else if(mode==='vertical')drawMeters(w,h,true);else if(mode==='virtualizer')drawVirtual(w,h,now);else drawFire(w,h,now);
  particles=particles.filter(p=>p.life>0);for(const p of particles){p.life-=delta;p.y-=p.vy*delta;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle='#ffc478';ctx.fillRect(p.x,p.y,1.5*dpr,2*dpr);}ctx.globalAlpha=1;
  document.getElementById('meter').textContent=`L ${db(left)} dB · R ${db(right)} dB`;clock.record(now,performance.now()-started);
-}requestAnimationFrame(draw);window.neowulfVisualizer={resetRenderMeasurements:()=>clock.resetMeasurements(),receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};}};
+}requestAnimationFrame(draw);window.neowulfVisualizer={resetRenderMeasurements:()=>clock.resetMeasurements(),receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};},
+ get transport(){return {accepted:transport.accepted,rejected:transport.rejected,ignored:transport.ignored,
+  bySource:{...transport.bySource},lastOrigin:transport.lastOrigin,selectedSource:source.value,
+  lastPacketAgeMs:lastPacket?Math.max(0,performance.now()-lastPacket):null,pcmChannels:packet.pcmChannels||'legacy'};}};
 })();
