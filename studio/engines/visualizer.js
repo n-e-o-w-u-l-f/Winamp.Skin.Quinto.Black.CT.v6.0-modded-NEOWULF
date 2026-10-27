@@ -23,13 +23,17 @@ function receive(data,origin='direct'){
  const rawL=clean(data.pcmLeft,8192),rawR=clean(data.pcmRight,8192);
  const a=rawL&&rawL.length?rawL:null,b=rawR&&rawR.length?rawR:null;
  const hasPcm=a!==null||b!==null,pcm=x=>Math.max(-1,Math.min(1,x/scale));
- const l=Number.isFinite(data.left)?Math.max(0,Math.min(255,data.left)):0;
- const r=Number.isFinite(data.right)?Math.max(0,Math.min(255,data.right)):0;
+ const pcmLeft=hasPcm?(a||Array(b.length).fill(0)).map(pcm):null;
+ const pcmRight=hasPcm?(b||Array(a.length).fill(0)).map(pcm):null;
+ // The bridge may send PCM without redundant integer meter levels.
+ // Derive them from actual normalized channel samples, never synthetic audio.
+ const rms=xs=>Math.min(255,Math.sqrt(xs.reduce((sum,x)=>sum+x*x,0)/xs.length)*510);
+ const l=Number.isFinite(data.left)?Math.max(0,Math.min(255,data.left)):(a?rms(pcmLeft):0);
+ const r=Number.isFinite(data.right)?Math.max(0,Math.min(255,data.right)):(b?rms(pcmRight):0);
  packet={playing:data.playing!==false,left:hasPcm&&!a?0:l,right:hasPcm&&!b?0:r,
   spectrum:(clean(data.spectrum,75)||Array(75).fill(0)).map(x=>Math.max(0,Math.min(16,x))),
   wave:(clean(data.wave,75)||Array(75).fill(0)).map(x=>Math.max(-16,Math.min(16,x))),
-  pcmLeft:hasPcm?(a||Array(b.length).fill(0)).map(pcm):null,
-  pcmRight:hasPcm?(b||Array(a.length).fill(0)).map(pcm):null,
+  pcmLeft,pcmRight,
   stereo:Boolean(a&&b),pcmChannels:a?(b?'stereo':'left'):(b?'right':'legacy'),
   sampleRate:Number.isFinite(data.sampleRate)&&data.sampleRate>0?data.sampleRate:48000};
  lastPacket=performance.now();
