@@ -49,8 +49,15 @@ for(const mode of ['osc','fire','horizontal','vertical','virtualizer']){
  v.receive({playing:true,left:-40,right:Infinity,pcmLeft:new Float32Array([NaN,Infinity,1]),pcmScale:32768});run(100);assert(v.levels.left>=0&&v.levels.right===0);
  v.receive({playing:true,left:255,right:0,pcmLeft:[Number.MAX_VALUE,-Number.MAX_VALUE],pcmScale:Number.MIN_VALUE});run(100);assert.deepEqual(Array.from(v.packet.pcmLeft),[1,-1]);
  v.receive({playing:true,left:255,right:0,wave:[Number.MAX_VALUE,-Number.MAX_VALUE],spectrum:[Number.MAX_VALUE,-100]});run(100);assert.deepEqual(Array.from(v.packet.wave),[16,-16]);assert.deepEqual(Array.from(v.packet.spectrum),[16,0]);
- const accepted=v.transport.accepted;v.receive(null);assert.equal(v.transport.rejected,1);assert.equal(v.transport.accepted,accepted);
+ const previousPacket=v.packet,priorAccepted=v.transport.accepted;
+ v.receive({type:'host-control',action:'resize',width:1920,height:1080});
+ assert.strictEqual(v.packet,previousPacket,'WebView control messages must not replace audio');
+ assert.equal(v.transport.accepted,priorAccepted);assert.equal(v.transport.rejected,1);
+ v.receive({playing:false});assert.equal(v.packet.playing,false,'Explicit stop without samples must be accepted');
+ const accepted=v.transport.accepted;v.receive(null);assert.equal(v.transport.rejected,2);assert.equal(v.transport.accepted,accepted);
  nativeListeners.message({data:{playing:true,left:205,right:0,pcmLeft:left}});assert.equal(v.transport.lastOrigin,'winamp');assert.equal(v.transport.bySource.winamp,1);
+ const nativePacket=v.packet;nativeListeners.message({data:{type:'webview-ready'}});
+ assert.strictEqual(v.packet,nativePacket);assert.equal(v.transport.bySource.winamp,1);assert.equal(v.transport.rejected,3);
  const dropped=v.transport.ignored;studioListeners.message({data:{playing:true,left:50,right:50}});assert.equal(v.transport.ignored,dropped+1,'Studio packets are ignored in Winamp mode');
  sourceNode.value='studio';sourceNode.handlers.change();assert.equal(v.transport.lastPacketAgeMs,null);assert.equal(v.levels.left,0);assert.equal(v.levels.right,0);assert.equal(Math.max(...v.spectra.left),0);
  const nativeIgnored=v.transport.ignored;nativeListeners.message({data:{playing:true,left:55,right:55}});assert.equal(v.transport.ignored,nativeIgnored+1,'Native packets are ignored in Studio mode');
