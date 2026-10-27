@@ -11,6 +11,12 @@ const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.aud
 const transport={accepted:0,rejected:0,ignored:0,bySource:{direct:0,winamp:0,studio:0},lastOrigin:'none'};
 function receive(data,origin='direct'){
  if(!data||typeof data!=='object'){transport.rejected++;return;}
+ // A WebView host may post UI/control events to the same listener.
+ // Only audio-bearing packets and explicit stop commands may replace the sound state.
+ const samples=x=>Array.isArray(x)||(ArrayBuffer.isView(x)&&typeof x.length==='number');
+ const hasAudio=Number.isFinite(data.left)||Number.isFinite(data.right)||
+  samples(data.pcmLeft)||samples(data.pcmRight)||samples(data.spectrum)||samples(data.wave);
+ if(!hasAudio&&data.playing!==false){transport.rejected++;return;}
  transport.accepted++;transport.bySource[origin]++;transport.lastOrigin=origin;
  // Bound untrusted DSP/WebView packets before allocation or pixel processing.
  const clean=(v,limit)=>{
