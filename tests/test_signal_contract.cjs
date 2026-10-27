@@ -31,6 +31,10 @@ for(const mode of ['osc','fire','horizontal','vertical','virtualizer']){
  assert(v.levels.left>.78&&v.levels.right===0);assert(Math.max(...v.spectra.left)>.1);assert.equal(Math.max(...v.spectra.right),0);
  const simulatedFps=v.stats.measuredFps;assert(simulatedFps>29&&simulatedFps<31);
  v.receive({playing:true,left:200,right:0,pcmLeft:new Float32Array(left)});assert.equal(v.packet.stereo,false);assert.equal(Math.max(...v.spectra.right),0,'Missing R must never duplicate L');
+ v.receive({playing:true,pcmLeft:left});assert(v.packet.left>100,'PCM-only left signal must drive the VU meter');assert.equal(v.packet.right,0);
+ v.receive({playing:true,pcmRight:left});assert(v.packet.right>100,'PCM-only right signal must drive the VU meter');assert.equal(v.packet.left,0);
+ v.receive({playing:true,left:17,right:0,pcmLeft:left});assert.equal(v.packet.left,17,'Explicit valid meter level has priority over derived RMS');
+ v.receive({playing:true,pcmLeft:Array(512).fill(0)});assert.equal(v.packet.left,0,'Silent PCM must not generate meter energy');
  v.receive({playing:true,left:200,right:230,pcmLeft:left});assert.equal(v.packet.right,0,'Missing R PCM must silence its level');assert.equal(v.packet.pcmChannels,'left');assert.equal(Math.max(...v.spectra.right),0);
  v.receive({playing:true,left:230,right:200,pcmRight:left});assert.equal(v.packet.left,0,'Missing L PCM must silence its level');assert.equal(v.packet.pcmChannels,'right');assert(Math.max(...v.spectra.right)>.1);assert.equal(Math.max(...v.spectra.left),0);
  v.receive({playing:true,left:200,right:230,pcmLeft:left,pcmRight:[]});assert.equal(v.packet.right,0,'Empty R PCM must silence its level');
