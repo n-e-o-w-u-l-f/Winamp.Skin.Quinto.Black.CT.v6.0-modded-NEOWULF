@@ -7,6 +7,73 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  portable-source:
+    name: Portable source contracts (Ubuntu)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the triggering revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install reproducible image-test dependency
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+
+      - name: Verify correct checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git rev-parse HEAD
+
+      - name: Compile Python source without writing build outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          scripts = list(Path('tools').glob('*.py')) + list(Path('tests').glob('*.py'))
+          assert scripts, 'missing Python sources'
+          for path in scripts:
+              compile(path.read_bytes(), str(path), 'exec')
+          print(f'Python source parse OK: {len(scripts)} files')
+          PY
+
+      - name: Execute portable contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -B tests/test_display_pipeline.py
+          python -B tests/test_turntable_source_assets.py
+          python -B tests/test_vinyl_rotation.py
+          node tests/test_signal_contract.cjs
+
+      - name: Verify MAKI signatures (not native execution)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          files = sorted(Path('skin/SCRIPTS').glob('*.maki'))
+          assert files, 'missing MAKI binaries'
+          assert all(f.read_bytes().startswith(b'FG') for f in files), 'invalid MAKI signature'
+          print(f'Existing MAKI signatures OK: {len(files)}')
+          PY
+
   validate:
     runs-on: [self-hosted, Linux, X64]
     steps:
@@ -17,6 +84,11 @@ jobs:
           rm -rf "$RUNNER_TEMP/neowulf-ci"
           git clone --depth 1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$RUNNER_TEMP/neowulf-ci"
           cd "$RUNNER_TEMP/neowulf-ci"
+          # PRs validate GitHub's merge ref; pushes validate the pushed ref.
+          # Never report PASS for default-branch code while checking a PR.
+          git fetch --no-tags --depth 1 origin "$GITHUB_REF"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           git rev-parse HEAD
 
       - name: Compile Python tooling

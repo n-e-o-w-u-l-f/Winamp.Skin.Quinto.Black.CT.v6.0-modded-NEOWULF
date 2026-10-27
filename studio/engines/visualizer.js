@@ -5,20 +5,60 @@ if(q.get('embed')==='1')document.body.classList.add('embedded');if(mode==='verti
 const names={osc:'NEOWULF · OSZILLATOR',fire:'NEOWULF · FIRE VU STEREO',horizontal:'NEOWULF · VU HORIZONTAL',vertical:'NEOWULF · VU VERTIKAL',virtualizer:'NEOWULF · HELLFIRE VIRTUALIZER'};
 document.getElementById('title').textContent=names[mode];document.title=names[mode];let variant=0;
 document.getElementById('variant').onclick=()=>{variant=(variant+1)%3;document.getElementById('variant').textContent=['MODE 1','MODE 2','MODE 3'][variant];};document.getElementById('crt').onclick=()=>{document.body.classList.toggle('crt');};
-let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=0,left=0,right=0,particles=[];
+let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=null,left=0,right=0,particles=[];
 const spectral=new Float32Array(256),spectralL=new Float32Array(256),spectralR=new Float32Array(256),re=new Float32Array(512),im=new Float32Array(512),clock=new HellfireRenderClock(mode);
 const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;
-function receive(data){
- if(!data||typeof data!=='object')return;
- const clean=a=>Array.isArray(a)||ArrayBuffer.isView(a)?Array.from(a,x=>Number.isFinite(x)?x:0):null;
- const scale=Number.isFinite(data.pcmScale)&&data.pcmScale>0?data.pcmScale:1,a=clean(data.pcmLeft),b=clean(data.pcmRight);
- const pcm=x=>Math.max(-1,Math.min(1,x/scale));
- packet={playing:data.playing!==false,left:Number.isFinite(data.left)?data.left:0,right:Number.isFinite(data.right)?data.right:0,
-  spectrum:(clean(data.spectrum)||Array(75).fill(0)).map(x=>Math.max(0,Math.min(16,x))),wave:(clean(data.wave)||Array(75).fill(0)).map(x=>Math.max(-16,Math.min(16,x))),
-  pcmLeft:a?.map(pcm),pcmRight:(b||(a?Array(a.length).fill(0):null))?.map(pcm),stereo:Boolean(a&&b),sampleRate:Number.isFinite(data.sampleRate)&&data.sampleRate>0?data.sampleRate:48000};
- lastPacket=performance.now();if(packet.pcmLeft){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
+const transport={accepted:0,rejected:0,ignored:0,bySource:{direct:0,winamp:0,studio:0},lastOrigin:'none'};
+function receive(data,origin='direct'){
+ if(!data||typeof data!=='object'){transport.rejected++;return;}
+ // A WebView host may post UI/control events to the same listener.
+ // Only audio-bearing packets and explicit stop commands may replace the sound state.
+ const samples=x=>Array.isArray(x)||(ArrayBuffer.isView(x)&&typeof x.length==='number');
+ const hasAudio=Number.isFinite(data.left)||Number.isFinite(data.right)||
+  samples(data.pcmLeft)||samples(data.pcmRight)||samples(data.spectrum)||samples(data.wave);
+ if(!hasAudio&&data.playing!==false){transport.rejected++;return;}
+ transport.accepted++;transport.bySource[origin]++;transport.lastOrigin=origin;
+ // Bound untrusted DSP/WebView packets before allocation or pixel processing.
+ const clean=(v,limit)=>{
+  if(!Array.isArray(v)&&!(ArrayBuffer.isView(v)&&typeof v.length==='number'))return null;
+  const n=Math.min(v.length,limit),out=new Array(n);
+  for(let i=0;i<n;i++)out[i]=Number.isFinite(v[i])?v[i]:0;
+  return out;
+ };
+ const scale=Number.isFinite(data.pcmScale)&&data.pcmScale>0?data.pcmScale:1;
+ const rawL=clean(data.pcmLeft,8192),rawR=clean(data.pcmRight,8192);
+ const a=rawL&&rawL.length?rawL:null,b=rawR&&rawR.length?rawR:null;
+ const hasPcm=a!==null||b!==null,pcm=x=>Math.max(-1,Math.min(1,x/scale));
+ const pcmLeft=hasPcm?(a||Array(b.length).fill(0)).map(pcm):null;
+ const pcmRight=hasPcm?(b||Array(a.length).fill(0)).map(pcm):null;
+ // The bridge may send PCM without redundant integer meter levels.
+ // Derive them from actual normalized channel samples, never synthetic audio.
+ const rms=xs=>Math.min(255,Math.sqrt(xs.reduce((sum,x)=>sum+x*x,0)/xs.length)*510);
+ const l=Number.isFinite(data.left)?Math.max(0,Math.min(255,data.left)):(a?rms(pcmLeft):0);
+ const r=Number.isFinite(data.right)?Math.max(0,Math.min(255,data.right)):(b?rms(pcmRight):0);
+ packet={playing:data.playing!==false,left:hasPcm&&!a?0:l,right:hasPcm&&!b?0:r,
+  spectrum:(clean(data.spectrum,75)||Array(75).fill(0)).map(x=>Math.max(0,Math.min(16,x))),
+  wave:(clean(data.wave,75)||Array(75).fill(0)).map(x=>Math.max(-16,Math.min(16,x))),
+  pcmLeft,pcmRight,
+  stereo:Boolean(a&&b),pcmChannels:a?(b?'stereo':'left'):(b?'right':'legacy'),
+  sampleRate:Number.isFinite(data.sampleRate)&&data.sampleRate>0?data.sampleRate:48000};
+ lastPacket=performance.now();
+ if(hasPcm){fftSpectrum(packet.pcmLeft,spectralL);fftSpectrum(packet.pcmRight,spectralR);for(let i=0;i<256;i++)spectral[i]=(spectralL[i]+spectralR[i])*.5;}
+ else {spectral.fill(0);spectralL.fill(0);spectralR.fill(0);}
 }
-window.neowulfAudio=receive;window.chrome?.webview?.addEventListener('message',e=>{if(source.value==='winamp')receive(e.data);});ch?.addEventListener('message',e=>{if(source.value==='studio')receive(e.data);});
+function resetStream(){
+ lastPacket=null;left=0;right=0;particles=[];
+ packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0),pcmLeft:null,pcmRight:null,stereo:false,pcmChannels:'legacy'};
+ spectral.fill(0);spectralL.fill(0);spectralR.fill(0);
+}
+window.neowulfAudio=data=>receive(data,'direct');
+window.chrome?.webview?.addEventListener('message',e=>{
+ if(source.value==='winamp')receive(e.data,'winamp');else transport.ignored++;
+});
+ch?.addEventListener('message',e=>{
+ if(source.value==='studio')receive(e.data,'studio');else transport.ignored++;
+});
+source.addEventListener?.('change',resetStream);
 function fftSpectrum(samples,out){
  const N=512;im.fill(0);
  for(let i=0;i<N;i++)re[i]=(samples[i]||0)*(.5-.5*Math.cos(2*Math.PI*i/(N-1)));
@@ -34,8 +74,8 @@ function drawOsc(w,h){
  grid(w,h);const a=packet.pcmLeft||packet.wave.map(x=>x/16),b=packet.pcmRight||a;
  ctx.lineWidth=Math.max(1,w/550);ctx.shadowBlur=8;ctx.shadowColor='#ff3e1b';
  if(variant===2&&packet.pcmLeft){ctx.beginPath();ctx.strokeStyle='#ff9662';const n=Math.min(a.length,b.length);for(let i=0;i<n;i++){const x=w/2+a[i]*w*.45,y=h/2-b[i]*h*.45;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}
- else{const rows=variant===1?1:2;for(let row=0;row<rows;row++){const arr=row?b:a,center=rows===1?h/2:h*(row?.74:.26),height=rows===1?h*.4:h*.21;ctx.strokeStyle=row?'#ffb270':'#ff5540';ctx.beginPath();for(let x=0;x<w;x++){const y=center-interpolate(arr,x/w)*height*2;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}}
- ctx.shadowBlur=0;ctx.fillStyle='#9a5142';ctx.font=`${Math.max(9,h/17)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?(packet.stereo?(variant===2?'STEREO XY · PCM':'STEREO PCM · L / R'):'PCM · L ONLY'):'WINAMP OSZILLOSKOP · LEGACY MONO',10,18);
+ else{const rows=variant===1?1:2;for(let row=0;row<rows;row++){const arr=row?b:(rows===1&&packet.pcmChannels==='right'?b:a),center=rows===1?h/2:h*(row?.74:.26),height=rows===1?h*.4:h*.21;ctx.strokeStyle=row?'#ffb270':'#ff5540';ctx.beginPath();for(let x=0;x<w;x++){const y=center-interpolate(arr,x/w)*height*2;if(x)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();}}
+ ctx.shadowBlur=0;ctx.fillStyle='#9a5142';ctx.font=`${Math.max(9,h/17)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?(packet.stereo?(variant===2?'STEREO XY · PCM':'STEREO PCM · L / R'):(packet.pcmChannels==='right'?'PCM · R ONLY':'PCM · L ONLY')):'WINAMP OSZILLOSKOP · LEGACY MONO',10,18);
 }
 function drawMeters(w,h,vertical){
  const levels=[left,right];for(let c=0;c<2;c++){
@@ -74,5 +114,8 @@ let previous=performance.now();function draw(now){
  if(mode==='osc')drawOsc(w,h);else if(mode==='horizontal')drawMeters(w,h,false);else if(mode==='vertical')drawMeters(w,h,true);else if(mode==='virtualizer')drawVirtual(w,h,now);else drawFire(w,h,now);
  particles=particles.filter(p=>p.life>0);for(const p of particles){p.life-=delta;p.y-=p.vy*delta;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle='#ffc478';ctx.fillRect(p.x,p.y,1.5*dpr,2*dpr);}ctx.globalAlpha=1;
  document.getElementById('meter').textContent=`L ${db(left)} dB · R ${db(right)} dB`;clock.record(now,performance.now()-started);
-}requestAnimationFrame(draw);window.neowulfVisualizer={resetRenderMeasurements:()=>clock.resetMeasurements(),receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};}};
+}requestAnimationFrame(draw);window.neowulfVisualizer={resetRenderMeasurements:()=>clock.resetMeasurements(),receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};},
+ get transport(){return {accepted:transport.accepted,rejected:transport.rejected,ignored:transport.ignored,
+  bySource:{...transport.bySource},lastOrigin:transport.lastOrigin,selectedSource:source.value,
+  lastPacketAgeMs:lastPacket===null?null:Math.max(0,performance.now()-lastPacket),pcmChannels:packet.pcmChannels||'legacy'};}};
 })();
