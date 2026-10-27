@@ -5,7 +5,7 @@ if(q.get('embed')==='1')document.body.classList.add('embedded');if(mode==='verti
 const names={osc:'NEOWULF · OSZILLATOR',fire:'NEOWULF · FIRE VU STEREO',horizontal:'NEOWULF · VU HORIZONTAL',vertical:'NEOWULF · VU VERTIKAL',virtualizer:'NEOWULF · HELLFIRE VIRTUALIZER'};
 document.getElementById('title').textContent=names[mode];document.title=names[mode];let variant=0;
 document.getElementById('variant').onclick=()=>{variant=(variant+1)%3;document.getElementById('variant').textContent=['MODE 1','MODE 2','MODE 3'][variant];};document.getElementById('crt').onclick=()=>{document.body.classList.toggle('crt');};
-let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=0,left=0,right=0,particles=[];
+let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=null,left=0,right=0,particles=[];
 const spectral=new Float32Array(256),spectralL=new Float32Array(256),spectralR=new Float32Array(256),re=new Float32Array(512),im=new Float32Array(512),clock=new HellfireRenderClock(mode);
 const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;
 const transport={accepted:0,rejected:0,ignored:0,bySource:{direct:0,winamp:0,studio:0},lastOrigin:'none'};
@@ -41,7 +41,7 @@ function receive(data,origin='direct'){
  else {spectral.fill(0);spectralL.fill(0);spectralR.fill(0);}
 }
 function resetStream(){
- lastPacket=0;left=0;right=0;particles=[];
+ lastPacket=null;left=0;right=0;particles=[];
  packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0),pcmLeft:null,pcmRight:null,stereo:false,pcmChannels:'legacy'};
  spectral.fill(0);spectralL.fill(0);spectralR.fill(0);
 }
@@ -111,5 +111,5 @@ let previous=performance.now();function draw(now){
 }requestAnimationFrame(draw);window.neowulfVisualizer={resetRenderMeasurements:()=>clock.resetMeasurements(),receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};},
  get transport(){return {accepted:transport.accepted,rejected:transport.rejected,ignored:transport.ignored,
   bySource:{...transport.bySource},lastOrigin:transport.lastOrigin,selectedSource:source.value,
-  lastPacketAgeMs:lastPacket?Math.max(0,performance.now()-lastPacket):null,pcmChannels:packet.pcmChannels||'legacy'};}};
+  lastPacketAgeMs:lastPacket===null?null:Math.max(0,performance.now()-lastPacket),pcmChannels:packet.pcmChannels||'legacy'};}};
 })();

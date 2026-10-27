@@ -27,6 +27,10 @@ for(const mode of ['osc','fire','horizontal','vertical','virtualizer']){
  c.window=c;vm.runInContext(read('studio/engines/render-clock.js'),c);vm.runInContext(read('studio/engines/visualizer.js'),c);
  const v=c.neowulfVisualizer,left=Array.from({length:512},(_,i)=>Math.sin(i*.17)*.6),right=Array(512).fill(0);
  function run(ms,packet){const end=now+ms;while(now<end){now+=1000/60;if(packet)v.receive(packet);frame(now);}}
+ assert.equal(v.transport.lastPacketAgeMs,null,'No packet has arrived yet');
+ v.receive({playing:true,left:200,pcmLeft:left});
+ assert.equal(v.transport.lastPacketAgeMs,0,'A packet received at clock zero has age zero');
+ now=25;assert.equal(v.transport.lastPacketAgeMs,25,'Packet age advances from clock zero');
  run(2400,{playing:true,left:200,right:0,pcmLeft:left,pcmRight:right});
  assert(v.levels.left>.78&&v.levels.right===0);assert(Math.max(...v.spectra.left)>.1);assert.equal(Math.max(...v.spectra.right),0);
  const simulatedFps=v.stats.measuredFps;assert(simulatedFps>29&&simulatedFps<31);
