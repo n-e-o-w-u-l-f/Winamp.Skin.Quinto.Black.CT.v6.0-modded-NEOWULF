@@ -126,7 +126,16 @@ const renderClock = read('studio/engines/render-clock.js');
 let now = 0, frame;
 const control = { value: '1.5', callbacks: {}, addEventListener(name, fn) { this.callbacks[name] = fn; } };
 const canvas = { clientWidth: 547, clientHeight: 87, width: 0, height: 0 };
-const ctx2 = new Proxy({ createLinearGradient: () => ({ addColorStop() {} }) }, {
+let fireClips = 0, clipDepth = 0;
+const ctx2 = new Proxy({
+  createLinearGradient: () => ({ addColorStop() {} }),
+  save() { clipDepth++; }, restore() { clipDepth--; assert.ok(clipDepth >= 0, 'Excess canvas restore'); },
+  clip() { fireClips++; },
+  rect(x, y, w, h) {
+    assert.ok(x >= 0 && y >= 0 && x + w <= canvas.width + .001 && y + h <= canvas.height + .001,
+      'A flame region must stay within the display canvas');
+  }
+}, {
   get: (target, prop) => prop in target ? target[prop] : (...args) => {
     for (const arg of args) if (typeof arg === 'number') assert.ok(Number.isFinite(arg), 'Nonfinite drawing data');
   }
@@ -150,10 +159,12 @@ for (let i = 0; i < 120; i++) {
   frame(now);
 }
 assert.ok(page.neowulfVisualizer.stats.measuredFps > 29);
+assert.ok(fireClips >= 100, 'Stereo fire renderer must clip BOTH channels inside glass');
+assert.equal(clipDepth, 0, 'Every fire clipping region must restore canvas state');
 console.log(JSON.stringify({
   evidence: 'Node VM / mocked AudioContext / geometry source invariants only; not native Winamp',
   verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, audioFilter: 'highpass', lfoStartedOnce: true,
   sustainAudibleGraphParameter: true, eqTracksContained: 11, equalDisplayDecks: 4,
-  paintGain: page.neowulfVisualizer.peakGain,
+  paintGain: page.neowulfVisualizer.peakGain, stereoFlameClips: fireClips,
   simulatedFps: page.neowulfVisualizer.stats.measuredFps
 }));
