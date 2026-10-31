@@ -7,6 +7,9 @@ document.getElementById('title').textContent=names[mode];document.title=names[mo
 document.getElementById('variant').onclick=()=>{variant=(variant+1)%3;document.getElementById('variant').textContent=['MODE 1','MODE 2','MODE 3'][variant];};document.getElementById('crt').onclick=()=>{document.body.classList.toggle('crt');};
 let packet={playing:false,left:0,right:0,spectrum:Array(75).fill(0),wave:Array(75).fill(0)},lastPacket=null,left=0,right=0,particles=[];
 const spectral=new Float32Array(256),spectralL=new Float32Array(256),spectralR=new Float32Array(256),re=new Float32Array(512),im=new Float32Array(512),clock=new HellfireRenderClock(mode);
+// Presentation gain changes painted peak intensity only, never PCM or Winamp audio.
+let peakGain=1.5;const peakInput=document.getElementById('peakGain');
+peakInput?.addEventListener('input',()=>{const n=Number(peakInput.value);if(Number.isFinite(n))peakGain=Math.min(4,Math.max(1,n));});
 const ch=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;
 const transport={accepted:0,rejected:0,ignored:0,bySource:{direct:0,winamp:0,studio:0},lastOrigin:'none'};
 function receive(data,origin='direct'){
@@ -80,7 +83,7 @@ function drawOsc(w,h){
 function drawMeters(w,h,vertical){
  const levels=[left,right];for(let c=0;c<2;c++){
   const strips=vertical?60:70,margin=vertical?w*.16:h*.18,gap=vertical?w*.09:h*.1,barW=vertical?(w-margin*2-gap)/2:w*.87,barH=vertical?h*.81:(h-margin*2-gap)/2;
-  const x=vertical?margin+c*(barW+gap):w*.07,y=vertical?h*.06:margin+c*(barH+gap),lit=Math.round(Math.sqrt(levels[c])*strips);
+  const x=vertical?margin+c*(barW+gap):w*.07,y=vertical?h*.06:margin+c*(barH+gap),lit=Math.min(strips,Math.round(Math.sqrt(Math.min(1,levels[c]*peakGain))*strips));
   for(let i=0;i<strips;i++){
    const t=i/(strips-1),xx=vertical?x:x+t*barW,yy=vertical?y+barH-(i+1)*barH/strips:y,ww=vertical?barW:barW/strips*.69,hh=vertical?barH/strips*.58:barH;
    ctx.fillStyle=i<lit?`hsl(${40-t*39} ${96-t*14}% ${76-t*58}%)`:'#28110f';if(i<lit){ctx.shadowBlur=5;ctx.shadowColor='#ff4021';}ctx.fillRect(xx,yy,ww,hh);ctx.shadowBlur=0;
@@ -90,7 +93,7 @@ function drawMeters(w,h,vertical){
 }
 function drawFire(w,h,now){
  const rows=w/h>3,levels=[left,right];for(let c=0;c<2;c++){
-  const ox=rows?w*.055:w*(c?.54:.07),width=w*(rows?.93:.39),height=h*(rows?.36:.9),base=h*(rows?(c?.96:.48):.95),energy=Math.sqrt(levels[c]);
+  const ox=rows?w*.055:w*(c?.54:.07),width=w*(rows?.93:.39),height=h*(rows?.43:.9),base=h*(rows?(c?.98:.49):.95),energy=Math.sqrt(Math.min(1,levels[c]*peakGain));
   const g=gradient(base-height,height);ctx.fillStyle=g;ctx.shadowColor='#f53213';ctx.shadowBlur=12;
   ctx.beginPath();ctx.moveTo(ox,base);
   for(let i=0;i<=100;i++){const t=i/100,x=ox+t*width,edge=Math.sin(Math.PI*t)**.45,ripple=.10*Math.sin(i*.43+now*.009)+.05*Math.sin(i*.94-now*.006),freq=packet.pcmLeft?interpolate(c?spectralR:spectralL,t):interpolate(packet.spectrum,t)/16;const y=base-height*energy*edge*Math.max(.05,.72+ripple+freq*.25);ctx.lineTo(x,y);}ctx.lineTo(ox+width,base);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
@@ -100,9 +103,9 @@ function drawFire(w,h,now){
  }
 }
 function drawVirtual(w,h,now){
- const bands=96,g=gradient(0,h),energy=(left+right)/2;ctx.fillStyle=g;ctx.shadowColor='#ff3e17';ctx.shadowBlur=5;
- if(variant===1){const cx=w/2,cy=h/2,r=Math.min(w,h)*.27;for(let i=0;i<bands;i++){const t=i/bands,a=t*Math.PI*2,v=packet.pcmLeft?interpolate(spectral,t):interpolate(packet.spectrum,t)/16;ctx.lineWidth=Math.max(1,w/300);ctx.strokeStyle=`hsl(${40-t*40},95%,${55-v*25}%)`;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.lineTo(cx+Math.cos(a)*(r+v*h*.26),cy+Math.sin(a)*(r+v*h*.26));ctx.stroke();}}
- else for(let i=0;i<bands;i++){const t=i/bands,v=packet.pcmLeft?interpolate(spectral,t):interpolate(packet.spectrum,t)/16,height=Math.min(h*.95,Math.pow(Math.max(0,v),.65)*h*.92),x=t*w;ctx.fillRect(x,h-height,w/bands*.62,height);if(variant===2){ctx.globalAlpha=.2;ctx.fillRect(x,0,w/bands*.62,height);ctx.globalAlpha=1;}}
+ const bands=96,g=gradient(0,h),energy=Math.min(1,(left+right)*peakGain/2);ctx.fillStyle=g;ctx.shadowColor='#ff3e17';ctx.shadowBlur=5;
+ if(variant===1){const cx=w/2,cy=h/2,r=Math.min(w,h)*.27;for(let i=0;i<bands;i++){const t=i/bands,a=t*Math.PI*2,v=Math.min(1,(packet.pcmLeft?interpolate(spectral,t):interpolate(packet.spectrum,t)/16)*peakGain);ctx.lineWidth=Math.max(1,w/300);ctx.strokeStyle=`hsl(${40-t*40},95%,${55-v*25}%)`;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.lineTo(cx+Math.cos(a)*(r+v*h*.26),cy+Math.sin(a)*(r+v*h*.26));ctx.stroke();}}
+ else for(let i=0;i<bands;i++){const t=i/bands,v=Math.min(1,(packet.pcmLeft?interpolate(spectral,t):interpolate(packet.spectrum,t)/16)*peakGain),height=Math.min(h*.95,Math.pow(Math.max(0,v),.65)*h*.92),x=t*w;ctx.fillRect(x,h-height,w/bands*.62,height);if(variant===2){ctx.globalAlpha=.2;ctx.fillRect(x,0,w/bands*.62,height);ctx.globalAlpha=1;}}
  ctx.shadowBlur=0;ctx.fillStyle='#9c4634';ctx.font=`${Math.max(9,h/20)}px Consolas,monospace`;ctx.fillText(packet.pcmLeft?'FFT · 512 PCM SAMPLES':'WINAMP · 75 FREQUENZBÄNDER',10,18);
 }
 let previous=performance.now();function draw(now){
@@ -115,7 +118,7 @@ let previous=performance.now();function draw(now){
  particles=particles.filter(p=>p.life>0);for(const p of particles){p.life-=delta;p.y-=p.vy*delta;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle='#ffc478';ctx.fillRect(p.x,p.y,1.5*dpr,2*dpr);}ctx.globalAlpha=1;
  document.getElementById('meter').textContent=`L ${db(left)} dB · R ${db(right)} dB`;clock.record(now,performance.now()-started);
 }requestAnimationFrame(draw);window.neowulfVisualizer={resetRenderMeasurements:()=>clock.resetMeasurements(),receive,get packet(){return packet;},get stats(){return clock.stats;},get levels(){return {left,right};},get spectra(){return {left:Array.from(spectralL),right:Array.from(spectralR)};},
- get transport(){return {accepted:transport.accepted,rejected:transport.rejected,ignored:transport.ignored,
+ get peakGain(){return peakGain;},get transport(){return {accepted:transport.accepted,rejected:transport.rejected,ignored:transport.ignored,
   bySource:{...transport.bySource},lastOrigin:transport.lastOrigin,selectedSource:source.value,
   lastPacketAgeMs:lastPacket===null?null:Math.max(0,performance.now()-lastPacket),pcmChannels:packet.pcmChannels||'legacy'};}};
 })();
