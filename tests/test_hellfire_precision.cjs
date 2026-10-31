@@ -13,8 +13,24 @@ assert.match(first, /^import \{[^}]+\} from '\.\/audio-engine\.js';$/);
 const built = audioSource.replace(/^export /gm, '') + '\n' + uiSource.slice(first.length + 1);
 assert.equal(read('studio/engines/instrument-app.js'), built, 'Winamp WebView bundle must match maintained modules');
 const context = vm.createContext({ console });
-vm.runInContext(audioSource.replace(/^export /gm, '') + ';globalThis.api = { newProject, validateProject, AudioGraph };', context);
-const { newProject, validateProject, AudioGraph } = context.api;
+vm.runInContext(audioSource.replace(/^export /gm, '') + ';globalThis.api = { newProject, validateProject, AudioGraph, buildSongPlan };', context);
+const { newProject, validateProject, AudioGraph, buildSongPlan } = context.api;
+const arrangement = newProject('synth');
+arrangement.chain = [7, 2];
+arrangement.patterns[7] = { ...arrangement.patterns[0], length: 16 };
+arrangement.patterns[2] = { ...arrangement.patterns[0], length: 32 };
+arrangement.swing = .25;
+const sequence = buildSongPlan(arrangement, 2);
+assert.equal(sequence.events.length, 96);
+assert.equal(sequence.events[0].patternId, 7, 'Song Chain must start at its FIRST entry');
+assert.equal(sequence.events[16].patternId, 2);
+assert.equal(sequence.events[48].patternId, 7);
+assert.equal(sequence.duration, 11.25);
+assert.ok(sequence.events[1].time > sequence.events[0].time, 'Swing timestamps must advance');
+assert.ok(sequence.events[16].time > sequence.events[15].time, 'Pattern boundaries must not overlap');
+arrangement.chain = Array.from({length:256},(_,i)=>i);
+for(const id of arrangement.chain)arrangement.patterns[id] = { ...arrangement.patterns[0], length:128 };
+assert.throws(()=>buildSongPlan(arrangement,16),/180 seconds/,'Long chains must fail BEFORE offline allocation');
 for (const model of ['synth', 'sampler', 'emx']) {
   const project = newProject(model);
   assert.equal(project.parts[0].filterType, 'lowpass');
@@ -136,7 +152,7 @@ for (let i = 0; i < 120; i++) {
 assert.ok(page.neowulfVisualizer.stats.measuredFps > 29);
 console.log(JSON.stringify({
   evidence: 'Node VM / mocked AudioContext / geometry source invariants only; not native Winamp',
-  verdict: 'PASS', models: 3, audioFilter: 'highpass', lfoStartedOnce: true,
+  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, audioFilter: 'highpass', lfoStartedOnce: true,
   sustainAudibleGraphParameter: true, eqTracksContained: 11, equalDisplayDecks: 4,
   paintGain: page.neowulfVisualizer.peakGain,
   simulatedFps: page.neowulfVisualizer.stats.measuredFps
