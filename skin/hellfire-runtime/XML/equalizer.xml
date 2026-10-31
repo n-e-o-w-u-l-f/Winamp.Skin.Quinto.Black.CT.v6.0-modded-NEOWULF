@@ -16,7 +16,7 @@
 	<Layer x="266" y="0" w="6" h="74" id="eq.layer.bar7"       image="eq.bar"/>
 	<Layer x="304" y="0" w="6" h="74" id="eq.layer.bar8"       image="eq.bar"/>
 	<Layer x="342" y="0" w="6" h="74" id="eq.layer.bar9"       image="eq.bar"/>
-	<Layer x="428" y="0" w="6" h="74" id="eq.layer.bar.preamp" image="eq.bar"/>
+	<Layer x="408" y="0" w="6" h="74" id="eq.layer.bar.preamp" image="eq.bar"/>
 </groupdef>
 <groupdef id="eq.group.slider">
 	<Slider x="0"   y="0" w="17" h="85" id="eq.slider0"       action="eq_band" param="1"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
@@ -29,7 +29,7 @@
 	<Slider x="266" y="0" w="17" h="85" id="eq.slider7"       action="eq_band" param="8"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
 	<Slider x="304" y="0" w="17" h="85" id="eq.slider8"       action="eq_band" param="9"      thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
 	<Slider x="342" y="0" w="17" h="85" id="eq.slider9"       action="eq_band" param="10"     thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
-	<Slider x="428" y="0" w="17" h="85" id="eq.slider.preamp" action="eq_band" param="preamp" thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
+	<Slider x="408" y="0" w="17" h="85" id="eq.slider.preamp" action="eq_band" param="preamp" thumb="eq.slider.thumb" hoverThumb="eq.slider.thumb.hover" downThumb="eq.slider.thumb.down" orientation="vertical"/>
 </groupdef>
 <groupdef id="eq.group.main">
 	<!-- COMPONENT BASE: do not remove width and height because we use setXmlParam() -->
