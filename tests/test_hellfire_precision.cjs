@@ -9,6 +9,37 @@ const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
 const audioSource = read('studio/engines/audio-engine.js');
 const uiSource = read('studio/engines/instrument-ui.js');
 const first = uiSource.split('\n')[0];
+// Instrument ARP must be real audio-scheduled, not a render-loop animation side effect.
+const arpMethod = uiSource.match(/function arpTick\(\)\{[\s\S]*?\n\}/)?.[0];
+assert.ok(arpMethod, 'Missing independent audio arpeggiator scheduler');
+assert.ok(!uiSource.includes('now-arpLast'), 'Frame-rate-coupled arpeggio was not removed');
+const arpEvents = [];
+const arpPart = { mute: false, solo: false };
+const arpState = vm.createContext({
+  arp: true, held: new Set([1, 3]),
+  engine: {
+    ctx: { state: 'running', currentTime: 5 },
+    graph: { trigger: (_p, event, at, duration) => arpEvents.push({ note: event.note, at, duration }) },
+    sampleFor: () => null, onTrigger: () => {}
+  },
+  project: { tempo: 120, parts: [arpPart, arpPart, arpPart, arpPart] },
+  arpNextTime: 0, arpIndex: 0, keyboard: true, selected: 0,
+  clamp: (value, lo, hi) => Math.min(hi, Math.max(lo, value)),
+  $: () => ({ value: '48' })
+});
+vm.runInContext(arpMethod + ';arpTick();', arpState);
+assert.equal(arpEvents.length, 1);
+assert.equal(arpEvents[0].note, 49);
+assert.equal(arpEvents[0].at, 5.025);
+arpState.engine.ctx.currentTime = 5.14;
+vm.runInContext('arpTick();', arpState);
+assert.equal(arpEvents.length, 2);
+assert.equal(arpEvents[1].note, 51);
+assert.ok(Math.abs(arpEvents[1].at - 5.15) < 1e-9);
+arpState.held.clear();
+vm.runInContext('arpTick();', arpState);
+assert.equal(arpEvents.length, 2, 'Releasing all pads must stop new arpeggio events');
+assert.equal(arpState.arpNextTime, 0);
 assert.match(first, /^import \{[^}]+\} from '\.\/audio-engine\.js';$/);
 const built = audioSource.replace(/^export /gm, '') + '\n' + uiSource.slice(first.length + 1);
 assert.equal(read('studio/engines/instrument-app.js'), built, 'Winamp WebView bundle must match maintained modules');
@@ -163,7 +194,7 @@ assert.ok(fireClips >= 100, 'Stereo fire renderer must clip BOTH channels inside
 assert.equal(clipDepth, 0, 'Every fire clipping region must restore canvas state');
 console.log(JSON.stringify({
   evidence: 'Node VM / mocked AudioContext / geometry source invariants only; not native Winamp',
-  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, audioFilter: 'highpass', lfoStartedOnce: true,
+  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, arpeggioScheduledEvents: 2, audioFilter: 'highpass', lfoStartedOnce: true,
   sustainAudibleGraphParameter: true, eqTracksContained: 11, equalDisplayDecks: 4,
   paintGain: page.neowulfVisualizer.peakGain, stereoFlameClips: fireClips,
   simulatedFps: page.neowulfVisualizer.stats.measuredFps
