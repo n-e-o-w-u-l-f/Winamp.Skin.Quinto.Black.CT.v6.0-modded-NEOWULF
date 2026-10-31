@@ -45,10 +45,10 @@ body.embedded .machine{padding:0;min-height:0}
 .reference-face .transport button{height:20px}
 .reference-face #scope{left:41px;top:133px;width:157px;height:76px}
 .reference-face .knobs{left:220px;top:49px;width:401px;height:60px;background:transparent}
-.reference-face .padgrid{left:218px;top:131px;width:408px;height:79px;grid-template-rows:repeat(2,35px);gap:9px 7px;background:transparent}
+.reference-face .padgrid{left:218px;top:131px;width:350px;height:79px;grid-template-rows:repeat(2,35px);gap:9px 7px;background:transparent}
 .reference-face .pad{height:35px}
-.face-mode{left:578px;top:100px;width:44px;flex-direction:row;gap:3px}
-.face-mode button{height:18px;min-width:24px}
+.face-mode{left:578px;top:132px;width:44px;flex-direction:column;gap:3px}
+.face-mode button{height:18px;min-width:0;width:44px}
 body.embedded .reference-face{left:calc(-15px * var(--reference-scale,1));top:calc(-35px * var(--reference-scale,1))}
 
 .knob:before{background:url('knob-face-v1.png') center/contain no-repeat!important;inset:0!important}

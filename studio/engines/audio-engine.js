@@ -18,7 +18,7 @@ export function newProject(model){
     const d=(model==='sampler'?i:i-spec.synths+9)%9;
     return {name:drum?DRUMS[d]:`SYNTH ${i+1}`,type:drum?'drum':'synth',wave:WAVES[i%4],drum:d,
       volume:drum?.68:.42,pan:0,cutoff:drum?17000:5200,resonance:.7,attack:.003,decay:.24,release:.09,
-      pitch:0,drive:.12,send:.16,mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
+      pitch:0,drive:.12,send:.16,filterType:'lowpass',sustain:.55,lfoRate:2,lfoDepth:0,mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
   });
   const p=blankPattern(spec.parts);p.name='HELLFIRE 01';
   const kick=spec.synths,hat=(spec.synths+2)%spec.parts,snare=(spec.synths+1)%spec.parts;
@@ -37,8 +37,8 @@ export function validateProject(value,model){
   value.tempo=clamp(Number(value.tempo)||128,40,300);value.swing=clamp(Number(value.swing)||0,0,.45);value.master=clamp(Number(value.master)||0,0,1);
   value.pattern=clamp(Math.floor(Number(value.pattern)||0),0,255);
   for(const p of value.parts){
-    for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
-    p.end=Math.max(p.start+.01,p.end);p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
+    for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['sustain',0,1,.55],['lfoRate',.1,20,2],['lfoDepth',0,1,0],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
+    p.end=Math.max(p.start+.01,p.end);p.filterType=['lowpass','bandpass','highpass'].includes(p.filterType)?p.filterType:'lowpass';p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
     p.name=String(p.name||'PART').slice(0,32);p.sampleId=typeof p.sampleId==='string'?p.sampleId:null;
     for(const k of ['mute','solo','reverse','loop'])p[k]=Boolean(p[k]);
   }
@@ -48,7 +48,7 @@ export function validateProject(value,model){
     if(!Array.isArray(p.events)||p.events.length!==spec.parts)throw Error('Invalid pattern events');
     p.length=clamp(Math.floor(Number(p.length)||16),1,spec.maxSteps);p.name=String(p.name||'INIT').slice(0,32);
     p.events=p.events.map(row=>Array.from({length:128},(_,s)=>{
-      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send'].includes(k)&&Number.isFinite(v))):null};
+      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send','sustain','lfoRate','lfoDepth'].includes(k)&&Number.isFinite(v))):null};
     }));out[id]=p;
   }
   value.patterns=out;if(!out[value.pattern])value.patterns[value.pattern]=blankPattern(spec.parts);
@@ -71,9 +71,17 @@ export class AudioGraph {
   trigger(part,event,time,duration,sample){
     const ctx=this.ctx,p={...part,...(event.lock||{})},t=Math.max(ctx.currentTime,time),gate=Math.max(.015,duration*event.gate);
     const gain=ctx.createGain(),filter=ctx.createBiquadFilter(),drive=ctx.createWaveShaper(),pan=ctx.createStereoPanner(),send=ctx.createGain();
-    filter.type='lowpass';filter.frequency.value=clamp(p.cutoff,30,ctx.sampleRate*.45);filter.Q.value=clamp(p.resonance,.1,18);drive.curve=curve(clamp(p.drive,0,1));drive.oversample='2x';pan.pan.value=clamp(p.pan,-1,1);send.gain.value=clamp(p.send,0,1);
+    filter.type=['lowpass','bandpass','highpass'].includes(p.filterType)?p.filterType:'lowpass';filter.frequency.value=clamp(p.cutoff,30,ctx.sampleRate*.45);filter.Q.value=clamp(p.resonance,.1,18);drive.curve=curve(clamp(p.drive,0,1));drive.oversample='2x';pan.pan.value=clamp(p.pan,-1,1);send.gain.value=clamp(p.send,0,1);
     filter.connect(drive);drive.connect(gain);gain.connect(pan);pan.connect(this.master);pan.connect(send);send.connect(this.delay);
     const sources=[];let stopAt=t+gate+p.release+.06;const pitch=event.note-48+p.pitch;
+    // Per-voice real audio-rate filter modulation; zero depth leaves the graph untouched.
+    let lfoSource=null;
+    if(p.lfoDepth>0){
+      const lfo=ctx.createOscillator(),modGain=ctx.createGain();
+      lfo.type='sine';lfo.frequency.value=clamp(p.lfoRate,.1,20);
+      modGain.gain.value=clamp(p.cutoff*.6*p.lfoDepth,0,ctx.sampleRate*.2);
+      lfo.connect(modGain);modGain.connect(filter.frequency);lfoSource=lfo;
+    }
     if(sample){
       const src=ctx.createBufferSource();src.buffer=sample;src.playbackRate.value=Math.pow(2,pitch/12);src.loop=Boolean(p.loop);
       const start=clamp(p.start,0,.99)*sample.duration,end=clamp(p.end,p.start+.01,1)*sample.duration;
@@ -96,9 +104,10 @@ export class AudioGraph {
       }
       const drumDecay=[.42,.21,.065,.36,.15,.33,.055,.8,.17][kind];stopAt=t+drumDecay+p.release+.04;
     }
+    if(lfoSource){lfoSource.start(t);sources.push(lfoSource);}
     const end=Math.max(t+.006,stopAt-p.release-.015),amp=clamp(p.volume,0,1)*clamp(event.velocity,0,1)*.6;
     gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(amp,t+Math.min(p.attack,(end-t)*.3));
-    gain.gain.exponentialRampToValueAtTime(Math.max(.0001,amp*.55),Math.min(end,t+p.attack+p.decay));
+    gain.gain.exponentialRampToValueAtTime(Math.max(.0001,amp*clamp(p.sustain,0,1)),Math.min(end,t+p.attack+p.decay));
     gain.gain.setTargetAtTime(.00001,end,Math.max(.004,p.release/4));
     const voice={sources,gain,stopAt,release:(when=ctx.currentTime)=>{const a=Math.max(t,when);gain.gain.cancelScheduledValues(a);gain.gain.setTargetAtTime(.00001,a,Math.max(.004,p.release/4));for(const s of sources){try{s.stop(a+p.release+.03);}catch{}}}};
     this.voices.add(voice);for(const s of sources){try{s.stop(stopAt);}catch{}}
@@ -106,6 +115,24 @@ export class AudioGraph {
     return voice;
   }
   panic(){for(const v of this.voices){for(const s of v.sources){try{s.stop();}catch{}}}this.voices.clear();}
+}
+// Ordered sections are shared by offline WAV export and on-device song-chain playback.
+export function buildSongPlan(project,repeats=1){
+  const n=clamp(Math.floor(Number(repeats)||1),1,16),step=60/project.tempo/4;
+  const ids=project.chain?.length?project.chain:[project.pattern];
+  const sections=ids.map(id=>({id,pattern:project.patterns[id]||blankPattern(MODELS[project.model].parts)}));
+  const duration=sections.reduce((sum,x)=>sum+x.pattern.length*step,0)*n;
+  // Protect OfflineAudioContext from unbounded sample allocation on long song chains.
+  if(!Number.isFinite(duration)||duration<=0||duration>180)throw Error('WAV export exceeds 180 seconds: shorten song chain or repeat count');
+  const events=[];let offset=0;
+  for(let repeat=0;repeat<n;repeat++)for(const section of sections){
+    for(let s=0;s<section.pattern.length;s++)events.push({
+      patternId:section.id,step:s,pattern:section.pattern,
+      time:.01+offset+s*step+(s%2===1?step*project.swing:0),duration:step
+    });
+    offset+=section.pattern.length*step;
+  }
+  return {events,duration};
 }
 export class Instrument {
   constructor(project){this.project=project;this.ctx=null;this.graph=null;this.samples=new Map();this.reversed=new Map();this.playing=false;this.step=0;this.nextTime=0;this.timer=null;this.pendingPattern=null;this.chainIndex=0;this.scheduled=[];this.onStep=()=>{};this.onPattern=()=>{};this.onTrigger=()=>{};}
@@ -122,7 +149,7 @@ export class Instrument {
     const b=this.samples.get(part.sampleId);if(!b||!part.reverse)return b;
     if(!this.reversed.has(part.sampleId)){const r=this.ctx.createBuffer(b.numberOfChannels,b.length,b.sampleRate);for(let c=0;c<b.numberOfChannels;c++)r.getChannelData(c).set(Float32Array.from(b.getChannelData(c)).reverse());this.reversed.set(part.sampleId,r);}return this.reversed.get(part.sampleId);
   }
-  async start(epoch){await this.enable();if(this.playing)return;this.playing=true;this.step=0;this.chainIndex=0;this.nextTime=this.ctx.currentTime+(epoch?Math.max(.02,(epoch-Date.now())/1000):.06);this.tick();this.timer=setInterval(()=>this.tick(),20);}
+  async start(epoch){await this.enable();if(this.playing)return;this.playing=true;this.step=0;this.chainIndex=0;this.pendingPattern=null;if(this.project.chain.length)this.setPattern(this.project.chain[0]);this.nextTime=this.ctx.currentTime+(epoch?Math.max(.02,(epoch-Date.now())/1000):.06);this.tick();this.timer=setInterval(()=>this.tick(),20);}
   stop(){this.playing=false;clearInterval(this.timer);this.timer=null;this.graph?.panic();this.scheduled=[];this.onStep(-1);}
   tick(){
     if(!this.playing||this.ctx.state!=='running')return;
@@ -142,12 +169,12 @@ export class Instrument {
   selectPattern(id){if(this.playing)this.pendingPattern=id;else this.setPattern(id);}
   async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger(p,{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
   async renderWav(repeats=1){
-    repeats=clamp(Math.floor(Number(repeats)||1),1,16);
-    const pr=this.project,pat=pr.patterns[pr.pattern],beat=60/pr.tempo/4,duration=pat.length*beat*clamp(repeats,1,16);
-    const ctx=new OfflineAudioContext(2,Math.ceil((duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
+    const pr=this.project,plan=buildSongPlan(pr,repeats);
+    const ctx=new OfflineAudioContext(2,Math.ceil((plan.duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
     const solo=pr.parts.some(p=>p.solo);
-    for(let s=0;s<pat.length*repeats;s++)pr.parts.forEach((p,i)=>{
-      const e=pat.events[i][s%pat.length];if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger(p,e,.01+s*beat+(s%2===1?beat*pr.swing:0),beat,this.sampleFor(p));
+    for(const item of plan.events)pr.parts.forEach((p,i)=>{
+      const e=item.pattern.events[i][item.step];
+      if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger(p,e,item.time,item.duration,this.sampleFor(p));
     });
     return encodeWav(await ctx.startRendering());
   }
