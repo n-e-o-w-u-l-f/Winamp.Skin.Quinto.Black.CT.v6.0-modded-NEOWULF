@@ -116,6 +116,24 @@ class AudioGraph {
   }
   panic(){for(const v of this.voices){for(const s of v.sources){try{s.stop();}catch{}}}this.voices.clear();}
 }
+// Ordered sections are shared by offline WAV export and on-device song-chain playback.
+function buildSongPlan(project,repeats=1){
+  const n=clamp(Math.floor(Number(repeats)||1),1,16),step=60/project.tempo/4;
+  const ids=project.chain?.length?project.chain:[project.pattern];
+  const sections=ids.map(id=>({id,pattern:project.patterns[id]||blankPattern(MODELS[project.model].parts)}));
+  const duration=sections.reduce((sum,x)=>sum+x.pattern.length*step,0)*n;
+  // Protect OfflineAudioContext from unbounded sample allocation on long song chains.
+  if(!Number.isFinite(duration)||duration<=0||duration>180)throw Error('WAV export exceeds 180 seconds: shorten song chain or repeat count');
+  const events=[];let offset=0;
+  for(let repeat=0;repeat<n;repeat++)for(const section of sections){
+    for(let s=0;s<section.pattern.length;s++)events.push({
+      patternId:section.id,step:s,pattern:section.pattern,
+      time:.01+offset+s*step+(s%2===1?step*project.swing:0),duration:step
+    });
+    offset+=section.pattern.length*step;
+  }
+  return {events,duration};
+}
 class Instrument {
   constructor(project){this.project=project;this.ctx=null;this.graph=null;this.samples=new Map();this.reversed=new Map();this.playing=false;this.step=0;this.nextTime=0;this.timer=null;this.pendingPattern=null;this.chainIndex=0;this.scheduled=[];this.onStep=()=>{};this.onPattern=()=>{};this.onTrigger=()=>{};}
   async enable(){
@@ -131,7 +149,7 @@ class Instrument {
     const b=this.samples.get(part.sampleId);if(!b||!part.reverse)return b;
     if(!this.reversed.has(part.sampleId)){const r=this.ctx.createBuffer(b.numberOfChannels,b.length,b.sampleRate);for(let c=0;c<b.numberOfChannels;c++)r.getChannelData(c).set(Float32Array.from(b.getChannelData(c)).reverse());this.reversed.set(part.sampleId,r);}return this.reversed.get(part.sampleId);
   }
-  async start(epoch){await this.enable();if(this.playing)return;this.playing=true;this.step=0;this.chainIndex=0;this.nextTime=this.ctx.currentTime+(epoch?Math.max(.02,(epoch-Date.now())/1000):.06);this.tick();this.timer=setInterval(()=>this.tick(),20);}
+  async start(epoch){await this.enable();if(this.playing)return;this.playing=true;this.step=0;this.chainIndex=0;this.pendingPattern=null;if(this.project.chain.length)this.setPattern(this.project.chain[0]);this.nextTime=this.ctx.currentTime+(epoch?Math.max(.02,(epoch-Date.now())/1000):.06);this.tick();this.timer=setInterval(()=>this.tick(),20);}
   stop(){this.playing=false;clearInterval(this.timer);this.timer=null;this.graph?.panic();this.scheduled=[];this.onStep(-1);}
   tick(){
     if(!this.playing||this.ctx.state!=='running')return;
@@ -151,12 +169,12 @@ class Instrument {
   selectPattern(id){if(this.playing)this.pendingPattern=id;else this.setPattern(id);}
   async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger(p,{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
   async renderWav(repeats=1){
-    repeats=clamp(Math.floor(Number(repeats)||1),1,16);
-    const pr=this.project,pat=pr.patterns[pr.pattern],beat=60/pr.tempo/4,duration=pat.length*beat*clamp(repeats,1,16);
-    const ctx=new OfflineAudioContext(2,Math.ceil((duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
+    const pr=this.project,plan=buildSongPlan(pr,repeats);
+    const ctx=new OfflineAudioContext(2,Math.ceil((plan.duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
     const solo=pr.parts.some(p=>p.solo);
-    for(let s=0;s<pat.length*repeats;s++)pr.parts.forEach((p,i)=>{
-      const e=pat.events[i][s%pat.length];if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger(p,e,.01+s*beat+(s%2===1?beat*pr.swing:0),beat,this.sampleFor(p));
+    for(const item of plan.events)pr.parts.forEach((p,i)=>{
+      const e=item.pattern.events[i][item.step];
+      if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger(p,e,item.time,item.duration,this.sampleFor(p));
     });
     return encodeWav(await ctx.startRendering());
   }
