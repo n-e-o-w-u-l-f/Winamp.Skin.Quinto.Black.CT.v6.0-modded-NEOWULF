@@ -18,7 +18,7 @@ function newProject(model){
     const d=(model==='sampler'?i:i-spec.synths+9)%9;
     return {name:drum?DRUMS[d]:`SYNTH ${i+1}`,type:drum?'drum':'synth',wave:WAVES[i%4],drum:d,
       volume:drum?.68:.42,pan:0,cutoff:drum?17000:5200,resonance:.7,attack:.003,decay:.24,release:.09,
-      pitch:0,drive:.12,send:.16,mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
+      pitch:0,drive:.12,send:.16,filterType:'lowpass',sustain:.55,lfoRate:2,lfoDepth:0,mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
   });
   const p=blankPattern(spec.parts);p.name='HELLFIRE 01';
   const kick=spec.synths,hat=(spec.synths+2)%spec.parts,snare=(spec.synths+1)%spec.parts;
@@ -37,8 +37,8 @@ function validateProject(value,model){
   value.tempo=clamp(Number(value.tempo)||128,40,300);value.swing=clamp(Number(value.swing)||0,0,.45);value.master=clamp(Number(value.master)||0,0,1);
   value.pattern=clamp(Math.floor(Number(value.pattern)||0),0,255);
   for(const p of value.parts){
-    for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
-    p.end=Math.max(p.start+.01,p.end);p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
+    for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['sustain',0,1,.55],['lfoRate',.1,20,2],['lfoDepth',0,1,0],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
+    p.end=Math.max(p.start+.01,p.end);p.filterType=['lowpass','bandpass','highpass'].includes(p.filterType)?p.filterType:'lowpass';p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
     p.name=String(p.name||'PART').slice(0,32);p.sampleId=typeof p.sampleId==='string'?p.sampleId:null;
     for(const k of ['mute','solo','reverse','loop'])p[k]=Boolean(p[k]);
   }
@@ -48,7 +48,7 @@ function validateProject(value,model){
     if(!Array.isArray(p.events)||p.events.length!==spec.parts)throw Error('Invalid pattern events');
     p.length=clamp(Math.floor(Number(p.length)||16),1,spec.maxSteps);p.name=String(p.name||'INIT').slice(0,32);
     p.events=p.events.map(row=>Array.from({length:128},(_,s)=>{
-      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send'].includes(k)&&Number.isFinite(v))):null};
+      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send','sustain','lfoRate','lfoDepth'].includes(k)&&Number.isFinite(v))):null};
     }));out[id]=p;
   }
   value.patterns=out;if(!out[value.pattern])value.patterns[value.pattern]=blankPattern(spec.parts);
@@ -71,9 +71,16 @@ class AudioGraph {
   trigger(part,event,time,duration,sample){
     const ctx=this.ctx,p={...part,...(event.lock||{})},t=Math.max(ctx.currentTime,time),gate=Math.max(.015,duration*event.gate);
     const gain=ctx.createGain(),filter=ctx.createBiquadFilter(),drive=ctx.createWaveShaper(),pan=ctx.createStereoPanner(),send=ctx.createGain();
-    filter.type='lowpass';filter.frequency.value=clamp(p.cutoff,30,ctx.sampleRate*.45);filter.Q.value=clamp(p.resonance,.1,18);drive.curve=curve(clamp(p.drive,0,1));drive.oversample='2x';pan.pan.value=clamp(p.pan,-1,1);send.gain.value=clamp(p.send,0,1);
+    filter.type=['lowpass','bandpass','highpass'].includes(p.filterType)?p.filterType:'lowpass';filter.frequency.value=clamp(p.cutoff,30,ctx.sampleRate*.45);filter.Q.value=clamp(p.resonance,.1,18);drive.curve=curve(clamp(p.drive,0,1));drive.oversample='2x';pan.pan.value=clamp(p.pan,-1,1);send.gain.value=clamp(p.send,0,1);
     filter.connect(drive);drive.connect(gain);gain.connect(pan);pan.connect(this.master);pan.connect(send);send.connect(this.delay);
     const sources=[];let stopAt=t+gate+p.release+.06;const pitch=event.note-48+p.pitch;
+    // Per-voice real audio-rate filter modulation; zero depth leaves the graph untouched.
+    if(p.lfoDepth>0){
+      const lfo=ctx.createOscillator(),modGain=ctx.createGain();
+      lfo.type='sine';lfo.frequency.value=clamp(p.lfoRate,.1,20);
+      modGain.gain.value=clamp(p.cutoff*.6*p.lfoDepth,0,ctx.sampleRate*.2);
+      lfo.connect(modGain);modGain.connect(filter.frequency);lfo.start(t);sources.push(lfo);
+    }
     if(sample){
       const src=ctx.createBufferSource();src.buffer=sample;src.playbackRate.value=Math.pow(2,pitch/12);src.loop=Boolean(p.loop);
       const start=clamp(p.start,0,.99)*sample.duration,end=clamp(p.end,p.start+.01,1)*sample.duration;
@@ -98,7 +105,7 @@ class AudioGraph {
     }
     const end=Math.max(t+.006,stopAt-p.release-.015),amp=clamp(p.volume,0,1)*clamp(event.velocity,0,1)*.6;
     gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(amp,t+Math.min(p.attack,(end-t)*.3));
-    gain.gain.exponentialRampToValueAtTime(Math.max(.0001,amp*.55),Math.min(end,t+p.attack+p.decay));
+    gain.gain.exponentialRampToValueAtTime(Math.max(.0001,amp*clamp(p.sustain,0,1)),Math.min(end,t+p.attack+p.decay));
     gain.gain.setTargetAtTime(.00001,end,Math.max(.004,p.release/4));
     const voice={sources,gain,stopAt,release:(when=ctx.currentTime)=>{const a=Math.max(t,when);gain.gain.cancelScheduledValues(a);gain.gain.setTargetAtTime(.00001,a,Math.max(.004,p.release/4));for(const s of sources){try{s.stop(a+p.release+.03);}catch{}}}};
     this.voices.add(voice);for(const s of sources){try{s.stop(stopAt);}catch{}}
@@ -169,7 +176,7 @@ let engine=new Instrument(project),selected=0,page=0,bank=Math.floor(project.pat
 const channel=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.instruments.transport.v1'):null;
 document.body.dataset.model=model;if(query.get('embed')==='1')document.body.classList.add('embedded');
 $('modelTitle').textContent=spec.title;document.title=`NEOWULF · ${spec.title}`;
-const params=[['cutoff','CUTOFF',30,20000,'log'],['resonance','RESONANCE',.1,18,'linear'],['pitch','PITCH',-36,36,'linear'],['volume','LEVEL',0,1,'linear'],['pan','PAN',-1,1,'linear'],['send','FX SEND',0,1,'linear'],['attack','ATTACK',.001,2,'log'],['decay','DECAY',.02,4,'log'],['release','RELEASE',.01,4,'log'],['drive','DRIVE',0,1,'linear']];
+const params=[['cutoff','CUTOFF',30,20000,'log'],['resonance','RESONANCE',.1,18,'linear'],['pitch','PITCH',-36,36,'linear'],['volume','LEVEL',0,1,'linear'],['pan','PAN',-1,1,'linear'],['send','FX SEND',0,1,'linear'],['attack','ATTACK',.001,2,'log'],['decay','DECAY',.02,4,'log'],['release','RELEASE',.01,4,'log'],['drive','DRIVE',0,1,'linear'],['sustain','SUSTAIN',0,1,'linear'],['lfoRate','LFO RATE',.1,20,'log'],['lfoDepth','LFO DEPTH',0,1,'linear']];
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3300);}
 function setStatus(msg){$('status').textContent=msg;}
 function persist(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{try{localStorage.setItem(storageKey,JSON.stringify(project));}catch(e){toast('Speichern fehlgeschlagen: '+e.message);}},250);}
@@ -215,7 +222,7 @@ function renderParts(){
   active('mute',part().mute);active('solo',part().solo);active('reverse',part().reverse);active('loop',part().loop);
   $('wave').replaceChildren();if(part().type==='synth'){for(const w of WAVES)$('wave').add(new Option(w.toUpperCase(),w));$('wave').value=part().wave;}
   else{for(const [i,n] of ['KICK','SNARE','CLOSED HAT','OPEN HAT','CLAP','LOW TOM','RIM','CRASH','PERC'].entries())$('wave').add(new Option(n,i));$('wave').value=part().drum;}
-  $('sampleStart').value=part().start;$('sampleEnd').value=part().end;$('sampleName').textContent=part().sampleId?part().name:'Eigene synthetische Werksklänge';
+  $('filterType').value=part().filterType;$('sampleStart').value=part().start;$('sampleEnd').value=part().end;$('sampleName').textContent=part().sampleId?part().name:'Eigene synthetische Werksklänge';
 }
 function renderKnobs(){for(const [key,title,min,max,scale] of params){const knob=document.querySelector(`[data-param="${key}"]`),v=part()[key],n=scale==='log'?Math.log(v/min)/Math.log(max/min):(v-min)/(max-min);knob.style.setProperty('--v',n);knob.setAttribute('aria-valuemin',min);knob.setAttribute('aria-valuemax',max);knob.setAttribute('aria-valuenow',v.toFixed(3));knob.parentElement.querySelector('output').textContent=key==='cutoff'?`${Math.round(v)} Hz`:['attack','decay','release'].includes(key)?`${Math.round(v*1000)} ms`:key==='pitch'?`${v>0?'+':''}${v} st`:v.toFixed(2);}}
 function renderSteps(current=-1){
@@ -269,7 +276,7 @@ $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instru
 $('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
-$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};
+$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;persist();};
 for(const [id,key] of [['mute','mute'],['solo','solo'],['reverse','reverse'],['loop','loop']])$(id).onclick=()=>{part()[key]=!part()[key];renderParts();persist();};
 $('sampleStart').oninput=()=>{part().start=Math.min(Number($('sampleStart').value),part().end-.01);persist();};$('sampleEnd').oninput=()=>{part().end=Math.max(Number($('sampleEnd').value),part().start+.01);persist();};
 $('sampleImport').onclick=()=>$('sampleFile').click();$('sampleFile').onchange=async()=>{const file=$('sampleFile').files[0];if(!file)return;const index=selected;try{await ensureAudio();const id=`sample-${Date.now()}-${index}`,buf=await engine.loadSample(file,id);project.parts[index].sampleId=id;project.parts[index].name=file.name.slice(0,30);project.parts[index].start=0;project.parts[index].end=1;await storeSample(id,encodeWav(buf));renderParts();persist();toast(`${file.name}: ${buf.duration.toFixed(2)} s geladen`);}catch(e){toast(e.message);}$('sampleFile').value='';};
