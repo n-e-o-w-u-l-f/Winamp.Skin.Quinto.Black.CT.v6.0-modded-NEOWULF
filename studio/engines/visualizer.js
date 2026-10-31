@@ -92,14 +92,45 @@ function drawMeters(w,h,vertical){
  }
 }
 function drawFire(w,h,now){
- const rows=w/h>3,levels=[left,right];for(let c=0;c<2;c++){
-  const ox=rows?w*.055:w*(c?.54:.07),width=w*(rows?.93:.39),height=h*(rows?.43:.9),base=h*(rows?(c?.98:.49):.95),energy=Math.sqrt(Math.min(1,levels[c]*peakGain));
-  const g=gradient(base-height,height);ctx.fillStyle=g;ctx.shadowColor='#f53213';ctx.shadowBlur=12;
-  ctx.beginPath();ctx.moveTo(ox,base);
-  for(let i=0;i<=100;i++){const t=i/100,x=ox+t*width,edge=Math.sin(Math.PI*t)**.45,ripple=.10*Math.sin(i*.43+now*.009)+.05*Math.sin(i*.94-now*.006),freq=packet.pcmLeft?interpolate(c?spectralR:spectralL,t):interpolate(packet.spectrum,t)/16;const y=base-height*energy*edge*Math.max(.05,.72+ripple+freq*.25);ctx.lineTo(x,y);}ctx.lineTo(ox+width,base);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
-  const strips=28;for(let i=0;i<strips;i++){const x=ox+i*width/strips,top=base-energy*height*(.32+.4*Math.sin(Math.PI*i/strips));ctx.globalAlpha=.22;ctx.fillStyle='#ffd88b';ctx.fillRect(x,top,width/strips*.18,base-top);ctx.globalAlpha=1;}
-  ctx.fillStyle='#b04733';ctx.font=`${Math.max(9,Math.min(12,h/20))}px Consolas,monospace`;ctx.fillText(c?'R':'L',rows?3:ox+width*.39,rows?base-height*.35:18);
-  if(energy>.08&&particles.length<220){for(let i=0;i<Math.ceil(energy*3);i++)particles.push({x:ox+Math.random()*width,y:base-energy*height*.6,vy:20+Math.random()*60,life:.4+Math.random()*.8});}
+ // 24 smooth, signal-driven flame tongues per stereo channel at a 30Hz budget.
+ // Each channel is additionally clipped to its own glass region.
+ const rows=w/h>3,levels=[left,right],tongues=24;
+ for(let c=0;c<2;c++){
+  const ox=rows?w*.055:w*(c?.54:.07),width=w*(rows?.93:.39);
+  const height=h*(rows?.43:.9),base=h*(rows?(c?.98:.49):.95);
+  const energy=Math.sqrt(Math.min(1,levels[c]*peakGain));
+  if(energy<.001)continue;
+  const g=gradient(base-height,height);
+  ctx.save();ctx.beginPath();ctx.rect(ox,base-height,width,height);ctx.clip();
+  ctx.fillStyle=g;ctx.shadowColor='#fa2c08';ctx.shadowBlur=Math.min(15,h*.08);
+  for(let i=0;i<tongues;i++){
+   const t=(i+.5)/tongues,edge=Math.sin(Math.PI*t)**.42;
+   const bin=packet.pcmLeft?interpolate(c?spectralR:spectralL,t):interpolate(packet.spectrum,t)/16;
+   const wave=Math.sin(now*.0044+i*1.919+c*1.1)*.06+Math.sin(now*.0029-i*.817)*.035;
+   const strength=Math.min(1,energy*edge*(.92+.18*bin)*(1+wave));
+   const y=base-height*strength,cell=width/tongues;
+   const x=ox+(i+.5)*cell,sway=Math.sin(now*.0035+i*1.4+c)*cell*.29;
+   ctx.beginPath();ctx.moveTo(x-cell*.64,base);
+   ctx.bezierCurveTo(x-cell*.39,base-height*.40*strength,x+sway-cell*.35,y+height*.16*strength,x+sway,y);
+   ctx.bezierCurveTo(x+sway+cell*.25,y+height*.18*strength,x+cell*.42,base-height*.20*strength,x+cell*.64,base);
+   ctx.closePath();ctx.fill();
+  }
+  ctx.shadowBlur=0;
+  // Bright cores respond independently to the L/R spectrum; stop at glass edges.
+  for(let i=0;i<32;i++){
+   const t=i/31,bin=packet.pcmLeft?interpolate(c?spectralR:spectralL,t):interpolate(packet.spectrum,t)/16;
+   const core=Math.min(1,energy*(.33+.55*bin));
+   const bh=height*core*(.47+.32*Math.sin(Math.PI*t)),x=ox+t*width;
+   ctx.globalAlpha=.24+.38*core;ctx.fillStyle=core>.7?'#fff2a3':'#ffab36';
+   ctx.fillRect(x,base-bh,width/32*.18,bh);
+  }
+  ctx.globalAlpha=1;ctx.restore();
+  ctx.fillStyle='#cf6554';ctx.font=`${Math.max(9,Math.min(12,h/20))}px Consolas,monospace`;
+  ctx.fillText(c?'R':'L',rows?3:ox+width*.39,rows?base-height*.38:18);
+  if(energy>.08&&particles.length<200)for(let i=0;i<Math.ceil(energy*2);i++){
+   const seed=(Math.sin(now*.017+i*13.1+c*31.7)+1)*.5;
+   particles.push({x:ox+seed*width,y:base-height*energy*.6,vy:24+seed*50,life:.45+seed*.5});
+  }
  }
 }
 function drawVirtual(w,h,now){
