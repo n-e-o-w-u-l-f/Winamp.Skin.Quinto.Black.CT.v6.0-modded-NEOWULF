@@ -263,13 +263,13 @@ function bindEngine(){
 function flashPad(i){const el=document.querySelector(`[data-pad="${i}"]`);if(!el)return;el.classList.add('hit');setTimeout(()=>{if(!held.has(i))el.classList.remove('hit');},110);}
 async function ensureAudio(){await engine.enable();document.body.classList.add('audio-on');$('power').textContent='AUDIO READY';setStatus(`${engine.ctx.sampleRate/1000} kHz · ECHTE AUDIOAUSGABE`);}
 async function hitPad(i){
-  try{await ensureAudio();held.add(i);const playedPart=keyboard?selected:i,note=keyboard?Number($('note').value)+i:Number($('note').value);if(!keyboard)selectPart(i);const voice=await engine.hit(playedPart,clamp(note,0,127));padVoices.set(i,voice);flashPad(i);
+  try{await ensureAudio();held.add(i);const playedPart=keyboard?selected:i,note=keyboard?Number($('note').value)+i:Number($('note').value);if(!keyboard)selectPart(i);const voice=arp?null:await engine.hit(playedPart,clamp(note,0,127));if(voice)padVoices.set(i,voice);flashPad(i);
     if(record&&engine.playing){const s=engine.lastStep??0,ev=pattern().events[playedPart][s];ev.on=true;ev.note=note;ev.velocity=.85;persist();renderSteps(s);}
   }catch(e){toast(e.message);}
 }
 function releasePad(i){held.delete(i);if(keyboard)padVoices.get(i)?.release();padVoices.delete(i);document.querySelector(`[data-pad="${i}"]`)?.classList.remove('hit');}
 async function play(epoch,broadcast=true){await ensureAudio();if(linked&&broadcast)epoch=Date.now()+180;await engine.start(epoch);active('play',true);setStatus('SEQUENCER LÄUFT');if(linked&&broadcast)channel?.postMessage({type:'play',tempo:project.tempo,epoch});}
-function stop(broadcast=true){engine.stop();active('play',false);setStatus('GESTOPPT');if(linked&&broadcast)channel?.postMessage({type:'stop'});}
+function stop(broadcast=true){stopArpTimer();arp=false;active('arp',false);engine.stop();active('play',false);setStatus('GESTOPPT');if(linked&&broadcast)channel?.postMessage({type:'stop'});}
 channel?.addEventListener('message',async({data})=>{if(!linked||!data)return;try{if(data.type==='play'){project.tempo=clamp(Number(data.tempo)||128,40,300);renderGlobals();await play(data.epoch,false);}if(data.type==='stop')stop(false);if(data.type==='tempo'){project.tempo=clamp(Number(data.value),40,300);renderGlobals();}}catch(e){toast(e.message);}});
 function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),15000);}
 async function db(){return new Promise((resolve,reject)=>{const r=indexedDB.open(`neowulf-${model}`,1);r.onupgradeneeded=()=>r.result.createObjectStore('samples');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
@@ -293,7 +293,7 @@ createButtons();bindEngine();renderAll();
 $('power').onclick=()=>ensureAudio().catch(e=>toast(e.message));$('play').onclick=()=>play(linked?Date.now()+180:undefined).catch(e=>toast(e.message));$('stop').onclick=()=>stop();
 $('record').onclick=()=>{record=!record;active('record',record);document.body.classList.toggle('recording',record);};$('motion').onclick=()=>{motion=!motion;active('motion',motion);};
 $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instrumentdecks über gemeinsamen Transport verbunden':'Transport bleibt unabhängig');};
-$('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);};
+$('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);if(arp)startArpTimer();else stopArpTimer();};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
 $('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;persist();};
@@ -311,11 +311,30 @@ $('editSave').onclick=()=>{const e=pattern().events[selected][editStep];e.note=c
 $('midi').onclick=async()=>{try{if(!navigator.requestMIDIAccess)throw Error('MIDI ist in dieser Laufzeit nicht verfügbar');const midi=await navigator.requestMIDIAccess(),inputs=[...midi.inputs.values()];if(!inputs.length)throw Error('Kein MIDI-Eingang angeschlossen');for(const input of inputs)input.onmidimessage=async({data})=>{const [st,note,vel]=data;if((st&240)===144&&vel>0){await ensureAudio();const v=await engine.hit(selected,note,vel/127);padVoices.set(`m${note}`,v);}else if((st&240)===128||((st&240)===144&&vel===0)){padVoices.get(`m${note}`)?.release();padVoices.delete(`m${note}`);}};active('midi',true);toast(inputs.map(i=>i.name).join(', '));}catch(e){toast(e.message);}};
 document.addEventListener('keydown',e=>{if(/input|select|textarea/i.test(e.target.tagName)||$('edit').open||e.ctrlKey||e.metaKey)return;if(e.code==='Space'){e.preventDefault();if(!e.repeat){if(engine.playing)stop();else play().catch(x=>toast(x.message));}}const i=keys.indexOf(e.key.toLowerCase());if(i>=0&&i<spec.parts&&!e.repeat)hitPad(i);});
 document.addEventListener('keyup',e=>{const i=keys.indexOf(e.key.toLowerCase());if(i>=0)releasePad(i);});window.addEventListener('blur',()=>{for(const i of [...held])releasePad(i);});
-let arpLast=0,arpIndex=0,audioSent=0;const audioChannel=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;const scope=$('scope'),sc=scope.getContext('2d'),data=new Float32Array(2048),pcmL=new Float32Array(512),pcmR=new Float32Array(512);
+let arpIndex=0,arpNextTime=0,arpTimer=null,audioSent=0;
+function arpTick(){
+  if(!arp||!held.size||engine.ctx?.state!=='running'||!engine.graph){arpNextTime=0;return;}
+  const now=engine.ctx.currentTime,interval=60/project.tempo/4;
+  if(!arpNextTime||arpNextTime<now-.15)arpNextTime=now+.025;
+  const pads=[...held].sort((a,b)=>a-b),solo=project.parts.some(p=>p.solo);
+  let guard=0;
+  while(arpNextTime<now+.12&&guard++<8){
+    const pad=pads[arpIndex++%pads.length],index=keyboard?selected:pad;
+    const voicePart=project.parts[index];
+    if(voicePart&&!voicePart.mute&&(!solo||voicePart.solo)){
+      const note=clamp(Number($('note').value)+(keyboard?pad:0),0,127);
+      engine.graph.trigger(voicePart,{note,velocity:.85,gate:.8},arpNextTime,interval,engine.sampleFor(voicePart));
+      engine.onTrigger(index,arpNextTime);
+    }
+    arpNextTime+=interval;
+  }
+}
+function startArpTimer(){if(arpTimer===null)arpTimer=setInterval(arpTick,20);}
+function stopArpTimer(){if(arpTimer!==null)clearInterval(arpTimer);arpTimer=null;arpNextTime=0;}
+const audioChannel=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.audio.v1'):null;const scope=$('scope'),sc=scope.getContext('2d'),data=new Float32Array(2048),pcmL=new Float32Array(512),pcmR=new Float32Array(512);
 const renderClock=new HellfireRenderClock("instrument-"+model);
 function draw(now){
   requestAnimationFrame(draw);
-  if(arp&&held.size&&engine.ctx?.state==='running'&&now-arpLast>60000/project.tempo/4){arpLast=now;const notes=[0,3,7,12];engine.hit(selected,Number($('note').value)+notes[arpIndex++%4]).catch(()=>{});}
   if(!renderClock.due(now))return;const paintStarted=performance.now();
   const dpr=Math.min(devicePixelRatio||1,3),w=Math.round(scope.clientWidth*dpr),h=Math.round(scope.clientHeight*dpr);if(scope.width!==w||scope.height!==h){scope.width=w;scope.height=h;}
   sc.fillStyle='#050608';sc.fillRect(0,0,w,h);sc.strokeStyle='#55202045';sc.lineWidth=dpr;for(let x=0;x<w;x+=w/8){sc.beginPath();sc.moveTo(x,0);sc.lineTo(x,h);sc.stroke();}for(let y=0;y<h;y+=h/4){sc.beginPath();sc.moveTo(0,y);sc.lineTo(w,y);sc.stroke();}
@@ -325,4 +344,4 @@ function draw(now){
 }requestAnimationFrame(draw);
 restoreSamples().catch(e=>toast('Sample-Wiederherstellung: '+e.message));
 window.neowulf={resetRenderMeasurements:()=>renderClock.resetMeasurements(),get renderStats(){return renderClock.stats;},get project(){return project;},get engine(){return engine;},selectPart,renderAll,validateProject,importProject,exportProject};
-window.addEventListener('beforeunload',()=>{try{localStorage.setItem(storageKey,JSON.stringify(project));}catch{}engine.dispose();channel?.close();});
+window.addEventListener('beforeunload',()=>{stopArpTimer();try{localStorage.setItem(storageKey,JSON.stringify(project));}catch{}engine.dispose();channel?.close();});
