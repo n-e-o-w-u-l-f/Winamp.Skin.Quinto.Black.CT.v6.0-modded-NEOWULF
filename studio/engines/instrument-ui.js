@@ -6,7 +6,7 @@ let engine=new Instrument(project),selected=0,page=0,bank=Math.floor(project.pat
 const channel=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('neowulf.instruments.transport.v1'):null;
 document.body.dataset.model=model;if(query.get('embed')==='1')document.body.classList.add('embedded');
 $('modelTitle').textContent=spec.title;document.title=`NEOWULF · ${spec.title}`;
-const params=[['cutoff','CUTOFF',30,20000,'log'],['resonance','RESONANCE',.1,18,'linear'],['pitch','PITCH',-36,36,'linear'],['volume','LEVEL',0,1,'linear'],['pan','PAN',-1,1,'linear'],['send','FX SEND',0,1,'linear'],['attack','ATTACK',.001,2,'log'],['decay','DECAY',.02,4,'log'],['release','RELEASE',.01,4,'log'],['drive','DRIVE',0,1,'linear']];
+const params=[['cutoff','CUTOFF',30,20000,'log'],['resonance','RESONANCE',.1,18,'linear'],['pitch','PITCH',-36,36,'linear'],['volume','LEVEL',0,1,'linear'],['pan','PAN',-1,1,'linear'],['send','FX SEND',0,1,'linear'],['attack','ATTACK',.001,2,'log'],['decay','DECAY',.02,4,'log'],['release','RELEASE',.01,4,'log'],['drive','DRIVE',0,1,'linear'],['sustain','SUSTAIN',0,1,'linear'],['lfoRate','LFO RATE',.1,20,'log'],['lfoDepth','LFO DEPTH',0,1,'linear']];
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3300);}
 function setStatus(msg){$('status').textContent=msg;}
 function persist(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{try{localStorage.setItem(storageKey,JSON.stringify(project));}catch(e){toast('Speichern fehlgeschlagen: '+e.message);}},250);}
@@ -52,7 +52,7 @@ function renderParts(){
   active('mute',part().mute);active('solo',part().solo);active('reverse',part().reverse);active('loop',part().loop);
   $('wave').replaceChildren();if(part().type==='synth'){for(const w of WAVES)$('wave').add(new Option(w.toUpperCase(),w));$('wave').value=part().wave;}
   else{for(const [i,n] of ['KICK','SNARE','CLOSED HAT','OPEN HAT','CLAP','LOW TOM','RIM','CRASH','PERC'].entries())$('wave').add(new Option(n,i));$('wave').value=part().drum;}
-  $('sampleStart').value=part().start;$('sampleEnd').value=part().end;$('sampleName').textContent=part().sampleId?part().name:'Eigene synthetische Werksklänge';
+  $('filterType').value=part().filterType;$('sampleStart').value=part().start;$('sampleEnd').value=part().end;$('sampleName').textContent=part().sampleId?part().name:'Eigene synthetische Werksklänge';
 }
 function renderKnobs(){for(const [key,title,min,max,scale] of params){const knob=document.querySelector(`[data-param="${key}"]`),v=part()[key],n=scale==='log'?Math.log(v/min)/Math.log(max/min):(v-min)/(max-min);knob.style.setProperty('--v',n);knob.setAttribute('aria-valuemin',min);knob.setAttribute('aria-valuemax',max);knob.setAttribute('aria-valuenow',v.toFixed(3));knob.parentElement.querySelector('output').textContent=key==='cutoff'?`${Math.round(v)} Hz`:['attack','decay','release'].includes(key)?`${Math.round(v*1000)} ms`:key==='pitch'?`${v>0?'+':''}${v} st`:v.toFixed(2);}}
 function renderSteps(current=-1){
@@ -106,7 +106,7 @@ $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instru
 $('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
-$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};
+$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;persist();};
 for(const [id,key] of [['mute','mute'],['solo','solo'],['reverse','reverse'],['loop','loop']])$(id).onclick=()=>{part()[key]=!part()[key];renderParts();persist();};
 $('sampleStart').oninput=()=>{part().start=Math.min(Number($('sampleStart').value),part().end-.01);persist();};$('sampleEnd').oninput=()=>{part().end=Math.max(Number($('sampleEnd').value),part().start+.01);persist();};
 $('sampleImport').onclick=()=>$('sampleFile').click();$('sampleFile').onchange=async()=>{const file=$('sampleFile').files[0];if(!file)return;const index=selected;try{await ensureAudio();const id=`sample-${Date.now()}-${index}`,buf=await engine.loadSample(file,id);project.parts[index].sampleId=id;project.parts[index].name=file.name.slice(0,30);project.parts[index].start=0;project.parts[index].end=1;await storeSample(id,encodeWav(buf));renderParts();persist();toast(`${file.name}: ${buf.duration.toFixed(2)} s geladen`);}catch(e){toast(e.message);}$('sampleFile').value='';};
