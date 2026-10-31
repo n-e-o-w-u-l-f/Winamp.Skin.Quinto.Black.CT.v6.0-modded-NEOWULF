@@ -75,11 +75,12 @@ export class AudioGraph {
     filter.connect(drive);drive.connect(gain);gain.connect(pan);pan.connect(this.master);pan.connect(send);send.connect(this.delay);
     const sources=[];let stopAt=t+gate+p.release+.06;const pitch=event.note-48+p.pitch;
     // Per-voice real audio-rate filter modulation; zero depth leaves the graph untouched.
+    let lfoSource=null;
     if(p.lfoDepth>0){
       const lfo=ctx.createOscillator(),modGain=ctx.createGain();
       lfo.type='sine';lfo.frequency.value=clamp(p.lfoRate,.1,20);
       modGain.gain.value=clamp(p.cutoff*.6*p.lfoDepth,0,ctx.sampleRate*.2);
-      lfo.connect(modGain);modGain.connect(filter.frequency);lfo.start(t);sources.push(lfo);
+      lfo.connect(modGain);modGain.connect(filter.frequency);lfoSource=lfo;
     }
     if(sample){
       const src=ctx.createBufferSource();src.buffer=sample;src.playbackRate.value=Math.pow(2,pitch/12);src.loop=Boolean(p.loop);
@@ -103,6 +104,7 @@ export class AudioGraph {
       }
       const drumDecay=[.42,.21,.065,.36,.15,.33,.055,.8,.17][kind];stopAt=t+drumDecay+p.release+.04;
     }
+    if(lfoSource){lfoSource.start(t);sources.push(lfoSource);}
     const end=Math.max(t+.006,stopAt-p.release-.015),amp=clamp(p.volume,0,1)*clamp(event.velocity,0,1)*.6;
     gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(amp,t+Math.min(p.attack,(end-t)*.3));
     gain.gain.exponentialRampToValueAtTime(Math.max(.0001,amp*clamp(p.sustain,0,1)),Math.min(end,t+p.attack+p.decay));
