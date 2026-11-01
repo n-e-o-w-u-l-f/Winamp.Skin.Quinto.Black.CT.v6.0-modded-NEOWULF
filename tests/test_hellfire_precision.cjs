@@ -44,8 +44,15 @@ assert.match(first, /^import \{[^}]+\} from '\.\/audio-engine\.js';$/);
 const built = audioSource.replace(/^export /gm, '') + '\n' + uiSource.slice(first.length + 1);
 assert.equal(read('studio/engines/instrument-app.js'), built, 'Winamp WebView bundle must match maintained modules');
 const context = vm.createContext({ console });
-vm.runInContext(audioSource.replace(/^export /gm, '') + ';globalThis.api = { newProject, validateProject, AudioGraph, buildSongPlan };', context);
-const { newProject, validateProject, AudioGraph, buildSongPlan } = context.api;
+vm.runInContext(audioSource.replace(/^export /gm, '') + ';globalThis.api = { newProject, validateProject, AudioGraph, buildSongPlan, resolveLfoHz };', context);
+const { newProject, validateProject, AudioGraph, buildSongPlan, resolveLfoHz } = context.api;
+const tempoLfo = {lfoRate:2.75,lfoDepth:.5,lfoSync:true,lfoDivision:'1/8'};
+assert.equal(resolveLfoHz(tempoLfo,120),4, '120 BPM eighth-note LFO is 4 Hz');
+assert.equal(resolveLfoHz(tempoLfo,90),3, '90 BPM eighth-note LFO is 3 Hz');
+tempoLfo.lfoSync=false;
+assert.equal(resolveLfoHz(tempoLfo,180),2.75, 'Free-rate LFO must ignore project BPM');
+tempoLfo.lfoSync=true;tempoLfo.lfoDivision='1/16';
+assert.equal(resolveLfoHz(tempoLfo,300),20, 'High BPM LFO must be capped');
 const arrangement = newProject('synth');
 arrangement.chain = [7, 2];
 arrangement.patterns[7] = { ...arrangement.patterns[0], length: 16 };
@@ -68,13 +75,26 @@ for (const model of ['synth', 'sampler', 'emx']) {
   assert.equal(project.parts[0].sustain, .55);
   assert.equal(project.parts[0].lfoRate, 2);
   assert.equal(project.parts[0].lfoDepth, 0);
+  assert.equal(project.parts[0].lfoSync, false);
+  assert.equal(project.parts[0].lfoDivision, '1/4');
   project.parts[0].filterType = 'bandpass';
   project.parts[0].lfoRate = 7;
   project.parts[0].lfoDepth = .4;
   project.parts[0].sustain = .7;
+  project.parts[0].lfoSync = true;
+  project.parts[0].lfoDivision = '1/8';
+  project.patterns[0].events[0][0].lock = {filterType:'highpass',lfoSync:true,lfoDivision:'1/16',lfoDepth:.8,unapproved:'ignored'};
   const valid = validateProject(project, model);
   assert.equal(valid.parts[0].filterType, 'bandpass');
   assert.equal(valid.parts[0].sustain, .7);
+  assert.equal(valid.parts[0].lfoSync, true);
+  assert.equal(valid.parts[0].lfoDivision, '1/8');
+  const locked=valid.patterns[0].events[0][0].lock;
+  assert.equal(locked.filterType, 'highpass');
+  assert.equal(locked.lfoSync, true);
+  assert.equal(locked.lfoDivision, '1/16');
+  assert.equal(locked.lfoDepth, .8);
+  assert.equal(Object.hasOwn(locked, 'unapproved'), false, 'Unknown motion lock must be dropped');
   valid.parts[0].filterType = 'invalid';
   valid.parts[0].lfoDepth = 200;
   valid.parts[0].lfoRate = -10;
@@ -82,9 +102,13 @@ for (const model of ['synth', 'sampler', 'emx']) {
   assert.equal(valid.parts[0].filterType, 'lowpass');
   assert.equal(valid.parts[0].lfoDepth, 1);
   assert.equal(valid.parts[0].lfoRate, .1);
+  delete valid.parts[0].lfoDivision;
+  delete valid.parts[0].lfoSync;
   delete valid.parts[0].sustain;
   validateProject(valid, model);
   assert.equal(valid.parts[0].sustain, .55, 'Old saved projects keep valid defaults');
+  assert.equal(valid.parts[0].lfoSync, false);
+  assert.equal(valid.parts[0].lfoDivision, '1/4');
 }
 const created = [], started = new Map();
 const parameter = (initial = 0) => ({
@@ -129,6 +153,14 @@ for (const oscillator of oscillators) assert.equal(started.get(oscillator), 1);
 const envelope = created.filter(n => n.kind === 'gain')
   .flatMap(n => n.gain.calls).find(a => a[0] === 'exp');
 assert.ok(envelope && Math.abs(envelope[1] - .2016) < .00001, 'Sustain parameter must change real gain envelope');
+const beforeSyncGraph=created.length;
+graph.trigger({...part,tempo:120,lfoSync:true,lfoDivision:'1/8'},
+  {note:48,velocity:1,gate:.8,lock:{filterType:'bandpass',lfoDivision:'1/16'}},.4,.2,null);
+const syncedNodes=created.slice(beforeSyncGraph);
+assert.equal(syncedNodes.filter(n=>n.kind==='biquad').length,1);
+assert.equal(syncedNodes.find(n=>n.kind==='biquad').type,'bandpass','Motion lock must drive an actual filter node');
+assert.equal(syncedNodes.filter(n=>n.kind==='oscillator'&&n.frequency.value===8).length,1,
+  '1/16 motion lock at 120 BPM must create actual 8 Hz filter oscillator');
 const xml = read('skin/hellfire-runtime/XML/neowulf-decks.xml');
 for (const id of [4, 5, 8]) {
   const group = xml.match(new RegExp('<Container id="nw\\.deck\\.' + id + '"[^>]+>'));
@@ -149,6 +181,11 @@ for (const kind of ['layer.bar', 'slider']) {
     assert.ok(x >= 0 && x + w <= max - 8, 'EQ thumb exceeds safe display boundary');
   }
 }
+const instrumentHtml = read('studio/engines/instrument.html');
+assert.match(instrumentHtml, /id="lfoSync"/);
+assert.match(instrumentHtml, /id="lfoDivision"/);
+assert.match(uiSource, /captureMotion\('lfoSync',part\(\).lfoSync\)/);
+assert.match(uiSource, /captureMotion\('filterType',part\(\).filterType\)/);
 const visualHtml = read('studio/engines/visualizer.html');
 assert.match(visualHtml, /\.display\{isolation:isolate;contain:paint;overflow:hidden\}/);
 assert.match(visualHtml, /id="peakGain"/);
@@ -194,7 +231,7 @@ assert.ok(fireClips >= 100, 'Stereo fire renderer must clip BOTH channels inside
 assert.equal(clipDepth, 0, 'Every fire clipping region must restore canvas state');
 console.log(JSON.stringify({
   evidence: 'Node VM / mocked AudioContext / geometry source invariants only; not native Winamp',
-  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, arpeggioScheduledEvents: 2, audioFilter: 'highpass', lfoStartedOnce: true,
+  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, arpeggioScheduledEvents: 2, lfoTempoSyncBpm:120, stepMotionFilterAndLfo:true, audioFilter: 'highpass', lfoStartedOnce: true,
   sustainAudibleGraphParameter: true, eqTracksContained: 11, equalDisplayDecks: 4,
   paintGain: page.neowulfVisualizer.peakGain, stereoFlameClips: fireClips,
   simulatedFps: page.neowulfVisualizer.stats.measuredFps
