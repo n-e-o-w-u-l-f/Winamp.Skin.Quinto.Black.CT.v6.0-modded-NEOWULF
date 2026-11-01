@@ -44,8 +44,10 @@ assert.match(first, /^import \{[^}]+\} from '\.\/audio-engine\.js';$/);
 const built = audioSource.replace(/^export /gm, '') + '\n' + uiSource.slice(first.length + 1);
 assert.equal(read('studio/engines/instrument-app.js'), built, 'Winamp WebView bundle must match maintained modules');
 const context = vm.createContext({ console });
-vm.runInContext(audioSource.replace(/^export /gm, '') + ';globalThis.api = { newProject, validateProject, AudioGraph, buildSongPlan, resolveLfoHz };', context);
-const { newProject, validateProject, AudioGraph, buildSongPlan, resolveLfoHz } = context.api;
+vm.runInContext(audioSource.replace(/^export /gm, '') + ';globalThis.api = { newProject, validateProject, AudioGraph, buildSongPlan, resolveLfoHz, delaySeconds };', context);
+const { newProject, validateProject, AudioGraph, buildSongPlan, resolveLfoHz, delaySeconds } = context.api;
+assert.equal(delaySeconds('1/8',120),.25,'Eighth-note delay must match BPM');
+assert.ok(Math.abs(delaySeconds('1/16',90)-(1/6))<1e-9,'Sixteenth-note delay must match BPM');
 const tempoLfo = {lfoRate:2.75,lfoDepth:.5,lfoSync:true,lfoDivision:'1/8'};
 assert.equal(resolveLfoHz(tempoLfo,120),4, '120 BPM eighth-note LFO is 4 Hz');
 assert.equal(resolveLfoHz(tempoLfo,90),3, '90 BPM eighth-note LFO is 3 Hz');
@@ -75,18 +77,25 @@ for (const model of ['synth', 'sampler', 'emx']) {
   assert.equal(project.parts[0].sustain, .55);
   assert.equal(project.parts[0].lfoRate, 2);
   assert.equal(project.parts[0].lfoDepth, 0);
+  assert.equal(project.effects.division,'1/8');
+  assert.equal(project.effects.feedback,.28);
+  assert.equal(project.effects.mix,.25);
   assert.equal(project.parts[0].lfoSync, false);
   assert.equal(project.parts[0].lfoDivision, '1/4');
   project.parts[0].filterType = 'bandpass';
   project.parts[0].lfoRate = 7;
   project.parts[0].lfoDepth = .4;
   project.parts[0].sustain = .7;
+  project.effects={division:'1/16',feedback:.81,mix:.6};
   project.parts[0].lfoSync = true;
   project.parts[0].lfoDivision = '1/8';
   project.patterns[0].events[0][0].lock = {filterType:'highpass',lfoSync:true,lfoDivision:'1/16',lfoDepth:.8,unapproved:'ignored'};
   const valid = validateProject(project, model);
   assert.equal(valid.parts[0].filterType, 'bandpass');
   assert.equal(valid.parts[0].sustain, .7);
+  assert.equal(valid.effects.division,'1/16');
+  assert.equal(valid.effects.feedback,.81);
+  assert.equal(valid.effects.mix,.6);
   assert.equal(valid.parts[0].lfoSync, true);
   assert.equal(valid.parts[0].lfoDivision, '1/8');
   const locked=valid.patterns[0].events[0][0].lock;
@@ -102,6 +111,13 @@ for (const model of ['synth', 'sampler', 'emx']) {
   assert.equal(valid.parts[0].filterType, 'lowpass');
   assert.equal(valid.parts[0].lfoDepth, 1);
   assert.equal(valid.parts[0].lfoRate, .1);
+  valid.effects={division:'invalid',feedback:2,mix:-3};
+  validateProject(valid,model);
+  assert.equal(valid.effects.division,'1/8');
+  assert.equal(valid.effects.feedback,.85);
+  assert.equal(valid.effects.mix,0);
+  delete valid.effects;validateProject(valid,model);
+  assert.equal(valid.effects.mix,.25,'Legacy effects default restored');
   delete valid.parts[0].lfoDivision;
   delete valid.parts[0].lfoSync;
   delete valid.parts[0].sustain;
@@ -141,6 +157,14 @@ const ctx = {
   createBuffer: () => node('buffer')
 };
 const graph = new AudioGraph(ctx);
+graph.configureEffects({division:'1/4',feedback:.61,mix:.39},120);
+assert.equal(graph.delay.delayTime.calls.at(-1)[1],.5);
+assert.equal(graph.feedback.gain.calls.at(-1)[1],.61);
+assert.equal(graph.wet.gain.calls.at(-1)[1],.39);
+graph.configureEffects({division:'1/8',feedback:20,mix:-2},90);
+assert.ok(Math.abs(graph.delay.delayTime.calls.at(-1)[1]-1/3)<1e-9);
+assert.equal(graph.feedback.gain.calls.at(-1)[1],.85);
+assert.equal(graph.wet.gain.calls.at(-1)[1],0);
 const part = { ...newProject('synth').parts[0], filterType: 'highpass', lfoRate: 3.5, lfoDepth: .5, sustain: .8 };
 graph.trigger(part, { note: 48, velocity: 1, gate: .8, lock: null }, .1, .2, null);
 const filters = created.filter(n => n.kind === 'biquad');
@@ -184,6 +208,10 @@ for (const kind of ['layer.bar', 'slider']) {
 const instrumentHtml = read('studio/engines/instrument.html');
 assert.match(instrumentHtml, /id="lfoSync"/);
 assert.match(instrumentHtml, /id="lfoDivision"/);
+assert.match(instrumentHtml, /id="delayDivision"/);
+assert.match(instrumentHtml, /id="delayFeedback"/);
+assert.match(instrumentHtml, /id="delayMix"/);
+assert.match(uiSource, /engine\.graph\?\.configureEffects/);
 assert.match(uiSource, /captureMotion\('lfoSync',part\(\).lfoSync\)/);
 assert.match(uiSource, /captureMotion\('filterType',part\(\).filterType\)/);
 const visualHtml = read('studio/engines/visualizer.html');
@@ -231,7 +259,7 @@ assert.ok(fireClips >= 100, 'Stereo fire renderer must clip BOTH channels inside
 assert.equal(clipDepth, 0, 'Every fire clipping region must restore canvas state');
 console.log(JSON.stringify({
   evidence: 'Node VM / mocked AudioContext / geometry source invariants only; not native Winamp',
-  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, arpeggioScheduledEvents: 2, lfoTempoSyncBpm:120, stepMotionFilterAndLfo:true, audioFilter: 'highpass', lfoStartedOnce: true,
+  verdict: 'PASS', models: 3, songChainFirstPattern: 7, songChainWavEvents: 96, exportDurationLimited: true, arpeggioScheduledEvents: 2, lfoTempoSyncBpm:120, stepMotionFilterAndLfo:true, tempoSyncDelayFX:true, audioFilter: 'highpass', lfoStartedOnce: true,
   sustainAudibleGraphParameter: true, eqTracksContained: 11, equalDisplayDecks: 4,
   paintGain: page.neowulfVisualizer.peakGain, stereoFlameClips: fireClips,
   simulatedFps: page.neowulfVisualizer.stats.measuredFps
