@@ -18,7 +18,7 @@ export function newProject(model){
     const d=(model==='sampler'?i:i-spec.synths+9)%9;
     return {name:drum?DRUMS[d]:`SYNTH ${i+1}`,type:drum?'drum':'synth',wave:WAVES[i%4],drum:d,
       volume:drum?.68:.42,pan:0,cutoff:drum?17000:5200,resonance:.7,attack:.003,decay:.24,release:.09,
-      pitch:0,drive:.12,send:.16,filterType:'lowpass',sustain:.55,lfoRate:2,lfoDepth:0,mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
+      pitch:0,drive:.12,send:.16,filterType:'lowpass',sustain:.55,lfoRate:2,lfoDepth:0,lfoSync:false,lfoDivision:'1/4',mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
   });
   const p=blankPattern(spec.parts);p.name='HELLFIRE 01';
   const kick=spec.synths,hat=(spec.synths+2)%spec.parts,snare=(spec.synths+1)%spec.parts;
@@ -38,7 +38,7 @@ export function validateProject(value,model){
   value.pattern=clamp(Math.floor(Number(value.pattern)||0),0,255);
   for(const p of value.parts){
     for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['sustain',0,1,.55],['lfoRate',.1,20,2],['lfoDepth',0,1,0],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
-    p.end=Math.max(p.start+.01,p.end);p.filterType=['lowpass','bandpass','highpass'].includes(p.filterType)?p.filterType:'lowpass';p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
+    p.end=Math.max(p.start+.01,p.end);p.lfoSync=Boolean(p.lfoSync);p.lfoDivision=['1/1','1/2','1/4','1/8','1/16'].includes(p.lfoDivision)?p.lfoDivision:'1/4';p.filterType=['lowpass','bandpass','highpass'].includes(p.filterType)?p.filterType:'lowpass';p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
     p.name=String(p.name||'PART').slice(0,32);p.sampleId=typeof p.sampleId==='string'?p.sampleId:null;
     for(const k of ['mute','solo','reverse','loop'])p[k]=Boolean(p[k]);
   }
@@ -58,6 +58,13 @@ export function validateProject(value,model){
 }
 function curve(amount){const a=new Float32Array(2048),k=amount*35;for(let i=0;i<a.length;i++){const x=i*2/(a.length-1)-1;a[i]=k?Math.tanh(x*(1+k))/Math.tanh(1+k):x;}return a;}
 function noiseBuffer(ctx,seconds=2){const b=ctx.createBuffer(1,Math.ceil(ctx.sampleRate*seconds),ctx.sampleRate),d=b.getChannelData(0);let seed=38719;for(let i=0;i<d.length;i++){seed=(seed*1664525+1013904223)>>>0;d[i]=seed/2147483648-1;}return b;}
+// Divide a four-beat bar into note values. Free rate remains independent of tempo.
+export function resolveLfoHz(part,tempo){
+  if(!part.lfoSync)return clamp(Number(part.lfoRate)||2,.1,20);
+  const beats={'1/1':4,'1/2':2,'1/4':1,'1/8':.5,'1/16':.25};
+  const period=beats[part.lfoDivision]??1;
+  return clamp((clamp(Number(tempo)||128,40,300)/60)/period,.1,20);
+}
 export class AudioGraph {
   constructor(ctx,master=.55){
     this.ctx=ctx;this.master=ctx.createGain();this.master.gain.value=master;
@@ -78,7 +85,7 @@ export class AudioGraph {
     let lfoSource=null;
     if(p.lfoDepth>0){
       const lfo=ctx.createOscillator(),modGain=ctx.createGain();
-      lfo.type='sine';lfo.frequency.value=clamp(p.lfoRate,.1,20);
+      lfo.type='sine';lfo.frequency.value=resolveLfoHz(p,p.tempo);
       modGain.gain.value=clamp(p.cutoff*.6*p.lfoDepth,0,ctx.sampleRate*.2);
       lfo.connect(modGain);modGain.connect(filter.frequency);lfoSource=lfo;
     }
@@ -159,7 +166,7 @@ export class Instrument {
       const pr=this.project,pat=pr.patterns[pr.pattern],base=60/pr.tempo/4;
       const swing=this.step%2===1?base*pr.swing:0,t=this.nextTime+swing;
       const solo=pr.parts.some(p=>p.solo);
-      pr.parts.forEach((p,i)=>{const e=pat.events[i][this.step];if(e?.on&&!p.mute&&(!solo||p.solo)){this.graph.trigger(p,e,t,base,this.sampleFor(p));this.onTrigger(i,t);}});
+      pr.parts.forEach((p,i)=>{const e=pat.events[i][this.step];if(e?.on&&!p.mute&&(!solo||p.solo)){this.graph.trigger({...p,tempo:pr.tempo},e,t,base,this.sampleFor(p));this.onTrigger(i,t);}});
       this.scheduled.push({step:this.step,time:t,pattern:pr.pattern});this.nextTime+=base;this.step++;
       if(this.step>=pat.length){this.step=0;if(pr.chain.length){this.chainIndex=(this.chainIndex+1)%pr.chain.length;this.setPattern(pr.chain[this.chainIndex]);}else if(this.pendingPattern!==null){this.setPattern(this.pendingPattern);this.pendingPattern=null;}}
     }
@@ -167,14 +174,14 @@ export class Instrument {
   }
   setPattern(id){id=clamp(Math.floor(id),0,255);if(!this.project.patterns[id])this.project.patterns[id]=blankPattern(MODELS[this.project.model].parts);this.project.pattern=id;this.onPattern(id);}
   selectPattern(id){if(this.playing)this.pendingPattern=id;else this.setPattern(id);}
-  async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger(p,{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
+  async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger({...p,tempo:this.project.tempo},{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
   async renderWav(repeats=1){
     const pr=this.project,plan=buildSongPlan(pr,repeats);
     const ctx=new OfflineAudioContext(2,Math.ceil((plan.duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
     const solo=pr.parts.some(p=>p.solo);
     for(const item of plan.events)pr.parts.forEach((p,i)=>{
       const e=item.pattern.events[i][item.step];
-      if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger(p,e,item.time,item.duration,this.sampleFor(p));
+      if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger({...p,tempo:pr.tempo},e,item.time,item.duration,this.sampleFor(p));
     });
     return encodeWav(await ctx.startRendering());
   }
