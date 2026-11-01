@@ -9,6 +9,12 @@ $('modelTitle').textContent=spec.title;document.title=`NEOWULF · ${spec.title}`
 const params=[['cutoff','CUTOFF',30,20000,'log'],['resonance','RESONANCE',.1,18,'linear'],['pitch','PITCH',-36,36,'linear'],['volume','LEVEL',0,1,'linear'],['pan','PAN',-1,1,'linear'],['send','FX SEND',0,1,'linear'],['attack','ATTACK',.001,2,'log'],['decay','DECAY',.02,4,'log'],['release','RELEASE',.01,4,'log'],['drive','DRIVE',0,1,'linear'],['sustain','SUSTAIN',0,1,'linear'],['lfoRate','LFO RATE',.1,20,'log'],['lfoDepth','LFO DEPTH',0,1,'linear']];
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3300);}
 function setStatus(msg){$('status').textContent=msg;}
+function captureMotion(key,value){
+  if(record&&motion&&engine.playing){
+    const event=pattern().events[selected][engine.lastStep??0];
+    event.lock??={};event.lock[key]=value;
+  }
+}
 function persist(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{try{localStorage.setItem(storageKey,JSON.stringify(project));}catch(e){toast('Speichern fehlgeschlagen: '+e.message);}},250);}
 function pattern(){return project.patterns[project.pattern];}
 function part(){return project.parts[selected];}
@@ -23,7 +29,7 @@ function createButtons(){
     const b=document.createElement('button');b.className='step';b.dataset.step=i;b.onclick=e=>{
       const n=page*16+i;if(n>=pattern().length)return;
       if(e.shiftKey){editStep=n;const ev=pattern().events[selected][n];$('editNote').value=ev.note;$('editVelocity').value=ev.velocity;$('editGate').value=ev.gate;$('edit').showModal();}
-      else{const ev=pattern().events[selected][n];ev.on=!ev.on;ev.note=Number($('note').value);if(motion)ev.lock=Object.fromEntries(params.map(([k])=>[k,part()[k]]));persist();renderSteps();}
+      else{const ev=pattern().events[selected][n];ev.on=!ev.on;ev.note=Number($('note').value);if(motion)ev.lock={...Object.fromEntries(params.map(([k])=>[k,part()[k]])),filterType:part().filterType,lfoSync:part().lfoSync,lfoDivision:part().lfoDivision};persist();renderSteps();}
     };$('steps').append(b);
   }
   for(let i=0;i<8;i++){const b=document.createElement('button');b.onclick=()=>engine.selectPattern(bank*8+i);b.dataset.pattern=i;$('patterns').append(b);}
@@ -35,7 +41,7 @@ function createButtons(){
     const knob=box.querySelector('.knob');let dragStart=null;
     const normalize=v=>scale==='log'?Math.log(v/min)/Math.log(max/min):(v-min)/(max-min);
     const denormalize=v=>scale==='log'?min*Math.pow(max/min,v):min+(max-min)*v;
-    const change=v=>{part()[key]=denormalize(clamp(v,0,1));if(key==='pitch')part()[key]=Math.round(part()[key]);if(record&&motion&&engine.playing){const ev=pattern().events[selected][engine.lastStep??0];ev.lock??={};ev.lock[key]=part()[key];}renderKnobs();persist();};
+    const change=v=>{part()[key]=denormalize(clamp(v,0,1));if(key==='pitch')part()[key]=Math.round(part()[key]);captureMotion(key,part()[key]);renderKnobs();persist();};
     knob.onpointerdown=e=>{e.preventDefault();knob.setPointerCapture(e.pointerId);dragStart={y:e.clientY,v:normalize(part()[key])};};
     knob.onpointermove=e=>{if(dragStart)change(dragStart.v+(dragStart.y-e.clientY)/(e.shiftKey?900:160));};knob.onpointerup=()=>dragStart=null;knob.onpointercancel=()=>dragStart=null;
     knob.onwheel=e=>{e.preventDefault();change(normalize(part()[key])+(e.deltaY<0?.025:-.025));};
@@ -106,7 +112,7 @@ $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instru
 $('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);if(arp)startArpTimer();else stopArpTimer();};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
-$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;persist();};$('lfoSync').onchange=()=>{part().lfoSync=$('lfoSync').checked;persist();};$('lfoDivision').onchange=()=>{part().lfoDivision=$('lfoDivision').value;persist();};
+$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;captureMotion('filterType',part().filterType);persist();};$('lfoSync').onchange=()=>{part().lfoSync=$('lfoSync').checked;captureMotion('lfoSync',part().lfoSync);persist();};$('lfoDivision').onchange=()=>{part().lfoDivision=$('lfoDivision').value;captureMotion('lfoDivision',part().lfoDivision);persist();};
 for(const [id,key] of [['mute','mute'],['solo','solo'],['reverse','reverse'],['loop','loop']])$(id).onclick=()=>{part()[key]=!part()[key];renderParts();persist();};
 $('sampleStart').oninput=()=>{part().start=Math.min(Number($('sampleStart').value),part().end-.01);persist();};$('sampleEnd').oninput=()=>{part().end=Math.max(Number($('sampleEnd').value),part().start+.01);persist();};
 $('sampleImport').onclick=()=>$('sampleFile').click();$('sampleFile').onchange=async()=>{const file=$('sampleFile').files[0];if(!file)return;const index=selected;try{await ensureAudio();const id=`sample-${Date.now()}-${index}`,buf=await engine.loadSample(file,id);project.parts[index].sampleId=id;project.parts[index].name=file.name.slice(0,30);project.parts[index].start=0;project.parts[index].end=1;await storeSample(id,encodeWav(buf));renderParts();persist();toast(`${file.name}: ${buf.duration.toFixed(2)} s geladen`);}catch(e){toast(e.message);}$('sampleFile').value='';};
