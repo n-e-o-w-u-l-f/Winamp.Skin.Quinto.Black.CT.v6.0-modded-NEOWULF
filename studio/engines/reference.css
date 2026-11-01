@@ -52,3 +52,8 @@ body.embedded .machine{padding:0;min-height:0}
 body.embedded .reference-face{left:calc(-15px * var(--reference-scale,1));top:calc(-35px * var(--reference-scale,1))}
 
 .knob:before{background:url('knob-face-v1.png') center/contain no-repeat!important;inset:0!important}
+/* Dedicated rhythm modulation controls; no overlap with the step pads or chassis. */
+.advanced-panel .modrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:9px 0 12px;padding:8px 10px;background:#090a0ce0;border:1px solid #63382d;border-radius:3px}
+.advanced-panel .modrow label{display:flex;align-items:center;gap:7px;font:10px Arial,sans-serif;letter-spacing:.4px;color:#ebafa1}
+.advanced-panel .modrow input{accent-color:#ff4b30}
+.advanced-panel .modrow select{max-width:100px;min-width:65px}
