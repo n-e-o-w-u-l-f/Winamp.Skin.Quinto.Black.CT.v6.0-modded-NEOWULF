@@ -57,3 +57,8 @@ body.embedded .reference-face{left:calc(-15px * var(--reference-scale,1));top:ca
 .advanced-panel .modrow label{display:flex;align-items:center;gap:7px;font:10px Arial,sans-serif;letter-spacing:.4px;color:#ebafa1}
 .advanced-panel .modrow input{accent-color:#ff4b30}
 .advanced-panel .modrow select{max-width:100px;min-width:65px}
+.advanced-panel .fxrow{display:flex;align-items:center;flex-wrap:wrap;gap:9px 18px;margin:8px 0 14px;padding:9px 11px;background:linear-gradient(115deg,#140c0d,#211413);border:1px solid #67352b;border-radius:4px}
+.advanced-panel .fxrow b{color:#ff7b62;font:10px Arial,sans-serif;letter-spacing:1px}
+.advanced-panel .fxrow label{display:flex;align-items:center;gap:6px;color:#e4b4a5;font:9px Arial,sans-serif}
+.advanced-panel .fxrow select{max-width:80px}
+.advanced-panel .fxrow input{width:90px;accent-color:#ff462e}
