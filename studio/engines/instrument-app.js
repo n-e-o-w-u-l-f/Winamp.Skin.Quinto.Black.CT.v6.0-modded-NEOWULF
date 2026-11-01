@@ -28,7 +28,7 @@ function newProject(model){
     if(s%8===4)p.events[snare][s].on=true;
     if(spec.synths&&s%4===2){p.events[0][s].on=true;p.events[0][s].note=[36,36,39,34][Math.floor(s/4)];}
   }
-  return {format:'NEOWULF-INSTRUMENT',version:1,model,tempo:128,swing:0,master:.55,pattern:0,patterns:{0:p},parts,chain:[],samples:{}};
+  return {format:'NEOWULF-INSTRUMENT',version:1,model,tempo:128,swing:0,master:.55,pattern:0,patterns:{0:p},parts,chain:[],samples:{},effects:{division:'1/8',feedback:.28,mix:.25}};
 }
 function validateProject(value,model){
   if(value?.format!=='NEOWULF-INSTRUMENT'||value.version!==1||value.model!==model)throw Error('Project belongs to another instrument or format');
@@ -56,6 +56,12 @@ function validateProject(value,model){
   }
   value.patterns=out;if(!out[value.pattern])value.patterns[value.pattern]=blankPattern(spec.parts);
   value.chain=Array.isArray(value.chain)?value.chain.filter(n=>Number.isInteger(n)&&n>=0&&n<=255).slice(0,256):[];
+  const effects=value.effects&&typeof value.effects==='object'?value.effects:{};
+  value.effects={
+    division:['1/1','1/2','1/4','1/8','1/16'].includes(effects.division)?effects.division:'1/8',
+    feedback:clamp(Number.isFinite(Number(effects.feedback))?Number(effects.feedback):.28,0,.85),
+    mix:clamp(Number.isFinite(Number(effects.mix))?Number(effects.mix):.25,0,.7)
+  };
   value.samples=value.samples&&typeof value.samples==='object'?value.samples:{};
   return value;
 }
@@ -68,6 +74,11 @@ function resolveLfoHz(part,tempo){
   const period=beats[part.lfoDivision]??1;
   return clamp((clamp(Number(tempo)||128,40,300)/60)/period,.1,20);
 }
+function delaySeconds(division,tempo){
+  const beatMultipliers={'1/1':4,'1/2':2,'1/4':1,'1/8':.5,'1/16':.25};
+  const beats=beatMultipliers[division]??.5;
+  return clamp(beats*60/clamp(Number(tempo)||128,40,300),.03,1.9);
+}
 class AudioGraph {
   constructor(ctx,master=.55){
     this.ctx=ctx;this.master=ctx.createGain();this.master.gain.value=master;
@@ -77,6 +88,13 @@ class AudioGraph {
     this.delay=ctx.createDelay(2);this.delay.delayTime.value=.234375;this.feedback=ctx.createGain();this.feedback.gain.value=.28;this.wet=ctx.createGain();this.wet.gain.value=.25;
     this.delay.connect(this.feedback);this.feedback.connect(this.delay);this.delay.connect(this.wet);this.wet.connect(this.master);this.noise=noiseBuffer(ctx);
     this.voices=new Set();this.samples=new Map();
+  }
+  configureEffects(effects,tempo){
+    const state=effects||{division:'1/8',feedback:.28,mix:.25};
+    const at=this.ctx.currentTime;
+    this.delay.delayTime.setTargetAtTime(delaySeconds(state.division,tempo),at,.02);
+    this.feedback.gain.setTargetAtTime(clamp(state.feedback,0,.85),at,.02);
+    this.wet.gain.setTargetAtTime(clamp(state.mix,0,.7),at,.02);
   }
   trigger(part,event,time,duration,sample){
     const ctx=this.ctx,p={...part,...(event.lock||{})},t=Math.max(ctx.currentTime,time),gate=Math.max(.015,duration*event.gate);
@@ -147,7 +165,7 @@ function buildSongPlan(project,repeats=1){
 class Instrument {
   constructor(project){this.project=project;this.ctx=null;this.graph=null;this.samples=new Map();this.reversed=new Map();this.playing=false;this.step=0;this.nextTime=0;this.timer=null;this.pendingPattern=null;this.chainIndex=0;this.scheduled=[];this.onStep=()=>{};this.onPattern=()=>{};this.onTrigger=()=>{};}
   async enable(){
-    if(!this.ctx){this.ctx=new AudioContext({latencyHint:'interactive'});this.graph=new AudioGraph(this.ctx,this.project.master);}
+    if(!this.ctx){this.ctx=new AudioContext({latencyHint:'interactive'});this.graph=new AudioGraph(this.ctx,this.project.master);this.graph.configureEffects(this.project.effects,this.project.tempo);}
     if(this.ctx.state==='suspended')await this.ctx.resume();return this.ctx;
   }
   async loadSample(file,id){
@@ -180,7 +198,7 @@ class Instrument {
   async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger({...p,tempo:this.project.tempo},{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
   async renderWav(repeats=1){
     const pr=this.project,plan=buildSongPlan(pr,repeats);
-    const ctx=new OfflineAudioContext(2,Math.ceil((plan.duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
+    const ctx=new OfflineAudioContext(2,Math.ceil((plan.duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);graph.configureEffects(pr.effects,pr.tempo);
     const solo=pr.parts.some(p=>p.solo);
     for(const item of plan.events)pr.parts.forEach((p,i)=>{
       const e=item.pattern.events[i][item.step];
@@ -271,7 +289,14 @@ function renderPatterns(){
   document.querySelectorAll('[data-pattern]').forEach(b=>{const id=bank*8+Number(b.dataset.pattern);b.textContent=String(id+1).padStart(3,'0');b.classList.toggle('active',id===project.pattern);b.title=project.patterns[id]?.name||'INIT';});
   active('chain',project.chain.length);renderSteps();
 }
-function renderGlobals(){ $('tempo').value=project.tempo;$('swing').value=project.swing;$('master').value=project.master;$('readout').textContent=`${project.tempo.toFixed(1)} BPM`;}
+function renderGlobals(){
+  $('tempo').value=project.tempo;$('swing').value=project.swing;$('master').value=project.master;
+  $('delayDivision').value=project.effects.division;
+  $('delayFeedback').value=project.effects.feedback;
+  $('delayMix').value=project.effects.mix;
+  $('readout').textContent=`${project.tempo.toFixed(1)} BPM`;
+  engine.graph?.configureEffects(project.effects,project.tempo);
+}
 function bindEngine(){
   engine.onStep=(s,id)=>{if(id!==undefined&&id!==project.pattern)return;renderSteps(s);};
   engine.onPattern=()=>{renderPatterns();persist();};engine.onTrigger=(i,t)=>{const delay=Math.max(0,(t-(engine.ctx?.currentTime||0))*1000);setTimeout(()=>flashPad(i),delay);};
@@ -311,6 +336,9 @@ $('record').onclick=()=>{record=!record;active('record',record);document.body.cl
 $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instrumentdecks über gemeinsamen Transport verbunden':'Transport bleibt unabhängig');};
 $('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);if(arp)startArpTimer();else stopArpTimer();};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
+$('delayDivision').onchange=()=>{project.effects.division=$('delayDivision').value;engine.graph?.configureEffects(project.effects,project.tempo);persist();};
+$('delayFeedback').oninput=()=>{project.effects.feedback=clamp(Number($('delayFeedback').value),0,.85);engine.graph?.configureEffects(project.effects,project.tempo);persist();};
+$('delayMix').oninput=()=>{project.effects.mix=clamp(Number($('delayMix').value),0,.7);engine.graph?.configureEffects(project.effects,project.tempo);persist();};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
 $('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;captureMotion('filterType',part().filterType);persist();};$('lfoSync').onchange=()=>{part().lfoSync=$('lfoSync').checked;captureMotion('lfoSync',part().lfoSync);persist();};$('lfoDivision').onchange=()=>{part().lfoDivision=$('lfoDivision').value;captureMotion('lfoDivision',part().lfoDivision);persist();};
 for(const [id,key] of [['mute','mute'],['solo','solo'],['reverse','reverse'],['loop','loop']])$(id).onclick=()=>{part()[key]=!part()[key];renderParts();persist();};
