@@ -71,7 +71,14 @@ function renderPatterns(){
   document.querySelectorAll('[data-pattern]').forEach(b=>{const id=bank*8+Number(b.dataset.pattern);b.textContent=String(id+1).padStart(3,'0');b.classList.toggle('active',id===project.pattern);b.title=project.patterns[id]?.name||'INIT';});
   active('chain',project.chain.length);renderSteps();
 }
-function renderGlobals(){ $('tempo').value=project.tempo;$('swing').value=project.swing;$('master').value=project.master;$('readout').textContent=`${project.tempo.toFixed(1)} BPM`;}
+function renderGlobals(){
+  $('tempo').value=project.tempo;$('swing').value=project.swing;$('master').value=project.master;
+  $('delayDivision').value=project.effects.division;
+  $('delayFeedback').value=project.effects.feedback;
+  $('delayMix').value=project.effects.mix;
+  $('readout').textContent=`${project.tempo.toFixed(1)} BPM`;
+  engine.graph?.configureEffects(project.effects,project.tempo);
+}
 function bindEngine(){
   engine.onStep=(s,id)=>{if(id!==undefined&&id!==project.pattern)return;renderSteps(s);};
   engine.onPattern=()=>{renderPatterns();persist();};engine.onTrigger=(i,t)=>{const delay=Math.max(0,(t-(engine.ctx?.currentTime||0))*1000);setTimeout(()=>flashPad(i),delay);};
@@ -111,6 +118,9 @@ $('record').onclick=()=>{record=!record;active('record',record);document.body.cl
 $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instrumentdecks über gemeinsamen Transport verbunden':'Transport bleibt unabhängig');};
 $('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);if(arp)startArpTimer();else stopArpTimer();};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
+$('delayDivision').onchange=()=>{project.effects.division=$('delayDivision').value;engine.graph?.configureEffects(project.effects,project.tempo);persist();};
+$('delayFeedback').oninput=()=>{project.effects.feedback=clamp(Number($('delayFeedback').value),0,.85);engine.graph?.configureEffects(project.effects,project.tempo);persist();};
+$('delayMix').oninput=()=>{project.effects.mix=clamp(Number($('delayMix').value),0,.7);engine.graph?.configureEffects(project.effects,project.tempo);persist();};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
 $('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;captureMotion('filterType',part().filterType);persist();};$('lfoSync').onchange=()=>{part().lfoSync=$('lfoSync').checked;captureMotion('lfoSync',part().lfoSync);persist();};$('lfoDivision').onchange=()=>{part().lfoDivision=$('lfoDivision').value;captureMotion('lfoDivision',part().lfoDivision);persist();};
 for(const [id,key] of [['mute','mute'],['solo','solo'],['reverse','reverse'],['loop','loop']])$(id).onclick=()=>{part()[key]=!part()[key];renderParts();persist();};
