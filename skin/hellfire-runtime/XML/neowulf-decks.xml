@@ -44,8 +44,8 @@
 <Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
 <script file="SCRIPTS\neowulf-deck.maki"/>
 </groupdef>
-<Container id="nw.deck.4" name="NEOWULF · Oszillator" component="guid:{4E454F04-574C-4600-8001-000100000004}" dynamic="1" default_x="180" default_y="180" default_w="850" default_h="430" default_visible="0">
-<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.4" fitparent="1"/></Layout></Container>
+<Container id="nw.deck.4" name="NEOWULF · Oszillator" component="guid:{4E454F04-574C-4600-8001-000100000004}" dynamic="1" default_x="180" default_y="180" default_w="638" default_h="246" default_visible="0">
+<Layout id="normal" w="638" h="246" minimum_w="638" minimum_h="246" background="nw.frame"><Group id="nw.deck.4" fitparent="1"/></Layout></Container>
 <groupdef id="nw.deck.5">
 <Layer fitparent="1" image="nw.frame" tile="1"/>
 <Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
@@ -56,8 +56,8 @@
 <Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
 <script file="SCRIPTS\neowulf-deck.maki"/>
 </groupdef>
-<Container id="nw.deck.5" name="NEOWULF · Fire VU Stereo" component="guid:{4E454F05-574C-4600-8001-000100000005}" dynamic="1" default_x="205" default_y="205" default_w="850" default_h="430" default_visible="0">
-<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.5" fitparent="1"/></Layout></Container>
+<Container id="nw.deck.5" name="NEOWULF · Fire VU Stereo" component="guid:{4E454F05-574C-4600-8001-000100000005}" dynamic="1" default_x="205" default_y="205" default_w="638" default_h="246" default_visible="0">
+<Layout id="normal" w="638" h="246" minimum_w="638" minimum_h="246" background="nw.frame"><Group id="nw.deck.5" fitparent="1"/></Layout></Container>
 <groupdef id="nw.deck.6">
 <Layer fitparent="1" image="nw.frame" tile="1"/>
 <Layer x="0" y="0" w="0" h="32" relatw="1" image="nw.header" tile="1" move="1"/>
@@ -92,8 +92,8 @@
 <Layer x="-10" y="-10" w="10" h="10" relatx="1" relaty="1" image="nw.frame" resize="bottomright"/>
 <script file="SCRIPTS\neowulf-deck.maki"/>
 </groupdef>
-<Container id="nw.deck.8" name="NEOWULF · Hellfire Virtualizer" component="guid:{4E454F08-574C-4600-8001-000100000008}" dynamic="1" default_x="280" default_y="280" default_w="850" default_h="430" default_visible="0">
-<Layout id="normal" w="850" h="430" minimum_w="280" minimum_h="220" background="nw.frame"><Group id="nw.deck.8" fitparent="1"/></Layout></Container>
+<Container id="nw.deck.8" name="NEOWULF · Hellfire Virtualizer" component="guid:{4E454F08-574C-4600-8001-000100000008}" dynamic="1" default_x="280" default_y="280" default_w="638" default_h="246" default_visible="0">
+<Layout id="normal" w="638" h="246" minimum_w="638" minimum_h="246" background="nw.frame"><Group id="nw.deck.8" fitparent="1"/></Layout></Container>
 <groupdef id="nw.speaker.tower-left"><Layer id="nw.cabinet" image="nw.speaker-tower-left" x="0" y="0" move="1"/><Layer id="nw.cone1" image="nw.cone-copper" x="46" y="42" w="80" h="80" ghost="1"/><Layer id="nw.cone2" image="nw.cone-black" x="49" y="250" w="77" h="77" ghost="1"/><Layer id="nw.cone3" image="nw.cone-black" x="49" y="370" w="77" h="77" ghost="1"/>
 <Layer id="nw.pulse" image="nw.led-red" x="72" y="567" ghost="1"/>
 <Button id="nw.close" x="-38" y="0" relatx="1" image="nw.close" tooltip="Deck schließen"/><script file="SCRIPTS\neowulf-speaker.maki" param="0"/></groupdef>

@@ -61,6 +61,8 @@ jobs:
           python -B tests/test_turntable_source_assets.py
           python -B tests/test_vinyl_rotation.py
           node tests/test_signal_contract.cjs
+          node tests/test_hellfire_precision.cjs
+          node studio/tools/build_instrument.cjs --check
 
       - name: Verify MAKI signatures (not native execution)
         shell: bash
@@ -116,6 +118,8 @@ jobs:
           python3 tests/test_turntable_source_assets.py
           python3 tests/test_vinyl_rotation.py
           node tests/test_signal_contract.cjs
+          node tests/test_hellfire_precision.cjs
+          node studio/tools/build_instrument.cjs --check
 
       - name: Verify committed MAKI binaries
         shell: bash
