@@ -48,7 +48,10 @@ export function validateProject(value,model){
     if(!Array.isArray(p.events)||p.events.length!==spec.parts)throw Error('Invalid pattern events');
     p.length=clamp(Math.floor(Number(p.length)||16),1,spec.maxSteps);p.name=String(p.name||'INIT').slice(0,32);
     p.events=p.events.map(row=>Array.from({length:128},(_,s)=>{
-      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send','sustain','lfoRate','lfoDepth'].includes(k)&&Number.isFinite(v))):null};
+      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>(['cutoff','resonance','pitch','volume','pan','drive','send','sustain','lfoRate','lfoDepth'].includes(k)&&Number.isFinite(v))||
+        (k==='filterType'&&['lowpass','bandpass','highpass'].includes(v))||
+        (k==='lfoSync'&&typeof v==='boolean')||
+        (k==='lfoDivision'&&['1/1','1/2','1/4','1/8','1/16'].includes(v)))):null};
     }));out[id]=p;
   }
   value.patterns=out;if(!out[value.pattern])value.patterns[value.pattern]=blankPattern(spec.parts);
