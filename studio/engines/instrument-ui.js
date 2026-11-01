@@ -52,7 +52,7 @@ function renderParts(){
   active('mute',part().mute);active('solo',part().solo);active('reverse',part().reverse);active('loop',part().loop);
   $('wave').replaceChildren();if(part().type==='synth'){for(const w of WAVES)$('wave').add(new Option(w.toUpperCase(),w));$('wave').value=part().wave;}
   else{for(const [i,n] of ['KICK','SNARE','CLOSED HAT','OPEN HAT','CLAP','LOW TOM','RIM','CRASH','PERC'].entries())$('wave').add(new Option(n,i));$('wave').value=part().drum;}
-  $('filterType').value=part().filterType;$('sampleStart').value=part().start;$('sampleEnd').value=part().end;$('sampleName').textContent=part().sampleId?part().name:'Eigene synthetische Werksklänge';
+  $('filterType').value=part().filterType;$('lfoSync').checked=part().lfoSync;$('lfoDivision').value=part().lfoDivision;$('sampleStart').value=part().start;$('sampleEnd').value=part().end;$('sampleName').textContent=part().sampleId?part().name:'Eigene synthetische Werksklänge';
 }
 function renderKnobs(){for(const [key,title,min,max,scale] of params){const knob=document.querySelector(`[data-param="${key}"]`),v=part()[key],n=scale==='log'?Math.log(v/min)/Math.log(max/min):(v-min)/(max-min);knob.style.setProperty('--v',n);knob.setAttribute('aria-valuemin',min);knob.setAttribute('aria-valuemax',max);knob.setAttribute('aria-valuenow',v.toFixed(3));knob.parentElement.querySelector('output').textContent=key==='cutoff'?`${Math.round(v)} Hz`:['attack','decay','release'].includes(key)?`${Math.round(v*1000)} ms`:key==='pitch'?`${v>0?'+':''}${v} st`:v.toFixed(2);}}
 function renderSteps(current=-1){
@@ -106,7 +106,7 @@ $('link').onclick=()=>{linked=!linked;active('link',linked);toast(linked?'Instru
 $('keyboard').onclick=()=>{keyboard=!keyboard;active('keyboard',keyboard);};$('arp').onclick=()=>{arp=!arp;active('arp',arp);if(arp)startArpTimer();else stopArpTimer();};
 $('tempo').onchange=()=>{project.tempo=clamp(Number($('tempo').value)||128,40,300);renderGlobals();persist();if(linked)channel?.postMessage({type:'tempo',value:project.tempo});};
 $('swing').oninput=()=>{project.swing=Number($('swing').value);persist();};$('master').oninput=()=>{project.master=Number($('master').value);if(engine.graph)engine.graph.master.gain.setTargetAtTime(project.master,engine.ctx.currentTime,.015);persist();};
-$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;persist();};
+$('wave').onchange=()=>{if(part().type==='synth')part().wave=$('wave').value;else part().drum=Number($('wave').value);part().sampleId=null;renderParts();persist();};$('filterType').onchange=()=>{part().filterType=$('filterType').value;persist();};$('lfoSync').onchange=()=>{part().lfoSync=$('lfoSync').checked;persist();};$('lfoDivision').onchange=()=>{part().lfoDivision=$('lfoDivision').value;persist();};
 for(const [id,key] of [['mute','mute'],['solo','solo'],['reverse','reverse'],['loop','loop']])$(id).onclick=()=>{part()[key]=!part()[key];renderParts();persist();};
 $('sampleStart').oninput=()=>{part().start=Math.min(Number($('sampleStart').value),part().end-.01);persist();};$('sampleEnd').oninput=()=>{part().end=Math.max(Number($('sampleEnd').value),part().start+.01);persist();};
 $('sampleImport').onclick=()=>$('sampleFile').click();$('sampleFile').onchange=async()=>{const file=$('sampleFile').files[0];if(!file)return;const index=selected;try{await ensureAudio();const id=`sample-${Date.now()}-${index}`,buf=await engine.loadSample(file,id);project.parts[index].sampleId=id;project.parts[index].name=file.name.slice(0,30);project.parts[index].start=0;project.parts[index].end=1;await storeSample(id,encodeWav(buf));renderParts();persist();toast(`${file.name}: ${buf.duration.toFixed(2)} s geladen`);}catch(e){toast(e.message);}$('sampleFile').value='';};
@@ -133,7 +133,7 @@ function arpTick(){
     const voicePart=project.parts[index];
     if(voicePart&&!voicePart.mute&&(!solo||voicePart.solo)){
       const note=clamp(Number($('note').value)+(keyboard?pad:0),0,127);
-      engine.graph.trigger(voicePart,{note,velocity:.85,gate:.8},arpNextTime,interval,engine.sampleFor(voicePart));
+      engine.graph.trigger({...voicePart,tempo:project.tempo},{note,velocity:.85,gate:.8},arpNextTime,interval,engine.sampleFor(voicePart));
       engine.onTrigger(index,arpNextTime);
     }
     arpNextTime+=interval;
