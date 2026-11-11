@@ -2,7 +2,7 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
 const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const results={environment:'Node VM, controlled time, canvas command validation; no browser/audio-device or native Winamp proof',models:[],renderers:[]};
-const context=vm.createContext({console,Blob});
+const context=vm.createContext({console,Blob,structuredClone});
 const source=read('studio/engines/instrument-app.js').split('const query=new URLSearchParams')[0];
 vm.runInContext(source+';globalThis.api={newProject,validateProject};',context);
 for(const [model,parts,max] of [['synth',16,64],['sampler',16,64],['emx',14,128]]){
