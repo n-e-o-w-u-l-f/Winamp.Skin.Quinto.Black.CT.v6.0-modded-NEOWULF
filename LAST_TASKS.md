@@ -41,3 +41,5 @@ The previous dated record is preserved byte-exact in [history](docs/history/LAST
 - TEST / VERIFIED: 57 Browser-Funktionsgruppen einschließlich zehn Regler je Modell; reale Datei-Exporte/Importe; LINK zwischen zwei Seiten; fünf Visualizer mit drei Modi und etwa 30 FPS bei DPR 2; separater Canvas-Fallback, Signalverträge und Bundle-Konsistenz bestanden.
 - BLOCKED: Native BMAX-IPC Deadline 281; Remote-Befehlsprüfung wiederholt PowerShell-Timeout. Native Integration, OEM-Korg-Vollständigkeit und endgültige Vorlagentreue bleiben offen; keine fertige Skin-Freigabe.
 - HANDOFF / NEXT: [Funktionsmatrix und Testgrenzen](docs/20261111-control-status.md) lesen; BMAX-Verfügbarkeit und vorhandene Plugin-Fenster/PCM prüfen; getestetes Bundle nur isoliert stagen. Vollständige Aufgabenmatrix unverändert verbindlich.
+
+- FAILED 2026-11-11 05:22 UTC: abschließender BMAX-Transfer aller fünf Laufzeitdateien ohne Antwort beendet; Anwendung unbestätigt. Gesicherter geprüfter Stand: test, PR #4. Bundle-SHA256 700f4efdeb56566716c837dad65c62eb8fbcece7b63a9254dca3edde45d4d2ab. Vor erneuter Übertragung Arbeitsbaum/Hashes lesen; keine Release- oder Installationsbehauptung.

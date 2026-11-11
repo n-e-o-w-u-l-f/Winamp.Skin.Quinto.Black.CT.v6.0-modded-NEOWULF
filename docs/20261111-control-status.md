@@ -68,3 +68,10 @@ Nächster Schritt: BMAX-Verfügbarkeit prüfen, getestetes UI-Bundle ausschließ
 - https://cdn.korg.com/us/support/download/files/18e1fc0dd60cac3f50433a89f7811208.pdf
 - https://cdn.korg.com/us/support/download/files/39d238e0f840ee25e68f1618517b4731.pdf
 - https://cdn.korg.com/us/support/download/files/e2eb4fe383a49b45cc7a4b5e593d5b10.pdf
+
+## Transferstatus 2026-11-11 05:22 UTC
+Die fünf abschließenden Übertragungen nach BMAX (audio-engine.js, instrument-ui.js, instrument.html, visualizer.js, instrument-app.js) endeten mit „Timeout - no response from device“. Ihre Anwendung ist nicht bestätigt; keine weiteren Wiederholungen gestartet. Die früheren Zwischenstände und der verworfene R5-Entwurf können dort weiterhin im Arbeitsbaum liegen.
+
+Der vollständige geprüfte Stand ist auf dem Git-Zweig test / PR #4 gesichert. Erwarteter SHA256 des fertigen instrument-app.js: 700f4efdeb56566716c837dad65c62eb8fbcece7b63a9254dca3edde45d4d2ab.
+
+Nach Wiederverbindung zuerst den BMAX-Arbeitsbaum und Bundle-Hash lesen, bestehende Änderungen erhalten und mit test vergleichen. Danach nur den geprüften Instrument-/Visualizer-Stand übernehmen und separat in Winamp stagen. Die vorhandene laufende Testinstallation wurde in diesem Schritt nicht nachweisbar aktualisiert. main und veröffentlichte Skin-Pakete bleiben unverändert.
