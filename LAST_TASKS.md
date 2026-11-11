@@ -33,3 +33,11 @@ The original global checkout's two unpublished commits and diverged history were
 Inspect installed native WebView/DSP packet/audio/control integration, then test every independent deck's close/reopen/drag/docking and visible paint cadence. Resolve native ≥20 FPS from actual pixels; do not substitute timer telemetry. Preserve all remaining matrix rows, including dynamic record album art, native CRT/preamp, editable headers, paired cabinet perspective, every-deck lighting and full detailed 4K coverage. Bridge C++ source is still absent; existing binaries are not source reproducibility.
 
 The previous dated record is preserved byte-exact in [history](docs/history/LAST-20261009-20261011.md), with older history retained separately. [Structured recovery](docs/verification/20261011-recovery.json) records the execution identity and next step.
+
+## 2026-11-11 — aktueller Funktionsstand
+- START / READ: aktuelle Benutzerkorrekturen, vorhandene UI-/Audio-/MAKI-Quellen und offizielle Korg-Unterlagen abgeglichen.
+- WROTE: Power-Toggle, laufende Klangparameter, Mute/Solo, MIDI-Trennen/Race-Schutz, kompletter Part-Copy/Paste, Note-0-/ADSR-Erhalt, Sample-Reverse-Ausschnitt, Pattern-Klangspeicher und Chain-Start korrigiert. Bestehende Frontanker erhalten.
+- WROTE: WebGL-Feuer mit separatem Canvas-Fallback; wirksame VU-MODE-Varianten und sofortige Quellenrücksetzung. Verworfene generische R5-Grafik nicht Teil dieses Quellstands.
+- TEST / VERIFIED: 57 Browser-Funktionsgruppen einschließlich zehn Regler je Modell; reale Datei-Exporte/Importe; LINK zwischen zwei Seiten; fünf Visualizer mit drei Modi und etwa 30 FPS bei DPR 2; separater Canvas-Fallback, Signalverträge und Bundle-Konsistenz bestanden.
+- BLOCKED: Native BMAX-IPC Deadline 281; Remote-Befehlsprüfung wiederholt PowerShell-Timeout. Native Integration, OEM-Korg-Vollständigkeit und endgültige Vorlagentreue bleiben offen; keine fertige Skin-Freigabe.
+- HANDOFF / NEXT: [Funktionsmatrix und Testgrenzen](docs/20261111-control-status.md) lesen; BMAX-Verfügbarkeit und vorhandene Plugin-Fenster/PCM prüfen; getestetes Bundle nur isoliert stagen. Vollständige Aufgabenmatrix unverändert verbindlich.

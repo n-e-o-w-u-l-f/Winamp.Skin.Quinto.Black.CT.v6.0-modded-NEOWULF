@@ -1,0 +1,31 @@
+{
+  "observedUtc": "2026-11-11T05:20:11.679809+00:00",
+  "ownedChromeProcessesRemaining": [],
+  "cleanupRunner": {
+    "startedUtc": "2026-11-11T05:18:56.222410+00:00",
+    "runnerPid": 72724,
+    "edge": "/tmp/hellfire-browser-20261111/chrome-headless-shell-linux64/chrome-headless-shell",
+    "node": "/usr/bin/node",
+    "baseUrl": "http://127.0.0.1:39759",
+    "debugUrl": "http://127.0.0.1:46701",
+    "environment": "owned local Chromium companion UI, not native Winamp",
+    "serverPid": 72741,
+    "edgePid": 72742,
+    "browserVersion": {
+      "Browser": "HeadlessChrome/157.0.8103.50",
+      "File-Path-Style": "posix",
+      "Protocol-Version": "1.3",
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.8103.50 Safari/537.36",
+      "V8-Version": "15.7.112.23",
+      "WebKit-Version": "537.36 (@049750111b1e5c11565c792b2aeed5541f332bad)",
+      "webSocketDebuggerUrl": "ws://127.0.0.1:46701/devtools/browser/c57f3fba-cc46-44fd-869e-166dc40813b7"
+    },
+    "launcherExitCode": null,
+    "exitCode": 0,
+    "browserClosedViaCdp": true,
+    "childrenClosed": true,
+    "completedUtc": "2026-11-11T05:19:00.545466+00:00"
+  },
+  "nativeAnchorsAndCssUnchanged": true,
+  "bundleSha256": "700f4efdeb56566716c837dad65c62eb8fbcece7b63a9254dca3edde45d4d2ab"
+}

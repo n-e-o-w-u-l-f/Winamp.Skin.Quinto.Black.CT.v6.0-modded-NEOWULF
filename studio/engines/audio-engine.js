@@ -20,7 +20,7 @@ export function newProject(model){
       volume:drum?.68:.42,pan:0,cutoff:drum?17000:5200,resonance:.7,attack:.003,decay:.24,release:.09,
       pitch:0,drive:.12,send:.16,mute:false,solo:false,start:0,end:1,reverse:false,loop:false,sampleId:null};
   });
-  const p=blankPattern(spec.parts);p.name='HELLFIRE 01';
+  const p=blankPattern(spec.parts);p.name='HELLFIRE 01';p.parts=parts;
   const kick=spec.synths,hat=(spec.synths+2)%spec.parts,snare=(spec.synths+1)%spec.parts;
   for(let s=0;s<16;s++){
     if(s%4===0)p.events[kick][s].on=true;
@@ -34,24 +34,30 @@ export function validateProject(value,model){
   if(value?.format!=='NEOWULF-INSTRUMENT'||value.version!==1||value.model!==model)throw Error('Project belongs to another instrument or format');
   const spec=MODELS[model];
   if(!Array.isArray(value.parts)||value.parts.length!==spec.parts||!value.patterns||typeof value.patterns!=='object')throw Error('Invalid part or pattern count');
-  value.tempo=clamp(Number(value.tempo)||128,40,300);value.swing=clamp(Number(value.swing)||0,0,.45);value.master=clamp(Number(value.master)||0,0,1);
+  value.tempo=clamp(Number(value.tempo)||128,20,300);value.swing=clamp(Number(value.swing)||0,-.5,.5);value.master=clamp(Number(value.master)||0,0,1);
   value.pattern=clamp(Math.floor(Number(value.pattern)||0),0,255);
-  for(const p of value.parts){
-    for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
+  function normalizePart(p){
+    if(!p||typeof p!=='object')throw Error('Invalid part');
+for(const [key,lo,hi,def] of [['volume',0,1,.5],['pan',-1,1,0],['cutoff',30,20000,6000],['resonance',.1,18,.7],['attack',.001,2,.003],['decay',.02,4,.24],['release',.01,4,.1],['pitch',-36,36,0],['drive',0,1,0],['send',0,1,.15],['start',0,.99,0],['end',.01,1,1]])p[key]=clamp(Number.isFinite(Number(p[key]))?Number(p[key]):def,lo,hi);
     p.end=Math.max(p.start+.01,p.end);p.type=p.type==='synth'?'synth':'drum';p.wave=WAVES.includes(p.wave)?p.wave:'sawtooth';p.drum=clamp(Math.floor(Number(p.drum)||0),0,8);
-    p.name=String(p.name||'PART').slice(0,32);p.sampleId=typeof p.sampleId==='string'?p.sampleId:null;
+    p.note=clamp(Math.round(Number.isFinite(Number(p.note))?Number(p.note):48),0,127);p.name=String(p.name||'PART').slice(0,32);p.sampleId=typeof p.sampleId==='string'?p.sampleId:null;
     for(const k of ['mute','solo','reverse','loop'])p[k]=Boolean(p[k]);
+
+    return p;
   }
+  value.parts=value.parts.map(normalizePart);
   const out={};
   for(const [id,p] of Object.entries(value.patterns)){
     if(!/^\d+$/.test(id)||Number(id)>255)continue;
     if(!Array.isArray(p.events)||p.events.length!==spec.parts)throw Error('Invalid pattern events');
+    p.parts=Array.isArray(p.parts)&&p.parts.length===spec.parts?p.parts.map(normalizePart):structuredClone(value.parts);
     p.length=clamp(Math.floor(Number(p.length)||16),1,spec.maxSteps);p.name=String(p.name||'INIT').slice(0,32);
     p.events=p.events.map(row=>Array.from({length:128},(_,s)=>{
-      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number(e.note)||48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send'].includes(k)&&Number.isFinite(v))):null};
+      const e=row?.[s]||{};return {on:Boolean(e.on),note:clamp(Math.floor(Number.isFinite(Number(e.note))?Number(e.note):48),0,127),velocity:clamp(Number.isFinite(Number(e.velocity))?Number(e.velocity):.8,0,1),gate:clamp(Number(e.gate)||.72,.05,8),lock:e.lock&&typeof e.lock==='object'?Object.fromEntries(Object.entries(e.lock).filter(([k,v])=>['cutoff','resonance','pitch','volume','pan','drive','send','attack','decay','release'].includes(k)&&Number.isFinite(v))):null};
     }));out[id]=p;
   }
   value.patterns=out;if(!out[value.pattern])value.patterns[value.pattern]=blankPattern(spec.parts);
+  value.patterns[value.pattern].parts=value.parts;
   value.chain=Array.isArray(value.chain)?value.chain.filter(n=>Number.isInteger(n)&&n>=0&&n<=255).slice(0,256):[];
   value.samples=value.samples&&typeof value.samples==='object'?value.samples:{};
   return value;
@@ -70,13 +76,13 @@ export class AudioGraph {
   }
   trigger(part,event,time,duration,sample){
     const ctx=this.ctx,p={...part,...(event.lock||{})},t=Math.max(ctx.currentTime,time),gate=Math.max(.015,duration*event.gate);
-    const gain=ctx.createGain(),filter=ctx.createBiquadFilter(),drive=ctx.createWaveShaper(),pan=ctx.createStereoPanner(),send=ctx.createGain();
+    const gain=ctx.createGain(),level=ctx.createGain(),filter=ctx.createBiquadFilter(),drive=ctx.createWaveShaper(),pan=ctx.createStereoPanner(),send=ctx.createGain();
     filter.type='lowpass';filter.frequency.value=clamp(p.cutoff,30,ctx.sampleRate*.45);filter.Q.value=clamp(p.resonance,.1,18);drive.curve=curve(clamp(p.drive,0,1));drive.oversample='2x';pan.pan.value=clamp(p.pan,-1,1);send.gain.value=clamp(p.send,0,1);
-    filter.connect(drive);drive.connect(gain);gain.connect(pan);pan.connect(this.master);pan.connect(send);send.connect(this.delay);
+    filter.connect(drive);drive.connect(gain);gain.connect(level);level.gain.value=clamp(p.volume,0,1);level.connect(pan);pan.connect(this.master);pan.connect(send);send.connect(this.delay);
     const sources=[];let stopAt=t+gate+p.release+.06;const pitch=event.note-48+p.pitch;
     if(sample){
       const src=ctx.createBufferSource();src.buffer=sample;src.playbackRate.value=Math.pow(2,pitch/12);src.loop=Boolean(p.loop);
-      const start=clamp(p.start,0,.99)*sample.duration,end=clamp(p.end,p.start+.01,1)*sample.duration;
+      const start=(p.reverse?1-p.end:p.start)*sample.duration,end=(p.reverse?1-p.start:p.end)*sample.duration;
       src.loopStart=start;src.loopEnd=end;src.connect(filter);
       if(src.loop)src.start(t,start);else src.start(t,start,(end-start)/1);
       sources.push(src);if(!src.loop)stopAt=Math.min(stopAt,t+(end-start)/src.playbackRate.value+.02);
@@ -96,15 +102,28 @@ export class AudioGraph {
       }
       const drumDecay=[.42,.21,.065,.36,.15,.33,.055,.8,.17][kind];stopAt=t+drumDecay+p.release+.04;
     }
-    const end=Math.max(t+.006,stopAt-p.release-.015),amp=clamp(p.volume,0,1)*clamp(event.velocity,0,1)*.6;
+    const end=Math.max(t+.006,stopAt-p.release-.015),amp=clamp(event.velocity,0,1)*.6;
     gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(amp,t+Math.min(p.attack,(end-t)*.3));
     gain.gain.exponentialRampToValueAtTime(Math.max(.0001,amp*.55),Math.min(end,t+p.attack+p.decay));
     gain.gain.setTargetAtTime(.00001,end,Math.max(.004,p.release/4));
-    const voice={sources,gain,stopAt,release:(when=ctx.currentTime)=>{const a=Math.max(t,when);gain.gain.cancelScheduledValues(a);gain.gain.setTargetAtTime(.00001,a,Math.max(.004,p.release/4));for(const s of sources){try{s.stop(a+p.release+.03);}catch{}}}};
+    const initialPitch=p.pitch;
+    const voice={sources,gain,level,filter,pan,send,part,stopAt,update:next=>{
+      Object.assign(p,next);
+      const at=ctx.currentTime;
+      filter.frequency.setTargetAtTime(clamp(p.cutoff,30,ctx.sampleRate*.45),at,.012);
+      filter.Q.setTargetAtTime(clamp(p.resonance,.1,18),at,.012);
+      level.gain.setTargetAtTime(clamp(p.volume,0,1),at,.012);
+      pan.pan.setTargetAtTime(clamp(p.pan,-1,1),at,.012);
+      send.gain.setTargetAtTime(clamp(p.send,0,1),at,.012);
+      drive.curve=curve(clamp(p.drive,0,1));
+      for(const s of sources)if(s.detune)s.detune.setTargetAtTime((p.pitch-initialPitch)*100,at,.012);
+    },release:(when=ctx.currentTime)=>{const a=Math.max(t,when);gain.gain.cancelScheduledValues(a);gain.gain.setTargetAtTime(.00001,a,Math.max(.004,p.release/4));for(const s of sources){try{s.stop(a+p.release+.03);}catch{}}}};
     this.voices.add(voice);for(const s of sources){try{s.stop(stopAt);}catch{}}
-    if(sources[0])sources[0].onended=()=>{this.voices.delete(voice);for(const node of [gain,filter,drive,pan,send])node.disconnect();};
+    if(sources[0])sources[0].onended=()=>{this.voices.delete(voice);for(const node of [gain,level,filter,drive,pan,send])node.disconnect();};
     return voice;
   }
+  updatePart(part){for(const v of this.voices)if(v.part===part)v.update(part);}
+  applyMutes(parts){const solo=parts.some(p=>p.solo);for(const v of this.voices)if(v.part.mute||(solo&&!v.part.solo))v.release();}
   panic(){for(const v of this.voices){for(const s of v.sources){try{s.stop();}catch{}}}this.voices.clear();}
 }
 export class Instrument {
@@ -113,6 +132,8 @@ export class Instrument {
     if(!this.ctx){this.ctx=new AudioContext({latencyHint:'interactive'});this.graph=new AudioGraph(this.ctx,this.project.master);}
     if(this.ctx.state==='suspended')await this.ctx.resume();return this.ctx;
   }
+  async disable(){this.stop();if(this.ctx?.state==='running')await this.ctx.suspend();}
+  updatePart(part){this.graph?.updatePart(part);this.graph?.applyMutes(this.project.parts);}
   async loadSample(file,id){
     await this.enable();if(file.size>64*1024*1024)throw Error('Sample exceeds 64 MB');
     const data=await file.arrayBuffer(),buf=await this.ctx.decodeAudioData(data);
@@ -122,32 +143,32 @@ export class Instrument {
     const b=this.samples.get(part.sampleId);if(!b||!part.reverse)return b;
     if(!this.reversed.has(part.sampleId)){const r=this.ctx.createBuffer(b.numberOfChannels,b.length,b.sampleRate);for(let c=0;c<b.numberOfChannels;c++)r.getChannelData(c).set(Float32Array.from(b.getChannelData(c)).reverse());this.reversed.set(part.sampleId,r);}return this.reversed.get(part.sampleId);
   }
-  async start(epoch){await this.enable();if(this.playing)return;this.playing=true;this.step=0;this.chainIndex=0;this.nextTime=this.ctx.currentTime+(epoch?Math.max(.02,(epoch-Date.now())/1000):.06);this.tick();this.timer=setInterval(()=>this.tick(),20);}
-  stop(){this.playing=false;clearInterval(this.timer);this.timer=null;this.graph?.panic();this.scheduled=[];this.onStep(-1);}
+  async start(epoch){await this.enable();if(this.playing)return;this.playing=true;this.step=0;this.chainIndex=0;if(this.project.chain.length)this.setPattern(this.project.chain[0]);this.nextTime=this.ctx.currentTime+(epoch?Math.max(.02,(epoch-Date.now())/1000):.06);this.tick();this.timer=setInterval(()=>this.tick(),20);}
+  stop(){this.playing=false;this.pendingPattern=null;this.lastStep=-1;this.lastPattern=null;clearInterval(this.timer);this.timer=null;this.graph?.panic();this.scheduled=[];this.onStep(-1);}
   tick(){
     if(!this.playing||this.ctx.state!=='running')return;
     if(this.nextTime<this.ctx.currentTime-.2){this.nextTime=this.ctx.currentTime+.02;this.scheduled=[];}
     let guard=0;
     while(this.nextTime<this.ctx.currentTime+.12&&guard++<32){
       const pr=this.project,pat=pr.patterns[pr.pattern],base=60/pr.tempo/4;
-      const swing=this.step%2===1?base*pr.swing:0,t=this.nextTime+swing;
+      const swing=this.step%2===0?Math.max(0,-base*pr.swing):Math.max(0,base*pr.swing),t=this.nextTime+swing;
       const solo=pr.parts.some(p=>p.solo);
-      pr.parts.forEach((p,i)=>{const e=pat.events[i][this.step];if(e?.on&&!p.mute&&(!solo||p.solo)){this.graph.trigger(p,e,t,base,this.sampleFor(p));this.onTrigger(i,t);}});
+      pr.parts.forEach((p,i)=>{const e=pat.events[i][this.step];if(e?.on&&!p.mute&&(!solo||p.solo)&&(!p.sampleId||this.samples.has(p.sampleId))){this.graph.trigger(p,e,t,base,this.sampleFor(p));this.onTrigger(i,t);}});
       this.scheduled.push({step:this.step,time:t,pattern:pr.pattern});this.nextTime+=base;this.step++;
-      if(this.step>=pat.length){this.step=0;if(pr.chain.length){this.chainIndex=(this.chainIndex+1)%pr.chain.length;this.setPattern(pr.chain[this.chainIndex]);}else if(this.pendingPattern!==null){this.setPattern(this.pendingPattern);this.pendingPattern=null;}}
+      if(this.step>=pat.length){this.step=0;if(this.pendingPattern!==null){this.setPattern(this.pendingPattern);this.pendingPattern=null;this.chainIndex=Math.max(0,pr.chain.indexOf(pr.pattern));}else if(pr.chain.length){this.chainIndex=(this.chainIndex+1)%pr.chain.length;this.setPattern(pr.chain[this.chainIndex]);}}
     }
-    while(this.scheduled.length&&this.scheduled[0].time<=this.ctx.currentTime){const x=this.scheduled.shift();this.lastStep=x.step;this.onStep(x.step,x.pattern);}
+    while(this.scheduled.length&&this.scheduled[0].time<=this.ctx.currentTime){const x=this.scheduled.shift();this.lastStep=x.step;this.lastPattern=x.pattern;this.onStep(x.step,x.pattern);}
   }
-  setPattern(id){id=clamp(Math.floor(id),0,255);if(!this.project.patterns[id])this.project.patterns[id]=blankPattern(MODELS[this.project.model].parts);this.project.pattern=id;this.onPattern(id);}
+  setPattern(id){id=clamp(Math.floor(id),0,255);this.project.patterns[this.project.pattern].parts=this.project.parts;if(!this.project.patterns[id]){this.project.patterns[id]=blankPattern(MODELS[this.project.model].parts);this.project.patterns[id].parts=structuredClone(newProject(this.project.model).parts);}this.project.parts=this.project.patterns[id].parts??structuredClone(this.project.parts);this.project.pattern=id;this.onPattern(id);}
   selectPattern(id){if(this.playing)this.pendingPattern=id;else this.setPattern(id);}
-  async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger(p,{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
+  async hit(part,note=48,velocity=.85){await this.enable();const p=this.project.parts[part];if(p.mute||(this.project.parts.some(x=>x.solo)&&!p.solo))return null;if(p.sampleId&&!this.samples.has(p.sampleId))throw Error('Sample fehlt: '+p.name);this.onTrigger(part,this.ctx.currentTime);return this.graph.trigger(p,{note,velocity,gate:1},this.ctx.currentTime,.28,this.sampleFor(p));}
   async renderWav(repeats=1){
     repeats=clamp(Math.floor(Number(repeats)||1),1,16);
     const pr=this.project,pat=pr.patterns[pr.pattern],beat=60/pr.tempo/4,duration=pat.length*beat*clamp(repeats,1,16);
     const ctx=new OfflineAudioContext(2,Math.ceil((duration+2)*48000),48000),graph=new AudioGraph(ctx,pr.master);
     const solo=pr.parts.some(p=>p.solo);
     for(let s=0;s<pat.length*repeats;s++)pr.parts.forEach((p,i)=>{
-      const e=pat.events[i][s%pat.length];if(e?.on&&!p.mute&&(!solo||p.solo))graph.trigger(p,e,.01+s*beat+(s%2===1?beat*pr.swing:0),beat,this.sampleFor(p));
+      const e=pat.events[i][s%pat.length];if(e?.on&&!p.mute&&(!solo||p.solo)&&(!p.sampleId||this.samples.has(p.sampleId)))graph.trigger(p,e,.01+s*beat+(s%2===0?Math.max(0,-beat*pr.swing):Math.max(0,beat*pr.swing)),beat,this.sampleFor(p));
     });
     return encodeWav(await ctx.startRendering());
   }

@@ -36,3 +36,7 @@ Actual owned BMAX Edge 155/CDP suite: `studio/tools/test_reference.cjs`, [result
 Continue from the R4 native profile: inspect actual installed WebView/DSP routing and audio/control integration; test every deck close/reopen/drag/dock and native visible cadence. Changed MAKI must be compiled with pinned MC twice and have its lock updated before staging. Preserve this matrix until every required acceptance is closed or the user explicitly changes scope.
 
 Global governance uses BMAX ordinary owner Git in a separate current-main checkout. The diverged original checkout is preserved. Native retained-source validation and VerifyPush pass after the 24-KiB bootstrap repair (2d0617e); canonical Winamp registration follows the verified source checkpoint through scoped route/state/index publication. Project-local records remain subordinate.
+
+## Ergänzung 2026-11-11
+
+Die [aktuelle Funktionsmatrix](20261111-control-status.md) dokumentiert 57 bestandene Browser-Funktionsgruppen für drei Instrumentdecks, wirksame Visualizer-Modi, DPR-2-WebGL-Feuer und den Canvas-Fallback. Keine bestehende native Abnahmezeile wird dadurch geschlossen. Der verworfene generische R5-Rahmen ist nicht Bestandteil dieses Standes; alle Frontanker bleiben fest. Der vollständige Original-Korg-Funktionsumfang und die im Abschnitt „Noch offen“ genannten Punkte sind weiterhin zu implementieren bzw. nativ abzunehmen.

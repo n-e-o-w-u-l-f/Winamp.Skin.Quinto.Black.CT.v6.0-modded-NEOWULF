@@ -1,0 +1,205 @@
+{
+  "environment": "Chrome headless on Legion; DPR 2; synthetic stereo validation signal, not Winamp PCM",
+  "modes": [
+    {
+      "mode": "osc",
+      "stats": {
+        "renderer": "osc",
+        "targetFps": 30,
+        "frames": 60,
+        "measuredFps": 30.001016983626563,
+        "measuredSpanMs": 1966.6000000000001,
+        "paintP95Ms": 0.40000000037252903,
+        "width": 1488,
+        "height": 464
+      },
+      "hashes": [
+        -194658565,
+        -577670034,
+        1035931176
+      ],
+      "states": [
+        {
+          "mode": "osc",
+          "variant": 0,
+          "label": "STEREO",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "osc",
+          "variant": 1,
+          "label": "MONO L",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "osc",
+          "variant": 2,
+          "label": "XY",
+          "flameBackend": "uninitialized"
+        }
+      ],
+      "sourceReset": true,
+      "crt": true
+    },
+    {
+      "mode": "fire",
+      "stats": {
+        "renderer": "fire",
+        "targetFps": 30,
+        "frames": 61,
+        "measuredFps": 30.001500075003747,
+        "measuredSpanMs": 1999.9,
+        "paintP95Ms": 32.5,
+        "width": 1488,
+        "height": 464
+      },
+      "hashes": [
+        -125170315,
+        1497770500,
+        53590702
+      ],
+      "states": [
+        {
+          "mode": "fire",
+          "variant": 0,
+          "label": "FLAME",
+          "flameBackend": "WebGL density field"
+        },
+        {
+          "mode": "fire",
+          "variant": 1,
+          "label": "FLOW",
+          "flameBackend": "WebGL density field"
+        },
+        {
+          "mode": "fire",
+          "variant": 2,
+          "label": "EMBERS",
+          "flameBackend": "WebGL density field"
+        }
+      ],
+      "sourceReset": true,
+      "crt": true
+    },
+    {
+      "mode": "horizontal",
+      "stats": {
+        "renderer": "horizontal",
+        "targetFps": 30,
+        "frames": 61,
+        "measuredFps": 30,
+        "measuredSpanMs": 2000,
+        "paintP95Ms": 1,
+        "width": 1488,
+        "height": 464
+      },
+      "hashes": [
+        210945673,
+        -163383848,
+        2090961716
+      ],
+      "states": [
+        {
+          "mode": "horizontal",
+          "variant": 0,
+          "label": "SEGMENTS",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "horizontal",
+          "variant": 1,
+          "label": "CONTINUOUS",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "horizontal",
+          "variant": 2,
+          "label": "PEAK HOLD",
+          "flameBackend": "uninitialized"
+        }
+      ],
+      "sourceReset": true,
+      "crt": true
+    },
+    {
+      "mode": "vertical",
+      "stats": {
+        "renderer": "vertical",
+        "targetFps": 30,
+        "frames": 60,
+        "measuredFps": 30.001016983626563,
+        "measuredSpanMs": 1966.6000000000001,
+        "paintP95Ms": 0.8999999994412065,
+        "width": 1488,
+        "height": 464
+      },
+      "hashes": [
+        -1570012756,
+        -1265713285,
+        834877645
+      ],
+      "states": [
+        {
+          "mode": "vertical",
+          "variant": 0,
+          "label": "SEGMENTS",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "vertical",
+          "variant": 1,
+          "label": "CONTINUOUS",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "vertical",
+          "variant": 2,
+          "label": "PEAK HOLD",
+          "flameBackend": "uninitialized"
+        }
+      ],
+      "sourceReset": true,
+      "crt": true
+    },
+    {
+      "mode": "virtualizer",
+      "stats": {
+        "renderer": "virtualizer",
+        "targetFps": 30,
+        "frames": 60,
+        "measuredFps": 29.999491534041795,
+        "measuredSpanMs": 1966.7,
+        "paintP95Ms": 0.40000000037252903,
+        "width": 1488,
+        "height": 464
+      },
+      "hashes": [
+        -1628509952,
+        524645604,
+        -1646690180
+      ],
+      "states": [
+        {
+          "mode": "virtualizer",
+          "variant": 0,
+          "label": "SPECTRUM",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "virtualizer",
+          "variant": 1,
+          "label": "RADIAL",
+          "flameBackend": "uninitialized"
+        },
+        {
+          "mode": "virtualizer",
+          "variant": 2,
+          "label": "MIRROR",
+          "flameBackend": "uninitialized"
+        }
+      ],
+      "sourceReset": true,
+      "crt": true
+    }
+  ]
+}
